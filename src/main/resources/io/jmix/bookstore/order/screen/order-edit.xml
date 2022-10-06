@@ -66,15 +66,14 @@
                         <label id="customerAddressField" dataContainer="orderDc" property="customer.address"/>
                     </vbox>
                 </groupBox>
-                <groupBox id="timeRangeGroupBox" width="100%" height="100%" caption="msg://timeRange" icon="CLOCK_O">
-
+                <groupBox id="orderInformationGroupBox" width="100%" height="100%" caption="msg://orderInformation" icon="BOOK">
+                    <form id="form" dataContainer="orderDc">
+                        <column width="350px">
+                            <dateField id="orderDateField" property="orderDate"/>
+                        </column>
+                    </form>
                 </groupBox>
             </hbox>
-            <form id="form" dataContainer="orderDc">
-                <column width="350px">
-                    <dateField id="orderDateField" property="orderDate"/>
-                </column>
-            </form>
             <groupBox id="orderLinesBox" caption="msg://io.jmix.bookstore.order/Order.orderLines">
                 <table id="orderLinesTable" dataContainer="orderLinesDc" width="100%" height="200px">
                     <actions>
@@ -83,8 +82,7 @@
                         <action id="remove" type="remove"/>
                     </actions>
                     <columns>
-                        <column id="startsAt"/>
-                        <column id="endsAt"/>
+                        <column id="product"/>
                     </columns>
                     <buttonsPanel>
                         <button action="orderLinesTable.create"/>

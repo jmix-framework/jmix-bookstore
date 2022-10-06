@@ -73,10 +73,7 @@
             <column name="ORDER_ID" type="UUID">
                 <constraints nullable="false"/>
             </column>
-            <column name="STARTS_AT" type="DATETIME">
-                <constraints nullable="false"/>
-            </column>
-            <column name="ENDS_AT" type="DATETIME">
+            <column name="PRODUCT_ID" type="UUID">
                 <constraints nullable="false"/>
             </column>
         </createTable>
@@ -125,6 +122,15 @@
         </createTable>
     </changeSet>
     <changeSet id="6" author="bookstore">
+        <createIndex indexName="IDX_BOOKSTOREORDERLINE_PRODUCT" tableName="BOOKSTORE_ORDER_LINE">
+            <column name="PRODUCT_ID"/>
+        </createIndex>
+
+        <addForeignKeyConstraint baseColumnNames="PRODUCT_ID" baseTableName="BOOKSTORE_ORDER_LINE"
+                                 constraintName="FK_BOOKSTOREORDERLI_ON_PRODUCT" referencedColumnNames="ID"
+                                 referencedTableName="BOOKSTORE_PRODUCT"/>
+    </changeSet>
+    <changeSet id="7" author="bookstore">
         <createIndex indexName="IDX_ORDERLINE_ORDER_ID" tableName="BOOKSTORE_ORDER_LINE">
             <column name="ORDER_ID"/>
         </createIndex>
@@ -133,7 +139,7 @@
                                  constraintName="FK_BOOKSTOREORDERLINE_ON_ORDER" referencedColumnNames="ID"
                                  referencedTableName="BOOKSTORE_ORDER"/>
     </changeSet>
-    <changeSet id="7" author="bookstore">
+    <changeSet id="8" author="bookstore">
         <createIndex indexName="IDX_ORDER_CUSTOMER_ID" tableName="BOOKSTORE_ORDER">
             <column name="CUSTOMER_ID"/>
         </createIndex>
@@ -142,7 +148,7 @@
                                  constraintName="FK_BOOKSTORE_ORDER_ON_CUSTOMER" referencedColumnNames="ID"
                                  referencedTableName="BOOKSTORE_CUSTOMER"/>
     </changeSet>
-    <changeSet id="8" author="bookstore">
+    <changeSet id="9" author="bookstore">
         <addForeignKeyConstraint baseColumnNames="CATEGORY_ID" baseTableName="BOOKSTORE_PRODUCT"
                                  constraintName="FK_BOOKSTOREPRODUC_ON_CATEGORY" referencedColumnNames="ID"
                                  referencedTableName="BOOKSTORE_PRODUCT_CATEGORY"/>

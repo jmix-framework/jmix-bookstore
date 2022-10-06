@@ -5,7 +5,9 @@
     <data>
         <instance id="orderLineDc"
                   class="io.jmix.bookstore.order.OrderLine">
-            <fetchPlan extends="_base"/>
+            <fetchPlan extends="_base">
+                <property name="product" fetchPlan="_base"/>
+            </fetchPlan>
             <loader/>
         </instance>
     </data>
@@ -30,8 +32,7 @@
         <scrollBox id="scrollBox" spacing="true">
             <form id="form" dataContainer="orderLineDc">
                 <column width="350px">
-                    <dateField id="startsAtField" property="startsAt"/>
-                    <dateField id="endsAtField" property="endsAt"/>
+                    <entityPicker id="productField" property="product"/>
                 </column>
             </form>
         </scrollBox>
