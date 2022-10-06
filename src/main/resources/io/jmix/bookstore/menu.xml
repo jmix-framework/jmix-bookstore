@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<menu-config xmlns="http://jmix.io/schema/ui/menu">
+
+    <menu id="application" caption="msg://io.jmix.bookstore/menu.application" insertBefore="administration">
+        <item screen="bookstore_User.browse" caption="msg://io.jmix.bookstore.screen.user/UserBrowse.caption"/>
+        <item screen="themeSettingsScreen" caption="msg://io.jmix.ui.app.themesettings/themeSettings.caption"/>
+        <item screen="bookstore_Customer.browse" caption="msg://io.jmix.bookstore.customer.screen/customerBrowse.menu"/>
+        <item screen="bookstore_Product.browse" caption="msg://io.jmix.bookstore.product.screen/productBrowse.menu"/>
+        <item screen="bookstore_ProductCategory.browse"
+              caption="msg://io.jmix.bookstore.product.screen.productcategory/productCategoryBrowse.menu"/>
+        <item screen="bookstore_Order.browse" caption="msg://io.jmix.bookstore.order.screen/orderBrowse.menu"/>
+    </menu>
+
+
+</menu-config>
