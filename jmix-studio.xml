@@ -10,6 +10,7 @@
                 <value>
                   <DataStoreSettings>
                     <option name="generateDdlType" value="CREATE_AND_UPDATE" />
+                    <option name="nameLengthMode" value="UNLIMITED" />
                     <option name="supportedTypes">
                       <option value="hsql" />
                     </option>

@@ -1,0 +1,339 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.11.xsd"
+        objectQuotingStrategy="QUOTE_ONLY_RESERVED_WORDS">
+    <changeSet id="1" author="bookstore">
+        <createTable tableName="BOOKSTORE_CUSTOMER">
+            <column name="ID" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_BOOKSTORE_CUSTOMER"/>
+            </column>
+            <column name="TENANT" type="VARCHAR(255)"/>
+            <column name="VERSION" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="CREATED_BY" type="VARCHAR(255)"/>
+            <column name="CREATED_DATE" type="DATETIME"/>
+            <column name="LAST_MODIFIED_BY" type="VARCHAR(255)"/>
+            <column name="LAST_MODIFIED_DATE" type="DATETIME"/>
+            <column name="DELETED_BY" type="VARCHAR(255)"/>
+            <column name="DELETED_DATE" type="DATETIME"/>
+            <column name="FIRST_NAME" type="VARCHAR(255)"/>
+            <column name="LAST_NAME" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="EMAIL" type="VARCHAR(255)"/>
+            <column name="ADDRESS_STREET" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="ADDRESS_POST_CODE" type="VARCHAR(255)"/>
+            <column name="ADDRESS_CITY" type="VARCHAR(255)"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="2" author="bookstore">
+        <createTable tableName="BOOKSTORE_EMPLOYEE">
+            <column name="ID" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_BOOKSTORE_EMPLOYEE"/>
+            </column>
+            <column name="VERSION" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="CREATED_BY" type="VARCHAR(255)"/>
+            <column name="CREATED_DATE" type="DATETIME"/>
+            <column name="LAST_MODIFIED_BY" type="VARCHAR(255)"/>
+            <column name="LAST_MODIFIED_DATE" type="DATETIME"/>
+            <column name="DELETED_BY" type="VARCHAR(255)"/>
+            <column name="DELETED_DATE" type="DATETIME"/>
+            <column name="FIRST_NAME" type="VARCHAR(255)"/>
+            <column name="LAST_NAME" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="TITLE" type="VARCHAR(255)"/>
+            <column name="BIRTH_DATE" type="DATE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="HIRE_DATE" type="DATE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="NOTES" type="CLOB"/>
+            <column name="REPORTS_TO_ID" type="UUID"/>
+            <column name="ADDRESS_STREET" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="ADDRESS_POST_CODE" type="VARCHAR(255)"/>
+            <column name="ADDRESS_CITY" type="VARCHAR(255)"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="3" author="bookstore">
+        <createTable tableName="BOOKSTORE_EMPLOYEE_TERRITORIES">
+            <column name="EMPLOYEE_ID" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_BOOKSTORE_EMPLOYEE_TERRITORIES"/>
+            </column>
+            <column name="TERRITORY_ID" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_BOOKSTORE_EMPLOYEE_TERRITORIES"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet id="4" author="bookstore">
+        <createTable tableName="BOOKSTORE_ORDER">
+            <column name="ID" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_BOOKSTORE_ORDER"/>
+            </column>
+            <column name="TENANT" type="VARCHAR(255)"/>
+            <column name="VERSION" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="CREATED_BY" type="VARCHAR(255)"/>
+            <column name="CREATED_DATE" type="DATETIME"/>
+            <column name="LAST_MODIFIED_BY" type="VARCHAR(255)"/>
+            <column name="LAST_MODIFIED_DATE" type="DATETIME"/>
+            <column name="DELETED_BY" type="VARCHAR(255)"/>
+            <column name="DELETED_DATE" type="DATETIME"/>
+            <column name="ORDER_DATE" type="DATE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="CUSTOMER_ID" type="UUID">
+                <constraints nullable="false"/>
+            </column>
+            <column name="REQUIRED_DATE" type="DATE"/>
+            <column name="SHIPPING_DATE" type="DATE"/>
+            <column name="SHIPPING_ADDRESS_STREET" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="SHIPPING_ADDRESS_POST_CODE" type="VARCHAR(255)"/>
+            <column name="SHIPPING_ADDRESS_CITY" type="VARCHAR(255)"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="5" author="bookstore">
+        <createTable tableName="BOOKSTORE_ORDER_LINE">
+            <column name="ID" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_BOOKSTORE_ORDER_LINE"/>
+            </column>
+            <column name="TENANT" type="VARCHAR(255)"/>
+            <column name="VERSION" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="CREATED_BY" type="VARCHAR(255)"/>
+            <column name="CREATED_DATE" type="DATETIME"/>
+            <column name="LAST_MODIFIED_BY" type="VARCHAR(255)"/>
+            <column name="LAST_MODIFIED_DATE" type="DATETIME"/>
+            <column name="DELETED_BY" type="VARCHAR(255)"/>
+            <column name="DELETED_DATE" type="DATETIME"/>
+            <column name="ORDER_ID" type="UUID">
+                <constraints nullable="false"/>
+            </column>
+            <column name="PRODUCT_ID" type="UUID">
+                <constraints nullable="false"/>
+            </column>
+            <column name="QUANTITY" type="INT"/>
+            <column name="UNIT_PRICE_AMOUNT" type="DECIMAL(19, 2)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="UNIT_PRICE_CURRENCY" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="DISCOUNT_AMOUNT" type="DECIMAL(19, 2)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="DISCOUNT_CURRENCY" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet id="6" author="bookstore">
+        <createTable tableName="BOOKSTORE_PRODUCT">
+            <column name="ID" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_BOOKSTORE_PRODUCT"/>
+            </column>
+            <column name="TENANT" type="VARCHAR(255)"/>
+            <column name="VERSION" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="CREATED_BY" type="VARCHAR(255)"/>
+            <column name="CREATED_DATE" type="DATETIME"/>
+            <column name="LAST_MODIFIED_BY" type="VARCHAR(255)"/>
+            <column name="LAST_MODIFIED_DATE" type="DATETIME"/>
+            <column name="DELETED_BY" type="VARCHAR(255)"/>
+            <column name="DELETED_DATE" type="DATETIME"/>
+            <column name="NAME" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="DESCRIPTION" type="CLOB"/>
+            <column name="CATEGORY_ID" type="UUID"/>
+            <column name="UNITS_IN_STOCK" type="INT"/>
+            <column name="UNITS_ON_ORDER" type="INT"/>
+            <column name="ACTIVE" type="BOOLEAN">
+                <constraints nullable="false"/>
+            </column>
+            <column name="SUPPLIER_ID" type="UUID"/>
+            <column name="UNIT_PRICE_AMOUNT" type="DECIMAL(19, 2)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="UNIT_PRICE_CURRENCY" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet id="7" author="bookstore">
+        <createTable tableName="BOOKSTORE_PRODUCT_CATEGORY">
+            <column name="ID" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_BOOKSTORE_PRODUCT_CATEGORY"/>
+            </column>
+            <column name="TENANT" type="VARCHAR(255)"/>
+            <column name="VERSION" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="CREATED_BY" type="VARCHAR(255)"/>
+            <column name="CREATED_DATE" type="DATETIME"/>
+            <column name="LAST_MODIFIED_BY" type="VARCHAR(255)"/>
+            <column name="LAST_MODIFIED_DATE" type="DATETIME"/>
+            <column name="DELETED_BY" type="VARCHAR(255)"/>
+            <column name="DELETED_DATE" type="DATETIME"/>
+            <column name="NAME" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="DESCRIPTION" type="CLOB"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="8" author="bookstore">
+        <createTable tableName="BOOKSTORE_REGION">
+            <column name="ID" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_BOOKSTORE_REGION"/>
+            </column>
+            <column name="VERSION" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="CREATED_BY" type="VARCHAR(255)"/>
+            <column name="CREATED_DATE" type="DATETIME"/>
+            <column name="LAST_MODIFIED_BY" type="VARCHAR(255)"/>
+            <column name="LAST_MODIFIED_DATE" type="DATETIME"/>
+            <column name="DELETED_BY" type="VARCHAR(255)"/>
+            <column name="DELETED_DATE" type="DATETIME"/>
+            <column name="NAME" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet id="9" author="bookstore">
+        <createTable tableName="BOOKSTORE_SUPPLIER">
+            <column name="ID" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_BOOKSTORE_SUPPLIER"/>
+            </column>
+            <column name="VERSION" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="CREATED_BY" type="VARCHAR(255)"/>
+            <column name="CREATED_DATE" type="DATETIME"/>
+            <column name="LAST_MODIFIED_BY" type="VARCHAR(255)"/>
+            <column name="LAST_MODIFIED_DATE" type="DATETIME"/>
+            <column name="DELETED_BY" type="VARCHAR(255)"/>
+            <column name="DELETED_DATE" type="DATETIME"/>
+            <column name="NAME" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="CONTACT_NAME" type="VARCHAR(255)"/>
+            <column name="CONTACT_TITLE" type="VARCHAR(255)"/>
+            <column name="PHONE" type="VARCHAR(255)"/>
+            <column name="EMAIL" type="VARCHAR(255)"/>
+            <column name="WEBSITE" type="VARCHAR(255)"/>
+            <column name="ADDRESS_STREET" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="ADDRESS_POST_CODE" type="VARCHAR(255)"/>
+            <column name="ADDRESS_CITY" type="VARCHAR(255)"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="10" author="bookstore">
+        <createTable tableName="BOOKSTORE_TERRITORY">
+            <column name="ID" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_BOOKSTORE_TERRITORY"/>
+            </column>
+            <column name="VERSION" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="CREATED_BY" type="VARCHAR(255)"/>
+            <column name="CREATED_DATE" type="DATETIME"/>
+            <column name="LAST_MODIFIED_BY" type="VARCHAR(255)"/>
+            <column name="LAST_MODIFIED_DATE" type="DATETIME"/>
+            <column name="DELETED_BY" type="VARCHAR(255)"/>
+            <column name="DELETED_DATE" type="DATETIME"/>
+            <column name="NAME" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="REGION_ID" type="UUID">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet id="11" author="bookstore">
+        <createIndex indexName="IDX_BOOKSTOREEMPLOYE_REPORTSTO" tableName="BOOKSTORE_EMPLOYEE">
+            <column name="REPORTS_TO_ID"/>
+        </createIndex>
+
+        <addForeignKeyConstraint baseColumnNames="REPORTS_TO_ID" baseTableName="BOOKSTORE_EMPLOYEE"
+                                 constraintName="FK_BOOKSTORE_EMPLOYEE_ON_REPORTS_TO" referencedColumnNames="ID"
+                                 referencedTableName="BOOKSTORE_EMPLOYEE"/>
+    </changeSet>
+    <changeSet id="12" author="bookstore">
+        <createIndex indexName="IDX_BOOKSTOREORDERLINE_PRODUCT" tableName="BOOKSTORE_ORDER_LINE">
+            <column name="PRODUCT_ID"/>
+        </createIndex>
+
+        <addForeignKeyConstraint baseColumnNames="PRODUCT_ID" baseTableName="BOOKSTORE_ORDER_LINE"
+                                 constraintName="FK_BOOKSTORE_ORDER_LINE_ON_PRODUCT" referencedColumnNames="ID"
+                                 referencedTableName="BOOKSTORE_PRODUCT"/>
+    </changeSet>
+    <changeSet id="13" author="bookstore">
+        <createIndex indexName="IDX_BOOKSTORE_PRODUCT_SUPPLIER" tableName="BOOKSTORE_PRODUCT">
+            <column name="SUPPLIER_ID"/>
+        </createIndex>
+
+        <addForeignKeyConstraint baseColumnNames="SUPPLIER_ID" baseTableName="BOOKSTORE_PRODUCT"
+                                 constraintName="FK_BOOKSTORE_PRODUCT_ON_SUPPLIER" referencedColumnNames="ID"
+                                 referencedTableName="BOOKSTORE_SUPPLIER"/>
+    </changeSet>
+    <changeSet id="14" author="bookstore">
+        <createIndex indexName="IDX_BOOKSTORE_TERRITORY_REGION" tableName="BOOKSTORE_TERRITORY">
+            <column name="REGION_ID"/>
+        </createIndex>
+
+        <addForeignKeyConstraint baseColumnNames="REGION_ID" baseTableName="BOOKSTORE_TERRITORY"
+                                 constraintName="FK_BOOKSTORE_TERRITORY_ON_REGION" referencedColumnNames="ID"
+                                 referencedTableName="BOOKSTORE_REGION"/>
+    </changeSet>
+    <changeSet id="15" author="bookstore">
+        <createIndex indexName="IDX_ORDERLINE_ORDER_ID" tableName="BOOKSTORE_ORDER_LINE">
+            <column name="ORDER_ID"/>
+        </createIndex>
+
+        <addForeignKeyConstraint baseColumnNames="ORDER_ID" baseTableName="BOOKSTORE_ORDER_LINE"
+                                 constraintName="FK_BOOKSTORE_ORDER_LINE_ON_ORDER" referencedColumnNames="ID"
+                                 referencedTableName="BOOKSTORE_ORDER"/>
+    </changeSet>
+    <changeSet id="16" author="bookstore">
+        <createIndex indexName="IDX_ORDER_CUSTOMER_ID" tableName="BOOKSTORE_ORDER">
+            <column name="CUSTOMER_ID"/>
+        </createIndex>
+
+        <addForeignKeyConstraint baseColumnNames="CUSTOMER_ID" baseTableName="BOOKSTORE_ORDER"
+                                 constraintName="FK_BOOKSTORE_ORDER_ON_CUSTOMER" referencedColumnNames="ID"
+                                 referencedTableName="BOOKSTORE_CUSTOMER"/>
+    </changeSet>
+    <changeSet id="17" author="bookstore">
+        <addForeignKeyConstraint baseColumnNames="EMPLOYEE_ID" baseTableName="BOOKSTORE_EMPLOYEE_TERRITORIES"
+                                 constraintName="FK_BOOEMPTER_ON_EMPLOYEE" referencedColumnNames="ID"
+                                 referencedTableName="BOOKSTORE_EMPLOYEE"/>
+    </changeSet>
+    <changeSet id="18" author="bookstore">
+        <addForeignKeyConstraint baseColumnNames="TERRITORY_ID" baseTableName="BOOKSTORE_EMPLOYEE_TERRITORIES"
+                                 constraintName="FK_BOOEMPTER_ON_TERRITORY" referencedColumnNames="ID"
+                                 referencedTableName="BOOKSTORE_TERRITORY"/>
+    </changeSet>
+    <changeSet id="19" author="bookstore">
+        <addForeignKeyConstraint baseColumnNames="CATEGORY_ID" baseTableName="BOOKSTORE_PRODUCT"
+                                 constraintName="FK_BOOKSTORE_PRODUCT_ON_CATEGORY" referencedColumnNames="ID"
+                                 referencedTableName="BOOKSTORE_PRODUCT_CATEGORY"/>
+    </changeSet>
+</databaseChangeLog>

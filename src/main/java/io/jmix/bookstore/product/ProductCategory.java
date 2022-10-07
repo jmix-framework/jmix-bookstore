@@ -25,6 +25,8 @@ public class ProductCategory extends StandardTenantEntity {
     @Lob
     private String description;
 
+
+
     public String getDescription() {
         return description;
     }

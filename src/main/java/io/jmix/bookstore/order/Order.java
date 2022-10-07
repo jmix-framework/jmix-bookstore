@@ -1,9 +1,11 @@
 package io.jmix.bookstore.order;
 
 import io.jmix.bookstore.customer.Customer;
+import io.jmix.bookstore.entity.Address;
 import io.jmix.bookstore.entity.StandardTenantEntity;
 import io.jmix.core.DeletePolicy;
 import io.jmix.core.MetadataTools;
+import io.jmix.core.entity.annotation.EmbeddedParameters;
 import io.jmix.core.entity.annotation.OnDelete;
 import io.jmix.core.metamodel.annotation.Composition;
 import io.jmix.core.metamodel.annotation.DependsOnProperties;
@@ -37,6 +39,45 @@ public class Order extends StandardTenantEntity {
     @Composition
     @OneToMany(mappedBy = "order")
     private List<OrderLine> orderLines;
+
+    @Column(name = "REQUIRED_DATE")
+    private LocalDate requiredDate;
+
+    @Column(name = "SHIPPING_DATE")
+    private LocalDate shippingDate;
+
+    @EmbeddedParameters(nullAllowed = false)
+    @Embedded
+    @AttributeOverrides({
+            @AttributeOverride(name = "street", column = @Column(name = "SHIPPING_ADDRESS_STREET", nullable = false)),
+            @AttributeOverride(name = "postCode", column = @Column(name = "SHIPPING_ADDRESS_POST_CODE")),
+            @AttributeOverride(name = "city", column = @Column(name = "SHIPPING_ADDRESS_CITY"))
+    })
+    private Address shippingAddress;
+
+    public Address getShippingAddress() {
+        return shippingAddress;
+    }
+
+    public void setShippingAddress(Address shippingAddress) {
+        this.shippingAddress = shippingAddress;
+    }
+
+    public LocalDate getShippingDate() {
+        return shippingDate;
+    }
+
+    public void setShippingDate(LocalDate shippedDate) {
+        this.shippingDate = shippedDate;
+    }
+
+    public LocalDate getRequiredDate() {
+        return requiredDate;
+    }
+
+    public void setRequiredDate(LocalDate requiredDate) {
+        this.requiredDate = requiredDate;
+    }
 
     public List<OrderLine> getOrderLines() {
         return orderLines;
