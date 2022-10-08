@@ -3,8 +3,8 @@ package io.jmix.bookstore.order;
 import io.jmix.bookstore.customer.Customer;
 
 import io.jmix.bookstore.test_support.AuthenticatedAsAdmin;
-import io.jmix.bookstore.test_support.test_data.Customers;
-import io.jmix.bookstore.test_support.test_data.Orders;
+import io.jmix.bookstore.customer.test_support.Customers;
+import io.jmix.bookstore.order.test_support.Orders;
 import io.jmix.core.MetadataTools;
 import org.junit.jupiter.api.Test;
 

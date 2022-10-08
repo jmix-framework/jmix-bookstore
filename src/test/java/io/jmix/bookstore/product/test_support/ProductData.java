@@ -1,5 +1,6 @@
 package io.jmix.bookstore.product.test_support;
 
+import io.jmix.bookstore.entity.Money;
 import io.jmix.bookstore.product.ProductCategory;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -12,4 +13,5 @@ import lombok.Value;
 public class ProductData {
     String name;
     ProductCategory category;
+    Money unitPrice;
 }

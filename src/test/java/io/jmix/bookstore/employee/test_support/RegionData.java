@@ -1,8 +1,9 @@
-package io.jmix.bookstore.order.test_support;
+package io.jmix.bookstore.employee.test_support;
 
-import io.jmix.bookstore.customer.Customer;
+import io.jmix.bookstore.employee.Employee;
+import io.jmix.bookstore.employee.Territory;
 import io.jmix.bookstore.entity.Address;
-import io.jmix.bookstore.order.OrderLine;
+import io.jmix.bookstore.entity.Title;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -14,9 +15,6 @@ import java.util.List;
 @Value
 @Builder
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
-public class OrderData {
-    LocalDate orderDate;
-    Customer customer;
-    List<OrderLine> orderLines;
-    Address shippingAddress;
+public class RegionData {
+    String name;
 }

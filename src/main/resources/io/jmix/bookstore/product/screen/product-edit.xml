@@ -7,6 +7,8 @@
                   class="io.jmix.bookstore.product.Product">
             <fetchPlan extends="_base">
                 <property name="category"/>
+                <property name="unitPrice" fetchPlan="_base"/>
+                <property name="supplier" fetchPlan="_base"/>
             </fetchPlan>
             <loader/>
         </instance>
@@ -36,9 +38,7 @@
     <dialogMode height="600"
                 width="800"/>
     <layout spacing="true" expand="contentTabSheet">
-
-        <label id="productNameLabel" dataContainer="productDc" property="name" stylename="h1" />
-
+        <label id="productNameLabel" dataContainer="productDc" property="name" stylename="h1"/>
         <tabSheet id="contentTabSheet">
             <tab id="formTab"
                  caption="msg://io.jmix.bookstore.product/generalInformation"
@@ -49,6 +49,12 @@
                     <column width="350px">
                         <textField id="nameField" property="name"/>
                         <entityComboBox id="categoryField" property="category" optionsContainer="productCategoriesDc"/>
+                        <textField id="unitPriceAmountField" property="unitPrice.amount"/>
+                        <comboBox id="unitPriceCurrencyField" property="unitPrice.currency"/>
+                        <textField id="unitsInStockField" property="unitsInStock"/>
+                        <textField id="unitsOnOrderField" property="unitsOnOrder"/>
+                        <checkBox id="activeField" property="active"/>
+                        <entityPicker id="supplierField" property="supplier"/>
                     </column>
                 </form>
             </tab>

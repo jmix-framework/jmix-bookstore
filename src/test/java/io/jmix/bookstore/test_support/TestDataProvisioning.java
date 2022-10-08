@@ -1,4 +1,4 @@
-package io.jmix.bookstore.test_support.test_data;
+package io.jmix.bookstore.test_support;
 
 
 public interface TestDataProvisioning<DTO, DTOBuilder, Entity> {

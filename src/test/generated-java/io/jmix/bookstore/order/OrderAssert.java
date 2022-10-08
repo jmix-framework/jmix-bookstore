@@ -390,6 +390,75 @@ public class OrderAssert extends AbstractObjectAssert<OrderAssert, Order> {
 
 
   /**
+   * Verifies that the actual Order's requiredDate is equal to the given one.
+   * @param requiredDate the given requiredDate to compare the actual Order's requiredDate to.
+   * @return this assertion object.
+   * @throws AssertionError - if the actual Order's requiredDate is not equal to the given one.
+   */
+  public OrderAssert hasRequiredDate(java.time.LocalDate requiredDate) {
+    // check that actual Order we want to make assertions on is not null.
+    isNotNull();
+
+    // overrides the default error message with a more explicit one
+    String assertjErrorMessage = "\nExpecting requiredDate of:\n  <%s>\nto be:\n  <%s>\nbut was:\n  <%s>";
+
+    // null safe check
+    java.time.LocalDate actualRequiredDate = actual.getRequiredDate();
+    if (!Objects.deepEquals(actualRequiredDate, requiredDate)) {
+      failWithMessage(assertjErrorMessage, actual, requiredDate, actualRequiredDate);
+    }
+
+    // return the current assertion for method chaining
+    return this;
+  }
+
+  /**
+   * Verifies that the actual Order's shippingAddress is equal to the given one.
+   * @param shippingAddress the given shippingAddress to compare the actual Order's shippingAddress to.
+   * @return this assertion object.
+   * @throws AssertionError - if the actual Order's shippingAddress is not equal to the given one.
+   */
+  public OrderAssert hasShippingAddress(io.jmix.bookstore.entity.Address shippingAddress) {
+    // check that actual Order we want to make assertions on is not null.
+    isNotNull();
+
+    // overrides the default error message with a more explicit one
+    String assertjErrorMessage = "\nExpecting shippingAddress of:\n  <%s>\nto be:\n  <%s>\nbut was:\n  <%s>";
+
+    // null safe check
+    io.jmix.bookstore.entity.Address actualShippingAddress = actual.getShippingAddress();
+    if (!Objects.deepEquals(actualShippingAddress, shippingAddress)) {
+      failWithMessage(assertjErrorMessage, actual, shippingAddress, actualShippingAddress);
+    }
+
+    // return the current assertion for method chaining
+    return this;
+  }
+
+  /**
+   * Verifies that the actual Order's shippingDate is equal to the given one.
+   * @param shippingDate the given shippingDate to compare the actual Order's shippingDate to.
+   * @return this assertion object.
+   * @throws AssertionError - if the actual Order's shippingDate is not equal to the given one.
+   */
+  public OrderAssert hasShippingDate(java.time.LocalDate shippingDate) {
+    // check that actual Order we want to make assertions on is not null.
+    isNotNull();
+
+    // overrides the default error message with a more explicit one
+    String assertjErrorMessage = "\nExpecting shippingDate of:\n  <%s>\nto be:\n  <%s>\nbut was:\n  <%s>";
+
+    // null safe check
+    java.time.LocalDate actualShippingDate = actual.getShippingDate();
+    if (!Objects.deepEquals(actualShippingDate, shippingDate)) {
+      failWithMessage(assertjErrorMessage, actual, shippingDate, actualShippingDate);
+    }
+
+    // return the current assertion for method chaining
+    return this;
+  }
+
+  /**
    * Verifies that the actual Order's tenant is equal to the given one.
    * @param tenant the given tenant to compare the actual Order's tenant to.
    * @return this assertion object.

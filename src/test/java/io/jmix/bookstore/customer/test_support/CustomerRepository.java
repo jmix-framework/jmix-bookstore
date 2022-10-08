@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 
-@Component("bookstore_CustomerRepository")
+@Component
 public class CustomerRepository implements EntityRepository<CustomerData, Customer> {
 
     @Autowired

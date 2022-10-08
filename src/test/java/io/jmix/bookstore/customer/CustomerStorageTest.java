@@ -1,17 +1,13 @@
 package io.jmix.bookstore.customer;
 
 
-import io.jmix.bookstore.JmixBookstoreApplication;
-import io.jmix.bookstore.JmixBookstoreApplicationTestConfig;
 import io.jmix.bookstore.test_support.AuthenticatedAsAdmin;
-import io.jmix.bookstore.test_support.test_data.Customers;
+import io.jmix.bookstore.customer.test_support.Customers;
 import org.junit.jupiter.api.Test;
 
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.annotation.Import;
-import org.springframework.test.context.ContextConfiguration;
 
 import static io.jmix.bookstore.order.Assertions.assertThat;
 

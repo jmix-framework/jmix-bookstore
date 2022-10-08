@@ -1,7 +1,7 @@
 package io.jmix.bookstore.order;
 
 import io.jmix.bookstore.test_support.Validations;
-import io.jmix.bookstore.test_support.test_data.Orders;
+import io.jmix.bookstore.order.test_support.Orders;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

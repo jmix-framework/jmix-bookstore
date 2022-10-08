@@ -1,26 +1,26 @@
-package io.jmix.bookstore.order.test_support;
+package io.jmix.bookstore.employee.test_support;
 
+import io.jmix.bookstore.customer.Customer;
+import io.jmix.bookstore.employee.Employee;
 import io.jmix.bookstore.entity.test_support.EntityRepository;
-import io.jmix.bookstore.order.Order;
 import io.jmix.bookstore.test_support.EntityValidation;
 import io.jmix.core.DataManager;
-import io.jmix.core.security.SystemAuthenticator;
 import org.springframework.beans.factory.annotation.Autowired;
-
 import org.springframework.stereotype.Component;
 
+
 @Component
-public class OrderRepository implements EntityRepository<OrderData, Order> {
+public class EmployeeRepository implements EntityRepository<EmployeeData, Employee> {
 
     @Autowired
     DataManager dataManager;
     @Autowired
     EntityValidation entityValidation;
     @Autowired
-    OrderMapper mapper;
+    EmployeeMapper mapper;
 
     @Override
-    public Order save(OrderData dto) {
+    public Employee save(EmployeeData dto) {
         var entity = mapper.toEntity(dto);
         entityValidation.ensureIsValid(entity);
         return dataManager.save(entity);

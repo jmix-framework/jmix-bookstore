@@ -29,6 +29,29 @@ public class ProductAssert extends AbstractObjectAssert<ProductAssert, Product> 
   }
 
   /**
+   * Verifies that the actual Product's active is equal to the given one.
+   * @param active the given active to compare the actual Product's active to.
+   * @return this assertion object.
+   * @throws AssertionError - if the actual Product's active is not equal to the given one.
+   */
+  public ProductAssert hasActive(Boolean active) {
+    // check that actual Product we want to make assertions on is not null.
+    isNotNull();
+
+    // overrides the default error message with a more explicit one
+    String assertjErrorMessage = "\nExpecting active of:\n  <%s>\nto be:\n  <%s>\nbut was:\n  <%s>";
+
+    // null safe check
+    Boolean actualActive = actual.getActive();
+    if (!Objects.deepEquals(actualActive, active)) {
+      failWithMessage(assertjErrorMessage, actual, active, actualActive);
+    }
+
+    // return the current assertion for method chaining
+    return this;
+  }
+
+  /**
    * Verifies that the actual Product's category is equal to the given one.
    * @param category the given category to compare the actual Product's category to.
    * @return this assertion object.
@@ -259,6 +282,29 @@ public class ProductAssert extends AbstractObjectAssert<ProductAssert, Product> 
   }
 
   /**
+   * Verifies that the actual Product's supplier is equal to the given one.
+   * @param supplier the given supplier to compare the actual Product's supplier to.
+   * @return this assertion object.
+   * @throws AssertionError - if the actual Product's supplier is not equal to the given one.
+   */
+  public ProductAssert hasSupplier(Supplier supplier) {
+    // check that actual Product we want to make assertions on is not null.
+    isNotNull();
+
+    // overrides the default error message with a more explicit one
+    String assertjErrorMessage = "\nExpecting supplier of:\n  <%s>\nto be:\n  <%s>\nbut was:\n  <%s>";
+
+    // null safe check
+    Supplier actualSupplier = actual.getSupplier();
+    if (!Objects.deepEquals(actualSupplier, supplier)) {
+      failWithMessage(assertjErrorMessage, actual, supplier, actualSupplier);
+    }
+
+    // return the current assertion for method chaining
+    return this;
+  }
+
+  /**
    * Verifies that the actual Product's tenant is equal to the given one.
    * @param tenant the given tenant to compare the actual Product's tenant to.
    * @return this assertion object.
@@ -275,6 +321,75 @@ public class ProductAssert extends AbstractObjectAssert<ProductAssert, Product> 
     String actualTenant = actual.getTenant();
     if (!Objects.deepEquals(actualTenant, tenant)) {
       failWithMessage(assertjErrorMessage, actual, tenant, actualTenant);
+    }
+
+    // return the current assertion for method chaining
+    return this;
+  }
+
+  /**
+   * Verifies that the actual Product's unitPrice is equal to the given one.
+   * @param unitPrice the given unitPrice to compare the actual Product's unitPrice to.
+   * @return this assertion object.
+   * @throws AssertionError - if the actual Product's unitPrice is not equal to the given one.
+   */
+  public ProductAssert hasUnitPrice(io.jmix.bookstore.entity.Money unitPrice) {
+    // check that actual Product we want to make assertions on is not null.
+    isNotNull();
+
+    // overrides the default error message with a more explicit one
+    String assertjErrorMessage = "\nExpecting unitPrice of:\n  <%s>\nto be:\n  <%s>\nbut was:\n  <%s>";
+
+    // null safe check
+    io.jmix.bookstore.entity.Money actualUnitPrice = actual.getUnitPrice();
+    if (!Objects.deepEquals(actualUnitPrice, unitPrice)) {
+      failWithMessage(assertjErrorMessage, actual, unitPrice, actualUnitPrice);
+    }
+
+    // return the current assertion for method chaining
+    return this;
+  }
+
+  /**
+   * Verifies that the actual Product's unitsInStock is equal to the given one.
+   * @param unitsInStock the given unitsInStock to compare the actual Product's unitsInStock to.
+   * @return this assertion object.
+   * @throws AssertionError - if the actual Product's unitsInStock is not equal to the given one.
+   */
+  public ProductAssert hasUnitsInStock(Integer unitsInStock) {
+    // check that actual Product we want to make assertions on is not null.
+    isNotNull();
+
+    // overrides the default error message with a more explicit one
+    String assertjErrorMessage = "\nExpecting unitsInStock of:\n  <%s>\nto be:\n  <%s>\nbut was:\n  <%s>";
+
+    // null safe check
+    Integer actualUnitsInStock = actual.getUnitsInStock();
+    if (!Objects.deepEquals(actualUnitsInStock, unitsInStock)) {
+      failWithMessage(assertjErrorMessage, actual, unitsInStock, actualUnitsInStock);
+    }
+
+    // return the current assertion for method chaining
+    return this;
+  }
+
+  /**
+   * Verifies that the actual Product's unitsOnOrder is equal to the given one.
+   * @param unitsOnOrder the given unitsOnOrder to compare the actual Product's unitsOnOrder to.
+   * @return this assertion object.
+   * @throws AssertionError - if the actual Product's unitsOnOrder is not equal to the given one.
+   */
+  public ProductAssert hasUnitsOnOrder(Integer unitsOnOrder) {
+    // check that actual Product we want to make assertions on is not null.
+    isNotNull();
+
+    // overrides the default error message with a more explicit one
+    String assertjErrorMessage = "\nExpecting unitsOnOrder of:\n  <%s>\nto be:\n  <%s>\nbut was:\n  <%s>";
+
+    // null safe check
+    Integer actualUnitsOnOrder = actual.getUnitsOnOrder();
+    if (!Objects.deepEquals(actualUnitsOnOrder, unitsOnOrder)) {
+      failWithMessage(assertjErrorMessage, actual, unitsOnOrder, actualUnitsOnOrder);
     }
 
     // return the current assertion for method chaining

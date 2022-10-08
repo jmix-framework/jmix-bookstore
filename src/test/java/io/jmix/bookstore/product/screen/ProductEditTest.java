@@ -3,8 +3,8 @@ package io.jmix.bookstore.product.screen;
 import io.jmix.bookstore.product.*;
 import io.jmix.bookstore.product.test_support.ProductData;
 import io.jmix.bookstore.test_support.DatabaseCleanup;
-import io.jmix.bookstore.test_support.test_data.ProductCategories;
-import io.jmix.bookstore.test_support.test_data.Products;
+import io.jmix.bookstore.product.test_support.ProductCategories;
+import io.jmix.bookstore.product.test_support.Products;
 import io.jmix.bookstore.test_support.ui.FormInteractions;
 import io.jmix.bookstore.test_support.ui.ScreenInteractions;
 import io.jmix.bookstore.test_support.ui.WebIntegrationTest;
@@ -59,6 +59,8 @@ class ProductEditTest extends WebIntegrationTest {
             // given:
             ProductData productData = products.defaultData().build();
             formInteractions.setTextFieldValue("nameField", productData.getName());
+            formInteractions.setNumberFieldValue("unitPriceAmountField", productData.getUnitPrice().getAmount());
+            formInteractions.setEnumFieldValue("unitPriceCurrencyField", productData.getUnitPrice().getCurrency());
 
             // when:
             OperationResult operationResult = formInteractions.saveForm();
@@ -132,6 +134,8 @@ class ProductEditTest extends WebIntegrationTest {
             // given:
             ProductData productData = products.defaultData().build();
             formInteractions.setTextFieldValue("nameField", productData.getName());
+            formInteractions.setNumberFieldValue("unitPriceAmountField", productData.getUnitPrice().getAmount());
+            formInteractions.setEnumFieldValue("unitPriceCurrencyField", productData.getUnitPrice().getCurrency());
 
             // and:
             formInteractions.setEntityComboBoxFieldValue("categoryField", productCategory1, ProductCategory.class);

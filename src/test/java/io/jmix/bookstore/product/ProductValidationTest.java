@@ -1,7 +1,7 @@
 package io.jmix.bookstore.product;
 
 import io.jmix.bookstore.test_support.Validations;
-import io.jmix.bookstore.test_support.test_data.Products;
+import io.jmix.bookstore.product.test_support.Products;
 import io.jmix.core.DataManager;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

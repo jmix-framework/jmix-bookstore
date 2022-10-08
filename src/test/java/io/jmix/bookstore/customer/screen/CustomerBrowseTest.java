@@ -1,7 +1,7 @@
 package io.jmix.bookstore.customer.screen;
 
 import io.jmix.bookstore.customer.Customer;
-import io.jmix.bookstore.test_support.test_data.Customers;
+import io.jmix.bookstore.customer.test_support.Customers;
 import io.jmix.bookstore.test_support.ui.ScreenInteractions;
 import io.jmix.bookstore.test_support.ui.TableInteractions;
 import io.jmix.bookstore.test_support.ui.WebIntegrationTest;

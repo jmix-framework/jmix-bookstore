@@ -4,7 +4,7 @@ import io.jmix.bookstore.product.ProductCategory;
 import io.jmix.bookstore.product.test_support.ProductCategoryData;
 import io.jmix.bookstore.product.screen.productcategory.ProductCategoryEdit;
 import io.jmix.bookstore.test_support.DatabaseCleanup;
-import io.jmix.bookstore.test_support.test_data.ProductCategories;
+import io.jmix.bookstore.product.test_support.ProductCategories;
 import io.jmix.bookstore.test_support.ui.FormInteractions;
 import io.jmix.bookstore.test_support.ui.ScreenInteractions;
 import io.jmix.bookstore.test_support.ui.WebIntegrationTest;

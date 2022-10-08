@@ -1,7 +1,7 @@
 package io.jmix.bookstore.product.screen;
 
 import io.jmix.bookstore.product.Product;
-import io.jmix.bookstore.test_support.test_data.Products;
+import io.jmix.bookstore.product.test_support.Products;
 import io.jmix.bookstore.test_support.ui.ScreenInteractions;
 import io.jmix.bookstore.test_support.ui.TableInteractions;
 import io.jmix.bookstore.test_support.ui.WebIntegrationTest;

@@ -2,10 +2,13 @@ package io.jmix.bookstore.order;
 
 
 import io.jmix.bookstore.customer.Customer;
+import io.jmix.bookstore.customer.test_support.Customers;
+import io.jmix.bookstore.order.test_support.OrderLines;
+import io.jmix.bookstore.order.test_support.Orders;
 import io.jmix.bookstore.product.Product;
 
+import io.jmix.bookstore.product.test_support.Products;
 import io.jmix.bookstore.test_support.AuthenticatedAsAdmin;
-import io.jmix.bookstore.test_support.test_data.*;
 import io.jmix.core.DataManager;
 import io.jmix.core.Id;
 import org.junit.jupiter.api.Test;
@@ -38,9 +41,6 @@ public class OrderStorageTest {
 
     private final LocalDate TODAY = LocalDate.now();
 
-    private final LocalDateTime IN_TWO_DAYS = LocalDateTime.now().plusDays(2);
-    private final LocalDateTime IN_THREE_DAYS = LocalDateTime.now().plusDays(3);
-
 
     @Test
     void given_validOrder_when_storingOrderWithOrderLines_then_allEntitiesAreStored() {
@@ -65,7 +65,7 @@ public class OrderStorageTest {
         OrderLine orderLine1 = orderLines.save(
                 orderLines.defaultData()
                         .order(order)
-                        .endsAt(IN_TWO_DAYS)
+                        .product(product)
                         .build()
         );
 
@@ -73,7 +73,7 @@ public class OrderStorageTest {
         OrderLine orderLine2 = orderLines.save(
                 orderLines.defaultData()
                         .order(order)
-                        .endsAt(IN_THREE_DAYS)
+                        .product(product)
                         .build()
         );
 

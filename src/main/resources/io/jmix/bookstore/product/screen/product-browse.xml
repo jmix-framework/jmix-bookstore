@@ -8,6 +8,8 @@
                     class="io.jmix.bookstore.product.Product">
             <fetchPlan extends="_base">
                 <property name="category"/>
+                <property name="unitPrice" fetchPlan="_base"/>
+                <property name="supplier" fetchPlan="_base"/>
             </fetchPlan>
             <loader id="productsDl">
                 <query>
@@ -51,6 +53,8 @@
                 </group>
                 <column id="name"/>
                 <column id="description"/>
+                <column id="active"/>
+                <column id="supplier"/>
             </columns>
             <simplePagination/>
             <buttonsPanel id="buttonsPanel"

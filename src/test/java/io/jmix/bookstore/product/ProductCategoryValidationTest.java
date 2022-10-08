@@ -1,7 +1,7 @@
 package io.jmix.bookstore.product;
 
 import io.jmix.bookstore.test_support.Validations;
-import io.jmix.bookstore.test_support.test_data.ProductCategories;
+import io.jmix.bookstore.product.test_support.ProductCategories;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EmptySource;

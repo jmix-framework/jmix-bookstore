@@ -28,6 +28,7 @@ public class Product extends StandardTenantEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     private ProductCategory category;
 
+
     @EmbeddedParameters(nullAllowed = false)
     @Embedded
     @AttributeOverrides({

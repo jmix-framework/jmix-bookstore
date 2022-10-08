@@ -15,6 +15,7 @@ import javax.validation.constraints.NotBlank;
 @Entity(name = "bookstore_ProductCategory")
 public class ProductCategory extends StandardTenantEntity {
 
+    
 
     @InstanceName
     @NotBlank

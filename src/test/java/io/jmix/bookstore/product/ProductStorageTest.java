@@ -2,8 +2,8 @@ package io.jmix.bookstore.product;
 
 
 import io.jmix.bookstore.test_support.AuthenticatedAsAdmin;
-import io.jmix.bookstore.test_support.test_data.ProductCategories;
-import io.jmix.bookstore.test_support.test_data.Products;
+import io.jmix.bookstore.product.test_support.ProductCategories;
+import io.jmix.bookstore.product.test_support.Products;
 import io.jmix.core.DataManager;
 import io.jmix.core.FetchPlan;
 import io.jmix.core.Id;
@@ -16,11 +16,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.Optional;
 
-import static io.jmix.bookstore.entity.Currency.EUR;
-import static io.jmix.bookstore.product.PriceUnit.DAY;
-import static io.jmix.bookstore.product.PriceUnit.WEEK;
-import static java.math.BigDecimal.ONE;
-import static java.math.BigDecimal.TEN;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest

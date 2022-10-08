@@ -3,7 +3,7 @@ package io.jmix.bookstore.product.screen;
 import io.jmix.bookstore.product.ProductCategory;
 import io.jmix.bookstore.product.screen.productcategory.ProductCategoryBrowse;
 import io.jmix.bookstore.product.screen.productcategory.ProductCategoryEdit;
-import io.jmix.bookstore.test_support.test_data.ProductCategories;
+import io.jmix.bookstore.product.test_support.ProductCategories;
 import io.jmix.bookstore.test_support.ui.ScreenInteractions;
 import io.jmix.bookstore.test_support.ui.TableInteractions;
 import io.jmix.bookstore.test_support.ui.WebIntegrationTest;

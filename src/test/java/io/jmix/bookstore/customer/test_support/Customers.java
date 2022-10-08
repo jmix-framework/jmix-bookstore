@@ -1,12 +1,10 @@
-package io.jmix.bookstore.test_support.test_data;
+package io.jmix.bookstore.customer.test_support;
 
 import io.jmix.bookstore.customer.Customer;
-import io.jmix.bookstore.customer.test_support.CustomerData;
-import io.jmix.bookstore.customer.test_support.CustomerMapper;
-import io.jmix.bookstore.customer.test_support.CustomerRepository;
 import io.jmix.bookstore.entity.Address;
 import io.jmix.bookstore.entity.test_support.AddressData;
 import io.jmix.bookstore.entity.test_support.AddressMapper;
+import io.jmix.bookstore.test_support.TestDataProvisioning;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.stereotype.Component;

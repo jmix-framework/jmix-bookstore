@@ -1,9 +1,11 @@
-package io.jmix.bookstore.test_support.test_data;
+package io.jmix.bookstore.order.test_support;
 
+import io.jmix.bookstore.customer.test_support.Customers;
+import io.jmix.bookstore.entity.Address;
+import io.jmix.bookstore.entity.test_support.AddressData;
+import io.jmix.bookstore.entity.test_support.AddressMapper;
 import io.jmix.bookstore.order.Order;
-import io.jmix.bookstore.order.test_support.OrderData;
-import io.jmix.bookstore.order.test_support.OrderMapper;
-import io.jmix.bookstore.order.test_support.OrderRepository;
+import io.jmix.bookstore.test_support.TestDataProvisioning;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.stereotype.Component;
@@ -15,6 +17,9 @@ import java.util.List;
 public class Orders
         implements TestDataProvisioning<OrderData, OrderData.OrderDataBuilder, Order> {
 
+    private static final String DEFAULT_SHIPPING_ADDRESS_POST_CODE = "12345";
+    private static final String DEFAULT_SHIPPING_ADDRESS_CITY = "City";
+    private static final String DEFAULT_SHIPPING_ADDRESS_STREET = "Street";
     @Autowired
     OrderRepository orderRepository;
     @Autowired
@@ -23,7 +28,8 @@ public class Orders
     Customers customers;
     @Autowired
     private OrderMapper orderMapper;
-
+    @Autowired
+    private AddressMapper addressMapper;
     public static final LocalDate DEFAULT_ORDER_DATE = LocalDate.now().plusDays(1);
 
 
@@ -32,7 +38,18 @@ public class Orders
         return OrderData.builder()
                 .orderDate(DEFAULT_ORDER_DATE)
                 .customer(customers.createDefault())
+                .shippingAddress(defaultShippingAddress())
                 .orderLines(List.of());
+    }
+
+    private Address defaultShippingAddress() {
+        return addressMapper.toEntity(
+                AddressData.builder()
+                        .city(DEFAULT_SHIPPING_ADDRESS_CITY)
+                        .street(DEFAULT_SHIPPING_ADDRESS_STREET)
+                        .postCode(DEFAULT_SHIPPING_ADDRESS_POST_CODE)
+                        .build()
+        );
     }
 
     @Override

@@ -121,22 +121,22 @@ public class OrderLineAssert extends AbstractObjectAssert<OrderLineAssert, Order
   }
 
   /**
-   * Verifies that the actual OrderLine's endsAt is equal to the given one.
-   * @param endsAt the given endsAt to compare the actual OrderLine's endsAt to.
+   * Verifies that the actual OrderLine's discount is equal to the given one.
+   * @param discount the given discount to compare the actual OrderLine's discount to.
    * @return this assertion object.
-   * @throws AssertionError - if the actual OrderLine's endsAt is not equal to the given one.
+   * @throws AssertionError - if the actual OrderLine's discount is not equal to the given one.
    */
-  public OrderLineAssert hasEndsAt(java.time.LocalDateTime endsAt) {
+  public OrderLineAssert hasDiscount(io.jmix.bookstore.entity.Money discount) {
     // check that actual OrderLine we want to make assertions on is not null.
     isNotNull();
 
     // overrides the default error message with a more explicit one
-    String assertjErrorMessage = "\nExpecting endsAt of:\n  <%s>\nto be:\n  <%s>\nbut was:\n  <%s>";
+    String assertjErrorMessage = "\nExpecting discount of:\n  <%s>\nto be:\n  <%s>\nbut was:\n  <%s>";
 
     // null safe check
-    java.time.LocalDateTime actualEndsAt = actual.getEndsAt();
-    if (!Objects.deepEquals(actualEndsAt, endsAt)) {
-      failWithMessage(assertjErrorMessage, actual, endsAt, actualEndsAt);
+    io.jmix.bookstore.entity.Money actualDiscount = actual.getDiscount();
+    if (!Objects.deepEquals(actualDiscount, discount)) {
+      failWithMessage(assertjErrorMessage, actual, discount, actualDiscount);
     }
 
     // return the current assertion for method chaining
@@ -236,22 +236,45 @@ public class OrderLineAssert extends AbstractObjectAssert<OrderLineAssert, Order
   }
 
   /**
-   * Verifies that the actual OrderLine's startsAt is equal to the given one.
-   * @param startsAt the given startsAt to compare the actual OrderLine's startsAt to.
+   * Verifies that the actual OrderLine's product is equal to the given one.
+   * @param product the given product to compare the actual OrderLine's product to.
    * @return this assertion object.
-   * @throws AssertionError - if the actual OrderLine's startsAt is not equal to the given one.
+   * @throws AssertionError - if the actual OrderLine's product is not equal to the given one.
    */
-  public OrderLineAssert hasStartsAt(java.time.LocalDateTime startsAt) {
+  public OrderLineAssert hasProduct(io.jmix.bookstore.product.Product product) {
     // check that actual OrderLine we want to make assertions on is not null.
     isNotNull();
 
     // overrides the default error message with a more explicit one
-    String assertjErrorMessage = "\nExpecting startsAt of:\n  <%s>\nto be:\n  <%s>\nbut was:\n  <%s>";
+    String assertjErrorMessage = "\nExpecting product of:\n  <%s>\nto be:\n  <%s>\nbut was:\n  <%s>";
 
     // null safe check
-    java.time.LocalDateTime actualStartsAt = actual.getStartsAt();
-    if (!Objects.deepEquals(actualStartsAt, startsAt)) {
-      failWithMessage(assertjErrorMessage, actual, startsAt, actualStartsAt);
+    io.jmix.bookstore.product.Product actualProduct = actual.getProduct();
+    if (!Objects.deepEquals(actualProduct, product)) {
+      failWithMessage(assertjErrorMessage, actual, product, actualProduct);
+    }
+
+    // return the current assertion for method chaining
+    return this;
+  }
+
+  /**
+   * Verifies that the actual OrderLine's quantity is equal to the given one.
+   * @param quantity the given quantity to compare the actual OrderLine's quantity to.
+   * @return this assertion object.
+   * @throws AssertionError - if the actual OrderLine's quantity is not equal to the given one.
+   */
+  public OrderLineAssert hasQuantity(Integer quantity) {
+    // check that actual OrderLine we want to make assertions on is not null.
+    isNotNull();
+
+    // overrides the default error message with a more explicit one
+    String assertjErrorMessage = "\nExpecting quantity of:\n  <%s>\nto be:\n  <%s>\nbut was:\n  <%s>";
+
+    // null safe check
+    Integer actualQuantity = actual.getQuantity();
+    if (!Objects.deepEquals(actualQuantity, quantity)) {
+      failWithMessage(assertjErrorMessage, actual, quantity, actualQuantity);
     }
 
     // return the current assertion for method chaining
@@ -275,6 +298,29 @@ public class OrderLineAssert extends AbstractObjectAssert<OrderLineAssert, Order
     String actualTenant = actual.getTenant();
     if (!Objects.deepEquals(actualTenant, tenant)) {
       failWithMessage(assertjErrorMessage, actual, tenant, actualTenant);
+    }
+
+    // return the current assertion for method chaining
+    return this;
+  }
+
+  /**
+   * Verifies that the actual OrderLine's unitPrice is equal to the given one.
+   * @param unitPrice the given unitPrice to compare the actual OrderLine's unitPrice to.
+   * @return this assertion object.
+   * @throws AssertionError - if the actual OrderLine's unitPrice is not equal to the given one.
+   */
+  public OrderLineAssert hasUnitPrice(io.jmix.bookstore.entity.Money unitPrice) {
+    // check that actual OrderLine we want to make assertions on is not null.
+    isNotNull();
+
+    // overrides the default error message with a more explicit one
+    String assertjErrorMessage = "\nExpecting unitPrice of:\n  <%s>\nto be:\n  <%s>\nbut was:\n  <%s>";
+
+    // null safe check
+    io.jmix.bookstore.entity.Money actualUnitPrice = actual.getUnitPrice();
+    if (!Objects.deepEquals(actualUnitPrice, unitPrice)) {
+      failWithMessage(assertjErrorMessage, actual, unitPrice, actualUnitPrice);
     }
 
     // return the current assertion for method chaining

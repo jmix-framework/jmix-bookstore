@@ -1,7 +1,7 @@
 package io.jmix.bookstore.customer;
 
 import io.jmix.bookstore.test_support.Validations;
-import io.jmix.bookstore.test_support.test_data.Customers;
+import io.jmix.bookstore.customer.test_support.Customers;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
