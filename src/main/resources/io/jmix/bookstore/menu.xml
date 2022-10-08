@@ -9,6 +9,12 @@
         <item screen="bookstore_ProductCategory.browse"
               caption="msg://io.jmix.bookstore.product.screen.productcategory/productCategoryBrowse.menu"/>
         <item screen="bookstore_Order.browse" caption="msg://io.jmix.bookstore.order.screen/orderBrowse.menu"/>
+        <item screen="bookstore_Supplier.browse"
+              caption="msg://io.jmix.bookstore.product.supplier.screen/supplierBrowse.menu"/>
+        <item screen="bookstore_Region.browse"
+              caption="msg://io.jmix.bookstore.employee.region.screen/regionBrowse.menu"/>
+        <item screen="bookstore_Territory.browse"
+              caption="msg://io.jmix.bookstore.employee.territory.screen/territoryBrowse.menu"/>
     </menu>
 
 

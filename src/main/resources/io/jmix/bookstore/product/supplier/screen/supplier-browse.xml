@@ -1,0 +1,95 @@
+<window xmlns="http://jmix.io/schema/ui/window"
+        xmlns:c="http://jmix.io/schema/ui/jpql-condition"
+        caption="msg://supplierBrowse.caption"
+        focusComponent="table">
+    <data>
+        <collection id="suppliersDc"
+                    class="io.jmix.bookstore.product.Supplier">
+            <fetchPlan extends="_base">
+                <property name="address" fetchPlan="_base"/>
+            </fetchPlan>
+            <loader id="suppliersDl">
+                <query>
+                    <![CDATA[select e from bookstore_Supplier e]]>
+                </query>
+            </loader>
+        </collection>
+        <instance id="supplierDc"
+                  class="io.jmix.bookstore.product.Supplier">
+            <fetchPlan extends="_base">
+                <property name="address" fetchPlan="_base"/>
+            </fetchPlan>
+            <loader/>
+        </instance>
+    </data>
+    <facets>
+        <dataLoadCoordinator auto="true"/>
+        <screenSettings id="settingsFacet" auto="true"/>
+    </facets>
+    <actions>
+        <action id="save" icon="OK" caption="msg:///actions.Ok" shortcut="CTRL-ENTER"/>
+        <action id="cancel" icon="CANCEL" caption="msg:///actions.Cancel" description="Esc"/>
+    </actions>
+    <dialogMode height="600" width="800"/>
+    <layout>
+        <split id="split" height="100%" orientation="horizontal" reversePosition="true" width="100%">
+            <vbox id="lookupBox" expand="table" height="100%" margin="false,true,false,false" spacing="true">
+                <filter id="filter" dataLoader="suppliersDl">
+                    <properties include=".*"/>
+                </filter>
+                <table id="table"
+                       width="100%"
+                       dataContainer="suppliersDc">
+                    <actions>
+                        <action id="create" type="create"/>
+                        <action id="edit" type="edit"/>
+                        <action id="remove" type="remove"/>
+                    </actions>
+                    <columns>
+                        <column id="name"/>
+                        <column id="address.street"/>
+                        <column id="address.postCode"/>
+                        <column id="address.city"/>
+                        <column id="contactName"/>
+                        <column id="contactTitle"/>
+                        <column id="phone"/>
+                        <column id="email"/>
+                        <column id="website"/>
+                    </columns>
+                    <simplePagination/>
+                    <buttonsPanel id="buttonsPanel"
+                                  alwaysVisible="true">
+                        <button id="createBtn" action="table.create"/>
+                        <button id="editBtn" action="table.edit"/>
+                        <button id="removeBtn" action="table.remove"/>
+                    </buttonsPanel>
+                </table>
+                <hbox id="lookupActions" spacing="true" visible="false">
+                    <button action="lookupSelectAction"/>
+                    <button action="lookupCancelAction"/>
+                </hbox>
+            </vbox>
+            <vbox id="editBox" height="100%" margin="false,false,false,true" expand="fieldGroupBox" spacing="true">
+                <scrollBox id="fieldGroupBox">
+                    <form id="form" dataContainer="supplierDc">
+                        <column width="350px">
+                            <textField id="nameField" property="name"/>
+                            <textField id="addressStreetField" property="address.street"/>
+                            <textField id="addressPostCodeField" property="address.postCode"/>
+                            <textField id="addressCityField" property="address.city"/>
+                            <textField id="contactNameField" property="contactName"/>
+                            <comboBox id="contactTitleField" property="contactTitle"/>
+                            <textField id="phoneField" property="phone"/>
+                            <textField id="emailField" property="email"/>
+                            <textField id="websiteField" property="website"/>
+                        </column>
+                    </form>
+                </scrollBox>
+                <hbox id="actionsPane" spacing="true" visible="false">
+                    <button id="saveBtn" action="save"/>
+                    <button id="cancelBtn" action="cancel"/>
+                </hbox>
+            </vbox>
+        </split>
+    </layout>
+</window>

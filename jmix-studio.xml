@@ -34,6 +34,13 @@
           <option name="url" value="jdbc:hsqldb:file:.jmix/hsqldb/bookstore" />
           <option name="user" value="sa" />
         </SavedDbProperties>
+        <SavedDbProperties>
+          <option name="databaseName" value="bookstore" />
+          <option name="dbType" value="hsqlinmem" />
+          <option name="dbmsVersion" />
+          <option name="url" value="jdbc:hsqldb:mem:bookstore" />
+          <option name="user" value="sa" />
+        </SavedDbProperties>
       </list>
     </option>
   </component>

@@ -7,6 +7,8 @@
                   class="io.jmix.bookstore.order.OrderLine">
             <fetchPlan extends="_base">
                 <property name="product" fetchPlan="_base"/>
+                <property name="unitPrice" fetchPlan="_base"/>
+                <property name="discount" fetchPlan="_base"/>
             </fetchPlan>
             <loader/>
         </instance>
@@ -33,6 +35,11 @@
             <form id="form" dataContainer="orderLineDc">
                 <column width="350px">
                     <entityPicker id="productField" property="product"/>
+                    <textField id="unitPriceAmountField" property="unitPrice.amount"/>
+                    <comboBox id="unitPriceCurrencyField" property="unitPrice.currency"/>
+                    <textField id="quantityField" property="quantity"/>
+                    <textField id="discountAmountField" property="discount.amount"/>
+                    <comboBox id="discountCurrencyField" property="discount.currency"/>
                 </column>
             </form>
         </scrollBox>
