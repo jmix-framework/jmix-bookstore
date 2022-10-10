@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://jmix.io/schema/ui/window"
+        caption="msg://supplierEdit.caption"
+        focusComponent="form">
+    <data>
+        <instance id="supplierDc"
+                  class="io.jmix.bookstore.product.Supplier">
+            <fetchPlan extends="_base">
+                <property name="address" fetchPlan="_base"/>
+            </fetchPlan>
+            <loader/>
+        </instance>
+    </data>
+    <facets>
+        <dataLoadCoordinator auto="true"/>
+        <screenSettings id="settingsFacet" auto="true"/>
+    </facets>
+    <actions>
+        <action id="windowCommitAndClose" caption="msg:///actions.Ok"
+                icon="EDITOR_OK"
+                primary="true"
+                shortcut="${COMMIT_SHORTCUT}"/>
+        <action id="windowClose"
+                caption="msg:///actions.Close"
+                icon="EDITOR_CANCEL"/>
+    </actions>
+    <dialogMode height="AUTO"
+                width="AUTO"
+                modal="true"
+                forceDialog="true"/>
+    <layout spacing="true" expand="scrollBox">
+        <scrollBox id="scrollBox" spacing="true">
+            <form id="form" dataContainer="supplierDc">
+                <column width="350px">
+                    <textField id="nameField" property="name"/>
+                    <textField id="addressStreetField" property="address.street"/>
+                    <textField id="addressPostCodeField" property="address.postCode"/>
+                    <textField id="addressCityField" property="address.city"/>
+                    <textField id="contactNameField" property="contactName"/>
+                    <comboBox id="contactTitleField" property="contactTitle"/>
+                    <textField id="phoneField" property="phone"/>
+                    <textField id="emailField" property="email"/>
+                    <textField id="websiteField" property="website"/>
+                </column>
+            </form>
+        </scrollBox>
+        <hbox id="editActions" spacing="true">
+            <button id="commitAndCloseBtn" action="windowCommitAndClose"/>
+            <button id="closeBtn" action="windowClose"/>
+        </hbox>
+    </layout>
+</window>

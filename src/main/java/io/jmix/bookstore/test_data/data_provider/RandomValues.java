@@ -8,6 +8,8 @@ import org.springframework.util.CollectionUtils;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
@@ -63,6 +65,15 @@ public class RandomValues {
             return null;
         }
         return list.get(random().nextInt(list.size()));
+    }
+
+
+    public static <T> T randomOfList(T... list) {
+        List<T> collection = Arrays.asList(list);
+        if (CollectionUtils.isEmpty(collection)) {
+            return null;
+        }
+        return collection.get(random().nextInt(collection.size()));
     }
 
     private static Random random() {
