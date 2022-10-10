@@ -26,7 +26,6 @@ import java.util.List;
 @Entity(name = "bookstore_Order")
 public class Order extends StandardTenantEntity {
     @NotNull
-    @FutureOrPresent
     @Column(name = "ORDER_DATE", nullable = false)
     private LocalDate orderDate;
 

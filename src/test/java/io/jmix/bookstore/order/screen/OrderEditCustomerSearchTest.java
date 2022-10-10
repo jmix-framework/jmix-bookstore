@@ -2,7 +2,7 @@ package io.jmix.bookstore.order.screen;
 
 import io.jmix.bookstore.customer.Customer;
 import io.jmix.bookstore.order.Order;
-import io.jmix.bookstore.test_support.DatabaseCleanup;
+import io.jmix.bookstore.test_data.DatabaseCleanup;
 import io.jmix.bookstore.customer.test_support.Customers;
 import io.jmix.bookstore.order.test_support.Orders;
 import io.jmix.bookstore.test_support.ui.FormInteractions;

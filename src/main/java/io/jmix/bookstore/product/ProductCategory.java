@@ -4,18 +4,15 @@ import io.jmix.bookstore.entity.StandardTenantEntity;
 import io.jmix.core.metamodel.annotation.InstanceName;
 import io.jmix.core.metamodel.annotation.JmixEntity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Lob;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 
 @JmixEntity
-@Table(name = "BOOKSTORE_PRODUCT_CATEGORY")
+@Table(name = "BOOKSTORE_PRODUCT_CATEGORY", uniqueConstraints = {
+        @UniqueConstraint(name = "IDX_BOOKSTORE_PRODUCT_CATEGORY_UNQ", columnNames = {"NAME"})
+})
 @Entity(name = "bookstore_ProductCategory")
 public class ProductCategory extends StandardTenantEntity {
-
-    
 
     @InstanceName
     @NotBlank
@@ -25,7 +22,6 @@ public class ProductCategory extends StandardTenantEntity {
     @Column(name = "DESCRIPTION")
     @Lob
     private String description;
-
 
 
     public String getDescription() {
