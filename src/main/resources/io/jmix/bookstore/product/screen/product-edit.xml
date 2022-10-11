@@ -45,18 +45,41 @@
                  margin="true"
                  spacing="true"
             >
-                <form id="form" dataContainer="productDc">
-                    <column width="350px">
-                        <textField id="nameField" property="name"/>
-                        <entityComboBox id="categoryField" property="category" optionsContainer="productCategoriesDc"/>
-                        <textField id="unitPriceAmountField" property="unitPrice.amount"/>
-                        <comboBox id="unitPriceCurrencyField" property="unitPrice.currency"/>
-                        <textField id="unitsInStockField" property="unitsInStock"/>
-                        <textField id="unitsOnOrderField" property="unitsOnOrder"/>
-                        <checkBox id="activeField" property="active"/>
-                        <entityPicker id="supplierField" property="supplier"/>
-                    </column>
-                </form>
+                <hbox spacing="true" height="350px" width="100%">
+
+                    <groupBox caption="msg://productInformation"
+                              spacing="true"
+                              height="100%"
+                              width="100%">
+                        <form id="form" dataContainer="productDc" captionPosition="TOP">
+                            <column width="350px">
+                                <textField id="nameField" property="name"/>
+                                <textField id="unitPriceAmountField" property="unitPrice.amount"/>
+                            </column>
+                            <column width="350px">
+                                <entityComboBox id="categoryField" property="category" optionsContainer="productCategoriesDc"/>
+                                <comboBox id="unitPriceCurrencyField" property="unitPrice.currency"/>
+                            </column>
+                        </form>
+                    </groupBox>
+
+                    <groupBox caption="msg://inventoryInformation"
+                              spacing="true"
+                              height="100%"
+                              width="100%">
+                        <form id="inventoryInformationForm" dataContainer="productDc" captionPosition="TOP">
+                            <column width="350px">
+                                <textField id="unitsInStockField" property="unitsInStock"/>
+                                <entityPicker id="supplierField" property="supplier" />
+                                <checkBox id="activeField" property="active"/>
+                            </column>
+                            <column width="350px">
+                                <textField id="unitsOnOrderField" property="unitsOnOrder"/>
+                            </column>
+                        </form>
+                    </groupBox>
+                </hbox>
+
             </tab>
             <tab id="descriptionTab"
                  caption="msg://io.jmix.bookstore.product/Product.description"

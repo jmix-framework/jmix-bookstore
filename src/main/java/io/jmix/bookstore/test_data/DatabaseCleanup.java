@@ -1,5 +1,12 @@
 package io.jmix.bookstore.test_data;
 
+import io.jmix.bookstore.customer.Customer;
+import io.jmix.bookstore.employee.Region;
+import io.jmix.bookstore.employee.Territory;
+import io.jmix.bookstore.order.Order;
+import io.jmix.bookstore.order.OrderLine;
+import io.jmix.bookstore.product.Product;
+import io.jmix.bookstore.product.ProductCategory;
 import io.jmix.core.DataManager;
 import io.jmix.core.Metadata;
 import io.jmix.core.MetadataTools;
@@ -34,8 +41,30 @@ public class DatabaseCleanup {
 
         JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
 
+        performDeletion(entityClass, jdbcTemplate);
+    }
+
+    private <T> void performDeletion(Class<T> entityClass, JdbcTemplate jdbcTemplate) {
         String tableName = metadataTools.getDatabaseTable(metadata.getClass(entityClass));
 
         jdbcTemplate.update("DELETE FROM " + tableName);
+    }
+
+    public void removeAllEntities() {
+
+        JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
+
+        performDeletion(Territory.class, jdbcTemplate);
+        performDeletion(Region.class, jdbcTemplate);
+
+        performDeletion(OrderLine.class, jdbcTemplate);
+        performDeletion(Order.class, jdbcTemplate);
+
+        performDeletion(Product.class, jdbcTemplate);
+        performDeletion(Customer.class, jdbcTemplate);
+
+
+        performDeletion(ProductCategory.class, jdbcTemplate);
+
     }
 }

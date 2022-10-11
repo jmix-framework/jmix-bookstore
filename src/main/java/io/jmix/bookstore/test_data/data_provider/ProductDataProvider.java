@@ -17,8 +17,7 @@ import java.util.Random;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static io.jmix.bookstore.test_data.data_provider.RandomValues.randomEnum;
-import static io.jmix.bookstore.test_data.data_provider.RandomValues.randomOfList;
+import static io.jmix.bookstore.test_data.data_provider.RandomValues.*;
 
 @Component("bookstore_ProductDataProvider")
 public class ProductDataProvider implements TestDataProvider<Product, ProductDataProvider.Dependencies> {
@@ -53,6 +52,14 @@ public class ProductDataProvider implements TestDataProvider<Product, ProductDat
         product.setName(book.title());
         product.setCategory(randomOfList(productCategories));
         product.setUnitPrice(randomPrice());
+
+        int unitsInStock = randomPositiveNumber(200);
+        product.setUnitsInStock(unitsInStock);
+
+        if (unitsInStock < 30) {
+            product.setUnitsInStock(randomPositiveNumber(100, 400));
+        }
+
         return product;
     }
 

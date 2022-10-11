@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.stereotype.Component;
 
+import java.util.UUID;
+
 @Component
 public class ProductCategories
         implements TestDataProvisioning<ProductCategoryData, ProductCategoryData.ProductCategoryDataBuilder, ProductCategory> {
@@ -20,7 +22,7 @@ public class ProductCategories
     @Override
     public ProductCategoryData.ProductCategoryDataBuilder defaultData() {
         return ProductCategoryData.builder()
-                .name(DEFAULT_NAME);
+                .name(DEFAULT_NAME + "-" + UUID.randomUUID().toString());
     }
 
     @Override

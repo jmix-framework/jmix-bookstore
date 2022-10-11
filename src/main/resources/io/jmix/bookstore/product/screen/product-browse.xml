@@ -6,10 +6,10 @@
     <data readOnly="true">
         <collection id="productsDc"
                     class="io.jmix.bookstore.product.Product">
-            <fetchPlan extends="_base">
-                <property name="category"/>
-                <property name="unitPrice" fetchPlan="_base"/>
-                <property name="supplier" fetchPlan="_base"/>
+            <fetchPlan extends="_instance_name">
+                <property name="description"/>
+                <property name="category" fetchPlan="_base"/>
+                <property name="active"/>
             </fetchPlan>
             <loader id="productsDl">
                 <query>
@@ -39,22 +39,18 @@
                 dataLoader="productsDl">
             <properties include=".*"/>
         </filter>
-        <groupTable id="productsTable"
-                    width="100%"
-                    dataContainer="productsDc">
+        <dataGrid id="productsTable"
+                  width="100%"
+                  dataContainer="productsDc">
             <actions>
                 <action id="create" type="create"/>
                 <action id="edit" type="edit"/>
                 <action id="remove" type="remove"/>
             </actions>
             <columns>
-                <group>
-                    <column id="category"/>
-                </group>
-                <column id="name"/>
-                <column id="description"/>
-                <column id="active"/>
-                <column id="supplier"/>
+                <column property="name" id="name"/>
+                <column property="category" id="category"/>
+                <column property="active" id="active"/>
             </columns>
             <simplePagination/>
             <buttonsPanel id="buttonsPanel"
@@ -63,7 +59,7 @@
                 <button id="editBtn" action="productsTable.edit"/>
                 <button id="removeBtn" action="productsTable.remove"/>
             </buttonsPanel>
-        </groupTable>
+        </dataGrid>
         <hbox id="lookupActions" spacing="true" visible="false">
             <button action="lookupSelectAction"/>
             <button action="lookupCancelAction"/>

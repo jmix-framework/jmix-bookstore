@@ -4,6 +4,7 @@ import io.jmix.bookstore.product.ProductCategory;
 import io.jmix.bookstore.product.screen.productcategory.ProductCategoryBrowse;
 import io.jmix.bookstore.product.screen.productcategory.ProductCategoryEdit;
 import io.jmix.bookstore.product.test_support.ProductCategories;
+import io.jmix.bookstore.test_data.DatabaseCleanup;
 import io.jmix.bookstore.test_support.ui.ScreenInteractions;
 import io.jmix.bookstore.test_support.ui.TableInteractions;
 import io.jmix.bookstore.test_support.ui.WebIntegrationTest;
@@ -20,6 +21,8 @@ class ProductCategoryBrowseTest extends WebIntegrationTest {
 
     @Autowired
     DataManager dataManager;
+    @Autowired
+    DatabaseCleanup databaseCleanup;
 
     private ProductCategory productCategory;
     @Autowired
@@ -28,6 +31,8 @@ class ProductCategoryBrowseTest extends WebIntegrationTest {
 
     @BeforeEach
     void setUp() {
+
+        databaseCleanup.removeAllEntities();
         productCategory = productCategories.saveDefault();
     }
 

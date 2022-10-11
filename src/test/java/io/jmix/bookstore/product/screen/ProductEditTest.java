@@ -41,8 +41,7 @@ class ProductEditTest extends WebIntegrationTest {
 
     @BeforeEach
     void setUp() {
-        databaseCleanup.removeAllEntities(ProductCategory.class);
-        databaseCleanup.removeAllEntities(Product.class);
+        databaseCleanup.removeAllEntities();
     }
 
     @Nested
