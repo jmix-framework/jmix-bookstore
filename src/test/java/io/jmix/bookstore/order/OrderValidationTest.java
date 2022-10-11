@@ -45,21 +45,6 @@ class OrderValidationTest {
     }
 
     @Test
-    void given_orderWithOrderDateInThePast_when_validate_then_oneViolationOccurs() {
-
-        // given
-        Order order = orders.create(
-                orders.defaultData()
-                        .orderDate(YESTERDAY)
-                        .build()
-        );
-
-        // expect
-        validations.assertExactlyOneViolationWith(order, "orderDate", "FutureOrPresent");
-    }
-
-
-    @Test
     void given_orderWithoutCustomer_when_validate_then_oneViolationOccurs() {
 
         // given

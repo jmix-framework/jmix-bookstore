@@ -40,7 +40,7 @@ class OrderEditCustomerSearchTest extends WebIntegrationTest {
     @BeforeEach
     void setUp() {
 
-        databaseCleanup.removeAllEntities(Customer.class);
+        databaseCleanup.removeAllEntities();
 
 
         mrMiyagi = customers.save(

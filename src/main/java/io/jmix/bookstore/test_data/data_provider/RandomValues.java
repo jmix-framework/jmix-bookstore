@@ -33,6 +33,10 @@ public class RandomValues {
         return new Faker().number().numberBetween(1, upUntil);
     }
 
+    public static int randomPositiveNumber(int from, int until) {
+        return new Faker().number().numberBetween(from, until);
+    }
+
     public static LocalDate randomPastLocalDate(int upUntilPastInYears) {
         return randomPastLocalDateTime(upUntilPastInYears).toLocalDate();
     }

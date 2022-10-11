@@ -34,7 +34,7 @@ class CustomerEditTest extends WebIntegrationTest {
 
     @BeforeEach
     void setUp() {
-        databaseCleanup.removeAllEntities(Customer.class);
+        databaseCleanup.removeAllEntities();
     }
 
     @Test

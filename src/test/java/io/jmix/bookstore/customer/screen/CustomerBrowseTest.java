@@ -2,6 +2,7 @@ package io.jmix.bookstore.customer.screen;
 
 import io.jmix.bookstore.customer.Customer;
 import io.jmix.bookstore.customer.test_support.Customers;
+import io.jmix.bookstore.test_data.DatabaseCleanup;
 import io.jmix.bookstore.test_support.ui.ScreenInteractions;
 import io.jmix.bookstore.test_support.ui.TableInteractions;
 import io.jmix.bookstore.test_support.ui.WebIntegrationTest;
@@ -18,6 +19,8 @@ class CustomerBrowseTest extends WebIntegrationTest {
 
     @Autowired
     DataManager dataManager;
+    @Autowired
+    DatabaseCleanup databaseCleanup;
 
     private Customer customer;
     @Autowired
@@ -26,6 +29,8 @@ class CustomerBrowseTest extends WebIntegrationTest {
 
     @BeforeEach
     void setUp() {
+
+        databaseCleanup.removeAllEntities();
         customer = customers.saveDefault();
     }
 
