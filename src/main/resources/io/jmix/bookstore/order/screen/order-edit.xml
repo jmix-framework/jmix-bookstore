@@ -75,21 +75,21 @@
                 </groupBox>
             </hbox>
             <groupBox id="orderLinesBox" caption="msg://io.jmix.bookstore.order/Order.orderLines">
-                <table id="orderLinesTable" dataContainer="orderLinesDc" width="100%" height="200px">
+                <dataGrid id="orderLinesTable" dataContainer="orderLinesDc" width="100%" height="200px">
                     <actions>
                         <action id="create" type="create"/>
                         <action id="edit" type="edit"/>
                         <action id="remove" type="remove"/>
                     </actions>
                     <columns>
-                        <column id="product"/>
+                        <column property="product" id="product"/>
                     </columns>
                     <buttonsPanel>
                         <button action="orderLinesTable.create"/>
                         <button action="orderLinesTable.edit"/>
                         <button action="orderLinesTable.remove"/>
                     </buttonsPanel>
-                </table>
+                </dataGrid>
             </groupBox>
         </scrollBox>
         <hbox id="editActions" spacing="true">

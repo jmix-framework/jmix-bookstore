@@ -6,7 +6,7 @@ import io.jmix.bookstore.product.productcategory.screen.ProductCategoryEdit;
 import io.jmix.bookstore.product.test_support.ProductCategories;
 import io.jmix.bookstore.test_data.DatabaseCleanup;
 import io.jmix.bookstore.test_support.ui.ScreenInteractions;
-import io.jmix.bookstore.test_support.ui.TableInteractions;
+import io.jmix.bookstore.test_support.ui.DataGridInteractions;
 import io.jmix.bookstore.test_support.ui.WebIntegrationTest;
 import io.jmix.core.DataManager;
 import io.jmix.ui.Screens;
@@ -27,42 +27,39 @@ class ProductCategoryBrowseTest extends WebIntegrationTest {
     private ProductCategory productCategory;
     @Autowired
     private ProductCategories productCategories;
+    private ScreenInteractions screenInteractions;
+    private DataGridInteractions<ProductCategory> productCategoryDataGrid;
 
 
     @BeforeEach
-    void setUp() {
+    void setUp(Screens screens) {
 
         databaseCleanup.removeAllEntities();
         productCategory = productCategories.saveDefault();
+
+
+        screenInteractions = ScreenInteractions.forBrowse(screens);
+        ProductCategoryBrowse productCategoryBrowse = screenInteractions.open(ProductCategoryBrowse.class);
+        productCategoryDataGrid = productCategoryDataGrid(productCategoryBrowse);
     }
 
     @Test
-    void given_oneProductCategoryExists_when_openProductCategoryBrowse_then_tableContainsTheProductCategory(Screens screens) {
-
-        // given:
-        ScreenInteractions screenInteractions = ScreenInteractions.forBrowse(screens);
-        ProductCategoryBrowse productCategoryBrowse = screenInteractions.open(ProductCategoryBrowse.class);
-        TableInteractions<ProductCategory> productCategoryTable = productCategoryTable(productCategoryBrowse);
+    void given_oneProductCategoryExists_when_openProductCategoryBrowse_then_tableContainsTheProductCategory() {
 
         // expect:
-        assertThat(productCategoryTable.firstItem())
+        assertThat(productCategoryDataGrid.firstItem())
                 .isEqualTo(productCategory);
     }
 
 
     @Test
-    void given_oneProductCategoryExists_when_editProductCategory_then_editProductCategoryEditorIsShown(Screens screens) {
+    void given_oneProductCategoryExists_when_editProductCategory_then_editProductCategoryEditorIsShown() {
 
         // given:
-        ScreenInteractions screenInteractions = ScreenInteractions.forBrowse(screens);
-        ProductCategoryBrowse productCategoryBrowse = screenInteractions.open(ProductCategoryBrowse.class);
-        TableInteractions<ProductCategory> productCategoryTable = productCategoryTable(productCategoryBrowse);
+        ProductCategory firstProductCategory = productCategoryDataGrid.firstItem();
 
         // and:
-        ProductCategory firstProductCategory = productCategoryTable.firstItem();
-
-        // and:
-        productCategoryTable.edit(firstProductCategory);
+        productCategoryDataGrid.edit(firstProductCategory);
 
         // then:
         ProductCategoryEdit productCategoryEdit = screenInteractions.findOpenScreen(ProductCategoryEdit.class);
@@ -72,7 +69,7 @@ class ProductCategoryBrowseTest extends WebIntegrationTest {
     }
 
     @NotNull
-    private TableInteractions<ProductCategory> productCategoryTable(ProductCategoryBrowse productCategoryBrowse) {
-        return TableInteractions.of(productCategoryBrowse, ProductCategory.class, "productCategoriesTable");
+    private DataGridInteractions<ProductCategory> productCategoryDataGrid(ProductCategoryBrowse productCategoryBrowse) {
+        return DataGridInteractions.of(productCategoryBrowse, ProductCategory.class, "productCategoriesTable");
     }
 }
