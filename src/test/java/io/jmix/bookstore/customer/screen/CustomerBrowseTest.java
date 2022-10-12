@@ -4,7 +4,7 @@ import io.jmix.bookstore.customer.Customer;
 import io.jmix.bookstore.customer.test_support.Customers;
 import io.jmix.bookstore.test_data.DatabaseCleanup;
 import io.jmix.bookstore.test_support.ui.ScreenInteractions;
-import io.jmix.bookstore.test_support.ui.TableInteractions;
+import io.jmix.bookstore.test_support.ui.DataGridInteractions;
 import io.jmix.bookstore.test_support.ui.WebIntegrationTest;
 import io.jmix.core.DataManager;
 import io.jmix.ui.Screens;
@@ -25,25 +25,26 @@ class CustomerBrowseTest extends WebIntegrationTest {
     private Customer customer;
     @Autowired
     private Customers customers;
+    private DataGridInteractions<Customer> customerDataGrid;
+    private ScreenInteractions screenInteractions;
 
 
     @BeforeEach
-    void setUp() {
+    void setUp(Screens screens) {
 
         databaseCleanup.removeAllEntities();
         customer = customers.saveDefault();
+
+        screenInteractions = ScreenInteractions.forBrowse(screens);
+        CustomerBrowse customerBrowse = screenInteractions.open(CustomerBrowse.class);
+        customerDataGrid = customerDataGrid(customerBrowse);
     }
 
     @Test
-    void given_oneCustomerExists_when_openCustomerBrowse_then_tableContainsTheCustomer(Screens screens) {
-
-        // given:
-        ScreenInteractions screenInteractions = ScreenInteractions.forBrowse(screens);
-        CustomerBrowse customerBrowse = screenInteractions.open(CustomerBrowse.class);
-        TableInteractions<Customer> customerTable = customerTable(customerBrowse);
+    void given_oneCustomerExists_when_openCustomerBrowse_then_dataGridContainsTheCustomer() {
 
         // expect:
-        assertThat(customerTable.firstItem())
+        assertThat(customerDataGrid.firstItem())
                 .isEqualTo(customer);
     }
 
@@ -52,15 +53,10 @@ class CustomerBrowseTest extends WebIntegrationTest {
     void given_oneCustomerExists_when_editCustomer_then_editCustomerEditorIsShown(Screens screens) {
 
         // given:
-        ScreenInteractions screenInteractions = ScreenInteractions.forBrowse(screens);
-        CustomerBrowse customerBrowse = screenInteractions.open(CustomerBrowse.class);
-        TableInteractions<Customer> customerTable = customerTable(customerBrowse);
+        Customer firstCustomer = customerDataGrid.firstItem();
 
         // and:
-        Customer firstCustomer = customerTable.firstItem();
-
-        // and:
-        customerTable.edit(firstCustomer);
+        customerDataGrid.edit(firstCustomer);
 
         // then:
         CustomerEdit customerEdit = screenInteractions.findOpenScreen(CustomerEdit.class);
@@ -70,7 +66,7 @@ class CustomerBrowseTest extends WebIntegrationTest {
     }
 
     @NotNull
-    private TableInteractions<Customer> customerTable(CustomerBrowse customerBrowse) {
-        return TableInteractions.of(customerBrowse, Customer.class, "customersTable");
+    private DataGridInteractions<Customer> customerDataGrid(CustomerBrowse customerBrowse) {
+        return DataGridInteractions.of(customerBrowse, Customer.class, "customersTable");
     }
 }
