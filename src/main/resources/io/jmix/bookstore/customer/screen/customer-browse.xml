@@ -37,7 +37,7 @@
                 dataLoader="customersDl">
             <properties include=".*"/>
         </filter>
-        <table id="customersTable"
+        <dataGrid id="customersTable"
                width="100%"
                dataContainer="customersDc">
             <actions>
@@ -46,9 +46,9 @@
                 <action id="remove" type="remove"/>
             </actions>
             <columns>
-                <column id="firstName"/>
-                <column id="lastName"/>
-                <column id="email"/>
+                <column property="firstName" id="firstName"/>
+                <column property="lastName" id="lastName"/>
+                <column property="email" id="email"/>
             </columns>
             <simplePagination/>
             <buttonsPanel id="buttonsPanel"
@@ -57,7 +57,7 @@
                 <button id="editBtn" action="customersTable.edit"/>
                 <button id="removeBtn" action="customersTable.remove"/>
             </buttonsPanel>
-        </table>
+        </dataGrid>
         <hbox id="lookupActions" spacing="true" visible="false">
             <button action="lookupSelectAction"/>
             <button action="lookupCancelAction"/>

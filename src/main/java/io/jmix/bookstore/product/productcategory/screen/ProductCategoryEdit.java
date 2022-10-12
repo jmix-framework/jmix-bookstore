@@ -1,4 +1,4 @@
-package io.jmix.bookstore.product.screen.productcategory;
+package io.jmix.bookstore.product.productcategory.screen;
 
 import io.jmix.bookstore.product.ProductCategory;
 import io.jmix.ui.screen.EditedEntityContainer;

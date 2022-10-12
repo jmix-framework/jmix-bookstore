@@ -35,7 +35,7 @@
                 dataLoader="productCategoriesDl">
             <properties include=".*"/>
         </filter>
-        <table id="productCategoriesTable"
+        <dataGrid id="productCategoriesTable"
                width="100%"
                dataContainer="productCategoriesDc">
             <actions>
@@ -44,8 +44,8 @@
                 <action id="remove" type="remove"/>
             </actions>
             <columns>
-                <column id="name"/>
-                <column id="description"/>
+                <column property="name" id="name"/>
+                <column property="description" id="description"/>
             </columns>
             <simplePagination/>
             <buttonsPanel id="buttonsPanel"
@@ -54,7 +54,7 @@
                 <button id="editBtn" action="productCategoriesTable.edit"/>
                 <button id="removeBtn" action="productCategoriesTable.remove"/>
             </buttonsPanel>
-        </table>
+        </dataGrid>
         <hbox id="lookupActions" spacing="true" visible="false">
             <button action="lookupSelectAction"/>
             <button action="lookupCancelAction"/>
