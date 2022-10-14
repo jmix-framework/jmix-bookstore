@@ -21,7 +21,7 @@ assertjGenerator {
 apply plugin: 'org.springframework.boot'
 
 jmix {
-    bomVersion = '1.3.3'
+    bomVersion = '1.3.4'
     projectId = 'bookstore'
 }
 
@@ -47,7 +47,6 @@ dependencies {
     implementation 'io.jmix.data:jmix-eclipselink-starter'
     implementation 'io.jmix.ui:jmix-ui-starter'
     implementation 'io.jmix.ui:jmix-ui-data-starter'
-    implementation 'io.jmix.ui:jmix-ui-themes-compiled'
     implementation 'io.jmix.ui:jmix-ui-widgets-compiled'
     implementation 'io.jmix.security:jmix-security-starter'
     implementation 'io.jmix.security:jmix-security-ui-starter'
@@ -81,6 +80,8 @@ dependencies {
     testAnnotationProcessor 'org.mapstruct:mapstruct-processor:1.5.2.Final'
 
     testImplementation 'io.jmix.ui:jmix-ui-test-assist'
+    themes 'io.jmix.ui:jmix-ui-themes'
+    implementation 'io.jmix.ui:jmix-ui-themes'
 }
 
 test {

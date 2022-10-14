@@ -31,10 +31,6 @@
     <dialogMode height="600"
                 width="800"/>
     <layout expand="ordersTable" spacing="true">
-        <filter id="filter"
-                dataLoader="ordersDl">
-            <properties include=".*"/>
-        </filter>
         <groupTable id="ordersTable"
                     width="100%"
                     dataContainer="ordersDc">

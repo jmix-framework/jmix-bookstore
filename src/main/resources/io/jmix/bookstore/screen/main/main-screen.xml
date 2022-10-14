@@ -9,28 +9,19 @@
                            stylename="jmix-drawer-header"
                            width="100%">
                     <image id="logoImage"
-                           stylename="app-icon"
+                           width="200px"
                            scaleMode="SCALE_DOWN">
                         <resource>
-                            <theme path="branding/app-icon-menu.svg"/>
+                            <theme path="branding/menu-logo.png"/>
                         </resource>
                     </image>
-                    <label id="appTitleLabel"
-                           stylename="app-title"
-                           value="msg://application.logoLabel"/>
                 </cssLayout>
                 <sideMenu id="sideMenu"
                           width="100%"
                           stylename="jmix-drawer-content"/>
-                <timeZoneIndicator id="timeZoneIndicator"
-                                   align="MIDDLE_CENTER"/>
                 <cssLayout id="controlBox"
                            stylename="jmix-drawer-footer"
                            width="100%">
-                    <button id="collapseDrawerButton"
-                            icon="CHEVRON_LEFT"
-                            stylename="jmix-drawer-collapse-button"
-                            description="msg://sideMenuCollapse"/>
                     <userIndicator id="userIndicator"
                                    align="MIDDLE_CENTER"/>
                     <logoutButton id="logoutButton"
