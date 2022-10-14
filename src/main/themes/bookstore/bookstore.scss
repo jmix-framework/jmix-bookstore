@@ -8,6 +8,7 @@
   --main-menu-purple: #0A2044;
   --main-background: #F1F3F9;
   --turquoise: #4DD0E1;
+  --dark-turquoise: #248491;
   --light-turquoise: #6aecff;
 
   --border-color: var(--turquoise);
@@ -27,6 +28,7 @@
   --primary-color-shade-2: var(--light-turquoise);
 
   /* Button */
+  --button-default-color: #FFFFFF;
   --button-secondary-color: #E5E5E5;
 
 
@@ -55,7 +57,9 @@
   --maintabsheet-tabcontainer-background-color: #E5E5E5;
 
   /* Notification */
-  --notification-system-background-color: #E5E5E5;
+  --notification-system-background-color: var(--dark-turquoise);
+  --notification-system-caption-color: #FFFFFF;
+  --notification-system-description-color: #FFFFFF;
 
   /* SideMenu */
   --drawer-background-color: var(--main-menu-purple);
