@@ -106,37 +106,37 @@ public class TestDataCreation {
     }
 
     private List<Order> generateOrders(int amount, List<Customer> customers, List<Product> products) {
-        log.info("Trying to create up to {} Orders", amount);
+        log.info("Trying to create a random amount of {} Orders", amount);
         return orderDataProvider.create(amount, new OrderDataProvider.Dependencies(customers, products));
     }
 
     private List<Customer> generateCustomers(int amount) {
-        log.info("Trying to create up to {} Customers", amount);
+        log.info("Trying to create a random amount of {} Customers", amount);
         return customerDataProvider.create(amount, new CustomerDataProvider.Dependencies());
     }
 
     private List<Territory> generateTerritories(int amount, List<Region> regions) {
-        log.info("Trying to create up to {} Territories", amount);
+        log.info("Trying to create a random amount of {} Territories", amount);
         return territoryDataProvider.create(amount, new TerritoryDataProvider.Dependencies(regions));
     }
 
     private List<Region> generateRegions(int amount) {
-        log.info("Trying to create up to {} Regions", amount);
+        log.info("Trying to create a random amount of {} Regions", amount);
         return regionDataProvider.create(amount, new RegionDataProvider.Dependencies());
     }
 
     private List<Supplier> generateSuppliers(int amount) {
-        log.info("Trying to create up to {} Suppliers", amount);
+        log.info("Trying to create a random amount of {} Suppliers", amount);
         return supplierDataProvider.create(amount, new SupplierDataProvider.Dependencies());
     }
 
     public List<Product> generateProducts(int amount, List<ProductCategory> productCategories) {
-        log.info("Trying to create up to {} Products", amount);
+        log.info("Trying to create a random amount of {} Products", amount);
         return productDataProvider.create(amount, new ProductDataProvider.Dependencies(productCategories));
     }
 
     public List<ProductCategory> generateProductCategories(int amount) {
-        log.info("Trying to create up to {} Product Categories", amount);
+        log.info("Trying to create a random amount of {} Product Categories", amount);
         return productCategoryDataProvider.create(amount, new ProductCategoryDataProvider.Dependencies());
     }
 

@@ -16,10 +16,15 @@
                   spacing="true"
                   stylename="jmix-login-panel"
                   width="AUTO">
-                <label id="welcomeLabel"
-                       align="MIDDLE_CENTER"
-                       stylename="jmix-login-caption"
-                       value="msg://welcomeLabel"/>
+                <image id="logoImage"
+                       align="TOP_CENTER"
+                       width="300px"
+                       stylename="login-logo"
+                       scaleMode="SCALE_DOWN">
+                    <resource>
+                        <theme path="branding/logo-login.png"/>
+                    </resource>
+                </image>
 
                 <vbox id="loginForm"
                       spacing="true"

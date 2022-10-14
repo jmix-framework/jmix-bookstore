@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <menu-config xmlns="http://jmix.io/schema/ui/menu">
 
-    <menu id="application" caption="msg://io.jmix.bookstore/menu.application" insertBefore="administration">
-        <item screen="bookstore_Order.browse" caption="msg://io.jmix.bookstore.order.screen/orderBrowse.menu"/>
-        <item screen="bookstore_Customer.browse" caption="msg://io.jmix.bookstore.customer.screen/customerBrowse.menu"/>
-        <item screen="bookstore_Product.browse" caption="msg://io.jmix.bookstore.product.screen/productBrowse.menu"/>
-    </menu>
+
+    <item screen="bookstore_Order.browse" caption="msg://io.jmix.bookstore.order.screen/orderBrowse.menu" icon="SHOPPING_CART" insertBefore="bpm"/>
+    <item screen="bookstore_Customer.browse" caption="msg://io.jmix.bookstore.customer.screen/customerBrowse.menu" icon="USER_CIRCLE" insertBefore="bpm"/>
+    <item screen="bookstore_Product.browse" caption="msg://io.jmix.bookstore.product.screen/productBrowse.menu" icon="BOOK" insertBefore="bpm"/>
     <menu id="masterdata" caption="msg://io.jmix.bookstore/menu.masterdata" insertBefore="administration">
         <item screen="bookstore_ProductCategory.browse"
               caption="msg://io.jmix.bookstore.product.productcategory.screen/productCategoryBrowse.menu"/>

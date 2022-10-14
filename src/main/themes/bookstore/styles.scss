@@ -1,0 +1,79 @@
+@import "bookstore-defaults";
+@import "addons";
+@import "bookstore";
+
+.bookstore {
+  @include addons;
+  @include bookstore;
+
+
+  /****************************************************************************************************/
+  // Filter Component
+  /****************************************************************************************************/
+
+  .jmix-filter {
+    background: #FFFFFF;
+    border: none;
+    color: #FFFFFF;
+  }
+
+  /****************************************************************************************************/
+  // Login Screen
+  /****************************************************************************************************/
+
+  .jmix-main-singlewindow {
+    background-color: var(--main-background);
+  }
+
+  .jmix-login-main-layout {
+    background: var(--dark-purple);
+  }
+
+  .jmix-login-panel {
+    border: none;
+    background: white;
+  }
+
+  .login-logo {
+    margin-top: -250px;
+    margin-bottom: 125px;
+  }
+
+
+
+  /****************************************************************************************************/
+  // Side Menu
+  /****************************************************************************************************/
+
+  .jmix-drawer .jmix-drawer-header {
+    margin-bottom: 30px;
+    margin-top: 20px;
+  }
+
+  // hide button to close a screen in the SINGLE app window mode (jmix.ui.app-window-mode=SINGLE)
+  .v-button-jmix-closetab-button {
+    display: none;
+  }
+
+
+
+
+  .jmix-groupbox {
+    background: #FFFFFF;
+    border: none;
+  }
+
+
+
+  /****************************************************************************************************/
+  // System Notifications
+  /****************************************************************************************************/
+
+  .v-Notification.system {
+
+    .v-Notification-caption, .v-Notification-description {
+
+      color: #FFFFFF !important;
+    }
+  }
+}
