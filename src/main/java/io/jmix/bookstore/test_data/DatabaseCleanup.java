@@ -7,6 +7,10 @@ import io.jmix.bookstore.order.Order;
 import io.jmix.bookstore.order.OrderLine;
 import io.jmix.bookstore.product.Product;
 import io.jmix.bookstore.product.ProductCategory;
+import io.jmix.bookstore.product.supplier.Supplier;
+import io.jmix.bookstore.product.supplier.SupplierOrder;
+import io.jmix.bookstore.product.supplier.SupplierOrderLine;
+import io.jmix.bookstore.product.supplier.SupplierOrderRequest;
 import io.jmix.core.DataManager;
 import io.jmix.core.Metadata;
 import io.jmix.core.MetadataTools;
@@ -60,6 +64,11 @@ public class DatabaseCleanup {
         performDeletion(OrderLine.class, jdbcTemplate);
         performDeletion(Order.class, jdbcTemplate);
 
+        performDeletion(SupplierOrderRequest.class, jdbcTemplate);
+        performDeletion(SupplierOrderLine.class, jdbcTemplate);
+        performDeletion(SupplierOrder.class, jdbcTemplate);
+
+        performDeletion(Supplier.class, jdbcTemplate);
         performDeletion(Product.class, jdbcTemplate);
         performDeletion(Customer.class, jdbcTemplate);
 
