@@ -2,7 +2,7 @@ package io.jmix.bookstore.employee;
 
 import io.jmix.bookstore.entity.Address;
 import io.jmix.bookstore.entity.StandardEntity;
-import io.jmix.bookstore.product.supplier.Title;
+import io.jmix.bookstore.entity.Title;
 import io.jmix.core.entity.annotation.EmbeddedParameters;
 import io.jmix.core.metamodel.annotation.InstanceName;
 import io.jmix.core.metamodel.annotation.JmixEntity;

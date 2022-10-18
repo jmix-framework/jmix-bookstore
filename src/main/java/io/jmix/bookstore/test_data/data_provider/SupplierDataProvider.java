@@ -1,6 +1,6 @@
 package io.jmix.bookstore.test_data.data_provider;
 
-import io.jmix.bookstore.product.supplier.Title;
+import io.jmix.bookstore.entity.Title;
 import io.jmix.bookstore.product.supplier.Supplier;
 import io.jmix.core.DataManager;
 import io.jmix.core.SaveContext;
