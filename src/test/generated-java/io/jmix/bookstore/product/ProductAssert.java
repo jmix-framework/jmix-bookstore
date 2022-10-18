@@ -287,7 +287,7 @@ public class ProductAssert extends AbstractObjectAssert<ProductAssert, Product> 
    * @return this assertion object.
    * @throws AssertionError - if the actual Product's supplier is not equal to the given one.
    */
-  public ProductAssert hasSupplier(Supplier supplier) {
+  public ProductAssert hasSupplier(io.jmix.bookstore.product.supplier.Supplier supplier) {
     // check that actual Product we want to make assertions on is not null.
     isNotNull();
 
@@ -295,7 +295,7 @@ public class ProductAssert extends AbstractObjectAssert<ProductAssert, Product> 
     String assertjErrorMessage = "\nExpecting supplier of:\n  <%s>\nto be:\n  <%s>\nbut was:\n  <%s>";
 
     // null safe check
-    Supplier actualSupplier = actual.getSupplier();
+    io.jmix.bookstore.product.supplier.Supplier actualSupplier = actual.getSupplier();
     if (!Objects.deepEquals(actualSupplier, supplier)) {
       failWithMessage(assertjErrorMessage, actual, supplier, actualSupplier);
     }
@@ -333,7 +333,7 @@ public class ProductAssert extends AbstractObjectAssert<ProductAssert, Product> 
    * @return this assertion object.
    * @throws AssertionError - if the actual Product's unitPrice is not equal to the given one.
    */
-  public ProductAssert hasUnitPrice(io.jmix.bookstore.entity.Money unitPrice) {
+  public ProductAssert hasUnitPrice(io.jmix.bookstore.product.supplier.Money unitPrice) {
     // check that actual Product we want to make assertions on is not null.
     isNotNull();
 
@@ -341,7 +341,7 @@ public class ProductAssert extends AbstractObjectAssert<ProductAssert, Product> 
     String assertjErrorMessage = "\nExpecting unitPrice of:\n  <%s>\nto be:\n  <%s>\nbut was:\n  <%s>";
 
     // null safe check
-    io.jmix.bookstore.entity.Money actualUnitPrice = actual.getUnitPrice();
+    io.jmix.bookstore.product.supplier.Money actualUnitPrice = actual.getUnitPrice();
     if (!Objects.deepEquals(actualUnitPrice, unitPrice)) {
       failWithMessage(assertjErrorMessage, actual, unitPrice, actualUnitPrice);
     }

@@ -126,7 +126,7 @@ public class OrderLineAssert extends AbstractObjectAssert<OrderLineAssert, Order
    * @return this assertion object.
    * @throws AssertionError - if the actual OrderLine's discount is not equal to the given one.
    */
-  public OrderLineAssert hasDiscount(io.jmix.bookstore.entity.Money discount) {
+  public OrderLineAssert hasDiscount(io.jmix.bookstore.product.supplier.Money discount) {
     // check that actual OrderLine we want to make assertions on is not null.
     isNotNull();
 
@@ -134,7 +134,7 @@ public class OrderLineAssert extends AbstractObjectAssert<OrderLineAssert, Order
     String assertjErrorMessage = "\nExpecting discount of:\n  <%s>\nto be:\n  <%s>\nbut was:\n  <%s>";
 
     // null safe check
-    io.jmix.bookstore.entity.Money actualDiscount = actual.getDiscount();
+    io.jmix.bookstore.product.supplier.Money actualDiscount = actual.getDiscount();
     if (!Objects.deepEquals(actualDiscount, discount)) {
       failWithMessage(assertjErrorMessage, actual, discount, actualDiscount);
     }
@@ -310,7 +310,7 @@ public class OrderLineAssert extends AbstractObjectAssert<OrderLineAssert, Order
    * @return this assertion object.
    * @throws AssertionError - if the actual OrderLine's unitPrice is not equal to the given one.
    */
-  public OrderLineAssert hasUnitPrice(io.jmix.bookstore.entity.Money unitPrice) {
+  public OrderLineAssert hasUnitPrice(io.jmix.bookstore.product.supplier.Money unitPrice) {
     // check that actual OrderLine we want to make assertions on is not null.
     isNotNull();
 
@@ -318,7 +318,7 @@ public class OrderLineAssert extends AbstractObjectAssert<OrderLineAssert, Order
     String assertjErrorMessage = "\nExpecting unitPrice of:\n  <%s>\nto be:\n  <%s>\nbut was:\n  <%s>";
 
     // null safe check
-    io.jmix.bookstore.entity.Money actualUnitPrice = actual.getUnitPrice();
+    io.jmix.bookstore.product.supplier.Money actualUnitPrice = actual.getUnitPrice();
     if (!Objects.deepEquals(actualUnitPrice, unitPrice)) {
       failWithMessage(assertjErrorMessage, actual, unitPrice, actualUnitPrice);
     }

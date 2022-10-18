@@ -6,7 +6,6 @@ import io.jmix.core.SaveContext;
 import net.datafaker.*;
 import org.springframework.stereotype.Component;
 
-import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -80,8 +79,8 @@ public class CustomerDataProvider implements TestDataProvider<Customer, Customer
         return internetFaker.emailAddress(randomOfList(localParts));
     }
 
-    private io.jmix.bookstore.entity.Address toAddress(Address address) {
-        io.jmix.bookstore.entity.Address addressEntity = dataManager.create(io.jmix.bookstore.entity.Address.class);
+    private io.jmix.bookstore.product.supplier.Address toAddress(Address address) {
+        io.jmix.bookstore.product.supplier.Address addressEntity = dataManager.create(io.jmix.bookstore.product.supplier.Address.class);
         addressEntity.setCity(address.city());
         addressEntity.setStreet(String.format("%s %s", address.streetName(), address.buildingNumber()));
         addressEntity.setPostCode(address.postcode());

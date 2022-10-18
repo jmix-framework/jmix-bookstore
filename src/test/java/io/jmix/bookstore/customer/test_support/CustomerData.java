@@ -1,6 +1,6 @@
 package io.jmix.bookstore.customer.test_support;
 
-import io.jmix.bookstore.entity.Address;
+import io.jmix.bookstore.product.supplier.Address;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

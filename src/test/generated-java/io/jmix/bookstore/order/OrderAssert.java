@@ -418,7 +418,7 @@ public class OrderAssert extends AbstractObjectAssert<OrderAssert, Order> {
    * @return this assertion object.
    * @throws AssertionError - if the actual Order's shippingAddress is not equal to the given one.
    */
-  public OrderAssert hasShippingAddress(io.jmix.bookstore.entity.Address shippingAddress) {
+  public OrderAssert hasShippingAddress(io.jmix.bookstore.product.supplier.Address shippingAddress) {
     // check that actual Order we want to make assertions on is not null.
     isNotNull();
 
@@ -426,7 +426,7 @@ public class OrderAssert extends AbstractObjectAssert<OrderAssert, Order> {
     String assertjErrorMessage = "\nExpecting shippingAddress of:\n  <%s>\nto be:\n  <%s>\nbut was:\n  <%s>";
 
     // null safe check
-    io.jmix.bookstore.entity.Address actualShippingAddress = actual.getShippingAddress();
+    io.jmix.bookstore.product.supplier.Address actualShippingAddress = actual.getShippingAddress();
     if (!Objects.deepEquals(actualShippingAddress, shippingAddress)) {
       failWithMessage(assertjErrorMessage, actual, shippingAddress, actualShippingAddress);
     }

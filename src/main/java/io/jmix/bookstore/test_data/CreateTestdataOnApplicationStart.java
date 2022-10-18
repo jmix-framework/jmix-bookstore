@@ -3,9 +3,11 @@ package io.jmix.bookstore.test_data;
 import io.jmix.core.security.Authenticated;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.event.ApplicationStartedEvent;
+import org.springframework.context.annotation.Profile;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 
+@Profile("!integration-test")
 @Component("petclinic_CreateVisitTestdataOnApplicationStart")
 public class CreateTestdataOnApplicationStart {
 

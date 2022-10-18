@@ -1,6 +1,6 @@
 package io.jmix.bookstore.screen.user;
 
-import io.jmix.bookstore.entity.User;
+import io.jmix.bookstore.product.supplier.User;
 import io.jmix.ui.navigation.Route;
 import io.jmix.ui.screen.*;
 

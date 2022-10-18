@@ -1,9 +1,9 @@
 package io.jmix.bookstore.customer.test_support;
 
 import io.jmix.bookstore.customer.Customer;
-import io.jmix.bookstore.entity.Address;
-import io.jmix.bookstore.entity.test_support.AddressData;
-import io.jmix.bookstore.entity.test_support.AddressMapper;
+import io.jmix.bookstore.product.supplier.Address;
+import io.jmix.bookstore.product.supplier.test_support.AddressData;
+import io.jmix.bookstore.product.supplier.test_support.AddressMapper;
 import io.jmix.bookstore.test_support.TestDataProvisioning;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -20,7 +20,7 @@ public class Customers
     @Autowired
     CustomerMapper customerMapper;
 
-    public static final String DEFAULT_ORDER_DATE = "first_name";
+    public static final String DEFAULT_FIRST_NAME = "first_name";
     public static final String DEFAULT_LAST_NAME = "last_name";
     public static final String DEFAULT_EMAIL = "first_name@last_name.com";
     public static final String DEFAULT_STREET = "street";
@@ -30,7 +30,7 @@ public class Customers
     @Override
     public CustomerData.CustomerDataBuilder defaultData() {
         return CustomerData.builder()
-                .firstName(DEFAULT_ORDER_DATE)
+                .firstName(DEFAULT_FIRST_NAME)
                 .lastName(DEFAULT_LAST_NAME)
                 .email(DEFAULT_EMAIL)
                 .address(defaultAddress());

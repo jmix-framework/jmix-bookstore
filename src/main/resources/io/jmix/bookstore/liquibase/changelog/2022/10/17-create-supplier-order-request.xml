@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.11.xsd"
+        objectQuotingStrategy="QUOTE_ONLY_RESERVED_WORDS">
+    <changeSet id="1" author="bookstore">
+        <createTable tableName="BOOKSTORE_SUPPLIER_ORDER_REQUEST">
+            <column name="ID" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_BOOKSTORE_SUPPLIER_ORDER_REQUEST"/>
+            </column>
+            <column name="VERSION" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="CREATED_BY" type="VARCHAR(255)"/>
+            <column name="CREATED_DATE" type="DATETIME"/>
+            <column name="LAST_MODIFIED_BY" type="VARCHAR(255)"/>
+            <column name="LAST_MODIFIED_DATE" type="DATETIME"/>
+            <column name="DELETED_BY" type="VARCHAR(255)"/>
+            <column name="DELETED_DATE" type="DATETIME"/>
+            <column name="PRODUCT_ID" type="UUID">
+                <constraints nullable="false"/>
+            </column>
+            <column name="REQUESTED_AMOUNT" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="COMMENT_" type="CLOB"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="2" author="bookstore">
+        <createIndex indexName="IDX_BOOKSTORE_SUPPLIER_ORDER_REQUEST_PRODUCT"
+                     tableName="BOOKSTORE_SUPPLIER_ORDER_REQUEST">
+            <column name="PRODUCT_ID"/>
+        </createIndex>
+
+        <addForeignKeyConstraint baseColumnNames="PRODUCT_ID" baseTableName="BOOKSTORE_SUPPLIER_ORDER_REQUEST"
+                                 constraintName="FK_BOOKSTORE_SUPPLIER_ORDER_REQUEST_ON_PRODUCT"
+                                 referencedColumnNames="ID" referencedTableName="BOOKSTORE_PRODUCT"/>
+    </changeSet>
+</databaseChangeLog>

@@ -1,6 +1,6 @@
-package io.jmix.bookstore.entity.test_support;
+package io.jmix.bookstore.product.supplier.test_support;
 
-import io.jmix.bookstore.entity.StandardEntity;
+import io.jmix.bookstore.product.supplier.StandardEntity;
 import io.jmix.core.DataManager;
 import org.mapstruct.TargetType;
 import org.springframework.beans.factory.annotation.Autowired;

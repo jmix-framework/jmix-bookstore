@@ -1,6 +1,6 @@
 package io.jmix.bookstore.employee;
 
-import io.jmix.bookstore.entity.StandardEntity;
+import io.jmix.bookstore.product.supplier.StandardEntity;
 import io.jmix.core.metamodel.annotation.InstanceName;
 import io.jmix.core.metamodel.annotation.JmixEntity;
 

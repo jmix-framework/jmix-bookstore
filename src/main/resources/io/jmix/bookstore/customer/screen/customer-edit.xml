@@ -1,14 +1,16 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <window xmlns="http://jmix.io/schema/ui/window"
         caption="msg://customerEdit.caption"
-        focusComponent="form">
+        focusComponent="personalForm">
     <data>
         <instance id="customerDc"
                   class="io.jmix.bookstore.customer.Customer">
             <fetchPlan extends="_base">
-                <property name="address"/>
+                <property name="address" fetchPlan="_base"/>
+                <property name="orders" fetchPlan="_base"/>
             </fetchPlan>
             <loader/>
+            <collection id="ordersDc" property="orders"/>
         </instance>
     </data>
     <facets>
@@ -26,17 +28,49 @@
     </actions>
     <dialogMode height="600"
                 width="800"/>
-    <layout spacing="true" expand="editActions">
-        <form id="form" dataContainer="customerDc">
-            <column width="350px">
-                <textField id="firstNameField" property="firstName"/>
-                <textField id="lastNameField" property="lastName"/>
-                <textField id="emailField" property="email"/>
-                <textField id="addressStreetField" property="address.street"/>
-                <textField id="addressPostCodeField" property="address.postCode"/>
-                <textField id="addressCityField" property="address.city"/>
-            </column>
-        </form>
+    <layout spacing="true" expand="scrollBox">
+        <scrollBox id="scrollBox" spacing="true">
+            <vbox spacing="true" width="100%" expand="ordersBox">
+                <label stylename="h2" dataContainer="customerDc" property="" />
+            <hbox spacing="true" width="100%" height="200px">
+                <groupBox id="personalInformationGroupBox" width="100%" height="100%"
+                          caption="msg://personalInformation" icon="USER_CIRCLE">
+                    <form id="personalForm" dataContainer="customerDc">
+                        <column width="350px">
+                            <textField id="firstNameField" property="firstName"/>
+                            <textField id="lastNameField" property="lastName"/>
+                            <textField id="emailField" property="email"/>
+                        </column>
+                    </form>
+                </groupBox>
+                <groupBox id="addressInformationGroupBox" width="100%" height="100%" caption="msg://addressInformation"
+                          icon="ADDRESS_BOOK">
+                    <form id="addressForm" dataContainer="customerDc">
+                        <column width="350px">
+                            <textField id="addressStreetField" property="address.street"/>
+                            <textField id="addressPostCodeField" property="address.postCode"/>
+                            <textField id="addressCityField" property="address.city"/>
+                        </column>
+                    </form>
+                </groupBox>
+            </hbox>
+            <groupBox id="ordersBox" caption="msg://io.jmix.bookstore.customer/Customer.orders">
+                <dataGrid id="ordersTable" dataContainer="ordersDc" width="100%" height="500px">
+                    <actions>
+                        <action id="view" type="view"/>
+                    </actions>
+                    <columns>
+                        <column property="orderDate" id="orderDate"/>
+                        <column property="requiredDate" id="requiredDate"/>
+                        <column property="shippingDate" id="shippingDate"/>
+                    </columns>
+                    <buttonsPanel>
+                        <button action="ordersTable.view"/>
+                    </buttonsPanel>
+                </dataGrid>
+            </groupBox></vbox>
+        </scrollBox>
+
         <hbox id="editActions" spacing="true">
             <button id="commitAndCloseBtn" action="windowCommitAndClose"/>
             <button id="closeBtn" action="windowClose"/>

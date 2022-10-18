@@ -1,11 +1,10 @@
 package io.jmix.bookstore.test_data.data_provider;
 
-import io.jmix.bookstore.entity.Title;
-import io.jmix.bookstore.product.Supplier;
+import io.jmix.bookstore.product.supplier.Title;
+import io.jmix.bookstore.product.supplier.Supplier;
 import io.jmix.core.DataManager;
 import io.jmix.core.SaveContext;
 import net.datafaker.*;
-import net.datafaker.service.RandomService;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -76,8 +75,8 @@ public class SupplierDataProvider implements TestDataProvider<Supplier, Supplier
         supplier.setPhone(supplierData.phoneNumber().phoneNumber());
         return supplier;
     }
-    private io.jmix.bookstore.entity.Address toAddress(Address address) {
-        io.jmix.bookstore.entity.Address addressEntity = dataManager.create(io.jmix.bookstore.entity.Address.class);
+    private io.jmix.bookstore.product.supplier.Address toAddress(Address address) {
+        io.jmix.bookstore.product.supplier.Address addressEntity = dataManager.create(io.jmix.bookstore.product.supplier.Address.class);
         addressEntity.setCity(address.city());
         addressEntity.setStreet(String.format("%s %s", address.streetName(), address.buildingNumber()));
         addressEntity.setPostCode(address.postcode());

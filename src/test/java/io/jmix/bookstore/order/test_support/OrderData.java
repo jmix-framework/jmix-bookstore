@@ -1,7 +1,7 @@
 package io.jmix.bookstore.order.test_support;
 
 import io.jmix.bookstore.customer.Customer;
-import io.jmix.bookstore.entity.Address;
+import io.jmix.bookstore.product.supplier.Address;
 import io.jmix.bookstore.order.OrderLine;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;

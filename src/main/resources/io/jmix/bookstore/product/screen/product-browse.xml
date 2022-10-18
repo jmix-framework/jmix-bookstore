@@ -38,6 +38,13 @@
         <filter id="filter"
                 dataLoader="productsDl">
             <properties include=".*"/>
+            <configurations>
+                <configuration id="lowInStock" name="msg://productLowInsStock.filter">
+                    <propertyFilter property="unitsInStock" operation="LESS"
+                                    operationEditable="false" defaultValue="50" editable="false"/>
+                    <propertyFilter property="unitsOnOrder" operation="EQUAL" defaultValue="0" editable="false"/>
+                </configuration>
+            </configurations>
         </filter>
         <dataGrid id="productsTable"
                   width="100%"
@@ -46,6 +53,7 @@
                 <action id="create" type="create"/>
                 <action id="edit" type="edit"/>
                 <action id="remove" type="remove"/>
+                <action id="fillUpInventory" caption="msg://fillUpInventory" icon="INDUSTRY" trackSelection="true"/>
             </actions>
             <columns>
                 <column property="name" id="name"/>
@@ -58,6 +66,7 @@
                 <button id="createBtn" action="productsTable.create"/>
                 <button id="editBtn" action="productsTable.edit"/>
                 <button id="removeBtn" action="productsTable.remove"/>
+                <button id="fillUpInventoryBtn" action="productsTable.fillUpInventory"/>
             </buttonsPanel>
         </dataGrid>
         <hbox id="lookupActions" spacing="true" visible="false">

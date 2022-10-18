@@ -7,7 +7,7 @@ import io.jmix.bookstore.order.Order;
 import io.jmix.bookstore.order.OrderLine;
 import io.jmix.bookstore.product.Product;
 import io.jmix.bookstore.product.ProductCategory;
-import io.jmix.bookstore.product.Supplier;
+import io.jmix.bookstore.product.supplier.Supplier;
 import io.jmix.bookstore.test_data.data_provider.*;
 import io.jmix.core.DataManager;
 import io.jmix.core.TimeSource;

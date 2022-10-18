@@ -1,6 +1,6 @@
-package io.jmix.bookstore.entity.test_support;
+package io.jmix.bookstore.product.supplier.test_support;
 
-import io.jmix.bookstore.entity.Address;
+import io.jmix.bookstore.product.supplier.Address;
 import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring", uses = {JmixEntityFactory.class})
