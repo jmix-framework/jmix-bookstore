@@ -10,9 +10,11 @@ import org.junit.jupiter.api.BeforeEach;
 
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 
 @SpringBootTest
+@ActiveProfiles("integration-test")
 @UiTest(authenticatedUser = "admin", mainScreenId = "bookstore_MainScreen", screenBasePackages = "io.jmix.bookstore")
 @ContextConfiguration(classes = {JmixBookstoreApplication.class, UiTestAssistConfiguration.class})
 @AutoConfigureTestDatabase

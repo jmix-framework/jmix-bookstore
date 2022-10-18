@@ -5,10 +5,12 @@ import io.jmix.bookstore.order.test_support.OrderLines;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 
 import java.time.LocalDateTime;
 
 @SpringBootTest
+@ActiveProfiles("integration-test")
 class OrderLineValidationTest {
 
     @Autowired
