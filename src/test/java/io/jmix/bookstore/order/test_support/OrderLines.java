@@ -1,9 +1,9 @@
 package io.jmix.bookstore.order.test_support;
 
-import io.jmix.bookstore.product.supplier.Currency;
-import io.jmix.bookstore.product.supplier.Money;
-import io.jmix.bookstore.product.supplier.test_support.MoneyData;
-import io.jmix.bookstore.product.supplier.test_support.MoneyMapper;
+import io.jmix.bookstore.entity.Currency;
+import io.jmix.bookstore.entity.Money;
+import io.jmix.bookstore.entity.test_support.MoneyData;
+import io.jmix.bookstore.entity.test_support.MoneyMapper;
 import io.jmix.bookstore.order.*;
 import io.jmix.bookstore.product.test_support.Products;
 import io.jmix.bookstore.test_support.TestDataProvisioning;

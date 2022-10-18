@@ -18,6 +18,28 @@ public class Assertions extends org.assertj.core.api.Assertions {
   }
 
   /**
+   * Creates a new instance of <code>{@link io.jmix.bookstore.entity.AddressAssert}</code>.
+   *
+   * @param actual the actual value.
+   * @return the created assertion object.
+   */
+  @org.assertj.core.util.CheckReturnValue
+  public static io.jmix.bookstore.entity.AddressAssert assertThat(io.jmix.bookstore.entity.Address actual) {
+    return new io.jmix.bookstore.entity.AddressAssert(actual);
+  }
+
+  /**
+   * Creates a new instance of <code>{@link io.jmix.bookstore.entity.MoneyAssert}</code>.
+   *
+   * @param actual the actual value.
+   * @return the created assertion object.
+   */
+  @org.assertj.core.util.CheckReturnValue
+  public static io.jmix.bookstore.entity.MoneyAssert assertThat(io.jmix.bookstore.entity.Money actual) {
+    return new io.jmix.bookstore.entity.MoneyAssert(actual);
+  }
+
+  /**
    * Creates a new instance of <code>{@link io.jmix.bookstore.order.OrderAssert}</code>.
    *
    * @param actual the actual value.

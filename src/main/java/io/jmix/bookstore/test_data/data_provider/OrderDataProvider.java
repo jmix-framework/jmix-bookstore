@@ -1,8 +1,8 @@
 package io.jmix.bookstore.test_data.data_provider;
 
 import io.jmix.bookstore.customer.Customer;
-import io.jmix.bookstore.product.supplier.Currency;
-import io.jmix.bookstore.product.supplier.Money;
+import io.jmix.bookstore.entity.Currency;
+import io.jmix.bookstore.entity.Money;
 import io.jmix.bookstore.order.Order;
 import io.jmix.bookstore.order.OrderLine;
 import io.jmix.bookstore.product.Product;
@@ -69,8 +69,8 @@ public class OrderDataProvider implements TestDataProvider<Order, OrderDataProvi
         );
         return order;
     }
-    private io.jmix.bookstore.product.supplier.Address toAddress(Address address) {
-        io.jmix.bookstore.product.supplier.Address addressEntity = dataManager.create(io.jmix.bookstore.product.supplier.Address.class);
+    private io.jmix.bookstore.entity.Address toAddress(Address address) {
+        io.jmix.bookstore.entity.Address addressEntity = dataManager.create(io.jmix.bookstore.entity.Address.class);
         addressEntity.setCity(address.city());
         addressEntity.setStreet(String.format("%s %s", address.streetName(), address.buildingNumber()));
         addressEntity.setPostCode(address.postcode());

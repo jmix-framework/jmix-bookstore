@@ -1,4 +1,4 @@
-package io.jmix.bookstore.product.supplier;
+package io.jmix.bookstore.entity;
 
 import io.jmix.core.metamodel.annotation.DependsOnProperties;
 import io.jmix.core.metamodel.annotation.InstanceName;

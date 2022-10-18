@@ -1,4 +1,4 @@
-package io.jmix.bookstore.product.supplier.test_support;
+package io.jmix.bookstore.entity.test_support;
 
 
 public interface EntityRepository<DTO, Entity> {

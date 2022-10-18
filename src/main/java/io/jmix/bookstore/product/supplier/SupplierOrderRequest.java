@@ -1,5 +1,6 @@
 package io.jmix.bookstore.product.supplier;
 
+import io.jmix.bookstore.entity.StandardEntity;
 import io.jmix.bookstore.product.Product;
 import io.jmix.core.metamodel.annotation.InstanceName;
 import io.jmix.core.metamodel.annotation.JmixEntity;

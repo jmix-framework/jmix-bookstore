@@ -1,12 +1,12 @@
 package io.jmix.bookstore.product.test_support;
 
-import io.jmix.bookstore.product.supplier.Address;
-import io.jmix.bookstore.product.supplier.Currency;
-import io.jmix.bookstore.product.supplier.Money;
-import io.jmix.bookstore.product.supplier.test_support.AddressData;
-import io.jmix.bookstore.product.supplier.test_support.AddressMapper;
-import io.jmix.bookstore.product.supplier.test_support.MoneyData;
-import io.jmix.bookstore.product.supplier.test_support.MoneyMapper;
+import io.jmix.bookstore.entity.Address;
+import io.jmix.bookstore.entity.Currency;
+import io.jmix.bookstore.entity.Money;
+import io.jmix.bookstore.entity.test_support.AddressData;
+import io.jmix.bookstore.entity.test_support.AddressMapper;
+import io.jmix.bookstore.entity.test_support.MoneyData;
+import io.jmix.bookstore.entity.test_support.MoneyMapper;
 import io.jmix.bookstore.product.supplier.Supplier;
 import io.jmix.bookstore.test_support.TestDataProvisioning;
 import io.jmix.core.DataManager;

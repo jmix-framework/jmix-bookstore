@@ -1,7 +1,7 @@
 package io.jmix.bookstore.test_data.data_provider;
 
-import io.jmix.bookstore.product.supplier.Currency;
-import io.jmix.bookstore.product.supplier.Money;
+import io.jmix.bookstore.entity.Currency;
+import io.jmix.bookstore.entity.Money;
 import io.jmix.bookstore.product.Product;
 import io.jmix.bookstore.product.ProductCategory;
 import io.jmix.core.DataManager;

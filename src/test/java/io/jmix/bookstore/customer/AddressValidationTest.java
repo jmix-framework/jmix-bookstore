@@ -1,6 +1,6 @@
 package io.jmix.bookstore.customer;
 
-import io.jmix.bookstore.product.supplier.Address;
+import io.jmix.bookstore.entity.Address;
 import io.jmix.bookstore.test_support.Validations;
 import io.jmix.core.DataManager;
 import org.junit.jupiter.api.BeforeEach;

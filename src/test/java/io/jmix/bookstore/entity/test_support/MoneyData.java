@@ -1,6 +1,6 @@
-package io.jmix.bookstore.product.supplier.test_support;
+package io.jmix.bookstore.entity.test_support;
 
-import io.jmix.bookstore.product.supplier.Currency;
+import io.jmix.bookstore.entity.Currency;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

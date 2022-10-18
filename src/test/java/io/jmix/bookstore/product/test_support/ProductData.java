@@ -1,6 +1,6 @@
 package io.jmix.bookstore.product.test_support;
 
-import io.jmix.bookstore.product.supplier.Money;
+import io.jmix.bookstore.entity.Money;
 import io.jmix.bookstore.product.ProductCategory;
 import io.jmix.bookstore.product.supplier.Supplier;
 import lombok.AccessLevel;

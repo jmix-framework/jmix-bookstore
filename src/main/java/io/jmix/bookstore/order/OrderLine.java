@@ -1,8 +1,8 @@
 package io.jmix.bookstore.order;
 
 import io.jmix.bookstore.product.Product;
-import io.jmix.bookstore.product.supplier.Money;
-import io.jmix.bookstore.product.supplier.StandardTenantEntity;
+import io.jmix.bookstore.entity.Money;
+import io.jmix.bookstore.entity.StandardTenantEntity;
 import io.jmix.core.entity.annotation.EmbeddedParameters;
 import io.jmix.core.metamodel.annotation.InstanceName;
 import io.jmix.core.metamodel.annotation.JmixEntity;

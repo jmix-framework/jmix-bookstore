@@ -75,8 +75,8 @@ public class SupplierDataProvider implements TestDataProvider<Supplier, Supplier
         supplier.setPhone(supplierData.phoneNumber().phoneNumber());
         return supplier;
     }
-    private io.jmix.bookstore.product.supplier.Address toAddress(Address address) {
-        io.jmix.bookstore.product.supplier.Address addressEntity = dataManager.create(io.jmix.bookstore.product.supplier.Address.class);
+    private io.jmix.bookstore.entity.Address toAddress(Address address) {
+        io.jmix.bookstore.entity.Address addressEntity = dataManager.create(io.jmix.bookstore.entity.Address.class);
         addressEntity.setCity(address.city());
         addressEntity.setStreet(String.format("%s %s", address.streetName(), address.buildingNumber()));
         addressEntity.setPostCode(address.postcode());

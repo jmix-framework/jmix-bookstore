@@ -1,7 +1,7 @@
 package io.jmix.bookstore.customer;
 
-import io.jmix.bookstore.product.supplier.Address;
-import io.jmix.bookstore.product.supplier.StandardTenantEntity;
+import io.jmix.bookstore.entity.Address;
+import io.jmix.bookstore.entity.StandardTenantEntity;
 import io.jmix.bookstore.order.Order;
 import io.jmix.core.DeletePolicy;
 import io.jmix.core.entity.annotation.EmbeddedParameters;

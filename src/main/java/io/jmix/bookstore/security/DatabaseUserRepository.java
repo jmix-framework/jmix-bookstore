@@ -1,6 +1,6 @@
 package io.jmix.bookstore.security;
 
-import io.jmix.bookstore.product.supplier.User;
+import io.jmix.bookstore.entity.User;
 import io.jmix.securitydata.user.AbstractDatabaseUserRepository;
 import org.springframework.context.annotation.Primary;
 import org.springframework.security.core.GrantedAuthority;

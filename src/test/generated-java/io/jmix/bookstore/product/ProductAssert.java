@@ -333,7 +333,7 @@ public class ProductAssert extends AbstractObjectAssert<ProductAssert, Product> 
    * @return this assertion object.
    * @throws AssertionError - if the actual Product's unitPrice is not equal to the given one.
    */
-  public ProductAssert hasUnitPrice(io.jmix.bookstore.product.supplier.Money unitPrice) {
+  public ProductAssert hasUnitPrice(io.jmix.bookstore.entity.Money unitPrice) {
     // check that actual Product we want to make assertions on is not null.
     isNotNull();
 
@@ -341,7 +341,7 @@ public class ProductAssert extends AbstractObjectAssert<ProductAssert, Product> 
     String assertjErrorMessage = "\nExpecting unitPrice of:\n  <%s>\nto be:\n  <%s>\nbut was:\n  <%s>";
 
     // null safe check
-    io.jmix.bookstore.product.supplier.Money actualUnitPrice = actual.getUnitPrice();
+    io.jmix.bookstore.entity.Money actualUnitPrice = actual.getUnitPrice();
     if (!Objects.deepEquals(actualUnitPrice, unitPrice)) {
       failWithMessage(assertjErrorMessage, actual, unitPrice, actualUnitPrice);
     }

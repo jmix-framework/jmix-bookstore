@@ -35,7 +35,7 @@ public class CustomerAssert extends AbstractObjectAssert<CustomerAssert, Custome
    * @return this assertion object.
    * @throws AssertionError - if the actual Customer's address is not equal to the given one.
    */
-  public CustomerAssert hasAddress(io.jmix.bookstore.product.supplier.Address address) {
+  public CustomerAssert hasAddress(io.jmix.bookstore.entity.Address address) {
     // check that actual Customer we want to make assertions on is not null.
     isNotNull();
 
@@ -43,7 +43,7 @@ public class CustomerAssert extends AbstractObjectAssert<CustomerAssert, Custome
     String assertjErrorMessage = "\nExpecting address of:\n  <%s>\nto be:\n  <%s>\nbut was:\n  <%s>";
 
     // null safe check
-    io.jmix.bookstore.product.supplier.Address actualAddress = actual.getAddress();
+    io.jmix.bookstore.entity.Address actualAddress = actual.getAddress();
     if (!Objects.deepEquals(actualAddress, address)) {
       failWithMessage(assertjErrorMessage, actual, address, actualAddress);
     }
