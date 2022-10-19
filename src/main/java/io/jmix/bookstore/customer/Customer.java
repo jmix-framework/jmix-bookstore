@@ -1,5 +1,6 @@
 package io.jmix.bookstore.customer;
 
+import com.google.common.base.Strings;
 import io.jmix.bookstore.entity.Address;
 import io.jmix.bookstore.entity.StandardTenantEntity;
 import io.jmix.bookstore.order.Order;
@@ -11,6 +12,8 @@ import io.jmix.core.metamodel.annotation.*;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import java.util.List;
+
+import static com.google.common.base.Strings.nullToEmpty;
 
 @JmixEntity
 @Table(name = "BOOKSTORE_CUSTOMER")
@@ -41,10 +44,10 @@ public class Customer extends StandardTenantEntity {
     @OneToMany(mappedBy = "customer")
     private List<Order> orders;
 
-    @JmixProperty
     @DependsOnProperties({"firstName", "lastName"})
+    @JmixProperty
     public String getFullName() {
-        return String.format("%s %s", firstName, lastName);
+        return String.format("%s %s", nullToEmpty(firstName), nullToEmpty(lastName));
     }
 
     public List<Order> getOrders() {
@@ -87,11 +90,9 @@ public class Customer extends StandardTenantEntity {
         this.firstName = firstName;
     }
 
-
-
     @InstanceName
     @DependsOnProperties({"firstName", "lastName"})
     public String getInstanceName() {
-        return getFullName();
+        return String.format("%s %s", firstName, lastName);
     }
 }

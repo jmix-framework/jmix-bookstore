@@ -23,6 +23,47 @@
       </entry>
     </moduleSettings>
   </component>
+  <component name="JmixLiquibaseChangesConfig">
+    <exclude-change idName="BOOKSTORE_CUSTOMER" tagName="createTable" />
+    <exclude-change idName="BOOKSTORE_EMPLOYEE" tagName="createTable" />
+    <exclude-change idName="BOOKSTORE_EMPLOYEE_TERRITORIES" tagName="createTable" />
+    <exclude-change idName="BOOKSTORE_ORDER" tagName="createTable" />
+    <exclude-change idName="BOOKSTORE_ORDER_LINE" tagName="createTable" />
+    <exclude-change idName="BOOKSTORE_PRODUCT" tagName="createTable" />
+    <exclude-change idName="BOOKSTORE_PRODUCT_CATEGORY" tagName="createTable" />
+    <exclude-change idName="BOOKSTORE_REGION" tagName="createTable" />
+    <exclude-change idName="BOOKSTORE_SUPPLIER" tagName="createTable" />
+    <exclude-change idName="BOOKSTORE_SUPPLIER_ORDER" tagName="createTable" />
+    <exclude-change idName="BOOKSTORE_SUPPLIER_ORDER_LINE" tagName="createTable" />
+    <exclude-change idName="BOOKSTORE_SUPPLIER_ORDER_REQUEST" tagName="createTable" />
+    <exclude-change idName="BOOKSTORE_TERRITORY" tagName="createTable" />
+    <exclude-change idName="BOOKSTORE_USER" tagName="createTable" />
+    <exclude-change idName="IDX_BOOKSTOREEMPLOYE_REPORTSTO" tagName="createIndex" />
+    <exclude-change idName="FK_BOOKSTORE_EMPLOYEE_ON_REPORTS_TO" tagName="addForeignKeyConstraint" />
+    <exclude-change idName="IDX_BOOKSTOREORDERLINE_PRODUCT" tagName="createIndex" />
+    <exclude-change idName="FK_BOOKSTORE_ORDER_LINE_ON_PRODUCT" tagName="addForeignKeyConstraint" />
+    <exclude-change idName="IDX_BOOKSTORE_PRODUCT_CATEGORY_UNQ" tagName="createIndex" />
+    <exclude-change idName="IDX_BOOKSTORE_PRODUCT_SUPPLIER" tagName="createIndex" />
+    <exclude-change idName="FK_BOOKSTORE_PRODUCT_ON_SUPPLIER" tagName="addForeignKeyConstraint" />
+    <exclude-change idName="IDX_BOOKSTORE_SUPPLIER_ORDER_LINE_PRODUCT" tagName="createIndex" />
+    <exclude-change idName="FK_BOOKSTORE_SUPPLIER_ORDER_LINE_ON_PRODUCT" tagName="addForeignKeyConstraint" />
+    <exclude-change idName="IDX_BOOKSTORE_SUPPLIER_ORDER_LINE_SUPPLIER_ORDER" tagName="createIndex" />
+    <exclude-change idName="FK_BOOKSTORE_SUPPLIER_ORDER_LINE_ON_SUPPLIER_ORDER" tagName="addForeignKeyConstraint" />
+    <exclude-change idName="IDX_BOOKSTORE_SUPPLIER_ORDER_REQUEST_PRODUCT" tagName="createIndex" />
+    <exclude-change idName="FK_BOOKSTORE_SUPPLIER_ORDER_REQUEST_ON_PRODUCT" tagName="addForeignKeyConstraint" />
+    <exclude-change idName="IDX_BOOKSTORE_SUPPLIER_ORDER_SUPPLIER" tagName="createIndex" />
+    <exclude-change idName="FK_BOOKSTORE_SUPPLIER_ORDER_ON_SUPPLIER" tagName="addForeignKeyConstraint" />
+    <exclude-change idName="IDX_BOOKSTORE_TERRITORY_REGION" tagName="createIndex" />
+    <exclude-change idName="FK_BOOKSTORE_TERRITORY_ON_REGION" tagName="addForeignKeyConstraint" />
+    <exclude-change idName="IDX_BOOKSTORE_USER_ON_USERNAME" tagName="createIndex" />
+    <exclude-change idName="IDX_ORDERLINE_ORDER_ID" tagName="createIndex" />
+    <exclude-change idName="FK_BOOKSTORE_ORDER_LINE_ON_ORDER" tagName="addForeignKeyConstraint" />
+    <exclude-change idName="IDX_ORDER_CUSTOMER_ID" tagName="createIndex" />
+    <exclude-change idName="FK_BOOKSTORE_ORDER_ON_CUSTOMER" tagName="addForeignKeyConstraint" />
+    <exclude-change idName="FK_BOOEMPTER_ON_EMPLOYEE" tagName="addForeignKeyConstraint" />
+    <exclude-change idName="FK_BOOEMPTER_ON_TERRITORY" tagName="addForeignKeyConstraint" />
+    <exclude-change idName="FK_BOOKSTORE_PRODUCT_ON_CATEGORY" tagName="addForeignKeyConstraint" />
+  </component>
   <component name="JmixPluginProjectSettings">
     <option name="savedDbProperties">
       <list>
