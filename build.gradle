@@ -87,3 +87,8 @@ dependencies {
 test {
     useJUnitPlatform()
 }
+
+
+tasks.named("bootBuildImage") {
+    imageName = "jmix/${project.name}"
+}
