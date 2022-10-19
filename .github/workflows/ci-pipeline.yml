@@ -24,6 +24,9 @@ jobs:
           java-version: 17
 
       - name: Run tests
+        env:
+          PREMIUM_REPO_USER: ${{ secrets.PREMIUM_REPO_USER }}
+          PREMIUM_REPO_PASS: ${{ secrets.PREMIUM_REPO_PASS }}
         run: ./gradlew test
 
       - name: Publish Test Report
