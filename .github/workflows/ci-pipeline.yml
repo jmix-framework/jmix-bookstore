@@ -27,8 +27,6 @@ jobs:
         env:
           PREMIUM_REPO_USER: ${{ secrets.PREMIUM_REPO_USER }}
           PREMIUM_REPO_PASS: ${{ secrets.PREMIUM_REPO_PASS }}
-          DOCKER_HUB_USERNAME: ${{ secrets.DOCKER_HUB_USERNAME }}
-          DOCKER_HUB_PASSWORD: ${{ secrets.DOCKER_HUB_PASSWORD }}
         run: ./gradlew test
 
       - name: Publish Test Report
@@ -38,6 +36,9 @@ jobs:
           report_paths: '**/build/test-results/test/TEST-*.xml'
 
       - name: Build Docker Image
+        env:
+          DOCKER_HUB_USERNAME: ${{ secrets.DOCKER_HUB_USERNAME }}
+          DOCKER_HUB_PASSWORD: ${{ secrets.DOCKER_HUB_PASSWORD }}
         run: ./gradlew bootBuildImage
 
       - name: Login to Docker Hub
