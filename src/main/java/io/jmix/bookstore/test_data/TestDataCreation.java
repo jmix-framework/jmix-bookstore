@@ -51,11 +51,6 @@ public class TestDataCreation {
 
     public void createData() {
 
-//        if (databaseIsNotEmpty()) {
-//            log.info("Entries found in DB. Test data generation is skipped...");
-//            return;
-//        }
-
         databaseCleanup.removeAllEntities(Territory.class);
         databaseCleanup.removeAllEntities(Region.class);
 

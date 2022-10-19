@@ -1,5 +1,7 @@
 package io.jmix.bookstore.product.supplier;
 
+import io.jmix.bookstore.product.test_support.SupplierOrderRequests;
+import io.jmix.bookstore.test_support.Validations;
 import io.jmix.bookstore.product.Product;
 import io.jmix.bookstore.product.test_support.SupplierOrderRequests;
 import io.jmix.bookstore.test_support.Validations;
@@ -10,9 +12,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
 class SupplierOrderRequestValidationTest {
-
-    @Autowired
-    private DataManager dataManager;
 
     @Autowired
     private Validations validations;

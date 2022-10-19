@@ -6,12 +6,11 @@ import io.jmix.core.DataManager;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 
 @SpringBootTest
+@ActiveProfiles("integration-test")
 class ProductValidationTest {
-
-    @Autowired
-    private DataManager dataManager;
 
     @Autowired
     private Validations validations;

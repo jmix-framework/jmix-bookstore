@@ -71,6 +71,11 @@ public class DatabaseCleanup {
         performDeletion(OrderLine.class, jdbcTemplate);
         performDeletion(Order.class, jdbcTemplate);
 
+        performDeletion(SupplierOrderRequest.class, jdbcTemplate);
+        performDeletion(SupplierOrderLine.class, jdbcTemplate);
+        performDeletion(SupplierOrder.class, jdbcTemplate);
+
+        performDeletion(Supplier.class, jdbcTemplate);
         performDeletion(Product.class, jdbcTemplate);
         performDeletion(Customer.class, jdbcTemplate);
 

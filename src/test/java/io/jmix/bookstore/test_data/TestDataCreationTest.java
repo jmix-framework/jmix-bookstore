@@ -13,6 +13,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 
 import java.time.*;
 import java.util.List;
@@ -21,17 +22,9 @@ import static java.util.List.of;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
+@ActiveProfiles("integration-test")
 @ExtendWith(AuthenticatedAsAdmin.class)
 class TestDataCreationTest {
-
-    /**
-     * NOW is freezed to some wednesday in order to not accidentally hit the weekend limitation
-     * of the visit test data generation
-     */
-    private static final LocalDate TODAY = LocalDate.now().with(DayOfWeek.WEDNESDAY);
-    private static final LocalDate TOMORROW = TODAY.plusDays(1);
-    private static final LocalDateTime TOMORROW_MORNING = TOMORROW.atStartOfDay();
-    private static final ZonedDateTime NOW = TODAY.atStartOfDay(ZoneId.of("Europe/Berlin")).plusHours(8);
 
     @Autowired
     TestDataCreation testDataCreation;
@@ -114,116 +107,5 @@ class TestDataCreationTest {
     private List<ProductCategory> dbProductCategories() {
         return allEntitiesOf(ProductCategory.class);
     }
-
-//
-//    @Test
-//    void given_daysInFutureShouldBeGenerated_when_generateVisits_then_amountOfVisitsIsDecreasingIntoTheFuture() {
-//
-//        // given:
-//        daysInPastToGenerateFor(1);
-//        daysInFutureToGenerateFor(30);
-//        visitAmountPerDay(10);
-//
-//        possibleDescriptions(of("Fever", "Disease"));
-//
-//        possiblePets(
-//                data.pet("Pikachu"),
-//                data.pet("Garchomp")
-//        );
-//
-//        possibleNurses(of(data.nurse("Joy")));
-//
-//        // when:
-//        List<Visit> visits = testDataCreation.createVisits();
-//
-//        // then: the more far into the future, the less amount of visits are generated
-//        assertThat(amountOfVisitsForDate(visits, TOMORROW))
-//                .isLessThan(10);
-//        assertThat(amountOfVisitsForDate(visits, TOMORROW.plusDays(7)))
-//                .isLessThan(8);
-//        assertThat(amountOfVisitsForDate(visits, TOMORROW.plusDays(14)))
-//                .isLessThan(6);
-//        assertThat(amountOfVisitsForDate(visits, TOMORROW.plusDays(21)))
-//                .isLessThan(4);
-//    }
-//
-//
-//    @Test
-//    void given_10VisitsPerDays_when_generateVisits_then_sizeIs10() {
-//
-//        // given:
-//        daysInPastToGenerateFor(1);
-//        daysInFutureToGenerateFor(0);
-//        visitAmountPerDay(10);
-//
-//        possibleDescriptions(of("Fever", "Disease"));
-//
-//        possiblePets(
-//                data.pet("Pikachu"),
-//                data.pet("Garchomp")
-//        );
-//
-//        possibleNurses(of(data.nurse("Joy")));
-//
-//        // when:
-//        List<Visit> visits = testDataCreation.createVisits();
-//
-//        // then:
-//        assertThat(visits.size())
-//                .isEqualTo(10);
-//    }
-//
-//    private void possiblePets(Pet... pets) {
-//        FluentLoader<Pet> petLoaderMock = mock(FluentLoader.class);
-//        FluentLoader.ByCondition<Pet> allPets = mock(FluentLoader.ByCondition.class);
-//
-//        when(dataManager.load(Pet.class))
-//                .thenReturn(petLoaderMock);
-//
-//        when(petLoaderMock.all())
-//                .thenReturn(allPets);
-//
-//        when(allPets.list())
-//                .thenReturn(asList(pets));
-//    }
-//
-//    private int amountOfVisitsForDate(List<Visit> visits, LocalDate date) {
-//        return futureVisits(visits)
-//                .stream()
-//                .collect(Collectors.groupingBy(visit -> visit.getVisitStart().toLocalDate()))
-//                .get(date)
-//                .size();
-//    }
-//
-//    private List<Visit> futureVisits(List<Visit> visits) {
-//        return visits.stream()
-//                .filter(visit -> visit.getVisitStart().isAfter(TOMORROW_MORNING))
-//                .collect(Collectors.toList());
-//    }
-//
-//    private void possibleNurses(List<User> nurses) {
-//        when(employeeRepository.findAllNurses())
-//                .thenReturn(nurses);
-//    }
-//
-//    private void daysInPastToGenerateFor(int days) {
-//        when(testdataProperties.getVisitStartAmountPastDays())
-//                .thenReturn(days);
-//    }
-//
-//    private void daysInFutureToGenerateFor(int days) {
-//        when(testdataProperties.getVisitStartAmountFutureDays())
-//                .thenReturn(days);
-//    }
-//
-//    private void visitAmountPerDay(int amount) {
-//        when(testdataProperties.getAmountPerDay())
-//                .thenReturn(amount);
-//    }
-//
-//    private void possibleDescriptions(List<String> descriptions) {
-//        lenient().when(testdataProperties.getDescriptionOptions())
-//                .thenReturn(descriptions);
-//    }
 
 }

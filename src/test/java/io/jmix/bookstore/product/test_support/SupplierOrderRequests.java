@@ -31,7 +31,7 @@ public class SupplierOrderRequests
     @Override
     public SupplierOrderRequestData.SupplierOrderRequestDataBuilder defaultData() {
         return SupplierOrderRequestData.builder()
-                .product(products.saveDefault())
+                .product(products.createDefault())
                 .comment(DEFAULT_COMMENT)
                 .requestedAmount(DEFAULT_REQUESTED_AMOUNT);
     }
