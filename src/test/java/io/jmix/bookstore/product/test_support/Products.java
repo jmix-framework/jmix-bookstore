@@ -31,11 +31,13 @@ public class Products
     public static final String DEFAULT_NAME = "product_name";
     private static final BigDecimal DEFAULT_UNIT_PRICE_AMOUNT = BigDecimal.TEN;
     private static final Currency DEFAULT_CURRENCY = Currency.USD;
+    private static final Boolean DEFAULT_ACTIVE = Boolean.TRUE;
 
     @Override
     public ProductData.ProductDataBuilder defaultData() {
         return ProductData.builder()
                 .name(DEFAULT_NAME)
+                .active(DEFAULT_ACTIVE)
                 .unitPrice(money(DEFAULT_UNIT_PRICE_AMOUNT, DEFAULT_CURRENCY))
                 .category(null);
     }

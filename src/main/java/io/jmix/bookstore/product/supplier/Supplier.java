@@ -1,4 +1,4 @@
-package io.jmix.bookstore.product;
+package io.jmix.bookstore.product.supplier;
 
 import io.jmix.bookstore.entity.Address;
 import io.jmix.bookstore.entity.StandardEntity;

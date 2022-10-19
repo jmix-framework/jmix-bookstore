@@ -287,7 +287,7 @@ public class ProductAssert extends AbstractObjectAssert<ProductAssert, Product> 
    * @return this assertion object.
    * @throws AssertionError - if the actual Product's supplier is not equal to the given one.
    */
-  public ProductAssert hasSupplier(Supplier supplier) {
+  public ProductAssert hasSupplier(io.jmix.bookstore.product.supplier.Supplier supplier) {
     // check that actual Product we want to make assertions on is not null.
     isNotNull();
 
@@ -295,7 +295,7 @@ public class ProductAssert extends AbstractObjectAssert<ProductAssert, Product> 
     String assertjErrorMessage = "\nExpecting supplier of:\n  <%s>\nto be:\n  <%s>\nbut was:\n  <%s>";
 
     // null safe check
-    Supplier actualSupplier = actual.getSupplier();
+    io.jmix.bookstore.product.supplier.Supplier actualSupplier = actual.getSupplier();
     if (!Objects.deepEquals(actualSupplier, supplier)) {
       failWithMessage(assertjErrorMessage, actual, supplier, actualSupplier);
     }
