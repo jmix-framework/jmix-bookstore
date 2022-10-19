@@ -43,7 +43,6 @@
                 <column id="orderDate"/>
                 <column id="customer"/>
             </columns>
-            <simplePagination/>
             <buttonsPanel id="buttonsPanel"
                           alwaysVisible="true">
                 <button id="createBtn" action="ordersTable.create"/>
@@ -51,6 +50,9 @@
                 <button id="removeBtn" action="ordersTable.remove"/>
             </buttonsPanel>
         </groupTable>
+        <pagination id="ordersPagination" align="BOTTOM_RIGHT" itemsPerPageVisible="true">
+            <containerProvider dataContainer="ordersDc" />
+        </pagination>
         <hbox id="lookupActions" spacing="true" visible="false">
             <button action="lookupSelectAction"/>
             <button action="lookupCancelAction"/>

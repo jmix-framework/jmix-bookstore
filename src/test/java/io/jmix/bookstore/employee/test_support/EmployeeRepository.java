@@ -1,6 +1,5 @@
 package io.jmix.bookstore.employee.test_support;
 
-import io.jmix.bookstore.customer.Customer;
 import io.jmix.bookstore.employee.Employee;
 import io.jmix.bookstore.entity.test_support.EntityRepository;
 import io.jmix.bookstore.test_support.EntityValidation;
