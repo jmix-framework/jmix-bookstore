@@ -21,7 +21,7 @@ assertjGenerator {
 apply plugin: 'org.springframework.boot'
 
 jmix {
-    bomVersion = '1.3.4'
+    bomVersion = '1.3.5'
     projectId = 'bookstore'
 }
 
@@ -90,7 +90,7 @@ test {
 
 
 tasks.named("bootBuildImage") {
-    imageName = "jmix/${project.name}"
+    imageName = "docker.io/jmix/${project.name}"
 
     publish = true
     docker {
