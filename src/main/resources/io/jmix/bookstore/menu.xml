@@ -16,6 +16,8 @@
               caption="msg://io.jmix.bookstore.employee.territory.screen/territoryBrowse.menu"/>
         <item screen="themeSettingsScreen" caption="msg://io.jmix.ui.app.themesettings/themeSettings.caption"/>
         <item screen="bookstore_User.browse" caption="msg://io.jmix.bookstore.screen.user/UserBrowse.caption"/>
+        <item screen="bookstore_SupplierOrder.browse"
+              caption="msg://io.jmix.bookstore.product.supplier.screen.supplierorder/supplierOrderBrowse.menu"/>
     </menu>
 
 
