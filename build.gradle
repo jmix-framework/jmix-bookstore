@@ -36,8 +36,8 @@ repositories {
     maven {
         url = 'https://global.repo.jmix.io/repository/premium'
         credentials {
-            username = rootProject['premiumRepoUser'] ?: System.getenv("PREMIUM_REPO_USER")
-            password = rootProject['premiumRepoPass'] ?: System.getenv("PREMIUM_REPO_PASS")
+            username = System.getenv("PREMIUM_REPO_USER") ?: rootProject['premiumRepoUser']
+            password = System.getenv("PREMIUM_REPO_PASS") ?: rootProject['premiumRepoPass']
         }
     }
 }
