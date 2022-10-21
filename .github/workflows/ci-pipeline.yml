@@ -24,6 +24,9 @@ jobs:
           java-version: 17
 
       - name: Run tests
+        env:
+          PREMIUM_REPO_USER: ${{ secrets.PREMIUM_REPO_USER }}
+          PREMIUM_REPO_PASS: ${{ secrets.PREMIUM_REPO_PASS }}
         run: ./gradlew test
 
       - name: Publish Test Report
@@ -31,3 +34,9 @@ jobs:
         if: always() # always run even if the previous step fails
         with:
           report_paths: '**/build/test-results/test/TEST-*.xml'
+
+      - name: Build Docker Image
+        env:
+          DOCKER_HUB_USERNAME: ${{ secrets.DOCKER_HUB_USERNAME }}
+          DOCKER_HUB_PASSWORD: ${{ secrets.DOCKER_HUB_PASSWORD }}
+        run: ./gradlew bootBuildImage

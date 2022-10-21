@@ -1,14 +1,19 @@
 package io.jmix.bookstore.customer;
 
+import com.google.common.base.Strings;
 import io.jmix.bookstore.entity.Address;
 import io.jmix.bookstore.entity.StandardTenantEntity;
+import io.jmix.bookstore.order.Order;
+import io.jmix.core.DeletePolicy;
 import io.jmix.core.entity.annotation.EmbeddedParameters;
-import io.jmix.core.metamodel.annotation.DependsOnProperties;
-import io.jmix.core.metamodel.annotation.InstanceName;
-import io.jmix.core.metamodel.annotation.JmixEntity;
+import io.jmix.core.entity.annotation.OnDelete;
+import io.jmix.core.metamodel.annotation.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
+import java.util.List;
+
+import static com.google.common.base.Strings.nullToEmpty;
 
 @JmixEntity
 @Table(name = "BOOKSTORE_CUSTOMER")
@@ -33,6 +38,25 @@ public class Customer extends StandardTenantEntity {
             @AttributeOverride(name = "city", column = @Column(name = "ADDRESS_CITY"))
     })
     private Address address;
+
+    @OnDelete(DeletePolicy.CASCADE)
+    @Composition
+    @OneToMany(mappedBy = "customer")
+    private List<Order> orders;
+
+    @DependsOnProperties({"firstName", "lastName"})
+    @JmixProperty
+    public String getFullName() {
+        return String.format("%s %s", nullToEmpty(firstName), nullToEmpty(lastName));
+    }
+
+    public List<Order> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(List<Order> orders) {
+        this.orders = orders;
+    }
 
     public Address getAddress() {
         return address;

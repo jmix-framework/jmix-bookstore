@@ -21,7 +21,7 @@ assertjGenerator {
 apply plugin: 'org.springframework.boot'
 
 jmix {
-    bomVersion = '1.3.4'
+    bomVersion = '1.3.5'
     projectId = 'bookstore'
 }
 
@@ -36,8 +36,10 @@ repositories {
     maven {
         url = 'https://global.repo.jmix.io/repository/premium'
         credentials {
-            username = rootProject['premiumRepoUser']
-            password = rootProject['premiumRepoPass']
+            username = System.getenv("PREMIUM_REPO_USER")
+//            username = rootProject['premiumRepoUser']
+            password = System.getenv("PREMIUM_REPO_PASS")
+//            password = rootProject['premiumRepoPass']
         }
     }
 }
@@ -86,4 +88,17 @@ dependencies {
 
 test {
     useJUnitPlatform()
+}
+
+
+tasks.named("bootBuildImage") {
+    imageName = "docker.io/jmix/${project.name}"
+
+//    publish = true
+//    docker {
+//        publishRegistry {
+//            username = System.getenv("DOCKER_HUB_USERNAME")
+//            password = System.getenv("DOCKER_HUB_PASSWORD")
+//        }
+//    }
 }
