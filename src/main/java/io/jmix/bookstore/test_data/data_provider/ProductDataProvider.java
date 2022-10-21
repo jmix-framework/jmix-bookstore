@@ -48,16 +48,20 @@ public class ProductDataProvider implements TestDataProvider<Product, ProductDat
 
     private  Product toProduct(Book book, List<ProductCategory> productCategories) {
         Product product = dataManager.create(Product.class);
-        product.setActive(true);
+        product.setActive(randomOfList(true, true, false));
         product.setName(book.title());
         product.setCategory(randomOfList(productCategories));
         product.setUnitPrice(randomPrice());
+        product.setUnitsOnOrder(0);
 
         int unitsInStock = randomPositiveNumber(200);
         product.setUnitsInStock(unitsInStock);
 
-        if (unitsInStock < 30) {
-            product.setUnitsInStock(randomPositiveNumber(100, 400));
+        if (unitsInStock < 50) {
+            product.setUnitsOnOrder(randomOfList(
+                    0,
+                    randomPositiveNumber(100, 400)
+            ));
         }
 
         return product;
