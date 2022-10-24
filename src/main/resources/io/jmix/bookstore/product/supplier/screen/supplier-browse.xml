@@ -5,7 +5,7 @@
         focusComponent="suppliersTable">
     <data readOnly="true">
         <collection id="suppliersDc"
-                    class="io.jmix.bookstore.product.Supplier">
+                    class="io.jmix.bookstore.product.supplier.Supplier">
             <fetchPlan extends="_base">
                 <property name="address" fetchPlan="_base"/>
             </fetchPlan>

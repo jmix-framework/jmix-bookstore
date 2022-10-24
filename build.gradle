@@ -36,10 +36,10 @@ repositories {
     maven {
         url = 'https://global.repo.jmix.io/repository/premium'
         credentials {
-            username = System.getenv("PREMIUM_REPO_USER")
-//            username = rootProject['premiumRepoUser']
-            password = System.getenv("PREMIUM_REPO_PASS")
-//            password = rootProject['premiumRepoPass']
+            username(rootProject.hasProperty('premiumRepoUser') ?
+                    rootProject['premiumRepoUser'] : System.getenv('PREMIUM_REPO_USER'))
+            password(rootProject.hasProperty('premiumRepoPass') ?
+                    rootProject['premiumRepoPass'] : System.getenv('PREMIUM_REPO_PASS'))
         }
     }
 }
@@ -94,11 +94,11 @@ test {
 tasks.named("bootBuildImage") {
     imageName = "docker.io/jmix/${project.name}"
 
-//    publish = true
-//    docker {
-//        publishRegistry {
-//            username = System.getenv("DOCKER_HUB_USERNAME")
-//            password = System.getenv("DOCKER_HUB_PASSWORD")
-//        }
-//    }
+    publish = true
+    docker {
+        publishRegistry {
+            username = System.getenv("DOCKER_HUB_LOGIN")
+            password = System.getenv("DOCKER_HUB_PASSWORD")
+        }
+    }
 }

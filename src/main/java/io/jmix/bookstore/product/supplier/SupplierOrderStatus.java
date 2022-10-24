@@ -8,7 +8,10 @@ import javax.annotation.Nullable;
 public enum SupplierOrderStatus implements EnumClass<String> {
 
     DRAFT("DRAFT"),
+    VALID("VALID"),
+    INVALID("INVALID"),
     APPROVED("APPROVED"),
+    CHANGES_REQUIRED("CHANGES_REQUIRED"),
     ORDERED("ORDERED"),
     DELIVERED("DELIVERED");
 

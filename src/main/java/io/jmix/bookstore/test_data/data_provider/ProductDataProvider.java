@@ -4,16 +4,15 @@ import io.jmix.bookstore.entity.Currency;
 import io.jmix.bookstore.entity.Money;
 import io.jmix.bookstore.product.Product;
 import io.jmix.bookstore.product.ProductCategory;
+import io.jmix.bookstore.product.supplier.Supplier;
 import io.jmix.core.DataManager;
 import io.jmix.core.SaveContext;
 import net.datafaker.Book;
 import net.datafaker.Faker;
 import org.springframework.stereotype.Component;
-import org.springframework.util.CollectionUtils;
 
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.Random;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -22,7 +21,7 @@ import static io.jmix.bookstore.test_data.data_provider.RandomValues.*;
 @Component("bookstore_ProductDataProvider")
 public class ProductDataProvider implements TestDataProvider<Product, ProductDataProvider.Dependencies> {
 
-    public record Dependencies(List<ProductCategory> productCategories){}
+    public record Dependencies(List<ProductCategory> productCategories, List<Supplier> suppliers){}
 
     protected final DataManager dataManager;
 
@@ -32,25 +31,26 @@ public class ProductDataProvider implements TestDataProvider<Product, ProductDat
 
     @Override
     public List<Product> create(int amount, Dependencies dependencies) {
-        return commit(createProducts(amount, dependencies.productCategories()));
+        return commit(createProducts(amount, dependencies.productCategories(), dependencies.suppliers()));
     }
 
-    private List<Product> createProducts(int amount, List<ProductCategory> productCategories) {
+    private List<Product> createProducts(int amount, List<ProductCategory> productCategories, List<Supplier> suppliers) {
         Faker faker = new Faker();
 
         return Stream.generate(faker::book).limit(amount)
-                .map(book -> toProduct(book, productCategories))
+                .map(book -> toProduct(book, productCategories, suppliers))
                 .collect(Collectors.groupingBy(Product::getName))
                 .values().stream()
                 .map(products -> products.get(0))
                 .collect(Collectors.toList());
     }
 
-    private  Product toProduct(Book book, List<ProductCategory> productCategories) {
+    private  Product toProduct(Book book, List<ProductCategory> productCategories, List<Supplier> suppliers) {
         Product product = dataManager.create(Product.class);
         product.setActive(randomOfList(true, true, false));
         product.setName(book.title());
         product.setCategory(randomOfList(productCategories));
+        product.setSupplier(randomOfList(suppliers));
         product.setUnitPrice(randomPrice());
         product.setUnitsOnOrder(0);
 

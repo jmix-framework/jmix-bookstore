@@ -246,6 +246,82 @@
         </createTable>
     </changeSet>
     <changeSet id="10" author="bookstore">
+        <createTable tableName="BOOKSTORE_SUPPLIER_ORDER">
+            <column name="ID" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_BOOKSTORE_SUPPLIER_ORDER"/>
+            </column>
+            <column name="VERSION" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="CREATED_BY" type="VARCHAR(255)"/>
+            <column name="CREATED_DATE" type="DATETIME"/>
+            <column name="LAST_MODIFIED_BY" type="VARCHAR(255)"/>
+            <column name="LAST_MODIFIED_DATE" type="DATETIME"/>
+            <column name="DELETED_BY" type="VARCHAR(255)"/>
+            <column name="DELETED_DATE" type="DATETIME"/>
+            <column name="SUPPLIER_ID" type="UUID">
+                <constraints nullable="false"/>
+            </column>
+            <column name="STATUS" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="ORDER_DATE" type="DATE">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet id="11" author="bookstore">
+        <createTable tableName="BOOKSTORE_SUPPLIER_ORDER_LINE">
+            <column name="ID" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_BOOKSTORE_SUPPLIER_ORDER_LINE"/>
+            </column>
+            <column name="VERSION" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="CREATED_BY" type="VARCHAR(255)"/>
+            <column name="CREATED_DATE" type="DATETIME"/>
+            <column name="LAST_MODIFIED_BY" type="VARCHAR(255)"/>
+            <column name="LAST_MODIFIED_DATE" type="DATETIME"/>
+            <column name="DELETED_BY" type="VARCHAR(255)"/>
+            <column name="DELETED_DATE" type="DATETIME"/>
+            <column name="SUPPLIER_ORDER_ID" type="UUID">
+                <constraints nullable="false"/>
+            </column>
+            <column name="PRODUCT_ID" type="UUID">
+                <constraints nullable="false"/>
+            </column>
+            <column name="QUANTITY" type="INT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet id="12" author="bookstore">
+        <createTable tableName="BOOKSTORE_SUPPLIER_ORDER_REQUEST">
+            <column name="ID" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_BOOKSTORE_SUPPLIER_ORDER_REQUEST"/>
+            </column>
+            <column name="VERSION" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="CREATED_BY" type="VARCHAR(255)"/>
+            <column name="CREATED_DATE" type="DATETIME"/>
+            <column name="LAST_MODIFIED_BY" type="VARCHAR(255)"/>
+            <column name="LAST_MODIFIED_DATE" type="DATETIME"/>
+            <column name="DELETED_BY" type="VARCHAR(255)"/>
+            <column name="DELETED_DATE" type="DATETIME"/>
+            <column name="PRODUCT_ID" type="UUID">
+                <constraints nullable="false"/>
+            </column>
+            <column name="REQUESTED_AMOUNT" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="COMMENT_" type="CLOB"/>
+            <column name="REQUESTED_BY_ID" type="UUID">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet id="13" author="bookstore">
         <createTable tableName="BOOKSTORE_TERRITORY">
             <column name="ID" type="UUID">
                 <constraints nullable="false" primaryKey="true" primaryKeyName="PK_BOOKSTORE_TERRITORY"/>
@@ -267,7 +343,7 @@
             </column>
         </createTable>
     </changeSet>
-    <changeSet id="11" author="bookstore">
+    <changeSet id="14" author="bookstore">
         <createIndex indexName="IDX_BOOKSTOREEMPLOYE_REPORTSTO" tableName="BOOKSTORE_EMPLOYEE">
             <column name="REPORTS_TO_ID"/>
         </createIndex>
@@ -276,7 +352,7 @@
                                  constraintName="FK_BOOKSTORE_EMPLOYEE_ON_REPORTS_TO" referencedColumnNames="ID"
                                  referencedTableName="BOOKSTORE_EMPLOYEE"/>
     </changeSet>
-    <changeSet id="12" author="bookstore">
+    <changeSet id="15" author="bookstore">
         <createIndex indexName="IDX_BOOKSTOREORDERLINE_PRODUCT" tableName="BOOKSTORE_ORDER_LINE">
             <column name="PRODUCT_ID"/>
         </createIndex>
@@ -285,7 +361,13 @@
                                  constraintName="FK_BOOKSTORE_ORDER_LINE_ON_PRODUCT" referencedColumnNames="ID"
                                  referencedTableName="BOOKSTORE_PRODUCT"/>
     </changeSet>
-    <changeSet id="13" author="bookstore">
+    <changeSet id="16" author="bookstore">
+        <createIndex indexName="IDX_BOOKSTORE_PRODUCT_CATEGORY_UNQ" tableName="BOOKSTORE_PRODUCT_CATEGORY"
+                     unique="true">
+            <column name="NAME"/>
+        </createIndex>
+    </changeSet>
+    <changeSet id="17" author="bookstore">
         <createIndex indexName="IDX_BOOKSTORE_PRODUCT_SUPPLIER" tableName="BOOKSTORE_PRODUCT">
             <column name="SUPPLIER_ID"/>
         </createIndex>
@@ -294,7 +376,55 @@
                                  constraintName="FK_BOOKSTORE_PRODUCT_ON_SUPPLIER" referencedColumnNames="ID"
                                  referencedTableName="BOOKSTORE_SUPPLIER"/>
     </changeSet>
-    <changeSet id="14" author="bookstore">
+    <changeSet id="18" author="bookstore">
+        <createIndex indexName="IDX_BOOKSTORE_SUPPLIER_ORDER_LINE_PRODUCT" tableName="BOOKSTORE_SUPPLIER_ORDER_LINE">
+            <column name="PRODUCT_ID"/>
+        </createIndex>
+
+        <addForeignKeyConstraint baseColumnNames="PRODUCT_ID" baseTableName="BOOKSTORE_SUPPLIER_ORDER_LINE"
+                                 constraintName="FK_BOOKSTORE_SUPPLIER_ORDER_LINE_ON_PRODUCT" referencedColumnNames="ID"
+                                 referencedTableName="BOOKSTORE_PRODUCT"/>
+    </changeSet>
+    <changeSet id="19" author="bookstore">
+        <createIndex indexName="IDX_BOOKSTORE_SUPPLIER_ORDER_LINE_SUPPLIER_ORDER"
+                     tableName="BOOKSTORE_SUPPLIER_ORDER_LINE">
+            <column name="SUPPLIER_ORDER_ID"/>
+        </createIndex>
+
+        <addForeignKeyConstraint baseColumnNames="SUPPLIER_ORDER_ID" baseTableName="BOOKSTORE_SUPPLIER_ORDER_LINE"
+                                 constraintName="FK_BOOKSTORE_SUPPLIER_ORDER_LINE_ON_SUPPLIER_ORDER"
+                                 referencedColumnNames="ID" referencedTableName="BOOKSTORE_SUPPLIER_ORDER"/>
+    </changeSet>
+    <changeSet id="20" author="bookstore">
+        <createIndex indexName="IDX_BOOKSTORE_SUPPLIER_ORDER_REQUEST_PRODUCT"
+                     tableName="BOOKSTORE_SUPPLIER_ORDER_REQUEST">
+            <column name="PRODUCT_ID"/>
+        </createIndex>
+
+        <addForeignKeyConstraint baseColumnNames="PRODUCT_ID" baseTableName="BOOKSTORE_SUPPLIER_ORDER_REQUEST"
+                                 constraintName="FK_BOOKSTORE_SUPPLIER_ORDER_REQUEST_ON_PRODUCT"
+                                 referencedColumnNames="ID" referencedTableName="BOOKSTORE_PRODUCT"/>
+    </changeSet>
+    <changeSet id="21" author="bookstore">
+        <createIndex indexName="IDX_BOOKSTORE_SUPPLIER_ORDER_REQUEST_REQUESTED_BY"
+                     tableName="BOOKSTORE_SUPPLIER_ORDER_REQUEST">
+            <column name="REQUESTED_BY_ID"/>
+        </createIndex>
+
+        <addForeignKeyConstraint baseColumnNames="REQUESTED_BY_ID" baseTableName="BOOKSTORE_SUPPLIER_ORDER_REQUEST"
+                                 constraintName="FK_BOOKSTORE_SUPPLIER_ORDER_REQUEST_ON_REQUESTED_BY"
+                                 referencedColumnNames="ID" referencedTableName="BOOKSTORE_USER"/>
+    </changeSet>
+    <changeSet id="22" author="bookstore">
+        <createIndex indexName="IDX_BOOKSTORE_SUPPLIER_ORDER_SUPPLIER" tableName="BOOKSTORE_SUPPLIER_ORDER">
+            <column name="SUPPLIER_ID"/>
+        </createIndex>
+
+        <addForeignKeyConstraint baseColumnNames="SUPPLIER_ID" baseTableName="BOOKSTORE_SUPPLIER_ORDER"
+                                 constraintName="FK_BOOKSTORE_SUPPLIER_ORDER_ON_SUPPLIER" referencedColumnNames="ID"
+                                 referencedTableName="BOOKSTORE_SUPPLIER"/>
+    </changeSet>
+    <changeSet id="23" author="bookstore">
         <createIndex indexName="IDX_BOOKSTORE_TERRITORY_REGION" tableName="BOOKSTORE_TERRITORY">
             <column name="REGION_ID"/>
         </createIndex>
@@ -303,7 +433,7 @@
                                  constraintName="FK_BOOKSTORE_TERRITORY_ON_REGION" referencedColumnNames="ID"
                                  referencedTableName="BOOKSTORE_REGION"/>
     </changeSet>
-    <changeSet id="15" author="bookstore">
+    <changeSet id="24" author="bookstore">
         <createIndex indexName="IDX_ORDERLINE_ORDER_ID" tableName="BOOKSTORE_ORDER_LINE">
             <column name="ORDER_ID"/>
         </createIndex>
@@ -312,7 +442,7 @@
                                  constraintName="FK_BOOKSTORE_ORDER_LINE_ON_ORDER" referencedColumnNames="ID"
                                  referencedTableName="BOOKSTORE_ORDER"/>
     </changeSet>
-    <changeSet id="16" author="bookstore">
+    <changeSet id="25" author="bookstore">
         <createIndex indexName="IDX_ORDER_CUSTOMER_ID" tableName="BOOKSTORE_ORDER">
             <column name="CUSTOMER_ID"/>
         </createIndex>
@@ -321,17 +451,17 @@
                                  constraintName="FK_BOOKSTORE_ORDER_ON_CUSTOMER" referencedColumnNames="ID"
                                  referencedTableName="BOOKSTORE_CUSTOMER"/>
     </changeSet>
-    <changeSet id="17" author="bookstore">
+    <changeSet id="26" author="bookstore">
         <addForeignKeyConstraint baseColumnNames="EMPLOYEE_ID" baseTableName="BOOKSTORE_EMPLOYEE_TERRITORIES"
                                  constraintName="FK_BOOEMPTER_ON_EMPLOYEE" referencedColumnNames="ID"
                                  referencedTableName="BOOKSTORE_EMPLOYEE"/>
     </changeSet>
-    <changeSet id="18" author="bookstore">
+    <changeSet id="27" author="bookstore">
         <addForeignKeyConstraint baseColumnNames="TERRITORY_ID" baseTableName="BOOKSTORE_EMPLOYEE_TERRITORIES"
                                  constraintName="FK_BOOEMPTER_ON_TERRITORY" referencedColumnNames="ID"
                                  referencedTableName="BOOKSTORE_TERRITORY"/>
     </changeSet>
-    <changeSet id="19" author="bookstore">
+    <changeSet id="28" author="bookstore">
         <addForeignKeyConstraint baseColumnNames="CATEGORY_ID" baseTableName="BOOKSTORE_PRODUCT"
                                  constraintName="FK_BOOKSTORE_PRODUCT_ON_CATEGORY" referencedColumnNames="ID"
                                  referencedTableName="BOOKSTORE_PRODUCT_CATEGORY"/>

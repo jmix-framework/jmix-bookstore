@@ -45,6 +45,19 @@ public class Supplier extends StandardEntity {
     @Column(name = "WEBSITE")
     private String website;
 
+
+    @NotNull
+    @Column(name = "COOPERATION_STATUS", nullable = false)
+    private String cooperationStatus;
+
+    public CooperationStatus getCooperationStatus() {
+        return cooperationStatus == null ? null : CooperationStatus.fromId(cooperationStatus);
+    }
+
+    public void setCooperationStatus(CooperationStatus coorperationStatus) {
+        this.cooperationStatus = coorperationStatus == null ? null : coorperationStatus.getId();
+    }
+
     public String getWebsite() {
         return website;
     }

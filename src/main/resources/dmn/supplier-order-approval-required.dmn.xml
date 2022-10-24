@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<definitions xmlns="http://www.omg.org/spec/DMN/20151101" namespace="http://www.flowable.org/dmn" name="supplier-order-approval-required">
+    <decision id="supplier-order-approval-required" name="supplier-order-approval-required">
+        <decisionTable hitPolicy="FIRST">
+            <input label="Supplier Cooperation Status">
+                <inputExpression id="supplierCooperationStatusInput" typeRef="string">
+                    <text><![CDATA[supplierOrder.supplier.cooperationStatus]]></text>
+                </inputExpression>
+            </input>
+            <output id="approvalNeededOutput" label="Approval needed?" name="approvalNeeded" typeRef="boolean"/>
+            <rule>
+                <inputEntry id="inputEntry_NijW9">
+                    <text><![CDATA["CANDIDATE"]]></text>
+                </inputEntry>
+                <outputEntry id="outputEntry_uGCly">
+                    <text><![CDATA[true]]></text>
+                </outputEntry>
+            </rule>
+            <rule>
+                <inputEntry id="inputEntry_RNmds">
+                    <text><![CDATA["REGULAR"]]></text>
+                </inputEntry>
+                <outputEntry id="outputEntry_mH0J3">
+                    <text><![CDATA[true]]></text>
+                </outputEntry>
+            </rule>
+            <rule>
+                <inputEntry id="inputEntry_AfdRF">
+                    <text><![CDATA["ON_HOLD"]]></text>
+                </inputEntry>
+                <outputEntry id="outputEntry_CEeK3">
+                    <text><![CDATA[true]]></text>
+                </outputEntry>
+            </rule>
+            <rule>
+                <inputEntry id="inputEntry_XnUjK">
+                    <text><![CDATA[]]></text>
+                </inputEntry>
+                <outputEntry id="outputEntry_ak5cN">
+                    <text><![CDATA[false]]></text>
+                </outputEntry>
+            </rule>
+        </decisionTable>
+    </decision>
+</definitions>

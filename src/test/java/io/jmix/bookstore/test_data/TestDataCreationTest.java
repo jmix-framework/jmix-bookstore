@@ -2,7 +2,9 @@ package io.jmix.bookstore.test_data;
 
 import io.jmix.bookstore.product.Product;
 import io.jmix.bookstore.product.ProductCategory;
+import io.jmix.bookstore.product.supplier.Supplier;
 import io.jmix.bookstore.product.test_support.ProductCategories;
+import io.jmix.bookstore.product.test_support.Suppliers;
 import io.jmix.bookstore.test_support.AuthenticatedAsAdmin;
 import io.jmix.core.DataManager;
 import io.jmix.core.TimeSource;
@@ -15,7 +17,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
-import java.time.*;
 import java.util.List;
 
 import static java.util.List.of;
@@ -37,6 +38,8 @@ class TestDataCreationTest {
     DatabaseCleanup databaseCleanup;
     @Autowired
     ProductCategories productCategories;
+    @Autowired
+    Suppliers suppliers;
 
 
     @BeforeEach
@@ -58,12 +61,16 @@ class TestDataCreationTest {
             ProductCategory productCategory1 = productCategories.saveDefault();
             ProductCategory productCategory2 = productCategories.saveDefault();
 
+            // and:
+            Supplier supplier1 = suppliers.saveDefault();
+            Supplier supplier2 = suppliers.saveDefault();
+
 
             // when:
             List<Product> products = testDataCreation.generateProducts(1_000, List.of(
                     productCategory1,
                     productCategory2
-            ));
+            ), List.of(supplier1, supplier2));
 
             // then:
             assertThat(products.size())

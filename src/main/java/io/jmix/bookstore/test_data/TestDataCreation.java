@@ -51,17 +51,7 @@ public class TestDataCreation {
 
     public void createData() {
 
-        databaseCleanup.removeAllEntities(Territory.class);
-        databaseCleanup.removeAllEntities(Region.class);
-
-        databaseCleanup.removeAllEntities(OrderLine.class);
-        databaseCleanup.removeAllEntities(Order.class);
-
-        databaseCleanup.removeAllEntities(Product.class);
-        databaseCleanup.removeAllEntities(Customer.class);
-
-
-        databaseCleanup.removeAllEntities(ProductCategory.class);
+        databaseCleanup.removeAllEntities();
 
         log.info("No Data found in the DB. Test data will be created...");
 
@@ -72,13 +62,11 @@ public class TestDataCreation {
         List<ProductCategory> productCategories = generateProductCategories(number.numberBetween(50, 200));
         log.info("{} Product Categories created", productCategories.size());
 
-
-        List<Product> products = generateProducts(number.numberBetween(500, 1000), productCategories);
-        log.info("{} Products created", products.size());
-
         List<Supplier> suppliers = generateSuppliers(number.numberBetween(50, 200));
         log.info("{} Suppliers created", suppliers.size());
 
+        List<Product> products = generateProducts(number.numberBetween(500, 1000), productCategories, suppliers);
+        log.info("{} Products created", products.size());
 
         List<Region> regions = generateRegions(number.numberBetween(50, 200));
         log.info("{} Regions created", regions.size());
@@ -125,9 +113,9 @@ public class TestDataCreation {
         return supplierDataProvider.create(amount, new SupplierDataProvider.Dependencies());
     }
 
-    public List<Product> generateProducts(int amount, List<ProductCategory> productCategories) {
+    public List<Product> generateProducts(int amount, List<ProductCategory> productCategories, List<Supplier> suppliers) {
         log.info("Trying to create a random amount of {} Products", amount);
-        return productDataProvider.create(amount, new ProductDataProvider.Dependencies(productCategories));
+        return productDataProvider.create(amount, new ProductDataProvider.Dependencies(productCategories, suppliers));
     }
 
     public List<ProductCategory> generateProductCategories(int amount) {

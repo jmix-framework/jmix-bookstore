@@ -18,7 +18,7 @@ public class EntityValidation {
     public <T> void ensureIsValid(T entity) {
         Set<ConstraintViolation<T>> violations = validate(entity);
         if (!violations.isEmpty()) {
-            throw new EntityValidationException("Entity validation failed", violations);
+            throw new EntityValidationException("Entity validation failed: ", violations);
         }
     }
 

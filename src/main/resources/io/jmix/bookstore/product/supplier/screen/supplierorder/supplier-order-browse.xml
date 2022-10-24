@@ -19,6 +19,8 @@
     <facets>
         <dataLoadCoordinator auto="true"/>
         <screenSettings id="settingsFacet" auto="true"/>
+        <notification id="supplierOrdersFromRequestsCreatedConfirmation" type="TRAY"
+                      caption="msg://supplierOrdersFromRequestsCreatedConfirmation"/>
     </facets>
     <actions>
         <action id="lookupSelectAction"
@@ -44,9 +46,14 @@
                 <action id="create" type="create"/>
                 <action id="edit" type="edit"/>
                 <action id="remove" type="remove"/>
+                <action id="createSupplierOrdersFromRequests" icon="LIST_ALT"
+                        caption="msg://createSupplierOrdersFromRequests"/>
+                <action id="performSupplierOrderProcess" icon="font-icon:HOURGLASS_START"
+                        caption="msg://performSupplierOrderProcess"/>
             </actions>
             <columns>
                 <column property="supplier" id="supplier"/>
+                <column property="supplier.cooperationStatus" id="supplierCooperationStatus"/>
                 <column property="status" id="status"/>
                 <column property="orderDate" id="orderDate"/>
             </columns>
@@ -56,6 +63,8 @@
                 <button id="createBtn" action="supplierOrdersTable.create"/>
                 <button id="editBtn" action="supplierOrdersTable.edit"/>
                 <button id="removeBtn" action="supplierOrdersTable.remove"/>
+                <button id="createSupplierOrdersFromRequestsBtn" action="supplierOrdersTable.createSupplierOrdersFromRequests"/>
+                <button id="performSupplierOrderProcessBtn" action="supplierOrdersTable.performSupplierOrderProcess"/>
             </buttonsPanel>
         </dataGrid>
         <hbox id="lookupActions" spacing="true" visible="false">

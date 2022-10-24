@@ -32,8 +32,10 @@ public class SupplierOrder extends StandardEntity {
 
     @OnDelete(DeletePolicy.CASCADE)
     @Composition
-    @OneToMany(mappedBy = "supplierOrder")
+    @OneToMany(mappedBy = "supplierOrder", cascade = CascadeType.ALL)
     private List<SupplierOrderLine> orderLines;
+
+
 
     public SupplierOrderStatus getStatus() {
         return status == null ? null : SupplierOrderStatus.fromId(status);

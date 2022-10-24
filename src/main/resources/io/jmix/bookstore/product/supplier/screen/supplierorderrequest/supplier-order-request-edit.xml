@@ -5,7 +5,9 @@
     <data>
         <instance id="supplierOrderRequestDc"
                   class="io.jmix.bookstore.product.supplier.SupplierOrderRequest">
-            <fetchPlan extends="_base"/>
+            <fetchPlan extends="_base">
+                <property name="requestedBy" fetchPlan="_base"/>
+            </fetchPlan>
             <loader/>
         </instance>
     </data>

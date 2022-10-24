@@ -2,6 +2,7 @@ package io.jmix.bookstore.product.test_support;
 
 
 import io.jmix.bookstore.product.supplier.SupplierOrderRequest;
+import io.jmix.bookstore.security.DatabaseUserRepository;
 import io.jmix.bookstore.test_support.TestDataProvisioning;
 import io.jmix.core.DataManager;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,8 @@ public class SupplierOrderRequests
 
     @Autowired
     Products products;
+    @Autowired
+    DatabaseUserRepository databaseUserRepository;
 
     private static final Integer DEFAULT_REQUESTED_AMOUNT = 10;
     public static final String DEFAULT_COMMENT = "supplierOrderRequest_comment";
@@ -31,6 +34,7 @@ public class SupplierOrderRequests
     @Override
     public SupplierOrderRequestData.SupplierOrderRequestDataBuilder defaultData() {
         return SupplierOrderRequestData.builder()
+                .requestedBy(databaseUserRepository.loadUserByUsername("admin"))
                 .product(products.createDefault())
                 .comment(DEFAULT_COMMENT)
                 .requestedAmount(DEFAULT_REQUESTED_AMOUNT);
