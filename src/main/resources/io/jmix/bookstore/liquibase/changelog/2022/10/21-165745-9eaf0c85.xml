@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.11.xsd"
+        objectQuotingStrategy="QUOTE_ONLY_RESERVED_WORDS">
+    <changeSet id="1" author="bookstore">
+        <addColumn tableName="BOOKSTORE_SUPPLIER_ORDER_LINE">
+            <column name="REQUEST_ID" type="UUID"/>
+        </addColumn>
+    </changeSet>
+    <changeSet id="2" author="bookstore">
+        <createIndex indexName="IDX_BOOKSTORE_SUPPLIER_ORDER_LINE_REQUEST" tableName="BOOKSTORE_SUPPLIER_ORDER_LINE">
+            <column name="REQUEST_ID"/>
+        </createIndex>
+
+        <addForeignKeyConstraint baseColumnNames="REQUEST_ID" baseTableName="BOOKSTORE_SUPPLIER_ORDER_LINE"
+                                 constraintName="FK_BOOKSTORE_SUPPLIER_ORDER_LINE_ON_REQUEST" referencedColumnNames="ID"
+                                 referencedTableName="BOOKSTORE_SUPPLIER_ORDER_REQUEST"/>
+    </changeSet>
+</databaseChangeLog>

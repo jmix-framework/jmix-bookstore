@@ -1,6 +1,8 @@
 package io.jmix.bookstore.product.screen;
 
+import io.jmix.bookstore.entity.User;
 import io.jmix.bookstore.product.supplier.SupplierOrderRequest;
+import io.jmix.core.security.CurrentAuthentication;
 import io.jmix.ui.ScreenBuilders;
 import io.jmix.ui.action.Action;
 import io.jmix.ui.component.DataGrid;
@@ -18,6 +20,10 @@ public class ProductBrowse extends StandardLookup<Product> {
     @Autowired
     private ScreenBuilders screenBuilders;
 
+    @Autowired
+    private CurrentAuthentication currentAuthentication;
+
+
     @Subscribe("productsTable.fillUpInventory")
     public void onProductsTableFillUpInventory(Action.ActionPerformedEvent event) {
 
@@ -25,6 +31,9 @@ public class ProductBrowse extends StandardLookup<Product> {
                 .withInitializer(supplierOrderRequest -> {
                     supplierOrderRequest.setRequestedAmount(100);
                     supplierOrderRequest.setProduct(productsTable.getSingleSelected());
+
+                    User user = (User) currentAuthentication.getUser();
+                    supplierOrderRequest.setRequestedBy(user);
                 })
                 .show();
 

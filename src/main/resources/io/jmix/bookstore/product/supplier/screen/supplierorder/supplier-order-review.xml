@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <window xmlns="http://jmix.io/schema/ui/window"
-        caption="msg://supplierOrderEdit.caption"
+        caption="msg://supplierOrderReview.caption"
         focusComponent="form">
     <data>
         <instance id="supplierOrderDc"
@@ -9,6 +9,9 @@
                 <property name="supplier" fetchPlan="_base"/>
                 <property name="orderLines" fetchPlan="_base">
                     <property name="product" fetchPlan="_base"/>
+                    <property name="request" fetchPlan="_base">
+                        <property name="requestedBy" fetchPlan="_base"/>
+                    </property>
                 </property>
             </fetchPlan>
             <loader/>
@@ -28,44 +31,40 @@
                 caption="msg:///actions.Close"
                 icon="EDITOR_CANCEL"/>
     </actions>
-    <dialogMode height="768"
-                width="1024"
-                modal="true"
-                forceDialog="true"/>
+    <dialogMode height="75%"
+                width="75%"/>
     <layout spacing="true" expand="orderLinesBox">
+        <label stylename="failure" id="changesRequiredCommentLabel" visible="false" width="100%" icon="WARNING"/>
             <form id="form" dataContainer="supplierOrderDc">
                 <column width="350px">
-                    <entityPicker id="supplierField" property="supplier">
-                        <actions>
-                            <action id="entityLookup" type="entity_lookup"/>
-                            <action id="entityClear" type="entity_clear"/>
-                        </actions>
-                    </entityPicker>
-                    <comboBox id="statusField" property="status"/>
+                    <entityPicker editable="false" id="supplierField" property="supplier" />
+                    <valuePicker editable="false" id="supplierStatusField" property="supplier.cooperationStatus" />
+                </column>
+                <column width="350px">
                     <dateField id="orderDateField" property="orderDate"/>
                 </column>
             </form>
             <groupBox id="orderLinesBox" caption="msg://io.jmix.bookstore.product.supplier/SupplierOrder.orderLines" expand="orderLinesTable">
-                <table id="orderLinesTable" dataContainer="orderLinesDc" width="100%">
+                <table id="orderLinesTable" dataContainer="orderLinesDc" width="100%" editable="true">
                     <actions>
-                        <action id="create" type="create"/>
-                        <action id="edit" type="edit"/>
                         <action id="remove" type="remove"/>
                     </actions>
                     <columns>
-                        <column id="quantity"/>
+                        <column editable="true" id="quantity"/>
                         <column id="product"/>
+                        <column id="request.requestedAmount"/>
+                        <column id="request.requestedBy"/>
+                        <column id="request.comment" caption="msg://requesterComment"/>
                     </columns>
                     <buttonsPanel>
-                        <button action="orderLinesTable.create"/>
-                        <button action="orderLinesTable.edit"/>
                         <button action="orderLinesTable.remove"/>
                     </buttonsPanel>
                 </table>
             </groupBox>
-        <hbox id="editActions" spacing="true">
-            <button id="commitAndCloseBtn" action="windowCommitAndClose"/>
-            <button id="closeBtn" action="windowClose"/>
+        <hbox id="taskActions" spacing="true">
+            <button id="yesOutcomeBtn" icon="font-icon:CHECK" caption="msg://yes"/>
+            <button id="noOutcomeBtn" icon="CLOSE" caption="msg://no"/>
+            <button id="cancelBtn" icon="font-icon:BAN" caption="msg://cancel"/>
         </hbox>
     </layout>
 </window>

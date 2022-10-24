@@ -1,5 +1,6 @@
 package io.jmix.bookstore.product.test_support;
 
+import io.jmix.bookstore.entity.User;
 import io.jmix.bookstore.product.Product;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -13,4 +14,5 @@ public class SupplierOrderRequestData {
     Product product;
     Integer requestedAmount;
     String comment;
+    User requestedBy;
 }

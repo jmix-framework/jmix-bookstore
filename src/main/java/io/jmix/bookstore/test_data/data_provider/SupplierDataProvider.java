@@ -1,6 +1,7 @@
 package io.jmix.bookstore.test_data.data_provider;
 
 import io.jmix.bookstore.entity.Title;
+import io.jmix.bookstore.product.supplier.CooperationStatus;
 import io.jmix.bookstore.product.supplier.Supplier;
 import io.jmix.core.DataManager;
 import io.jmix.core.SaveContext;
@@ -72,6 +73,7 @@ public class SupplierDataProvider implements TestDataProvider<Supplier, Supplier
                 company.email(firstName, lastName),
                 company.email(firstName, lastName)
         ));
+        supplier.setCooperationStatus(randomEnum(CooperationStatus.values()));
         supplier.setPhone(supplierData.phoneNumber().phoneNumber());
         return supplier;
     }

@@ -10,6 +10,7 @@
                 <property name="description"/>
                 <property name="category" fetchPlan="_base"/>
                 <property name="active"/>
+                <property name="supplier" fetchPlan="_base"/>
             </fetchPlan>
             <loader id="productsDl">
                 <query>
@@ -58,6 +59,8 @@
             <columns>
                 <column property="name" id="name"/>
                 <column property="category" id="category"/>
+                <column property="supplier" id="supplier"/>
+                <column property="supplier.cooperationStatus" id="supplierCooperationStatus"/>
                 <column property="active" id="active"/>
             </columns>
             <simplePagination/>

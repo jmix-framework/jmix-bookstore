@@ -3,10 +3,12 @@ package io.jmix.bookstore.product.test_support;
 import io.jmix.bookstore.entity.Address;
 import io.jmix.bookstore.entity.Currency;
 import io.jmix.bookstore.entity.Money;
+import io.jmix.bookstore.entity.Title;
 import io.jmix.bookstore.entity.test_support.AddressData;
 import io.jmix.bookstore.entity.test_support.AddressMapper;
 import io.jmix.bookstore.entity.test_support.MoneyData;
 import io.jmix.bookstore.entity.test_support.MoneyMapper;
+import io.jmix.bookstore.product.supplier.CooperationStatus;
 import io.jmix.bookstore.product.supplier.Supplier;
 import io.jmix.bookstore.test_support.TestDataProvisioning;
 import io.jmix.core.DataManager;
@@ -41,7 +43,8 @@ public class Suppliers
 
     public static final String DEFAULT_NAME = "supplier_name";
     public static final String DEFAULT_CONTACT_NAME = "Magda Supplier";
-    public static final String DEFAULT_CONTACT_TITLE = "Mrs";
+    public static final Title DEFAULT_CONTACT_TITLE = Title.MRS;
+    public static final CooperationStatus DEFAULT_COOPERATION_STATUS = CooperationStatus.REGULAR;
 
     @Override
     public SupplierData.SupplierDataBuilder defaultData() {
@@ -52,6 +55,7 @@ public class Suppliers
                 .contactName(DEFAULT_CONTACT_NAME)
                 .contactTitle(DEFAULT_CONTACT_TITLE)
                 .phone(DEFAULT_PHONE)
+                .cooperationStatus(DEFAULT_COOPERATION_STATUS)
                 .address(defaultAddress());
     }
 

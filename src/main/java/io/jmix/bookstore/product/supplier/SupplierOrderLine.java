@@ -10,7 +10,8 @@ import javax.validation.constraints.NotNull;
 @JmixEntity
 @Table(name = "BOOKSTORE_SUPPLIER_ORDER_LINE", indexes = {
         @Index(name = "IDX_BOOKSTORE_SUPPLIER_ORDER_LINE_PRODUCT", columnList = "PRODUCT_ID"),
-        @Index(name = "IDX_BOOKSTORE_SUPPLIER_ORDER_LINE_SUPPLIER_ORDER", columnList = "SUPPLIER_ORDER_ID")
+        @Index(name = "IDX_BOOKSTORE_SUPPLIER_ORDER_LINE_SUPPLIER_ORDER", columnList = "SUPPLIER_ORDER_ID"),
+        @Index(name = "IDX_BOOKSTORE_SUPPLIER_ORDER_LINE_REQUEST", columnList = "REQUEST_ID")
 })
 @Entity(name = "bookstore_SupplierOrderLine")
 public class SupplierOrderLine extends StandardEntity {
@@ -27,6 +28,18 @@ public class SupplierOrderLine extends StandardEntity {
     @Column(name = "QUANTITY", nullable = false)
     @NotNull
     private Integer quantity;
+
+    @JoinColumn(name = "REQUEST_ID")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private SupplierOrderRequest request;
+
+    public SupplierOrderRequest getRequest() {
+        return request;
+    }
+
+    public void setRequest(SupplierOrderRequest request) {
+        this.request = request;
+    }
 
     public SupplierOrder getSupplierOrder() {
         return supplierOrder;

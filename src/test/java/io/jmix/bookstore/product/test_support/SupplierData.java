@@ -1,6 +1,8 @@
 package io.jmix.bookstore.product.test_support;
 
 import io.jmix.bookstore.entity.Address;
+import io.jmix.bookstore.entity.Title;
+import io.jmix.bookstore.product.supplier.CooperationStatus;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -13,9 +15,10 @@ public class SupplierData {
     String name;
     Address address;
     String contactName;
-    String contactTitle;
+    Title contactTitle;
     String phone;
     String email;
     String website;
+    CooperationStatus cooperationStatus;
 
 }

@@ -6,9 +6,10 @@
                       http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.11.xsd"
         objectQuotingStrategy="QUOTE_ONLY_RESERVED_WORDS">
     <changeSet id="1" author="bookstore">
-        <createIndex indexName="IDX_BOOKSTORE_PRODUCT_CATEGORY_UNQ" tableName="BOOKSTORE_PRODUCT_CATEGORY"
-                     unique="true">
-            <column name="NAME"/>
-        </createIndex>
+        <addColumn tableName="BOOKSTORE_SUPPLIER">
+            <column name="COOPERATION_STATUS" type="VARCHAR(255)"/>
+        </addColumn>
+
+        <addNotNullConstraint columnName="COOPERATION_STATUS" tableName="BOOKSTORE_SUPPLIER"/>
     </changeSet>
 </databaseChangeLog>
