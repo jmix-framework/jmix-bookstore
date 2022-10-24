@@ -20,13 +20,6 @@ jobs:
         with:
           java-version: 17
 
-
-      - name: Login to Docker Hub
-        uses: docker/login-action@v2
-        with:
-          username: ${{ secrets.DOCKER_HUB_LOGIN }}
-          password: ${{ secrets.DOCKER_HUB_PASSWORD }}
-
       - name: Run tests
         env:
           PREMIUM_REPO_USER: ${{ secrets.PREMIUM_REPO_USER }}
@@ -41,6 +34,6 @@ jobs:
 
       - name: Build Docker Image
         env:
-          DOCKER_HUB_USERNAME: ${{ secrets.DOCKER_HUB_USERNAME }}
+          DOCKER_HUB_LOGIN: ${{ secrets.DOCKER_HUB_LOGIN }}
           DOCKER_HUB_PASSWORD: ${{ secrets.DOCKER_HUB_PASSWORD }}
         run: ./gradlew bootBuildImage
