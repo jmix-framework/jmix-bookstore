@@ -3,14 +3,16 @@ package io.jmix.bookstore.test_data;
 import io.jmix.bookstore.customer.Customer;
 import io.jmix.bookstore.employee.Region;
 import io.jmix.bookstore.employee.Territory;
+import io.jmix.bookstore.entity.User;
 import io.jmix.bookstore.order.Order;
-import io.jmix.bookstore.order.OrderLine;
 import io.jmix.bookstore.product.Product;
 import io.jmix.bookstore.product.ProductCategory;
 import io.jmix.bookstore.product.supplier.Supplier;
 import io.jmix.bookstore.test_data.data_provider.*;
 import io.jmix.core.DataManager;
 import io.jmix.core.TimeSource;
+import io.jmix.core.querycondition.PropertyCondition;
+import io.jmix.securitydata.entity.RoleAssignmentEntity;
 import net.datafaker.Faker;
 import net.datafaker.Number;
 import org.slf4j.Logger;
@@ -18,6 +20,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Component("bookstore_TestDataCreation")
 public class TestDataCreation {
@@ -32,11 +36,12 @@ public class TestDataCreation {
     protected final TerritoryDataProvider territoryDataProvider;
     protected final CustomerDataProvider customerDataProvider;
     protected final OrderDataProvider orderDataProvider;
+    protected final UserDataProvider userDataProvider;
     protected final DatabaseCleanup databaseCleanup;
 
     public TestDataCreation(
             TimeSource timeSource,
-            DataManager dataManager, ProductDataProvider productDataProvider, ProductCategoryDataProvider productCategoryDataProvider, SupplierDataProvider supplierDataProvider, RegionDataProvider regionDataProvider, TerritoryDataProvider territoryDataProvider, CustomerDataProvider customerDataProvider, OrderDataProvider orderDataProvider, DatabaseCleanup databaseCleanup) {
+            DataManager dataManager, ProductDataProvider productDataProvider, ProductCategoryDataProvider productCategoryDataProvider, SupplierDataProvider supplierDataProvider, RegionDataProvider regionDataProvider, TerritoryDataProvider territoryDataProvider, CustomerDataProvider customerDataProvider, OrderDataProvider orderDataProvider, UserDataProvider userDataProvider, DatabaseCleanup databaseCleanup) {
         this.timeSource = timeSource;
         this.dataManager = dataManager;
         this.productDataProvider = productDataProvider;
@@ -46,17 +51,23 @@ public class TestDataCreation {
         this.territoryDataProvider = territoryDataProvider;
         this.customerDataProvider = customerDataProvider;
         this.orderDataProvider = orderDataProvider;
+        this.userDataProvider = userDataProvider;
         this.databaseCleanup = databaseCleanup;
     }
 
     public void createData() {
 
         databaseCleanup.removeAllEntities();
+        databaseCleanup.removeNonAdminUsers();
 
         log.info("No Data found in the DB. Test data will be created...");
 
 
         Number number = new Faker().number();
+
+
+        List<User> users = generateUsers();
+        log.info("{} Users created", users.size());
 
 
         List<ProductCategory> productCategories = generateProductCategories(number.numberBetween(50, 200));
@@ -121,6 +132,10 @@ public class TestDataCreation {
     public List<ProductCategory> generateProductCategories(int amount) {
         log.info("Trying to create a random amount of {} Product Categories", amount);
         return productCategoryDataProvider.create(amount, new ProductCategoryDataProvider.Dependencies());
+    }
+    public List<User> generateUsers() {
+        log.info("Trying to create pre-defined Users");
+        return userDataProvider.create(0, new UserDataProvider.Dependencies());
     }
 
 }

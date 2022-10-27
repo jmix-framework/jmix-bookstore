@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.11.xsd"
+        objectQuotingStrategy="QUOTE_ONLY_RESERVED_WORDS">
+    <changeSet id="1" author="bookstore">
+        <addColumn tableName="BOOKSTORE_EMPLOYEE">
+            <column name="USER_ID" type="UUID"/>
+        </addColumn>
+    </changeSet>
+    <changeSet id="2" author="bookstore">
+        <createIndex indexName="IDX_BOOKSTORE_EMPLOYEE_USER" tableName="BOOKSTORE_EMPLOYEE">
+            <column name="USER_ID"/>
+        </createIndex>
+
+        <addForeignKeyConstraint baseColumnNames="USER_ID" baseTableName="BOOKSTORE_EMPLOYEE"
+                                 constraintName="FK_BOOKSTORE_EMPLOYEE_ON_USER" referencedColumnNames="ID"
+                                 referencedTableName="BOOKSTORE_USER"/>
+    </changeSet>
+</databaseChangeLog>

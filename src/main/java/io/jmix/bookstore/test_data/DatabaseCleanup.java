@@ -4,6 +4,7 @@ import io.jmix.bookstore.customer.Customer;
 import io.jmix.bookstore.employee.Employee;
 import io.jmix.bookstore.employee.Region;
 import io.jmix.bookstore.employee.Territory;
+import io.jmix.bookstore.entity.User;
 import io.jmix.bookstore.order.Order;
 import io.jmix.bookstore.order.OrderLine;
 import io.jmix.bookstore.product.Product;
@@ -16,7 +17,9 @@ import io.jmix.core.DataManager;
 import io.jmix.core.Metadata;
 import io.jmix.core.MetadataTools;
 import io.jmix.core.SaveContext;
+import io.jmix.core.querycondition.PropertyCondition;
 import io.jmix.core.security.SystemAuthenticator;
+import io.jmix.securitydata.entity.RoleAssignmentEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -25,6 +28,9 @@ import org.springframework.stereotype.Component;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.sql.DataSource;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 
 @Component
@@ -72,5 +78,17 @@ public class DatabaseCleanup {
         performDeletion(Supplier.class, jdbcTemplate);
         performDeletion(Territory.class, jdbcTemplate);
         performDeletion(Region.class, jdbcTemplate);
+    }
+
+    public void removeAllEntities(List<?> entities) {
+        SaveContext entitiesToRemove = new SaveContext();
+        entities.forEach(entitiesToRemove::removing);
+        dataManager.save(entitiesToRemove);
+    }
+
+    public void removeNonAdminUsers() {
+        List<RoleAssignmentEntity> allRoleAssignmentExceptAdmin = dataManager.load(RoleAssignmentEntity.class).condition(PropertyCondition.notEqual("username", "admin")).list();
+        List<User> allUsersExceptAdmin = dataManager.load(User.class).condition(PropertyCondition.notEqual("username", "admin")).list();
+        removeAllEntities(Stream.concat(allRoleAssignmentExceptAdmin.stream(), allUsersExceptAdmin.stream()).collect(Collectors.toList()));
     }
 }

@@ -14,8 +14,9 @@
         <flowNodeRef>MarkOrderAsInvalidEntityTask</flowNodeRef>
         <flowNodeRef>PlaceSupplierOrderServiceTask</flowNodeRef>
       </lane>
-      <lane id="procurmentEmployeeLane" name="Procurement Employee">
+      <lane id="procurementEmployeeLane" name="Procurement Employee">
         <extensionElements>
+          <jmix:assignmentDetails assigneeSource="expression" candidateUsersSource="users" candidateGroups="procurement-employee-group" candidateGroupsValue="procurement-employee-group" candidateGroupsSource="userGroups" />
           <jmix:conditionDetails conditionSource="userTaskOutcome" />
         </extensionElements>
         <flowNodeRef>ReviewSupplierOrderDraftHumanTask</flowNodeRef>
@@ -24,8 +25,9 @@
         <flowNodeRef>ApprovalRequiredDecision</flowNodeRef>
         <flowNodeRef>ApprovalRequiredGateway</flowNodeRef>
       </lane>
-      <lane id="procurmentSupervisorLane" name="Procurment Supervisor">
+      <lane id="procurementSupervisorLane" name="Procurement Supervisor">
         <extensionElements>
+          <jmix:assignmentDetails assigneeSource="expression" candidateUsersSource="users" candidateGroups="procurement-employee-group" candidateGroupsValue="procurement-employee-group" candidateGroupsSource="userGroups" />
           <jmix:conditionDetails conditionSource="userTaskOutcome" />
         </extensionElements>
         <flowNodeRef>SupplierOrderApprovedGateway</flowNodeRef>
@@ -193,10 +195,10 @@
       <bpmndi:BPMNShape id="Participant_14kbpym_di" bpmnElement="JmixBookstoreParticipant" isHorizontal="true">
         <omgdc:Bounds x="100" y="130" width="1198" height="580" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Lane_0xe6g31_di" bpmnElement="procurmentSupervisorLane" isHorizontal="true">
+      <bpmndi:BPMNShape id="Lane_0xe6g31_di" bpmnElement="procurementSupervisorLane" isHorizontal="true">
         <omgdc:Bounds x="130" y="450" width="1168" height="260" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Lane_1wuht0x_di" bpmnElement="procurmentEmployeeLane" isHorizontal="true">
+      <bpmndi:BPMNShape id="Lane_1wuht0x_di" bpmnElement="procurementEmployeeLane" isHorizontal="true">
         <omgdc:Bounds x="130" y="255" width="1168" height="195" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Lane_0ohu76m_di" bpmnElement="systemLane" isHorizontal="true">
