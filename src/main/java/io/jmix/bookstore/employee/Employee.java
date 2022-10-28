@@ -3,6 +3,7 @@ package io.jmix.bookstore.employee;
 import io.jmix.bookstore.entity.Address;
 import io.jmix.bookstore.entity.StandardEntity;
 import io.jmix.bookstore.entity.Title;
+import io.jmix.bookstore.entity.User;
 import io.jmix.core.entity.annotation.EmbeddedParameters;
 import io.jmix.core.metamodel.annotation.InstanceName;
 import io.jmix.core.metamodel.annotation.JmixEntity;
@@ -14,7 +15,8 @@ import java.util.List;
 
 @JmixEntity
 @Table(name = "BOOKSTORE_EMPLOYEE", indexes = {
-        @Index(name = "IDX_BOOKSTOREEMPLOYE_REPORTSTO", columnList = "REPORTS_TO_ID")
+        @Index(name = "IDX_BOOKSTOREEMPLOYE_REPORTSTO", columnList = "REPORTS_TO_ID"),
+        @Index(name = "IDX_BOOKSTORE_EMPLOYEE_USER", columnList = "USER_ID")
 })
 @Entity(name = "bookstore_Employee")
 public class Employee extends StandardEntity {
@@ -59,6 +61,18 @@ public class Employee extends StandardEntity {
             inverseJoinColumns = @JoinColumn(name = "TERRITORY_ID", referencedColumnName = "ID"))
     @ManyToMany
     private List<Territory> territories;
+
+    @JoinColumn(name = "USER_ID")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private User user;
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
 
     public List<Territory> getTerritories() {
         return territories;

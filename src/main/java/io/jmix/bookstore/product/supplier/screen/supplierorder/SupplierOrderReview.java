@@ -1,5 +1,6 @@
 package io.jmix.bookstore.product.supplier.screen.supplierorder;
 
+import io.jmix.bookstore.entity.User;
 import io.jmix.bookstore.product.supplier.SupplierOrder;
 import io.jmix.bookstore.product.supplier.SupplierOrderLine;
 import io.jmix.bookstore.product.supplier.SupplierOrderStatus;
@@ -7,6 +8,7 @@ import io.jmix.bpmui.processform.ProcessFormContext;
 import io.jmix.bpmui.processform.annotation.Outcome;
 import io.jmix.bpmui.processform.annotation.ProcessForm;
 import io.jmix.bpmui.processform.annotation.ProcessVariable;
+import io.jmix.core.security.CurrentAuthentication;
 import io.jmix.ui.action.list.RemoveAction;
 import io.jmix.ui.component.Button;
 import io.jmix.ui.component.DateField;
@@ -52,6 +54,8 @@ public class SupplierOrderReview extends StandardEditor<SupplierOrder> {
     private RemoveAction<SupplierOrderLine> orderLinesTableRemove;
     @Autowired
     private Label<String> changesRequiredCommentLabel;
+    @Autowired
+    private CurrentAuthentication currentAuthentication;
 
 
     @Subscribe
@@ -85,6 +89,9 @@ public class SupplierOrderReview extends StandardEditor<SupplierOrder> {
         Map<String, Object> processVariables = new HashMap<>();
         processVariables.put("supplierOrder", getEditedEntity());
 
+        User user = (User) currentAuthentication.getUser();
+        processVariables.put("reviewedBy", user);
+
         processFormContext.taskCompletion()
                 .withOutcome(YES_OUTCOME)
                 .withProcessVariables(processVariables)
@@ -97,6 +104,10 @@ public class SupplierOrderReview extends StandardEditor<SupplierOrder> {
     public void onNoOutcomeBtnClick(Button.ClickEvent event) {
         Map<String, Object> processVariables = new HashMap<>();
         processVariables.put("supplierOrder", getEditedEntity());
+
+
+        User user = (User) currentAuthentication.getUser();
+        processVariables.put("reviewedBy", user);
 
         processFormContext.taskCompletion()
                 .withOutcome(NO_OUTCOME)

@@ -6,7 +6,6 @@ import io.jmix.core.SaveContext;
 import net.datafaker.*;
 import org.springframework.stereotype.Component;
 
-import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -15,18 +14,18 @@ import java.util.stream.Stream;
 import static io.jmix.bookstore.test_data.data_provider.RandomValues.randomOfList;
 
 @Component("bookstore_CustomerDataProvider")
-public class CustomerDataProvider implements TestDataProvider<Customer, CustomerDataProvider.Dependencies> {
+public class CustomerDataProvider implements TestDataProvider<Customer, CustomerDataProvider.DataContext> {
 
     protected final DataManager dataManager;
 
-    public record Dependencies(){}
+    public record DataContext(int amount){}
     public CustomerDataProvider(DataManager dataManager) {
         this.dataManager = dataManager;
     }
 
     @Override
-    public List<Customer> create(int amount, Dependencies dependencies) {
-        return commit(createCustomer(amount));
+    public List<Customer> create(DataContext dataContext) {
+        return commit(createCustomer(dataContext.amount()));
     }
 
     private List<Customer> createCustomer(int amount) {

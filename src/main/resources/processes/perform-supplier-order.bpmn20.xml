@@ -6,7 +6,7 @@
     </extensionElements>
     <participant id="JmixBookstoreParticipant" name="Jmix Bookstore" processRef="perform-supplier-order" />
   </collaboration>
-  <process id="perform-supplier-order" name="Perform Supplier Order" isExecutable="true">
+  <process id="perform-supplier-order" name="Perform Supplier Order" isExecutable="true" flowable:candidateStarterGroups="order-fulfillment-employees,procurement-employees" jmix:candidateStarterGroupsValue="order-fulfillment-employees,procurement-employees">
     <laneSet id="LaneSet_0q0huc4">
       <lane id="systemLane" name="System">
         <flowNodeRef>PerformSupplierOrderStartEvent</flowNodeRef>
@@ -14,9 +14,10 @@
         <flowNodeRef>MarkOrderAsInvalidEntityTask</flowNodeRef>
         <flowNodeRef>PlaceSupplierOrderServiceTask</flowNodeRef>
       </lane>
-      <lane id="procurmentEmployeeLane" name="Procurement Employee">
+      <lane id="procurementEmployeeLane" name="Procurement Employee">
         <extensionElements>
           <jmix:conditionDetails conditionSource="userTaskOutcome" />
+          <jmix:assignmentDetails assigneeSource="expression" candidateUsersSource="users" candidateGroups="procurement-employees" candidateGroupsValue="procurement-employees" candidateGroupsSource="userGroups" />
         </extensionElements>
         <flowNodeRef>ReviewSupplierOrderDraftHumanTask</flowNodeRef>
         <flowNodeRef>SupplierOrderDraftValidGateway</flowNodeRef>
@@ -24,9 +25,13 @@
         <flowNodeRef>ApprovalRequiredDecision</flowNodeRef>
         <flowNodeRef>ApprovalRequiredGateway</flowNodeRef>
       </lane>
-      <lane id="procurmentSupervisorLane" name="Procurment Supervisor">
+      <lane id="procurementSupervisorLane" name="Procurement Supervisor">
         <extensionElements>
           <jmix:conditionDetails conditionSource="userTaskOutcome" />
+          <jmix:assignmentDetails assigneeSource="userProvider" assigneeValue="bookstore_SupervisorUserProvider" assignee="${bookstore_SupervisorUserProvider.find(reviewedBy)}" candidateUsersSource="users" candidateGroups="procurement-employee-group" candidateGroupsValue="procurement-employee-group" candidateGroupsSource="userGroups" />
+          <jmix:springBean beanName="bookstore_SupervisorUserProvider" methodName="find">
+            <jmix:methodParam name="reviewedBy" type="io.jmix.bookstore.entity.User" isVariable="true">reviewedBy</jmix:methodParam>
+          </jmix:springBean>
         </extensionElements>
         <flowNodeRef>SupplierOrderApprovedGateway</flowNodeRef>
         <flowNodeRef>ApproveSupplierOrderHumanTask</flowNodeRef>
@@ -193,10 +198,10 @@
       <bpmndi:BPMNShape id="Participant_14kbpym_di" bpmnElement="JmixBookstoreParticipant" isHorizontal="true">
         <omgdc:Bounds x="100" y="130" width="1198" height="580" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Lane_0xe6g31_di" bpmnElement="procurmentSupervisorLane" isHorizontal="true">
+      <bpmndi:BPMNShape id="Lane_0xe6g31_di" bpmnElement="procurementSupervisorLane" isHorizontal="true">
         <omgdc:Bounds x="130" y="450" width="1168" height="260" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Lane_1wuht0x_di" bpmnElement="procurmentEmployeeLane" isHorizontal="true">
+      <bpmndi:BPMNShape id="Lane_1wuht0x_di" bpmnElement="procurementEmployeeLane" isHorizontal="true">
         <omgdc:Bounds x="130" y="255" width="1168" height="195" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Lane_0ohu76m_di" bpmnElement="systemLane" isHorizontal="true">

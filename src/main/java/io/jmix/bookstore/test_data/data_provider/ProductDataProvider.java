@@ -19,9 +19,9 @@ import java.util.stream.Stream;
 import static io.jmix.bookstore.test_data.data_provider.RandomValues.*;
 
 @Component("bookstore_ProductDataProvider")
-public class ProductDataProvider implements TestDataProvider<Product, ProductDataProvider.Dependencies> {
+public class ProductDataProvider implements TestDataProvider<Product, ProductDataProvider.DataContext> {
 
-    public record Dependencies(List<ProductCategory> productCategories, List<Supplier> suppliers){}
+    public record DataContext(int amount, List<ProductCategory> productCategories, List<Supplier> suppliers){}
 
     protected final DataManager dataManager;
 
@@ -30,8 +30,8 @@ public class ProductDataProvider implements TestDataProvider<Product, ProductDat
     }
 
     @Override
-    public List<Product> create(int amount, Dependencies dependencies) {
-        return commit(createProducts(amount, dependencies.productCategories(), dependencies.suppliers()));
+    public List<Product> create(DataContext dataContext) {
+        return commit(createProducts(dataContext.amount(), dataContext.productCategories(), dataContext.suppliers()));
     }
 
     private List<Product> createProducts(int amount, List<ProductCategory> productCategories, List<Supplier> suppliers) {

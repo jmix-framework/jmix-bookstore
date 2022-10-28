@@ -1,0 +1,10 @@
+version: "3"
+services:
+  jmix-bookstore:
+    container_name: jmix-bookstore
+    image: jmix/jmix-bookstore:latest
+    environment:
+      - SPRING_PROFILES_ACTIVE=test
+      - SERVER_SERVLET_CONTEXT_PATH=/bookstore
+    ports:
+      - "8807:8080"

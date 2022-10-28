@@ -4,5 +4,5 @@ import java.util.List;
 
 public interface TestDataProvider<T, U> {
 
-    List<T> create(int amount, U dependencies);
+    List<T> create(U dataContext);
 }

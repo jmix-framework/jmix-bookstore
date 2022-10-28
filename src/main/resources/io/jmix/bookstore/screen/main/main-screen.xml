@@ -22,8 +22,15 @@
                 <cssLayout id="controlBox"
                            stylename="jmix-drawer-footer"
                            width="100%">
-                    <userIndicator id="userIndicator"
-                                   align="MIDDLE_CENTER"/>
+                    <image id="userAvatar"
+                           width="40px"
+                           stylename="user-avatar"
+                           scaleMode="CONTAIN"
+                           align="MIDDLE_CENTER">
+                        <resource>
+                            <theme path="avatars/unknown.png"/>
+                        </resource>
+                    </image>
                     <logoutButton id="logoutButton"
                                   icon="SIGN_OUT"
                                   description="msg://logoutBtnDescription"/>
@@ -33,6 +40,29 @@
                       stylename="jmix-workarea"
                       height="100%">
                 <initialLayout spacing="true" margin="true">
+                    <vbox expand="welcomeBox" align="TOP_CENTER">
+                        <image id="mainScreenLogoImage"
+                               width="500px" height="25%" align="MIDDLE_CENTER" scaleMode="CONTAIN">
+                            <resource>
+                                <theme path="branding/main-screen-logo.png"/>
+                            </resource>
+                        </image>
+
+                        <hbox align="MIDDLE_CENTER" spacing="true" id="welcomeBox">
+                            <label id="welcomeMessage" stylename="h1" align="MIDDLE_CENTER"/>
+                            <image id="userAvatarMainScreen"
+                                   width="100px"
+                                   stylename="user-avatar"
+                                   scaleMode="CONTAIN"
+                                   align="MIDDLE_CENTER">
+                                <resource>
+                                    <theme path="avatars/unknown.png"/>
+                                </resource>
+                            </image>
+                        </hbox>
+                    </vbox>
+
+
                 </initialLayout>
             </workArea>
         </cssLayout>

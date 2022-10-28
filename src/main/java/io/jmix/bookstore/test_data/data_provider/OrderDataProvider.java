@@ -23,9 +23,9 @@ import java.util.stream.Stream;
 import static io.jmix.bookstore.test_data.data_provider.RandomValues.*;
 
 @Component("bookstore_OrderDataProvider")
-public class OrderDataProvider implements TestDataProvider<Order, OrderDataProvider.Dependencies> {
+public class OrderDataProvider implements TestDataProvider<Order, OrderDataProvider.DataContext> {
 
-    public record Dependencies(List<Customer> customers, List<Product> products){}
+    public record DataContext(int amount, List<Customer> customers, List<Product> products){}
 
     protected final DataManager dataManager;
 
@@ -34,8 +34,8 @@ public class OrderDataProvider implements TestDataProvider<Order, OrderDataProvi
     }
 
     @Override
-    public List<Order> create(int amount, Dependencies dependencies) {
-        List<Order> orders = createOrders(amount, dependencies.customers(), dependencies.products());
+    public List<Order> create(DataContext dataContext) {
+        List<Order> orders = createOrders(dataContext.amount(), dataContext.customers(), dataContext.products());
         SaveContext saveContext = new SaveContext();
         orders.forEach(saveContext::saving);
 
