@@ -6,7 +6,7 @@
     </extensionElements>
     <participant id="JmixBookstoreParticipant" name="Jmix Bookstore" processRef="perform-supplier-order" />
   </collaboration>
-  <process id="perform-supplier-order" name="Perform Supplier Order" isExecutable="true">
+  <process id="perform-supplier-order" name="Perform Supplier Order" isExecutable="true" flowable:candidateStarterGroups="order-fulfillment-employees,procurement-employees" jmix:candidateStarterGroupsValue="order-fulfillment-employees,procurement-employees">
     <laneSet id="LaneSet_0q0huc4">
       <lane id="systemLane" name="System">
         <flowNodeRef>PerformSupplierOrderStartEvent</flowNodeRef>
@@ -16,8 +16,8 @@
       </lane>
       <lane id="procurementEmployeeLane" name="Procurement Employee">
         <extensionElements>
-          <jmix:assignmentDetails assigneeSource="expression" candidateUsersSource="users" candidateGroups="procurement-employee-group" candidateGroupsValue="procurement-employee-group" candidateGroupsSource="userGroups" />
           <jmix:conditionDetails conditionSource="userTaskOutcome" />
+          <jmix:assignmentDetails assigneeSource="expression" candidateUsersSource="users" candidateGroups="procurement-employees" candidateGroupsValue="procurement-employees" candidateGroupsSource="userGroups" />
         </extensionElements>
         <flowNodeRef>ReviewSupplierOrderDraftHumanTask</flowNodeRef>
         <flowNodeRef>SupplierOrderDraftValidGateway</flowNodeRef>
@@ -27,8 +27,11 @@
       </lane>
       <lane id="procurementSupervisorLane" name="Procurement Supervisor">
         <extensionElements>
-          <jmix:assignmentDetails assigneeSource="expression" candidateUsersSource="users" candidateGroups="procurement-employee-group" candidateGroupsValue="procurement-employee-group" candidateGroupsSource="userGroups" />
           <jmix:conditionDetails conditionSource="userTaskOutcome" />
+          <jmix:assignmentDetails assigneeSource="userProvider" assigneeValue="bookstore_SupervisorUserProvider" assignee="${bookstore_SupervisorUserProvider.find(reviewedBy)}" candidateUsersSource="users" candidateGroups="procurement-employee-group" candidateGroupsValue="procurement-employee-group" candidateGroupsSource="userGroups" />
+          <jmix:springBean beanName="bookstore_SupervisorUserProvider" methodName="find">
+            <jmix:methodParam name="reviewedBy" type="io.jmix.bookstore.entity.User" isVariable="true">reviewedBy</jmix:methodParam>
+          </jmix:springBean>
         </extensionElements>
         <flowNodeRef>SupplierOrderApprovedGateway</flowNodeRef>
         <flowNodeRef>ApproveSupplierOrderHumanTask</flowNodeRef>

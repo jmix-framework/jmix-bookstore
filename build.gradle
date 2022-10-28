@@ -92,7 +92,7 @@ test {
 
 
 tasks.named("bootBuildImage") {
-    imageName = "docker.io/jmix/${project.name}"
+    imageName = "docker.io/jmix/${project.name}-test"
 
     publish = false
     docker {

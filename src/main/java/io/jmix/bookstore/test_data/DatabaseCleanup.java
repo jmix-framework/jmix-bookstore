@@ -13,6 +13,8 @@ import io.jmix.bookstore.product.supplier.Supplier;
 import io.jmix.bookstore.product.supplier.SupplierOrder;
 import io.jmix.bookstore.product.supplier.SupplierOrderLine;
 import io.jmix.bookstore.product.supplier.SupplierOrderRequest;
+import io.jmix.bpm.entity.UserGroup;
+import io.jmix.bpm.entity.UserGroupRole;
 import io.jmix.core.DataManager;
 import io.jmix.core.Metadata;
 import io.jmix.core.MetadataTools;
@@ -66,6 +68,8 @@ public class DatabaseCleanup {
         JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
 
 
+        performDeletion(UserGroupRole.class, jdbcTemplate);
+        performDeletion(UserGroup.class, jdbcTemplate);
         performDeletion(Employee.class, jdbcTemplate);
         performDeletion(OrderLine.class, jdbcTemplate);
         performDeletion(Order.class, jdbcTemplate);

@@ -9,10 +9,12 @@ import io.jmix.bookstore.product.Product;
 import io.jmix.bookstore.product.ProductCategory;
 import io.jmix.bookstore.product.supplier.Supplier;
 import io.jmix.bookstore.test_data.data_provider.*;
+import io.jmix.bookstore.test_data.data_provider.bpm.BpmUserGroupDataProvider;
 import io.jmix.bookstore.test_data.data_provider.employee.OrderFulfillmentEmployeeDataProvider;
 import io.jmix.bookstore.test_data.data_provider.employee.OrderFulfillmentSupervisorDataProvider;
 import io.jmix.bookstore.test_data.data_provider.employee.ProcurementEmployeeDataProvider;
 import io.jmix.bookstore.test_data.data_provider.employee.ProcurementSupervisorDataProvider;
+import io.jmix.bpm.entity.UserGroup;
 import io.jmix.core.DataManager;
 import io.jmix.core.TimeSource;
 import net.datafaker.Faker;
@@ -45,6 +47,7 @@ public class TestDataCreation {
     private final ProcurementEmployeeDataProvider procurementEmployeeDataProvider;
     private final OrderFulfillmentEmployeeDataProvider orderFulfillmentEmployeeDataProvider;
     private final OrderFulfillmentSupervisorDataProvider orderFulfillmentSupervisorDataProvider;
+    private final BpmUserGroupDataProvider bpmUserGroupDataProvider;
 
     public TestDataCreation(
             TimeSource timeSource,
@@ -60,8 +63,8 @@ public class TestDataCreation {
             DatabaseCleanup databaseCleanup,
             ProcurementEmployeeDataProvider procurementEmployeeDataProvider,
             OrderFulfillmentEmployeeDataProvider orderFulfillmentEmployeeDataProvider,
-            OrderFulfillmentSupervisorDataProvider orderFulfillmentSupervisorDataProvider
-    ) {
+            OrderFulfillmentSupervisorDataProvider orderFulfillmentSupervisorDataProvider,
+            BpmUserGroupDataProvider bpmUserGroupDataProvider) {
         this.timeSource = timeSource;
         this.dataManager = dataManager;
         this.productDataProvider = productDataProvider;
@@ -76,6 +79,7 @@ public class TestDataCreation {
         this.procurementEmployeeDataProvider = procurementEmployeeDataProvider;
         this.orderFulfillmentEmployeeDataProvider = orderFulfillmentEmployeeDataProvider;
         this.orderFulfillmentSupervisorDataProvider = orderFulfillmentSupervisorDataProvider;
+        this.bpmUserGroupDataProvider = bpmUserGroupDataProvider;
     }
 
     public void createData() {
@@ -86,6 +90,9 @@ public class TestDataCreation {
         log.info("No Data found in the DB. Test data will be created...");
 
         Number number = new Faker().number();
+
+        List<UserGroup> bpmUserGroups = generateBpmUserGroups();
+        log.info("{} BPM User Groups created", bpmUserGroups.size());
 
         List<Employee> employees = generateEmployees();
         log.info("{} Employees created", employees.size());
@@ -153,6 +160,11 @@ public class TestDataCreation {
     public List<ProductCategory> generateProductCategories(int amount) {
         log.info("Trying to create a random amount of {} Product Categories", amount);
         return productCategoryDataProvider.create(new ProductCategoryDataProvider.DataContext(amount));
+    }
+
+    public List<UserGroup> generateBpmUserGroups() {
+        log.info("Trying to create pre-defined BPM User Groups");
+        return bpmUserGroupDataProvider.create(new BpmUserGroupDataProvider.DataContext());
     }
 
     public List<Employee> generateEmployees() {
