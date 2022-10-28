@@ -11,18 +11,18 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @Component("bookstore_RegionDataProvider")
-public class RegionDataProvider implements TestDataProvider<Region, RegionDataProvider.Dependencies> {
+public class RegionDataProvider implements TestDataProvider<Region, RegionDataProvider.DataContext> {
 
     protected final DataManager dataManager;
 
-    public record Dependencies(){}
+    public record DataContext(int amount){}
     public RegionDataProvider(DataManager dataManager) {
         this.dataManager = dataManager;
     }
 
     @Override
-    public List<Region> create(int amount, Dependencies dependencies) {
-        return commit(createRegions(amount));
+    public List<Region> create(DataContext dataContext) {
+        return commit(createRegions(dataContext.amount()));
     }
 
     private List<Region> createRegions(int amount) {

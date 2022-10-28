@@ -8,23 +8,21 @@ import net.datafaker.Faker;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @Component("bookstore_ProductCategoryDataProvider")
-public class ProductCategoryDataProvider implements TestDataProvider<ProductCategory, ProductCategoryDataProvider.Dependencies> {
+public class ProductCategoryDataProvider implements TestDataProvider<ProductCategory, ProductCategoryDataProvider.DataContext> {
 
     protected final DataManager dataManager;
-
-    public record Dependencies(){}
+    public record DataContext(int amount){}
     public ProductCategoryDataProvider(DataManager dataManager) {
         this.dataManager = dataManager;
     }
 
     @Override
-    public List<ProductCategory> create(int amount, Dependencies dependencies) {
-        return commit(createProductCategories(amount));
+    public List<ProductCategory> create(DataContext dataContext) {
+        return commit(createProductCategories(dataContext.amount()));
     }
 
     private List<ProductCategory> createProductCategories(int amount) {

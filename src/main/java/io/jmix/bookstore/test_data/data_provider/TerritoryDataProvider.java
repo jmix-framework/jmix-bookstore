@@ -15,9 +15,9 @@ import java.util.stream.Stream;
 import static io.jmix.bookstore.test_data.data_provider.RandomValues.randomOfList;
 
 @Component("bookstore_TerritoryDataProvider")
-public class TerritoryDataProvider implements TestDataProvider<Territory, TerritoryDataProvider.Dependencies> {
+public class TerritoryDataProvider implements TestDataProvider<Territory, TerritoryDataProvider.DataContext> {
 
-    public record Dependencies(List<io.jmix.bookstore.employee.Region> regions){}
+    public record DataContext(int amount, List<io.jmix.bookstore.employee.Region> regions){}
 
     protected final DataManager dataManager;
 
@@ -26,9 +26,10 @@ public class TerritoryDataProvider implements TestDataProvider<Territory, Territ
     }
 
     @Override
-    public List<Territory> create(int amount, Dependencies dependencies) {
-        return commit(createTerritories(amount, dependencies.regions()));
+    public List<Territory> create(DataContext dataContext) {
+        return commit(createTerritories(dataContext.amount(), dataContext.regions()));
     }
+
 
     private List<Territory> createTerritories(int amount, List<Region> regions) {
         Faker faker = new Faker();

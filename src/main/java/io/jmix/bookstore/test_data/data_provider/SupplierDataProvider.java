@@ -16,18 +16,18 @@ import static io.jmix.bookstore.test_data.data_provider.RandomValues.randomEnum;
 import static io.jmix.bookstore.test_data.data_provider.RandomValues.randomOfList;
 
 @Component("bookstore_SupplierDataProvider")
-public class SupplierDataProvider implements TestDataProvider<Supplier, SupplierDataProvider.Dependencies> {
+public class SupplierDataProvider implements TestDataProvider<Supplier, SupplierDataProvider.DataContext> {
 
     protected final DataManager dataManager;
 
-    public record Dependencies(){}
+    public record DataContext(int amount){}
     public SupplierDataProvider(DataManager dataManager) {
         this.dataManager = dataManager;
     }
 
     @Override
-    public List<Supplier> create(int amount, Dependencies dependencies) {
-        return commit(createSupplier(amount));
+    public List<Supplier> create(DataContext dataContext) {
+        return commit(createSupplier(dataContext.amount()));
     }
 
     private List<Supplier> createSupplier(int amount) {

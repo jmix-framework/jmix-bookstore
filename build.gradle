@@ -94,7 +94,7 @@ test {
 tasks.named("bootBuildImage") {
     imageName = "docker.io/jmix/${project.name}"
 
-    publish = true
+    publish = false
     docker {
         publishRegistry {
             username = System.getenv("DOCKER_HUB_LOGIN")
