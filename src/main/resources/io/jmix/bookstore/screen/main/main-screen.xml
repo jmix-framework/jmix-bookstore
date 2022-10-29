@@ -19,9 +19,10 @@
                 <sideMenu id="sideMenu"
                           width="100%"
                           stylename="jmix-drawer-content"/>
-                <cssLayout id="controlBox"
-                           stylename="jmix-drawer-footer"
-                           width="100%">
+
+                <label id="positionBadgeLabel2" align="MIDDLE_CENTER"/>
+
+                <hbox width="100%" align="MIDDLE_CENTER" spacing="true">
                     <image id="userAvatar"
                            width="40px"
                            scaleMode="CONTAIN"
@@ -30,10 +31,14 @@
                             <theme path="avatars/unknown.png"/>
                         </resource>
                     </image>
+
+                    <userIndicator id="userIndicator"
+                                   align="MIDDLE_CENTER"/>
                     <logoutButton id="logoutButton"
                                   icon="SIGN_OUT"
                                   description="msg://logoutBtnDescription"/>
-                </cssLayout>
+                </hbox>
+
             </drawer>
             <workArea id="workArea"
                       stylename="jmix-workarea"
@@ -60,8 +65,6 @@
                         </hbox>
                         <label id="positionBadgeLabel" align="MIDDLE_CENTER"/>
                     </vbox>
-
-
                 </initialLayout>
             </workArea>
         </cssLayout>

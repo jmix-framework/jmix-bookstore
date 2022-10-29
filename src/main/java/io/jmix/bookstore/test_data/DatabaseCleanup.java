@@ -70,9 +70,6 @@ public class DatabaseCleanup {
 
         performDeletion(Employee.class, jdbcTemplate);
 
-        performDeletion(RoleAssignmentEntity.class, jdbcTemplate);
-        performDeletion(User.class, jdbcTemplate);
-
         performDeletion(UserGroupRole.class, jdbcTemplate);
         performDeletion(UserGroup.class, jdbcTemplate);
         performDeletion(Position.class, jdbcTemplate);
@@ -96,8 +93,9 @@ public class DatabaseCleanup {
     }
 
     public void removeNonAdminUsers() {
-//        List<RoleAssignmentEntity> allRoleAssignmentExceptAdmin = dataManager.load(RoleAssignmentEntity.class).all().list();
-//        List<User> allUsersExceptAdmin = dataManager.load(User.class).all().list();
-//        removeAllEntities(Stream.concat(allRoleAssignmentExceptAdmin.stream(), allUsersExceptAdmin.stream()).collect(Collectors.toList()));
+        PropertyCondition notAdmin = PropertyCondition.notEqual("username", "admin");
+        List<RoleAssignmentEntity> allRoleAssignmentExceptAdmin = dataManager.load(RoleAssignmentEntity.class).condition(notAdmin).list();
+        List<User> allUsersExceptAdmin = dataManager.load(User.class).condition(notAdmin).list();
+        removeAllEntities(Stream.concat(allRoleAssignmentExceptAdmin.stream(), allUsersExceptAdmin.stream()).collect(Collectors.toList()));
     }
 }

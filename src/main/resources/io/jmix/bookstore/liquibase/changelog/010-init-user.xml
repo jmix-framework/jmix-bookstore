@@ -43,6 +43,9 @@
             <column name="VERSION" value="1"/>
             <column name="USERNAME" value="admin"/>
             <column name="PASSWORD" value="{noop}admin"/>
+            <column name="FIRST_NAME" value="Mike"/>
+            <column name="LAST_NAME" value="Holloway"/>
+            <column name="EMAIL" value="admin@jmix-bookstore.com"/>
             <column name="ACTIVE" valueBoolean="true"/>
         </insert>
 

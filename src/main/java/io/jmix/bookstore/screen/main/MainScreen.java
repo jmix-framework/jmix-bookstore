@@ -37,6 +37,8 @@ public class MainScreen extends Screen implements Window.HasWorkArea {
     private MessageBundle messageBundle;
     @Autowired
     private Label<String> positionBadgeLabel;
+    @Autowired
+    private Label<String> positionBadgeLabel2;
 
     @Autowired
     private DataManager dataManager;
@@ -66,8 +68,10 @@ public class MainScreen extends Screen implements Window.HasWorkArea {
         if (currentEmployees.size() == 1)  {
             Position position = currentEmployees.get(0).getPosition();
             positionBadgeLabel.setValue(position.getName());
+            positionBadgeLabel2.setValue(position.getName());
             String colorStyleName = position.getColor().getStyleName();
             positionBadgeLabel.setStyleName("position-badge " + colorStyleName);
+            positionBadgeLabel2.setStyleName("position-badge-side-menu " + colorStyleName);
             userAvatar.setStyleName("user-avatar user-avatar-border-" + colorStyleName);
             userAvatarMainScreen.setStyleName("user-avatar user-avatar-border-" + colorStyleName);
         }
