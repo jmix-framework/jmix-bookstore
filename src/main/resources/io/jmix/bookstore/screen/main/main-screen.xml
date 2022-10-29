@@ -24,7 +24,6 @@
                            width="100%">
                     <image id="userAvatar"
                            width="40px"
-                           stylename="user-avatar"
                            scaleMode="CONTAIN"
                            align="MIDDLE_CENTER">
                         <resource>
@@ -41,25 +40,25 @@
                       height="100%">
                 <initialLayout spacing="true" margin="true">
                     <vbox expand="welcomeBox" align="TOP_CENTER">
-                        <image id="mainScreenLogoImage"
-                               width="500px" height="25%" align="MIDDLE_CENTER" scaleMode="CONTAIN">
+                        <image id="mainScreenLogoImage" stylename="bookstore-main-screen-logo"
+                               width="500px" align="MIDDLE_CENTER" scaleMode="CONTAIN">
                             <resource>
                                 <theme path="branding/main-screen-logo.png"/>
                             </resource>
                         </image>
 
+                        <image id="userAvatarMainScreen"
+                               width="100px"
+                               scaleMode="CONTAIN"
+                               align="MIDDLE_CENTER">
+                            <resource>
+                                <theme path="avatars/unknown.png"/>
+                            </resource>
+                        </image>
                         <hbox align="MIDDLE_CENTER" spacing="true" id="welcomeBox">
                             <label id="welcomeMessage" stylename="h1" align="MIDDLE_CENTER"/>
-                            <image id="userAvatarMainScreen"
-                                   width="100px"
-                                   stylename="user-avatar"
-                                   scaleMode="CONTAIN"
-                                   align="MIDDLE_CENTER">
-                                <resource>
-                                    <theme path="avatars/unknown.png"/>
-                                </resource>
-                            </image>
                         </hbox>
+                        <label id="positionBadgeLabel" align="MIDDLE_CENTER"/>
                     </vbox>
 
 

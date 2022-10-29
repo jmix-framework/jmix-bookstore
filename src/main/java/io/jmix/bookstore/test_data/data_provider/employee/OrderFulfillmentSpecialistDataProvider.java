@@ -1,7 +1,9 @@
 package io.jmix.bookstore.test_data.data_provider.employee;
 
 import io.jmix.bookstore.employee.Employee;
+import io.jmix.bookstore.employee.Position;
 import io.jmix.bookstore.entity.Title;
+import io.jmix.bookstore.security.EmployeeRole;
 import io.jmix.bookstore.security.OrderFulfillmentRole;
 import io.jmix.bookstore.test_data.data_provider.TestDataProvider;
 import io.jmix.bpmui.security.role.BpmProcessActorRole;
@@ -14,14 +16,14 @@ import java.util.List;
 import static io.jmix.bookstore.test_data.data_provider.RandomValues.randomOfList;
 
 @Component("bookstore_OrderFulfillmentEmployeeDataProvider")
-public class OrderFulfillmentEmployeeDataProvider implements TestDataProvider<Employee, OrderFulfillmentEmployeeDataProvider.DataContext> {
+public class OrderFulfillmentSpecialistDataProvider implements TestDataProvider<Employee, OrderFulfillmentSpecialistDataProvider.DataContext> {
 
     protected final EmployeeDataProvider employeeDataProvider;
 
-    public record DataContext(List<Employee> supervisors) {
+    public record DataContext(List<Employee> managers, EmployeePositions employeePositions) {
     }
 
-    public OrderFulfillmentEmployeeDataProvider(EmployeeDataProvider employeeDataProvider) {
+    public OrderFulfillmentSpecialistDataProvider(EmployeeDataProvider employeeDataProvider) {
         this.employeeDataProvider = employeeDataProvider;
     }
 
@@ -34,29 +36,36 @@ public class OrderFulfillmentEmployeeDataProvider implements TestDataProvider<Em
                         Title.MR,
                         "Oliver",
                         "Bolick",
+                        orderFulfillmentSpecialist(dataContext),
                         LocalDate.now().minusYears(5).minusMonths(1).minusDays(10),
-                        randomOfList(dataContext.supervisors()),
-                        List.of(
-                                OrderFulfillmentRole.CODE,
-                                UiMinimalRole.CODE,
-                                BpmProcessActorRole.CODE
-                        )
+                        randomOfList(dataContext.managers()),
+                        orderFulfillmentSpecialistRoles()
                 ),
                 new EmployeeData(
-                        "emma",
+                        "hikari",
                         Title.MRS,
-                        "Emma",
-                        "McAlister",
+                        "Hikari",
+                        "Miyama",
+                        orderFulfillmentSpecialist(dataContext),
                         LocalDate.now().minusYears(12).minusMonths(1).minusDays(0),
-                        randomOfList(dataContext.supervisors()),
-                        List.of(
-                                OrderFulfillmentRole.CODE,
-                                UiMinimalRole.CODE,
-                                BpmProcessActorRole.CODE
-                        )
+                        randomOfList(dataContext.managers()),
+                        orderFulfillmentSpecialistRoles()
                 )
         );
 
         return employeeDataProvider.save(employees);
+    }
+
+    private static List<String> orderFulfillmentSpecialistRoles() {
+        return List.of(
+                EmployeeRole.CODE,
+                OrderFulfillmentRole.CODE,
+                UiMinimalRole.CODE,
+                BpmProcessActorRole.CODE
+        );
+    }
+
+    private static Position orderFulfillmentSpecialist(DataContext dataContext) {
+        return dataContext.employeePositions().find(EmployeePositions.AvailablePosition.ORDER_FULFILLMENT_SPECIALIST);
     }
 }

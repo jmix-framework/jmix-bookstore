@@ -54,9 +54,10 @@ public class EmployeeDataProvider {
         employee.setUser(user);
         employee.setFirstName(employeeData.firstName());
         employee.setLastName(employeeData.lastName());
+        employee.setPosition(employeeData.position());
         employee.setHireDate(employeeData.hireDate());
         employee.setTitle(employeeData.title());
-        employee.setReportsTo(employeeData.supervisor());
+        employee.setReportsTo(employeeData.manager());
 
         employee.setBirthDate(randomBirthday());
         employee.setAddress(toAddress(new Faker().address()));

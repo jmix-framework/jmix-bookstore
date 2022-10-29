@@ -3,8 +3,8 @@ package io.jmix.bookstore.test_data.data_provider.bpm;
 import io.jmix.bookstore.employee.Employee;
 import io.jmix.bookstore.employee.Region;
 import io.jmix.bookstore.security.OrderFulfillmentRole;
-import io.jmix.bookstore.security.ProcurementEmployeeRole;
-import io.jmix.bookstore.security.ProcurementSupervisorRole;
+import io.jmix.bookstore.security.ProcurementSpecialistRole;
+import io.jmix.bookstore.security.ProcurementManagerRole;
 import io.jmix.bookstore.test_data.data_provider.TestDataProvider;
 import io.jmix.bpm.entity.UserGroup;
 import io.jmix.bpm.entity.UserGroupRole;
@@ -36,8 +36,8 @@ public class BpmUserGroupDataProvider implements TestDataProvider<UserGroup, Bpm
     private List<Object> createUserGroups() {
 
         List<UserGroupData> userGroups = List.of(
-                new UserGroupData("Order Fulfillment Employees", "order-fulfillment-employees", List.of(OrderFulfillmentRole.CODE)),
-                new UserGroupData("Procurement Employees", "procurement-employees", List.of(ProcurementEmployeeRole.CODE, ProcurementSupervisorRole.CODE))
+                new UserGroupData("Order Fulfillment Specialists", "order-fulfillment-specialists", List.of(OrderFulfillmentRole.CODE)),
+                new UserGroupData("Procurement Specialists", "procurement-specialists", List.of(ProcurementSpecialistRole.CODE, ProcurementManagerRole.CODE))
         );
 
         return userGroups.stream()
