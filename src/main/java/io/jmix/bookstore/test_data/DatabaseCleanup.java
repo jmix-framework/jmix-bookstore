@@ -2,6 +2,7 @@ package io.jmix.bookstore.test_data;
 
 import io.jmix.bookstore.customer.Customer;
 import io.jmix.bookstore.employee.Employee;
+import io.jmix.bookstore.employee.Position;
 import io.jmix.bookstore.employee.Region;
 import io.jmix.bookstore.employee.Territory;
 import io.jmix.bookstore.entity.User;
@@ -67,10 +68,11 @@ public class DatabaseCleanup {
 
         JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
 
+        performDeletion(Employee.class, jdbcTemplate);
 
         performDeletion(UserGroupRole.class, jdbcTemplate);
         performDeletion(UserGroup.class, jdbcTemplate);
-        performDeletion(Employee.class, jdbcTemplate);
+        performDeletion(Position.class, jdbcTemplate);
         performDeletion(OrderLine.class, jdbcTemplate);
         performDeletion(Order.class, jdbcTemplate);
         performDeletion(Customer.class, jdbcTemplate);
@@ -91,8 +93,9 @@ public class DatabaseCleanup {
     }
 
     public void removeNonAdminUsers() {
-        List<RoleAssignmentEntity> allRoleAssignmentExceptAdmin = dataManager.load(RoleAssignmentEntity.class).condition(PropertyCondition.notEqual("username", "admin")).list();
-        List<User> allUsersExceptAdmin = dataManager.load(User.class).condition(PropertyCondition.notEqual("username", "admin")).list();
+        PropertyCondition notAdmin = PropertyCondition.notEqual("username", "admin");
+        List<RoleAssignmentEntity> allRoleAssignmentExceptAdmin = dataManager.load(RoleAssignmentEntity.class).condition(notAdmin).list();
+        List<User> allUsersExceptAdmin = dataManager.load(User.class).condition(notAdmin).list();
         removeAllEntities(Stream.concat(allRoleAssignmentExceptAdmin.stream(), allUsersExceptAdmin.stream()).collect(Collectors.toList()));
     }
 }

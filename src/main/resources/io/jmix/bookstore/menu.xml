@@ -5,7 +5,14 @@
     <item screen="bookstore_Order.browse" caption="msg://io.jmix.bookstore.order.screen/orderBrowse.menu" icon="SHOPPING_CART" insertBefore="bpm"/>
     <item screen="bookstore_Customer.browse" caption="msg://io.jmix.bookstore.customer.screen/customerBrowse.menu" icon="USER_CIRCLE" insertBefore="bpm"/>
     <item screen="bookstore_Product.browse" caption="msg://io.jmix.bookstore.product.screen/productBrowse.menu" icon="BOOK" insertBefore="bpm"/>
-    <menu id="masterdata" caption="msg://io.jmix.bookstore/menu.masterdata" insertBefore="administration">
+    <menu id="hr" caption="msg://io.jmix.bookstore/menu.hr" icon="USERS" insertBefore="bpm">
+        <item screen="bookstore_Employee.browse" caption="msg://io.jmix.bookstore.employee.screen/employeeBrowse.menu"/>
+        <item screen="bookstore_User.browse" caption="msg://io.jmix.bookstore.screen.user/UserBrowse.caption"/>
+        <item screen="bookstore_Position.browse"
+              caption="msg://io.jmix.bookstore.employee.position.screen/positionBrowse.menu"/>
+    </menu>
+
+    <menu id="masterdata" caption="msg://io.jmix.bookstore/menu.masterdata" icon="font-icon:LIST_ALT" insertBefore="bpm">
         <item screen="bookstore_ProductCategory.browse"
               caption="msg://io.jmix.bookstore.product.productcategory.screen/productCategoryBrowse.menu"/>
         <item screen="bookstore_Supplier.browse"
@@ -15,10 +22,8 @@
         <item screen="bookstore_Territory.browse"
               caption="msg://io.jmix.bookstore.employee.territory.screen/territoryBrowse.menu"/>
         <item screen="themeSettingsScreen" caption="msg://io.jmix.ui.app.themesettings/themeSettings.caption"/>
-        <item screen="bookstore_User.browse" caption="msg://io.jmix.bookstore.screen.user/UserBrowse.caption"/>
         <item screen="bookstore_SupplierOrder.browse"
               caption="msg://io.jmix.bookstore.product.supplier.screen.supplierorder/supplierOrderBrowse.menu"/>
     </menu>
-
 
 </menu-config>

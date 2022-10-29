@@ -14,7 +14,7 @@ import java.util.Optional;
 
 @UserProvider(
         value = "bookstore_SupervisorUserProvider",
-        description = "Returns the supervisor of a given user"
+        description = "Returns the manager of a given user"
 )
 public class SupervisorUserProvider {
 
@@ -33,9 +33,9 @@ public class SupervisorUserProvider {
                 .condition(PropertyCondition.equal("user", reviewedBy))
                 .fetchPlan(emFp -> {
                     emFp.addFetchPlan(FetchPlan.BASE);
-                    emFp.add("reportsTo", supervisorEmployeeFp -> {
-                        supervisorEmployeeFp.addFetchPlan(FetchPlan.BASE);
-                        supervisorEmployeeFp.add("user", FetchPlan.BASE);
+                    emFp.add("reportsTo", managerEmployeeFp -> {
+                        managerEmployeeFp.addFetchPlan(FetchPlan.BASE);
+                        managerEmployeeFp.add("user", FetchPlan.BASE);
                     });
                 })
                 .optional();

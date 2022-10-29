@@ -14,7 +14,7 @@
         <flowNodeRef>MarkOrderAsInvalidEntityTask</flowNodeRef>
         <flowNodeRef>PlaceSupplierOrderServiceTask</flowNodeRef>
       </lane>
-      <lane id="procurementEmployeeLane" name="Procurement Employee">
+      <lane id="procurementSpecialistLane" name="Procurement Specialist">
         <extensionElements>
           <jmix:conditionDetails conditionSource="userTaskOutcome" />
           <jmix:assignmentDetails assigneeSource="expression" candidateUsersSource="users" candidateGroups="procurement-employees" candidateGroupsValue="procurement-employees" candidateGroupsSource="userGroups" />
@@ -25,7 +25,7 @@
         <flowNodeRef>ApprovalRequiredDecision</flowNodeRef>
         <flowNodeRef>ApprovalRequiredGateway</flowNodeRef>
       </lane>
-      <lane id="procurementSupervisorLane" name="Procurement Supervisor">
+      <lane id="procurementSupervisorLane" name="Procurement Manager">
         <extensionElements>
           <jmix:conditionDetails conditionSource="userTaskOutcome" />
           <jmix:assignmentDetails assigneeSource="userProvider" assigneeValue="bookstore_SupervisorUserProvider" assignee="${bookstore_SupervisorUserProvider.find(reviewedBy)}" candidateUsersSource="users" candidateGroups="procurement-employee-group" candidateGroupsValue="procurement-employee-group" candidateGroupsSource="userGroups" />
@@ -201,7 +201,7 @@
       <bpmndi:BPMNShape id="Lane_0xe6g31_di" bpmnElement="procurementSupervisorLane" isHorizontal="true">
         <omgdc:Bounds x="130" y="450" width="1168" height="260" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Lane_1wuht0x_di" bpmnElement="procurementEmployeeLane" isHorizontal="true">
+      <bpmndi:BPMNShape id="Lane_1wuht0x_di" bpmnElement="procurementSpecialistLane" isHorizontal="true">
         <omgdc:Bounds x="130" y="255" width="1168" height="195" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Lane_0ohu76m_di" bpmnElement="systemLane" isHorizontal="true">

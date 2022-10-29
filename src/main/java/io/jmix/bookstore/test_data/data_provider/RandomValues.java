@@ -16,6 +16,11 @@ import java.util.concurrent.TimeUnit;
 
 public class RandomValues {
 
+    public static LocalDate randomBirthday() {
+        DateAndTime date = new Faker().date();
+        return date.birthday().toLocalDateTime().toLocalDate();
+    }
+
     public static LocalDateTime randomPastLocalDateTime(int upUntilInYears) {
         DateAndTime date = new Faker().date();
         Number number = new Faker().number();

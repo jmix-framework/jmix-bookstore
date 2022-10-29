@@ -14,9 +14,9 @@ import io.jmix.security.role.annotation.ResourceRole;
 import io.jmix.securityui.role.annotation.MenuPolicy;
 import io.jmix.securityui.role.annotation.ScreenPolicy;
 
-@ResourceRole(name = "Procurement Employee", code = ProcurementEmployeeRole.CODE)
-public interface ProcurementEmployeeRole {
-    String CODE = "procurement-employee";
+@ResourceRole(name = "Procurement Specialist", code = ProcurementSpecialistRole.CODE)
+public interface ProcurementSpecialistRole {
+    String CODE = "procurement-specialist";
 
     @EntityAttributePolicy(entityClass = Supplier.class, attributes = "*", action = EntityAttributePolicyAction.MODIFY)
     @EntityPolicy(entityClass = Supplier.class, actions = EntityPolicyAction.ALL)

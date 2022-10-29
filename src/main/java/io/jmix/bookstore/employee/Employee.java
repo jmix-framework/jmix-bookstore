@@ -16,7 +16,8 @@ import java.util.List;
 @JmixEntity
 @Table(name = "BOOKSTORE_EMPLOYEE", indexes = {
         @Index(name = "IDX_BOOKSTOREEMPLOYE_REPORTSTO", columnList = "REPORTS_TO_ID"),
-        @Index(name = "IDX_BOOKSTORE_EMPLOYEE_USER", columnList = "USER_ID")
+        @Index(name = "IDX_BOOKSTORE_EMPLOYEE_USER", columnList = "USER_ID"),
+        @Index(name = "IDX_BOOKSTORE_EMPLOYEE_POSITION", columnList = "POSITION_ID")
 })
 @Entity(name = "bookstore_Employee")
 public class Employee extends StandardEntity {
@@ -65,6 +66,19 @@ public class Employee extends StandardEntity {
     @JoinColumn(name = "USER_ID")
     @ManyToOne(fetch = FetchType.LAZY)
     private User user;
+
+    @NotNull
+    @JoinColumn(name = "POSITION_ID", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    private Position position;
+
+    public Position getPosition() {
+        return position;
+    }
+
+    public void setPosition(Position position) {
+        this.position = position;
+    }
 
     public User getUser() {
         return user;

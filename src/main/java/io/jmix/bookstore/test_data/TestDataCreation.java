@@ -10,10 +10,7 @@ import io.jmix.bookstore.product.ProductCategory;
 import io.jmix.bookstore.product.supplier.Supplier;
 import io.jmix.bookstore.test_data.data_provider.*;
 import io.jmix.bookstore.test_data.data_provider.bpm.BpmUserGroupDataProvider;
-import io.jmix.bookstore.test_data.data_provider.employee.OrderFulfillmentEmployeeDataProvider;
-import io.jmix.bookstore.test_data.data_provider.employee.OrderFulfillmentSupervisorDataProvider;
-import io.jmix.bookstore.test_data.data_provider.employee.ProcurementEmployeeDataProvider;
-import io.jmix.bookstore.test_data.data_provider.employee.ProcurementSupervisorDataProvider;
+import io.jmix.bookstore.test_data.data_provider.employee.*;
 import io.jmix.bpm.entity.UserGroup;
 import io.jmix.core.DataManager;
 import io.jmix.core.TimeSource;
@@ -41,12 +38,14 @@ public class TestDataCreation {
     protected final TerritoryDataProvider territoryDataProvider;
     protected final CustomerDataProvider customerDataProvider;
     protected final OrderDataProvider orderDataProvider;
-    protected final ProcurementSupervisorDataProvider procurementSupervisorDataProvider;
+    protected final ProcurementManagerDataProvider procurementManagerDataProvider;
 
     protected final DatabaseCleanup databaseCleanup;
-    private final ProcurementEmployeeDataProvider procurementEmployeeDataProvider;
-    private final OrderFulfillmentEmployeeDataProvider orderFulfillmentEmployeeDataProvider;
-    private final OrderFulfillmentSupervisorDataProvider orderFulfillmentSupervisorDataProvider;
+    private final ItAdministratorEmployeeDataProvider itAdministratorEmployeeDataProvider;
+    private final ProcurementSpecialistDataProvider procurementSpecialistDataProvider;
+    private final OrderFulfillmentSpecialistDataProvider orderFulfillmentSpecialistDataProvider;
+    private final OrderFulfillmentManagerDataProvider orderFulfillmentManagerDataProvider;
+    private final EmployeePositionDataProvider employeePositionDataProvider;
     private final BpmUserGroupDataProvider bpmUserGroupDataProvider;
 
     public TestDataCreation(
@@ -59,12 +58,12 @@ public class TestDataCreation {
             TerritoryDataProvider territoryDataProvider,
             CustomerDataProvider customerDataProvider,
             OrderDataProvider orderDataProvider,
-            ProcurementSupervisorDataProvider procurementSupervisorDataProvider,
+            ProcurementManagerDataProvider procurementManagerDataProvider,
             DatabaseCleanup databaseCleanup,
-            ProcurementEmployeeDataProvider procurementEmployeeDataProvider,
-            OrderFulfillmentEmployeeDataProvider orderFulfillmentEmployeeDataProvider,
-            OrderFulfillmentSupervisorDataProvider orderFulfillmentSupervisorDataProvider,
-            BpmUserGroupDataProvider bpmUserGroupDataProvider) {
+            ItAdministratorEmployeeDataProvider itAdministratorEmployeeDataProvider, ProcurementSpecialistDataProvider procurementSpecialistDataProvider,
+            OrderFulfillmentSpecialistDataProvider orderFulfillmentSpecialistDataProvider,
+            OrderFulfillmentManagerDataProvider orderFulfillmentManagerDataProvider,
+            EmployeePositionDataProvider employeePositionDataProvider, BpmUserGroupDataProvider bpmUserGroupDataProvider) {
         this.timeSource = timeSource;
         this.dataManager = dataManager;
         this.productDataProvider = productDataProvider;
@@ -74,11 +73,13 @@ public class TestDataCreation {
         this.territoryDataProvider = territoryDataProvider;
         this.customerDataProvider = customerDataProvider;
         this.orderDataProvider = orderDataProvider;
-        this.procurementSupervisorDataProvider = procurementSupervisorDataProvider;
+        this.procurementManagerDataProvider = procurementManagerDataProvider;
         this.databaseCleanup = databaseCleanup;
-        this.procurementEmployeeDataProvider = procurementEmployeeDataProvider;
-        this.orderFulfillmentEmployeeDataProvider = orderFulfillmentEmployeeDataProvider;
-        this.orderFulfillmentSupervisorDataProvider = orderFulfillmentSupervisorDataProvider;
+        this.itAdministratorEmployeeDataProvider = itAdministratorEmployeeDataProvider;
+        this.procurementSpecialistDataProvider = procurementSpecialistDataProvider;
+        this.orderFulfillmentSpecialistDataProvider = orderFulfillmentSpecialistDataProvider;
+        this.orderFulfillmentManagerDataProvider = orderFulfillmentManagerDataProvider;
+        this.employeePositionDataProvider = employeePositionDataProvider;
         this.bpmUserGroupDataProvider = bpmUserGroupDataProvider;
     }
 
@@ -94,7 +95,10 @@ public class TestDataCreation {
         List<UserGroup> bpmUserGroups = generateBpmUserGroups();
         log.info("{} BPM User Groups created", bpmUserGroups.size());
 
-        List<Employee> employees = generateEmployees();
+        EmployeePositions employeePositions = generateEmployeePositions();
+        log.info("{} Employee Positions created", employeePositions.size());
+
+        List<Employee> employees = generateEmployees(employeePositions);
         log.info("{} Employees created", employees.size());
 
 
@@ -167,19 +171,26 @@ public class TestDataCreation {
         return bpmUserGroupDataProvider.create(new BpmUserGroupDataProvider.DataContext());
     }
 
-    public List<Employee> generateEmployees() {
+    public EmployeePositions generateEmployeePositions() {
+        log.info("Trying to create pre-defined Employee Positions");
+        return new EmployeePositions(employeePositionDataProvider.create(new EmployeePositionDataProvider.DataContext()));
+    }
+
+    public List<Employee> generateEmployees(EmployeePositions employeePositions) {
         log.info("Trying to create pre-defined Employees");
-        List<Employee> procurementSupervisors = procurementSupervisorDataProvider.create(new ProcurementSupervisorDataProvider.DataContext());
-        List<Employee> procurementEmployees = procurementEmployeeDataProvider.create(new ProcurementEmployeeDataProvider.DataContext(procurementSupervisors));
+        List<Employee> itEmployees = itAdministratorEmployeeDataProvider.create(new ItAdministratorEmployeeDataProvider.DataContext(employeePositions));
+        List<Employee> procurementManagers = procurementManagerDataProvider.create(new ProcurementManagerDataProvider.DataContext(employeePositions));
+        List<Employee> procurementSpecialists = procurementSpecialistDataProvider.create(new ProcurementSpecialistDataProvider.DataContext(procurementManagers, employeePositions));
 
 
-        List<Employee> orderFulfillmentSupervisors = orderFulfillmentSupervisorDataProvider.create(new OrderFulfillmentSupervisorDataProvider.DataContext());
-        List<Employee> orderFulfillmentEmployees = orderFulfillmentEmployeeDataProvider.create(new OrderFulfillmentEmployeeDataProvider.DataContext(orderFulfillmentSupervisors));
+        List<Employee> orderFulfillmentManagers = orderFulfillmentManagerDataProvider.create(new OrderFulfillmentManagerDataProvider.DataContext(employeePositions));
+        List<Employee> orderFulfillmentEmployees = orderFulfillmentSpecialistDataProvider.create(new OrderFulfillmentSpecialistDataProvider.DataContext(orderFulfillmentManagers, employeePositions));
 
         return joinLists(
-                procurementSupervisors,
-                procurementEmployees,
-                orderFulfillmentSupervisors,
+                itEmployees,
+                procurementManagers,
+                procurementSpecialists,
+                orderFulfillmentManagers,
                 orderFulfillmentEmployees
         );
     }

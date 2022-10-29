@@ -77,9 +77,78 @@
     }
   }
 
+  .bookstore-main-screen-logo {
+    margin-bottom: 100px;
+  }
+
+
+  .position-badge {
+    border-radius: 20px;
+    padding: 10px;
+    margin-top:10px;
+  }
+  .position-badge-side-menu {
+    border-radius: 20px;
+    padding: 10px;
+    margin: 10px;
+    text-align: center;
+  }
+
+  .jmix-logout-button {
+    margin-left: 20px;
+    border-radius: 20px;
+    background:white !important;
+    padding:0 16px !important;
+    height:34px !important;
+
+  }
+
+  .jmix-userindicator {
+    margin-left: -10px;
+  }
+
+  .position-red {
+    color: #DF6679;
+    background-color: #FFC8D0;
+  }
+
+  .user-avatar-border-position-red {
+    border-color: #FFC8D0 !important;
+  }
+  .position-green {
+    color: #23BA75;
+    background-color: #BAF2D8;
+  }
+  .user-avatar-border-position-green {
+    border-color: #BAF2D8 !important;
+  }
+  .position-yellow {
+    color: #E3A023;
+    background-color: #FFE2AD;
+  }
+  .user-avatar-border-position-yellow {
+    border-color: #FFE2AD !important;
+  }
+  .position-purple {
+    color: #6E64B9;
+    background-color: #D6D0FF;
+  }
+  .user-avatar-border-position-purple {
+    border-color: #D6D0FF !important;
+  }
+  .position-blue {
+    color: #249FAF;
+    background-color: #BAF7FF;
+  }
+  .user-avatar-border-position-blue {
+    border-color: #BAF7FF !important;
+  }
+
 }
 
 
 .user-avatar {
   margin-left: 10px;
+  border-radius: 100px !important;
+  border: 3px solid var(--turquoise);
 }

@@ -19,50 +19,52 @@
                 <sideMenu id="sideMenu"
                           width="100%"
                           stylename="jmix-drawer-content"/>
-                <cssLayout id="controlBox"
-                           stylename="jmix-drawer-footer"
-                           width="100%">
+
+                <label id="positionBadgeLabel2" align="MIDDLE_CENTER"/>
+
+                <hbox width="100%" align="MIDDLE_CENTER" spacing="true">
                     <image id="userAvatar"
                            width="40px"
-                           stylename="user-avatar"
                            scaleMode="CONTAIN"
                            align="MIDDLE_CENTER">
                         <resource>
                             <theme path="avatars/unknown.png"/>
                         </resource>
                     </image>
+
+                    <userIndicator id="userIndicator"
+                                   align="MIDDLE_CENTER"/>
                     <logoutButton id="logoutButton"
                                   icon="SIGN_OUT"
                                   description="msg://logoutBtnDescription"/>
-                </cssLayout>
+                </hbox>
+
             </drawer>
             <workArea id="workArea"
                       stylename="jmix-workarea"
                       height="100%">
                 <initialLayout spacing="true" margin="true">
                     <vbox expand="welcomeBox" align="TOP_CENTER">
-                        <image id="mainScreenLogoImage"
-                               width="500px" height="25%" align="MIDDLE_CENTER" scaleMode="CONTAIN">
+                        <image id="mainScreenLogoImage" stylename="bookstore-main-screen-logo"
+                               width="500px" align="MIDDLE_CENTER" scaleMode="CONTAIN">
                             <resource>
                                 <theme path="branding/main-screen-logo.png"/>
                             </resource>
                         </image>
 
+                        <image id="userAvatarMainScreen"
+                               width="100px"
+                               scaleMode="CONTAIN"
+                               align="MIDDLE_CENTER">
+                            <resource>
+                                <theme path="avatars/unknown.png"/>
+                            </resource>
+                        </image>
                         <hbox align="MIDDLE_CENTER" spacing="true" id="welcomeBox">
                             <label id="welcomeMessage" stylename="h1" align="MIDDLE_CENTER"/>
-                            <image id="userAvatarMainScreen"
-                                   width="100px"
-                                   stylename="user-avatar"
-                                   scaleMode="CONTAIN"
-                                   align="MIDDLE_CENTER">
-                                <resource>
-                                    <theme path="avatars/unknown.png"/>
-                                </resource>
-                            </image>
                         </hbox>
+                        <label id="positionBadgeLabel" align="MIDDLE_CENTER"/>
                     </vbox>
-
-
                 </initialLayout>
             </workArea>
         </cssLayout>
