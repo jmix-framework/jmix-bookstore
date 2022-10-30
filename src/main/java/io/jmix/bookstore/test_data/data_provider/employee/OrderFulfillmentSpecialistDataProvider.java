@@ -32,10 +32,10 @@ public class OrderFulfillmentSpecialistDataProvider implements TestDataProvider<
 
         List<EmployeeData> employees = List.of(
                 new EmployeeData(
-                        "oliver",
+                        "melissa",
                         Title.MR,
-                        "Oliver",
-                        "Bolick",
+                        "Melissa",
+                        "Arendt",
                         orderFulfillmentSpecialist(dataContext),
                         LocalDate.now().minusYears(5).minusMonths(1).minusDays(10),
                         randomOfList(dataContext.managers()),
@@ -58,10 +58,7 @@ public class OrderFulfillmentSpecialistDataProvider implements TestDataProvider<
 
     private static List<String> orderFulfillmentSpecialistRoles() {
         return List.of(
-                EmployeeRole.CODE,
-                OrderFulfillmentRole.CODE,
-                UiMinimalRole.CODE,
-                BpmProcessActorRole.CODE
+                OrderFulfillmentRole.CODE
         );
     }
 

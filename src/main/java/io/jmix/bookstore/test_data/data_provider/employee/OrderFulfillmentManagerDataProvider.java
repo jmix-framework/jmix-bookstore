@@ -46,10 +46,7 @@ public class OrderFulfillmentManagerDataProvider implements TestDataProvider<Emp
 
     private static List<String> orderFulfillmentManagerRoles() {
         return List.of(
-                EmployeeRole.CODE,
-                OrderFulfillmentRole.CODE,
-                UiMinimalRole.CODE,
-                BpmProcessActorRole.CODE
+                OrderFulfillmentRole.CODE
         );
     }
 
