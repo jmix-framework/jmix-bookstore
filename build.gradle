@@ -84,6 +84,8 @@ dependencies {
     testImplementation 'io.jmix.ui:jmix-ui-test-assist'
     themes 'io.jmix.ui:jmix-ui-themes'
     implementation 'io.jmix.ui:jmix-ui-themes'
+    implementation 'io.jmix.notifications:jmix-notifications-starter'
+    implementation 'io.jmix.notifications:jmix-notifications-ui-starter'
 }
 
 test {

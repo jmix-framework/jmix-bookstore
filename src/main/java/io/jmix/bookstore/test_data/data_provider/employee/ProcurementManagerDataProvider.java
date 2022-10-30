@@ -47,10 +47,7 @@ public class ProcurementManagerDataProvider implements TestDataProvider<Employee
 
     private static List<String> procurementManagerRoles() {
         return List.of(
-                EmployeeRole.CODE,
-                ProcurementManagerRole.CODE,
-                UiMinimalRole.CODE,
-                BpmProcessActorRole.CODE
+                ProcurementManagerRole.CODE
         );
     }
 

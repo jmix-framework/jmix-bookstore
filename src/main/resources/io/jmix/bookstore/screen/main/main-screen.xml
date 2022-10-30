@@ -1,4 +1,5 @@
 <window xmlns="http://jmix.io/schema/ui/window"
+        xmlns:ntf="http://jmix.io/schema/notifications/ui"
         caption="msg://application.caption">
 
     <layout>
@@ -40,15 +41,21 @@
                 </hbox>
 
             </drawer>
+            <vbox expand="workArea" width="100%" height="100%">
+                <hbox width="100%">
+                    <ntf:notificationsIndicator id="ntfIndicator" align="TOP_RIGHT"/>
+                </hbox>
+
             <workArea id="workArea"
                       stylename="jmix-workarea"
-                      height="100%">
+                      width="100%"
+                      >
                 <initialLayout spacing="true" margin="true">
                     <vbox expand="welcomeBox" align="TOP_CENTER">
                         <image id="mainScreenLogoImage" stylename="bookstore-main-screen-logo"
                                width="500px" align="MIDDLE_CENTER" scaleMode="CONTAIN">
                             <resource>
-                                <theme path="branding/main-screen-logo.png"/>
+                                <theme path="branding/main-screen-logo-grey.png"/>
                             </resource>
                         </image>
 
@@ -67,6 +74,8 @@
                     </vbox>
                 </initialLayout>
             </workArea>
+
+            </vbox>
         </cssLayout>
     </layout>
 </window>

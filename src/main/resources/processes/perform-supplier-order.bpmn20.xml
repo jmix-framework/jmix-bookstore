@@ -6,7 +6,7 @@
     </extensionElements>
     <participant id="JmixBookstoreParticipant" name="Jmix Bookstore" processRef="perform-supplier-order" />
   </collaboration>
-  <process id="perform-supplier-order" name="Perform Supplier Order" isExecutable="true" flowable:candidateStarterGroups="order-fulfillment-employees,procurement-employees" jmix:candidateStarterGroupsValue="order-fulfillment-employees,procurement-employees">
+  <process id="perform-supplier-order" name="Perform Supplier Order" isExecutable="true" flowable:candidateStarterGroups="order-fulfillment-specialists" jmix:candidateStarterGroupsValue="order-fulfillment-specialists">
     <laneSet id="LaneSet_0q0huc4">
       <lane id="systemLane" name="System">
         <flowNodeRef>PerformSupplierOrderStartEvent</flowNodeRef>
@@ -17,7 +17,7 @@
       <lane id="procurementSpecialistLane" name="Procurement Specialist">
         <extensionElements>
           <jmix:conditionDetails conditionSource="userTaskOutcome" />
-          <jmix:assignmentDetails assigneeSource="expression" candidateUsersSource="users" candidateGroups="procurement-employees" candidateGroupsValue="procurement-employees" candidateGroupsSource="userGroups" />
+          <jmix:assignmentDetails assigneeSource="expression" candidateUsersSource="users" candidateGroups="procurement-specialists" candidateGroupsValue="procurement-specialists" candidateGroupsSource="userGroups" />
         </extensionElements>
         <flowNodeRef>ReviewSupplierOrderDraftHumanTask</flowNodeRef>
         <flowNodeRef>SupplierOrderDraftValidGateway</flowNodeRef>

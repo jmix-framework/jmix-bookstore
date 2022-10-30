@@ -103,6 +103,26 @@
 
   }
 
+  .jmix-notifications-indicator {
+    background:none;
+  }
+
+  .jmix-notifications-indicator:hover:not(.v-disabled) {
+    background:none;
+    color: var(--dark-turquoise);
+
+    .jmix-notifications-indicator-counter {
+      background:none;
+      color: var(--dark-turquoise);
+    }
+  }
+
+
+  .jmix-notifications-indicator-counter {
+    background:none;
+    color: var(--text-main-color);
+  }
+
   .jmix-userindicator {
     margin-left: -10px;
   }
@@ -144,6 +164,12 @@
     border-color: #BAF7FF !important;
   }
 
+
+
+  .jmix-app-workarea {
+    box-shadow: none;
+    -webkit-box-shadow: none;
+  }
 }
 
 
