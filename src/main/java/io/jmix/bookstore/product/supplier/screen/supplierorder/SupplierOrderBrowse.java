@@ -22,10 +22,6 @@ public class SupplierOrderBrowse extends StandardLookup<SupplierOrder> {
     private PerformSupplierOrderService performSupplierOrderService;
     @Autowired
     private NotificationFacet supplierOrdersFromRequestsCreatedConfirmation;
-    @Autowired
-    private RuntimeService runtimeService;
-    @Autowired
-    private DataGrid<SupplierOrder> supplierOrdersTable;
 
     @Subscribe("supplierOrdersTable.createSupplierOrdersFromRequests")
     public void onSupplierOrdersTableCreateSupplierOrdersFromRequests(Action.ActionPerformedEvent event) {
@@ -36,19 +32,4 @@ public class SupplierOrderBrowse extends StandardLookup<SupplierOrder> {
         supplierOrdersFromRequestsCreatedConfirmation.show();
     }
 
-    @Subscribe("supplierOrdersTable.performSupplierOrderProcess")
-    public void onSupplierOrdersTablePerformSupplierOrderProcess(Action.ActionPerformedEvent event) {
-        Set<SupplierOrder> supplierOrders = supplierOrdersTable.getSelected();
-
-        supplierOrders.forEach(this::performSupplierOrder);
-
-    }
-
-    private void performSupplierOrder(SupplierOrder supplierOrder) {
-        Map<String, Object> params = new HashMap<>();
-        params.put("supplierOrder", supplierOrder);
-        runtimeService.startProcessInstanceByKey(
-                "perform-supplier-order",
-                params);
-    }
 }

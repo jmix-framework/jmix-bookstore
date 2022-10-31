@@ -4,13 +4,15 @@ import io.jmix.bookstore.entity.User;
 import io.jmix.bookstore.product.Product;
 import io.jmix.core.*;
 import io.jmix.core.metamodel.datatype.DatatypeFormatter;
+import io.jmix.core.querycondition.PropertyCondition;
 import io.jmix.notifications.NotificationManager;
 import io.jmix.notifications.entity.ContentType;
+import org.flowable.engine.RuntimeService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -23,13 +25,15 @@ public class PerformSupplierOrderService {
     private final DataManager dataManager;
     private final TimeSource timeSource;
     protected final NotificationManager notificationManager;
-    @Autowired
-    private DatatypeFormatter datatypeFormatter;
+    private final DatatypeFormatter datatypeFormatter;
+    private final RuntimeService runtimeService;
 
-    public PerformSupplierOrderService(DataManager dataManager, TimeSource timeSource, NotificationManager notificationManager) {
+    public PerformSupplierOrderService(DataManager dataManager, TimeSource timeSource, NotificationManager notificationManager, DatatypeFormatter datatypeFormatter, RuntimeService runtimeService) {
         this.dataManager = dataManager;
         this.timeSource = timeSource;
         this.notificationManager = notificationManager;
+        this.datatypeFormatter = datatypeFormatter;
+        this.runtimeService = runtimeService;
     }
 
     /**
@@ -98,20 +102,40 @@ public class PerformSupplierOrderService {
 
     public void createDraftSupplierOrders() {
         List<SupplierOrderRequest> supplierOrderRequests = dataManager.load(SupplierOrderRequest.class)
-                .all()
+                .condition(PropertyCondition.equal("status", SupplierOrderRequestStatus.NEW))
                 .fetchPlan(this::supplierOrderRequestsFetchPlan)
                 .list();
+
 
         Map<Supplier, List<SupplierOrderRequest>> requestsBySupplier = supplierOrderRequests.stream()
                 .collect(Collectors.groupingBy(supplierOrderRequest -> supplierOrderRequest.getProduct().getSupplier()));
 
 
         SaveContext saveContext = new SaveContext();
-        requestsBySupplier.entrySet().stream()
-                .map(supplierListEntry -> createSupplierOrder(supplierListEntry.getKey(), supplierListEntry.getValue()))
+        List<SupplierOrder> supplierOrders = requestsBySupplier.entrySet().stream()
+                .map(supplierListEntry -> createSupplierOrder(supplierListEntry.getKey(), supplierListEntry.getValue())).toList();
+
+        supplierOrderRequests.forEach(supplierOrderRequest -> supplierOrderRequest.setStatus(SupplierOrderRequestStatus.ORDER_LINE_CREATED));
+        supplierOrderRequests.forEach(saveContext::saving);
+        supplierOrders
                 .forEach(saveContext::saving);
 
         dataManager.save(saveContext);
+
+        supplierOrders.forEach(this::startProcess);
+    }
+
+    private void startProcess(SupplierOrder supplierOrder) {
+        Map<String, Object> params = new HashMap<>();
+        params.put("supplierOrder", supplierOrder);
+        runtimeService.startProcessInstanceByKey(
+                "perform-supplier-order",
+                businessKey(supplierOrder),
+                params);
+    }
+
+    private String businessKey(SupplierOrder supplierOrder) {
+        return "%s (%s)".formatted(supplierOrder.getSupplier().getName(), datatypeFormatter.formatLocalDate(supplierOrder.getOrderDate()));
     }
 
     private SupplierOrder createSupplierOrder(Supplier supplier, List<SupplierOrderRequest> requests) {

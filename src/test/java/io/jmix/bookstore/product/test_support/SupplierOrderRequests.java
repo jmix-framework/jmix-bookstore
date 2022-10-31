@@ -2,6 +2,7 @@ package io.jmix.bookstore.product.test_support;
 
 
 import io.jmix.bookstore.product.supplier.SupplierOrderRequest;
+import io.jmix.bookstore.product.supplier.SupplierOrderRequestStatus;
 import io.jmix.bookstore.security.DatabaseUserRepository;
 import io.jmix.bookstore.test_support.TestDataProvisioning;
 import io.jmix.core.DataManager;
@@ -30,12 +31,14 @@ public class SupplierOrderRequests
 
     private static final Integer DEFAULT_REQUESTED_AMOUNT = 10;
     public static final String DEFAULT_COMMENT = "supplierOrderRequest_comment";
+    private final SupplierOrderRequestStatus DEFAULT_STATUS = SupplierOrderRequestStatus.NEW;
 
     @Override
     public SupplierOrderRequestData.SupplierOrderRequestDataBuilder defaultData() {
         return SupplierOrderRequestData.builder()
                 .requestedBy(databaseUserRepository.loadUserByUsername("admin"))
                 .product(products.createDefault())
+                .status(DEFAULT_STATUS)
                 .comment(DEFAULT_COMMENT)
                 .requestedAmount(DEFAULT_REQUESTED_AMOUNT);
     }
