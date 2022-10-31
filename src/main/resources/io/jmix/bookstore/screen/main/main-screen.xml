@@ -2,6 +2,9 @@
         xmlns:ntf="http://jmix.io/schema/notifications/ui"
         caption="msg://application.caption">
 
+    <facets>
+        <timer id="taskNotificationCounterTimer" delay="2000" autostart="true" repeating="true" />
+    </facets>
     <layout>
         <cssLayout id="horizontalWrap"
                    stylename="jmix-drawer-layout">
@@ -42,7 +45,21 @@
 
             </drawer>
             <vbox expand="workArea" width="100%" height="100%">
-                <hbox width="100%">
+                <hbox align="TOP_RIGHT">
+                    <hbox id="taskIndicator_rootBox"
+                          expand="tasksIndicator_captionLabel"
+                          stylename="jmix-tasks-indicator"
+                          spacing="true"
+                          margin="true">
+                        <label id="tasksIndicator_captionLabel"
+                               icon="TASKS"
+                               stylename="jmix-tasks-indicator-caption"
+                               align="MIDDLE_CENTER"/>
+                        <label id="tasksIndicator_counterLabel"
+                               stylename="jmix-tasks-indicator-counter"
+                               align="MIDDLE_CENTER"/>
+                    </hbox>
+<!--                    <button icon="TASKS" id="myTasksBtn" align="TOP_RIGHT"/>-->
                     <ntf:notificationsIndicator id="ntfIndicator" align="TOP_RIGHT"/>
                 </hbox>
 

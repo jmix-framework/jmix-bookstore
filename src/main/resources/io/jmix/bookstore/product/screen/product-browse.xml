@@ -22,6 +22,8 @@
     <facets>
         <dataLoadCoordinator auto="true"/>
         <screenSettings id="settingsFacet" auto="true"/>
+        <notification id="supplierOrderRequestCreatedConfirmation" type="TRAY"
+                      caption="msg://supplierOrderRequestCreatedConfirmation"/>
     </facets>
     <actions>
         <action id="lookupSelectAction"

@@ -48,8 +48,6 @@
                 <action id="remove" type="remove"/>
                 <action id="createSupplierOrdersFromRequests" icon="LIST_ALT"
                         caption="msg://createSupplierOrdersFromRequests"/>
-                <action id="performSupplierOrderProcess" icon="font-icon:HOURGLASS_START"
-                        caption="msg://performSupplierOrderProcess"/>
             </actions>
             <columns>
                 <column property="supplier" id="supplier"/>
@@ -60,11 +58,10 @@
             <simplePagination/>
             <buttonsPanel id="buttonsPanel"
                           alwaysVisible="true">
-                <button id="createBtn" action="supplierOrdersTable.create"/>
+                <button id="createSupplierOrdersFromRequestsBtn" primary="true" action="supplierOrdersTable.createSupplierOrdersFromRequests"/>
+                <button id="createBtn" action="supplierOrdersTable.create" primary="false"/>
                 <button id="editBtn" action="supplierOrdersTable.edit"/>
                 <button id="removeBtn" action="supplierOrdersTable.remove"/>
-                <button id="createSupplierOrdersFromRequestsBtn" action="supplierOrdersTable.createSupplierOrdersFromRequests"/>
-                <button id="performSupplierOrderProcessBtn" action="supplierOrdersTable.performSupplierOrderProcess"/>
             </buttonsPanel>
         </dataGrid>
         <hbox id="lookupActions" spacing="true" visible="false">

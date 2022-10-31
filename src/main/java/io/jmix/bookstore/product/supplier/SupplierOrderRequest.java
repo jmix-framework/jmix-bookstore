@@ -35,6 +35,19 @@ public class SupplierOrderRequest extends StandardEntity {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     private User requestedBy;
 
+
+    @NotNull
+    @Column(name = "STATUS", nullable = false)
+    private String status;
+
+    public SupplierOrderRequestStatus getStatus() {
+        return status == null ? null : SupplierOrderRequestStatus.fromId(status);
+    }
+
+    public void setStatus(SupplierOrderRequestStatus status) {
+        this.status = status == null ? null : status.getId();
+    }
+
     public User getRequestedBy() {
         return requestedBy;
     }

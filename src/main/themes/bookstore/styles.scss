@@ -123,6 +123,30 @@
     color: var(--text-main-color);
   }
 
+  .jmix-tasks-indicator {
+    background:none;
+    cursor: pointer;
+  }
+
+  .jmix-tasks-indicator:hover:not(.v-disabled) {
+    background:none;
+    cursor: pointer;
+    color: var(--dark-turquoise);
+
+    .jmix-tasks-indicator-counter {
+      background:none;
+      cursor: pointer;
+      color: var(--dark-turquoise);
+    }
+  }
+
+
+  .jmix-tasks-indicator-counter {
+    background:none;
+    cursor: pointer;
+    color: var(--text-main-color);
+  }
+
   .jmix-userindicator {
     margin-left: -10px;
   }
@@ -177,4 +201,94 @@
   margin-left: 10px;
   border-radius: 100px !important;
   border: 3px solid var(--turquoise);
+}
+
+
+.v-table .v-table-row.jmix-tasks-table-unread-notification,
+.v-table .v-table-row-odd.jmix-tasks-table-unread-notification {
+  font-weight: 600;
+}
+
+.jmix-tasks-table-unread-notification-indicator {
+  color: var(--success-color-shade-1, #2a8463);;
+}
+
+.jmix-tasks-indicator {
+  background-color: var(--dim-color, #f2f2f2);
+}
+
+.jmix-tasks-indicator:hover:not(.v-disabled) {
+  background-color: var(--dim-color-shade-1, #cecece);
+  cursor: pointer;
+}
+
+.jmix-tasks-indicator-counter {
+  padding: 1px 5px;
+}
+
+.jmix-tasks-indicator-counter-empty {
+  background-color: var(--dim-color-shade-1, #cecece);
+}
+
+.jmix-tasks-indicator-counter-has-new {
+  background-color: var(--success-color, #36ab80);
+  color: var(--text-contrast-color, #fff);
+}
+
+.jmix-tasks-indicator:hover:not(.v-disabled) .jmix-tasks-indicator-counter-empty {
+  background-color: var(--dim-color, #f2f2f2);
+}
+
+.jmix-tasks-indicator:hover:not(.v-disabled) .jmix-tasks-indicator-counter-has-new {
+  background-color: var(--success-color-shade-1, #2a8463);
+}
+
+.jmix-drawer.jmix-drawer-collapsed.expand-on-hover:not(:hover) .jmix-tasks-indicator .v-spacing,
+.jmix-drawer.jmix-drawer-collapsed.expand-on-hover:not(:hover) .v-slot-jmix-tasks-indicator-caption {
+  display: none;
+}
+
+.jmix-drawer.jmix-drawer-collapsed.expand-on-hover:not(:hover) .jmix-tasks-indicator {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.jmix-drawer.jmix-drawer-collapsed.expand-on-hover:not(:hover) .jmix-tasks-indicator > .v-expand {
+  text-align: center;
+  padding-left: 0 !important;
+}
+
+.jmix-app-menubar .jmix-tasks-indicator {
+  background-color: transparent;
+  color: var(--menubar-text-color, #c8d6e5);
+  border-radius: 6px;
+}
+
+.jmix-app-menubar > .v-expand > .v-slot-jmix-tasks-indicator > .jmix-tasks-indicator {
+  padding-top: 0;
+  padding-bottom: 0;
+  height: 100% !important;
+}
+
+.jmix-app-menubar .jmix-tasks-indicator-counter {
+  border-radius: 6px;
+}
+
+.jmix-app-menubar .jmix-tasks-indicator:hover:not(.v-disabled) {
+  background-color: var(--menubar-action-button-hover-background-color, #4f5c78);
+  color: var(--menubar-action-button-hover-text-color, #fff)
+}
+
+.jmix-app-menubar .jmix-tasks-indicator-counter-empty {
+  background-color: var(--menubar-text-color, #c8d6e5);
+  color: var(--menubar-background-color, #374d66);
+}
+
+.jmix-app-menubar .jmix-tasks-indicator:hover:not(.v-disabled) .jmix-tasks-indicator-counter-empty {
+  background-color: var(--dim-color, #f2f2f2);
+  color: var(--menubar-action-button-hover-background-color, #4f5c78);
+}
+
+.jmix-app-menubar .jmix-tasks-indicator:hover:not(.v-disabled) .jmix-tasks-indicator-counter-has-new {
+  background-color: var(--success-color, #36ab80);
 }

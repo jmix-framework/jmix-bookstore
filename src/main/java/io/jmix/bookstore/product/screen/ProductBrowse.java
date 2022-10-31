@@ -2,10 +2,13 @@ package io.jmix.bookstore.product.screen;
 
 import io.jmix.bookstore.entity.User;
 import io.jmix.bookstore.product.supplier.SupplierOrderRequest;
+import io.jmix.bookstore.product.supplier.SupplierOrderRequestStatus;
+import io.jmix.bookstore.product.supplier.screen.supplierorderrequest.SupplierOrderRequestEdit;
 import io.jmix.core.security.CurrentAuthentication;
 import io.jmix.ui.ScreenBuilders;
 import io.jmix.ui.action.Action;
 import io.jmix.ui.component.DataGrid;
+import io.jmix.ui.component.NotificationFacet;
 import io.jmix.ui.screen.*;
 import io.jmix.bookstore.product.Product;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,19 +25,32 @@ public class ProductBrowse extends StandardLookup<Product> {
 
     @Autowired
     private CurrentAuthentication currentAuthentication;
+    @Autowired
+    private NotificationFacet supplierOrderRequestCreatedConfirmation;
 
 
     @Subscribe("productsTable.fillUpInventory")
     public void onProductsTableFillUpInventory(Action.ActionPerformedEvent event) {
 
-        screenBuilders.editor(SupplierOrderRequest.class, this)
+        SupplierOrderRequestEdit supplierOrderRequestEdit = screenBuilders.editor(SupplierOrderRequest.class, this)
+                .withScreenClass(SupplierOrderRequestEdit.class)
                 .withInitializer(supplierOrderRequest -> {
                     supplierOrderRequest.setRequestedAmount(100);
+                    supplierOrderRequest.setStatus(SupplierOrderRequestStatus.NEW);
                     supplierOrderRequest.setProduct(productsTable.getSingleSelected());
 
                     User user = (User) currentAuthentication.getUser();
                     supplierOrderRequest.setRequestedBy(user);
                 })
+                .build();
+
+        supplierOrderRequestEdit.addAfterCloseListener(afterCloseEvent -> {
+            if (afterCloseEvent.closedWith(StandardOutcome.COMMIT)) {
+                supplierOrderRequestCreatedConfirmation.show();
+            }
+        });
+
+        supplierOrderRequestEdit
                 .show();
 
     }

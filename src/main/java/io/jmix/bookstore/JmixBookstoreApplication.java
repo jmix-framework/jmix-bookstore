@@ -14,10 +14,12 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Primary;
 import org.springframework.context.event.EventListener;
 import org.springframework.core.env.Environment;
+import org.springframework.scheduling.annotation.EnableAsync;
 
 import javax.annotation.PostConstruct;
 import javax.sql.DataSource;
 
+@EnableAsync
 @SpringBootApplication
 public class JmixBookstoreApplication {
 
