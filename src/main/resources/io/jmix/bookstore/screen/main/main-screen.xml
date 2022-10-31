@@ -59,7 +59,6 @@
                                stylename="jmix-tasks-indicator-counter"
                                align="MIDDLE_CENTER"/>
                     </hbox>
-<!--                    <button icon="TASKS" id="myTasksBtn" align="TOP_RIGHT"/>-->
                     <ntf:notificationsIndicator id="ntfIndicator" align="TOP_RIGHT"/>
                 </hbox>
 

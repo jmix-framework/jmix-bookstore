@@ -1,22 +1,22 @@
 plugins {
     id 'io.jmix' version '1.3.0'
     id 'java'
-//    id "com.github.fhermansson.assertj-generator" version "1.1.4"
+    id "com.github.fhermansson.assertj-generator" version "1.1.4"
 }
 
 
-//assertjGenerator {
-//    classOrPackageNames = [
-//            'io.jmix.bookstore.order.Order',
-//            'io.jmix.bookstore.order.OrderLine',
-//            'io.jmix.bookstore.product.Product',
-//            'io.jmix.bookstore.product.ProductCategory',
-//            'io.jmix.bookstore.product.ProductPrice',
-//            'io.jmix.bookstore.customer.Customer',
-//            'io.jmix.bookstore.entity.Address',
-//            'io.jmix.bookstore.entity.Money',
-//    ]
-//}
+assertjGenerator {
+    classOrPackageNames = [
+            'io.jmix.bookstore.order.Order',
+            'io.jmix.bookstore.order.OrderLine',
+            'io.jmix.bookstore.product.Product',
+            'io.jmix.bookstore.product.ProductCategory',
+            'io.jmix.bookstore.product.ProductPrice',
+            'io.jmix.bookstore.customer.Customer',
+            'io.jmix.bookstore.entity.Address',
+            'io.jmix.bookstore.entity.Money',
+    ]
+}
 
 apply plugin: 'org.springframework.boot'
 
