@@ -85,22 +85,25 @@
   .position-badge {
     border-radius: 20px;
     padding: 10px;
-    margin-top:10px;
+    margin-right:10px;
   }
-  .position-badge-side-menu {
-    border-radius: 20px;
-    padding: 10px;
-    margin: 10px;
-    text-align: center;
-  }
+  //.position-badge-side-menu {
+  //  border-radius: 20px;
+  //  padding: 10px;
+  //  margin: 10px;
+  //  text-align: center;
+  //}
 
   .jmix-logout-button {
-    margin-left: 20px;
-    border-radius: 20px;
-    background:white !important;
+    margin-top: 7px;
+    background:none;
     padding:0 16px !important;
     height:34px !important;
+  }
 
+  .jmix-logout-button:hover:not(.v-disabled) {
+    background:none;
+    color: var(--dark-turquoise);
   }
 
   .jmix-notifications-indicator {
@@ -148,7 +151,7 @@
   }
 
   .jmix-userindicator {
-    margin-left: -10px;
+    //margin-bottom: -10px;
   }
 
   .position-red {

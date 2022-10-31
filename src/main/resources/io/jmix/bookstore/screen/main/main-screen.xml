@@ -23,29 +23,11 @@
                 <sideMenu id="sideMenu"
                           width="100%"
                           stylename="jmix-drawer-content"/>
-
-                <label id="positionBadgeLabel2" align="MIDDLE_CENTER"/>
-
-                <hbox width="100%" align="MIDDLE_CENTER" spacing="true">
-                    <image id="userAvatar"
-                           width="40px"
-                           scaleMode="CONTAIN"
-                           align="MIDDLE_CENTER">
-                        <resource>
-                            <theme path="avatars/unknown.png"/>
-                        </resource>
-                    </image>
-
-                    <userIndicator id="userIndicator"
-                                   align="MIDDLE_CENTER"/>
-                    <logoutButton id="logoutButton"
-                                  icon="SIGN_OUT"
-                                  description="msg://logoutBtnDescription"/>
-                </hbox>
-
             </drawer>
             <vbox expand="workArea" width="100%" height="100%">
-                <hbox align="TOP_RIGHT">
+                <hbox align="TOP_RIGHT" spacing="true">
+
+                    <label id="positionBadgeLabel" align="MIDDLE_CENTER"/>
                     <hbox id="taskIndicator_rootBox"
                           expand="tasksIndicator_captionLabel"
                           stylename="jmix-tasks-indicator"
@@ -60,6 +42,23 @@
                                align="MIDDLE_CENTER"/>
                     </hbox>
                     <ntf:notificationsIndicator id="ntfIndicator" align="TOP_RIGHT"/>
+
+
+                    <userIndicator id="userIndicator"
+                                   align="MIDDLE_CENTER"/>
+
+                    <image id="userAvatar"
+                           width="40px"
+                           scaleMode="CONTAIN"
+                           align="MIDDLE_CENTER">
+                        <resource>
+                            <theme path="avatars/unknown.png"/>
+                        </resource>
+                    </image>
+
+                    <logoutButton id="logoutButton"
+                                  icon="SIGN_OUT"
+                                  description="msg://logoutBtnDescription"/>
                 </hbox>
 
             <workArea id="workArea"
@@ -74,7 +73,6 @@
                                 <theme path="branding/main-screen-logo-grey.png"/>
                             </resource>
                         </image>
-
                         <image id="userAvatarMainScreen"
                                width="100px"
                                scaleMode="CONTAIN"
@@ -86,7 +84,6 @@
                         <hbox align="MIDDLE_CENTER" spacing="true" id="welcomeBox">
                             <label id="welcomeMessage" stylename="h1" align="MIDDLE_CENTER"/>
                         </hbox>
-                        <label id="positionBadgeLabel" align="MIDDLE_CENTER"/>
                     </vbox>
                 </initialLayout>
             </workArea>
