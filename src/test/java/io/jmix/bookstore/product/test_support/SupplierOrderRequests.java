@@ -31,7 +31,7 @@ public class SupplierOrderRequests
 
     private static final Integer DEFAULT_REQUESTED_AMOUNT = 10;
     public static final String DEFAULT_COMMENT = "supplierOrderRequest_comment";
-    private SupplierOrderRequestStatus DEFAULT_STATUS = SupplierOrderRequestStatus.NEW;
+    private final SupplierOrderRequestStatus DEFAULT_STATUS = SupplierOrderRequestStatus.NEW;
 
     @Override
     public SupplierOrderRequestData.SupplierOrderRequestDataBuilder defaultData() {
