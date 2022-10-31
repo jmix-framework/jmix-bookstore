@@ -33,34 +33,29 @@
     </actions>
     <dialogMode height="75%"
                 width="75%"/>
-    <layout spacing="true" expand="orderLinesBox">
-        <label stylename="failure" id="changesRequiredCommentLabel" visible="false" width="100%" />
-            <form id="form" dataContainer="supplierOrderDc">
-                <column width="350px">
-                    <entityPicker editable="false" id="supplierField" property="supplier" />
-                    <valuePicker editable="false" id="supplierStatusField" property="supplier.cooperationStatus" />
-                </column>
-                <column width="350px">
-                    <dateField id="orderDateField" property="orderDate"/>
-                </column>
-            </form>
-            <groupBox id="orderLinesBox" caption="msg://io.jmix.bookstore.product.supplier/SupplierOrder.orderLines" expand="orderLinesTable">
-                <table id="orderLinesTable" dataContainer="orderLinesDc" width="100%" editable="true">
-                    <actions>
-                        <action id="remove" type="remove"/>
-                    </actions>
-                    <columns>
-                        <column editable="true" id="quantity"/>
-                        <column id="product"/>
-                        <column id="request.requestedAmount"/>
-                        <column id="request.requestedBy"/>
-                        <column id="request.comment" caption="msg://requesterComment"/>
-                    </columns>
-                    <buttonsPanel>
-                        <button action="orderLinesTable.remove"/>
-                    </buttonsPanel>
-                </table>
-            </groupBox>
+    <layout spacing="true" expand="orderLinesTable">
+        <label stylename="failure" id="changesRequiredCommentLabel" visible="false" width="100%" icon="WARNING"/>
+        <form id="form" dataContainer="supplierOrderDc" editable="false">
+            <column width="350px">
+                <entityPicker editable="false" id="supplierField" property="supplier"/>
+                <valuePicker editable="false" id="supplierStatusField" property="supplier.cooperationStatus"/>
+            </column>
+            <column width="350px">
+                <dateField id="orderDateField" property="orderDate"/>
+            </column>
+        </form>
+        <table id="orderLinesTable" dataContainer="orderLinesDc" width="100%" editable="true"
+               caption="msg://io.jmix.bookstore.product.supplier/SupplierOrder.orderLines">
+            <columns>
+                <column id="quantity"/>
+                <column id="product"/>
+                <column id="request.requestedAmount"/>
+                <column id="request.requestedBy"/>
+                <column id="request.comment" caption="msg://requesterComment"/>
+            </columns>
+        </table>
+        <textArea width="100%" id="changesRequiredCommentTextArea" rows="5"
+                  caption="msg://changesRequiredCommentLabel"/>
         <hbox id="taskActions" spacing="true">
             <button id="yesOutcomeBtn" icon="font-icon:CHECK" caption="msg://yes"/>
             <button id="noOutcomeBtn" icon="CLOSE" caption="msg://no"/>

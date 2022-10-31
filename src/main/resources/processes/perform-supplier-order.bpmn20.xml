@@ -35,6 +35,7 @@
         </extensionElements>
         <flowNodeRef>SupplierOrderApprovedGateway</flowNodeRef>
         <flowNodeRef>ApproveSupplierOrderHumanTask</flowNodeRef>
+        <flowNodeRef>MarkOrderAsChangesRequiredEntityTask</flowNodeRef>
       </lane>
     </laneSet>
     <startEvent id="PerformSupplierOrderStartEvent">
@@ -105,7 +106,7 @@
         </jmix:formData>
       </extensionElements>
       <incoming>Flow_02a3bui</incoming>
-      <incoming>SupplierOrderApprovedNoFlow</incoming>
+      <incoming>ReReviewOrderFlow</incoming>
       <outgoing>Flow_0ed0u4q</outgoing>
     </userTask>
     <exclusiveGateway id="SupplierOrderDraftValidGateway" name="Draft valid?">
@@ -147,7 +148,7 @@
       <outgoing>ApprovalRequiredNoFlow</outgoing>
     </exclusiveGateway>
     <sequenceFlow id="Flow_016chow" sourceRef="ApproveSupplierOrderHumanTask" targetRef="SupplierOrderApprovedGateway" />
-    <sequenceFlow id="SupplierOrderApprovedNoFlow" name="No" sourceRef="SupplierOrderApprovedGateway" targetRef="ReviewSupplierOrderDraftHumanTask">
+    <sequenceFlow id="SupplierOrderApprovedNoFlow" name="No" sourceRef="SupplierOrderApprovedGateway" targetRef="MarkOrderAsChangesRequiredEntityTask">
       <extensionElements>
         <jmix:conditionDetails conditionSource="userTaskOutcome" conditionType="anyoneCompleted" userTaskId="ApproveSupplierOrderHumanTask" userTaskOutcome="No" />
       </extensionElements>
@@ -161,10 +162,11 @@
     <userTask id="ApproveSupplierOrderHumanTask" name="Approve Supplier Order" jmix:assigneeSource="expression">
       <extensionElements>
         <jmix:conditionDetails conditionSource="userTaskOutcome" />
-        <jmix:formData type="jmix-screen" openMode="DIALOG" screenId="bookstore_SupplierOrder.review">
+        <jmix:formData type="jmix-screen" openMode="DIALOG" screenId="bookstore_SupplierOrder.approval">
           <jmix:formOutcomes>
             <jmix:formOutcome id="Yes" />
             <jmix:formOutcome id="No" />
+            <jmix:formOutcome id="" />
           </jmix:formOutcomes>
         </jmix:formData>
       </extensionElements>
@@ -192,6 +194,26 @@
       </extensionElements>
       <conditionExpression xsi:type="tFormalExpression">${approvalNeeded==false}</conditionExpression>
     </sequenceFlow>
+    <sequenceFlow id="ReReviewOrderFlow" sourceRef="MarkOrderAsChangesRequiredEntityTask" targetRef="ReviewSupplierOrderDraftHumanTask">
+      <extensionElements>
+        <jmix:conditionDetails conditionSource="expression" />
+      </extensionElements>
+    </sequenceFlow>
+    <serviceTask id="MarkOrderAsChangesRequiredEntityTask" name="Set Order Status to &#34;Changes required&#34;" flowable:type="jmix-modify-entity">
+      <extensionElements>
+        <flowable:field name="processVariable">
+          <flowable:string>supplierOrder</flowable:string>
+        </flowable:field>
+        <flowable:field name="entityName">
+          <flowable:string>bookstore_SupplierOrder</flowable:string>
+        </flowable:field>
+        <flowable:field name="entityAttributes">
+          <flowable:string>[{"name":"status","valueType":"directValue","value":"Changes Required"}]</flowable:string>
+        </flowable:field>
+      </extensionElements>
+      <incoming>SupplierOrderApprovedNoFlow</incoming>
+      <outgoing>ReReviewOrderFlow</outgoing>
+    </serviceTask>
   </process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_process">
     <bpmndi:BPMNPlane id="BPMNPlane_process" bpmnElement="PerformSupplierOrder">
@@ -207,6 +229,11 @@
       <bpmndi:BPMNShape id="Lane_0ohu76m_di" bpmnElement="systemLane" isHorizontal="true">
         <omgdc:Bounds x="130" y="130" width="1168" height="125" />
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_09bxbik_di" bpmnElement="ReReviewOrderFlow">
+        <di:waypoint x="610" y="640" />
+        <di:waypoint x="310" y="640" />
+        <di:waypoint x="310" y="350" />
+      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1bl79gv_di" bpmnElement="ApprovalRequiredNoFlow">
         <di:waypoint x="865" y="390" />
         <di:waypoint x="1070" y="390" />
@@ -227,10 +254,9 @@
       <bpmndi:BPMNEdge id="Flow_09wv192_di" bpmnElement="SupplierOrderApprovedNoFlow">
         <di:waypoint x="1070" y="555" />
         <di:waypoint x="1070" y="640" />
-        <di:waypoint x="310" y="640" />
-        <di:waypoint x="310" y="350" />
+        <di:waypoint x="710" y="640" />
         <bpmndi:BPMNLabel>
-          <omgdc:Bounds x="683" y="622" width="15" height="14" />
+          <omgdc:Bounds x="1078" y="595" width="15" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_016chow_di" bpmnElement="Flow_016chow">
@@ -324,6 +350,9 @@
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0mi2ak2_di" bpmnElement="PlaceSupplierOrderServiceTask">
         <omgdc:Bounds x="1100" y="150" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1lp1mkx_di" bpmnElement="MarkOrderAsChangesRequiredEntityTask">
+        <omgdc:Bounds x="610" y="600" width="100" height="80" />
       </bpmndi:BPMNShape>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>

@@ -9,11 +9,9 @@ import io.jmix.bpmui.processform.annotation.Outcome;
 import io.jmix.bpmui.processform.annotation.ProcessForm;
 import io.jmix.bpmui.processform.annotation.ProcessVariable;
 import io.jmix.core.security.CurrentAuthentication;
+import io.jmix.ui.Notifications;
 import io.jmix.ui.action.list.RemoveAction;
-import io.jmix.ui.component.Button;
-import io.jmix.ui.component.DateField;
-import io.jmix.ui.component.Label;
-import io.jmix.ui.component.Table;
+import io.jmix.ui.component.*;
 import io.jmix.ui.screen.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
@@ -23,16 +21,16 @@ import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
 
-@UiController("bookstore_SupplierOrder.review")
-@UiDescriptor("supplier-order-review.xml")
+@UiController("bookstore_SupplierOrder.approval")
+@UiDescriptor("supplier-order-approval.xml")
 @EditedEntityContainer("supplierOrderDc")
 @ProcessForm(
         outcomes = {
-                @Outcome(id = SupplierOrderReview.YES_OUTCOME),
-                @Outcome(id = SupplierOrderReview.NO_OUTCOME)
+                @Outcome(id = SupplierOrderApproval.YES_OUTCOME),
+                @Outcome(id = SupplierOrderApproval.NO_OUTCOME)
         }
 )
-public class SupplierOrderReview extends StandardEditor<SupplierOrder> {
+public class SupplierOrderApproval extends StandardEditor<SupplierOrder> {
 
 
     static final String YES_OUTCOME = "Yes";
@@ -43,8 +41,6 @@ public class SupplierOrderReview extends StandardEditor<SupplierOrder> {
 
     @ProcessVariable(name = "changesRequiredComment")
     protected String changesRequiredComment;
-    @ProcessVariable(name = "approver")
-    protected User approver;
 
     @Autowired
     protected ProcessFormContext processFormContext;
@@ -52,14 +48,13 @@ public class SupplierOrderReview extends StandardEditor<SupplierOrder> {
     private Table<SupplierOrderLine> orderLinesTable;
     @Autowired
     private DateField<LocalDate> orderDateField;
-    @Named("orderLinesTable.remove")
-    private RemoveAction<SupplierOrderLine> orderLinesTableRemove;
-    @Autowired
-    private Label<String> changesRequiredCommentLabel;
+
     @Autowired
     private CurrentAuthentication currentAuthentication;
     @Autowired
-    private MessageBundle messageBundle;
+    private TextArea<String> changesRequiredCommentTextArea;
+    @Autowired
+    private Notifications notifications;
 
 
     @Subscribe
@@ -67,31 +62,12 @@ public class SupplierOrderReview extends StandardEditor<SupplierOrder> {
         setEntityToEdit(supplierOrder);
     }
 
-    @Subscribe
-    public void onAfterShow(AfterShowEvent event) {
-
-        if (StringUtils.hasText(changesRequiredComment)) {
-            changesRequiredCommentLabel.setValue(getChangesRequiredComment());
-            changesRequiredCommentLabel.setVisible(true);
-        }
-    }
-
-    private String getChangesRequiredComment() {
-        return messageBundle.formatMessage("changesRequiredComment", approver.getDisplayName(), changesRequiredComment);
-    }
-
 
     @Subscribe("yesOutcomeBtn")
     public void onYesOutcomeBtnClick(Button.ClickEvent event) {
-        Map<String, Object> processVariables = new HashMap<>();
-        processVariables.put("supplierOrder", getEditedEntity());
-
-        User user = (User) currentAuthentication.getUser();
-        processVariables.put("reviewedBy", user);
 
         processFormContext.taskCompletion()
                 .withOutcome(YES_OUTCOME)
-                .withProcessVariables(processVariables)
                 .complete();
 
         closeWithDiscard();
@@ -100,11 +76,19 @@ public class SupplierOrderReview extends StandardEditor<SupplierOrder> {
     @Subscribe("noOutcomeBtn")
     public void onNoOutcomeBtnClick(Button.ClickEvent event) {
         Map<String, Object> processVariables = new HashMap<>();
-        processVariables.put("supplierOrder", getEditedEntity());
+        String changesRequiredComment = changesRequiredCommentTextArea.getValue();
+
+        if (!StringUtils.hasText(changesRequiredComment)) {
+            notifications.create(Notifications.NotificationType.WARNING)
+                    .withCaption("Please provide comment")
+                    .show();
+
+            return;
+        }
 
 
-        User user = (User) currentAuthentication.getUser();
-        processVariables.put("reviewedBy", user);
+        processVariables.put("changesRequiredComment", changesRequiredComment);
+        processVariables.put("approver", currentAuthentication.getUser());
 
         processFormContext.taskCompletion()
                 .withOutcome(NO_OUTCOME)
