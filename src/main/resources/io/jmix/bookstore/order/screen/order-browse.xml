@@ -31,28 +31,31 @@
     <dialogMode height="600"
                 width="800"/>
     <layout expand="ordersTable" spacing="true">
-        <groupTable id="ordersTable"
-                    width="100%"
-                    dataContainer="ordersDc">
+        <filter id="filter"
+                dataLoader="ordersDl">
+            <properties include=".*"/>
+        </filter>
+        <dataGrid id="ordersTable"
+                  width="100%"
+                  dataContainer="ordersDc">
             <actions>
                 <action id="create" type="create"/>
                 <action id="edit" type="edit"/>
                 <action id="remove" type="remove"/>
             </actions>
             <columns>
-                <column id="orderDate"/>
-                <column id="customer"/>
+                <column property="orderDate" id="orderDate"/>
+                <column property="customer" id="customer"/>
+                <column property="shippingDate" id="shippingDate"/>
             </columns>
+            <simplePagination/>
             <buttonsPanel id="buttonsPanel"
                           alwaysVisible="true">
                 <button id="createBtn" action="ordersTable.create"/>
                 <button id="editBtn" action="ordersTable.edit"/>
                 <button id="removeBtn" action="ordersTable.remove"/>
             </buttonsPanel>
-        </groupTable>
-        <pagination id="ordersPagination" align="BOTTOM_RIGHT" itemsPerPageVisible="true">
-            <containerProvider dataContainer="ordersDc" />
-        </pagination>
+        </dataGrid>
         <hbox id="lookupActions" spacing="true" visible="false">
             <button action="lookupSelectAction"/>
             <button action="lookupCancelAction"/>

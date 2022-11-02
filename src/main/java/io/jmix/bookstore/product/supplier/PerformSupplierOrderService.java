@@ -70,7 +70,7 @@ public class PerformSupplierOrderService {
         String productName = requestedProduct.getName();
 
         String subject = "Order with Fill-Up request placed".formatted(productName);
-        String body = "Your fill-up request from %s for %s has been approved and an order has been placed.".formatted(
+        String body = "Your fill-up request from %s for '%s' has been approved and an order has been placed.".formatted(
                 datatypeFormatter.formatDate(request.getCreatedDate()),
                 productName
         );
@@ -93,6 +93,12 @@ public class PerformSupplierOrderService {
      */
     public void placeSupplierOrder(SupplierOrder supplierOrder) {
         log.info("Placing Supplier Order: {}", supplierOrder);
+
+        SupplierOrder reloadedSupplierOrder = dataManager.load(Id.of(supplierOrder)).one();
+
+        reloadedSupplierOrder.setStatus(SupplierOrderStatus.ORDERED);
+
+        dataManager.save(reloadedSupplierOrder);
 
         supplierOrder.getOrderLines().stream().map(this::placedOrderNotification)
                 .forEach(NotificationManager.SendNotification::send);

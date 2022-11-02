@@ -46,9 +46,9 @@
                 <action id="remove" type="remove"/>
             </actions>
             <columns>
+                <column property="title" id="title"/>
                 <column property="firstName" id="firstName"/>
                 <column property="lastName" id="lastName"/>
-                <column property="title" id="title"/>
                 <column property="birthDate" id="birthDate"/>
                 <column property="hireDate" id="hireDate"/>
                 <column property="notes" id="notes"/>
