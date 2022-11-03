@@ -2,6 +2,7 @@ package io.jmix.bookstore.product.supplier;
 
 import io.jmix.bookstore.entity.StandardEntity;
 import io.jmix.core.DeletePolicy;
+import io.jmix.core.FileRef;
 import io.jmix.core.entity.annotation.OnDelete;
 import io.jmix.core.metamodel.annotation.Composition;
 import io.jmix.core.metamodel.annotation.JmixEntity;
@@ -36,6 +37,17 @@ public class SupplierOrder extends StandardEntity {
     private List<SupplierOrderLine> orderLines;
 
 
+    @Column(name = "ORDER_FORM")
+    @Lob
+    private FileRef orderForm;
+
+    public FileRef getOrderForm() {
+        return orderForm;
+    }
+
+    public void setOrderForm(FileRef orderForm) {
+        this.orderForm = orderForm;
+    }
 
     public SupplierOrderStatus getStatus() {
         return status == null ? null : SupplierOrderStatus.fromId(status);

@@ -9,10 +9,12 @@
   <process id="perform-supplier-order" name="Perform Supplier Order" isExecutable="true" flowable:candidateStarterGroups="order-fulfillment-specialists" jmix:candidateStarterGroupsValue="order-fulfillment-specialists">
     <laneSet id="LaneSet_0q0huc4">
       <lane id="systemLane" name="System">
-        <flowNodeRef>PerformSupplierOrderStartEvent</flowNodeRef>
         <flowNodeRef>NotifyRequestersAboutInvalidRequestServiceTask</flowNodeRef>
         <flowNodeRef>MarkOrderAsInvalidEntityTask</flowNodeRef>
         <flowNodeRef>PlaceSupplierOrderServiceTask</flowNodeRef>
+        <flowNodeRef>Event_12sufjm</flowNodeRef>
+        <flowNodeRef>SendOrderFormToSupplierEmailTask</flowNodeRef>
+        <flowNodeRef>Event_04yywkw</flowNodeRef>
       </lane>
       <lane id="procurementSpecialistLane" name="Procurement Specialist">
         <extensionElements>
@@ -24,6 +26,7 @@
         <flowNodeRef>MarkOrderAsValidEntityTask</flowNodeRef>
         <flowNodeRef>ApprovalRequiredDecision</flowNodeRef>
         <flowNodeRef>ApprovalRequiredGateway</flowNodeRef>
+        <flowNodeRef>PerformSupplierOrderStartEvent</flowNodeRef>
       </lane>
       <lane id="procurementSupervisorLane" name="Procurement Manager">
         <extensionElements>
@@ -38,17 +41,6 @@
         <flowNodeRef>MarkOrderAsChangesRequiredEntityTask</flowNodeRef>
       </lane>
     </laneSet>
-    <startEvent id="PerformSupplierOrderStartEvent">
-      <extensionElements>
-        <jmix:processVariables>
-          <jmix:processVariable name="supplierOrder" type="entity">
-            <jmix:processVariableProperty name="entityName" value="bookstore_SupplierOrder" />
-          </jmix:processVariable>
-        </jmix:processVariables>
-        <jmix:formData type="no-form" />
-      </extensionElements>
-      <outgoing>Flow_02a3bui</outgoing>
-    </startEvent>
     <sequenceFlow id="Flow_02a3bui" sourceRef="PerformSupplierOrderStartEvent" targetRef="ReviewSupplierOrderDraftHumanTask" />
     <sequenceFlow id="Flow_0ed0u4q" sourceRef="ReviewSupplierOrderDraftHumanTask" targetRef="SupplierOrderDraftValidGateway" />
     <sequenceFlow id="DraftValidNoFlow" name="No" sourceRef="SupplierOrderDraftValidGateway" targetRef="MarkOrderAsInvalidEntityTask">
@@ -78,6 +70,7 @@
         </jmix:springBean>
       </extensionElements>
       <incoming>Flow_1t2wrft</incoming>
+      <outgoing>Flow_0lqxmqg</outgoing>
     </serviceTask>
     <serviceTask id="MarkOrderAsInvalidEntityTask" name="Mark Order as Invalid" flowable:type="jmix-modify-entity">
       <extensionElements>
@@ -179,14 +172,16 @@
       </extensionElements>
       <conditionExpression xsi:type="tFormalExpression">${execution.getVariable('ApproveSupplierOrderHumanTask_result') != null &amp;&amp; bpm_UserTaskResults.containsOutcome(execution.getVariable('ApproveSupplierOrderHumanTask_result'), 'Yes')}</conditionExpression>
     </sequenceFlow>
-    <serviceTask id="PlaceSupplierOrderServiceTask" name="Place Supplier Order" flowable:expression="${bookstore_PerformSupplierOrderService.placeSupplierOrder(supplierOrder)}" jmix:taskType="springBean" jmix:beanName="bookstore_PerformSupplierOrderService">
+    <serviceTask id="PlaceSupplierOrderServiceTask" name="Place Supplier Order" flowable:expression="${bookstore_PerformSupplierOrderService.placeSupplierOrder(supplierOrder, reviewedBy)}" jmix:taskType="springBean" jmix:beanName="bookstore_PerformSupplierOrderService">
       <extensionElements>
         <jmix:springBean beanName="bookstore_PerformSupplierOrderService" methodName="placeSupplierOrder">
           <jmix:methodParam name="supplierOrder" type="io.jmix.bookstore.product.supplier.SupplierOrder" isVariable="true">supplierOrder</jmix:methodParam>
+          <jmix:methodParam name="reviewedBy" type="io.jmix.bookstore.entity.User" isVariable="true">reviewedBy</jmix:methodParam>
         </jmix:springBean>
       </extensionElements>
       <incoming>SupplierOrderApprovedYesFlow</incoming>
       <incoming>ApprovalRequiredNoFlow</incoming>
+      <outgoing>Flow_1nx6jbs</outgoing>
     </serviceTask>
     <sequenceFlow id="ApprovalRequiredNoFlow" name="No" sourceRef="ApprovalRequiredGateway" targetRef="PlaceSupplierOrderServiceTask">
       <extensionElements>
@@ -214,21 +209,70 @@
       <incoming>SupplierOrderApprovedNoFlow</incoming>
       <outgoing>ReReviewOrderFlow</outgoing>
     </serviceTask>
+    <sequenceFlow id="Flow_1nx6jbs" sourceRef="PlaceSupplierOrderServiceTask" targetRef="SendOrderFormToSupplierEmailTask">
+      <extensionElements>
+        <jmix:conditionDetails conditionSource="expression" />
+      </extensionElements>
+    </sequenceFlow>
+    <startEvent id="PerformSupplierOrderStartEvent">
+      <extensionElements>
+        <jmix:processVariables>
+          <jmix:processVariable name="supplierOrder" type="entity">
+            <jmix:processVariableProperty name="entityName" value="bookstore_SupplierOrder" />
+          </jmix:processVariable>
+        </jmix:processVariables>
+        <jmix:formData type="no-form" />
+      </extensionElements>
+      <outgoing>Flow_02a3bui</outgoing>
+    </startEvent>
+    <endEvent id="Event_12sufjm">
+      <incoming>Flow_0lqxmqg</incoming>
+    </endEvent>
+    <sequenceFlow id="Flow_0lqxmqg" sourceRef="NotifyRequestersAboutInvalidRequestServiceTask" targetRef="Event_12sufjm" />
+    <serviceTask id="SendOrderFormToSupplierEmailTask" name="Send Order Form to Supplier" flowable:type="jmix-send-email">
+      <extensionElements>
+        <flowable:field name="to">
+          <flowable:string>${supplierOrder.supplier.email}</flowable:string>
+        </flowable:field>
+        <flowable:field name="subject">
+          <flowable:string>Jmix Bookstore Order</flowable:string>
+        </flowable:field>
+        <flowable:field name="content">
+          <flowable:string>Hello,&amp;nbsp;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;the Jmix Bookstore would like to order new Books.&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;Attached you will find an new Order from the Jmix Bookstore with all details attached.&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;Best regards,&lt;/div&gt;&lt;div&gt;Jmix Bookstore&lt;/div&gt;</flowable:string>
+        </flowable:field>
+        <flowable:field name="contentType">
+          <flowable:string>text/html; charset=UTF-8</flowable:string>
+        </flowable:field>
+        <flowable:field name="sendAsync">
+          <flowable:string>true</flowable:string>
+        </flowable:field>
+      </extensionElements>
+      <incoming>Flow_1nx6jbs</incoming>
+      <outgoing>Flow_1hkxtai</outgoing>
+    </serviceTask>
+    <endEvent id="Event_04yywkw">
+      <incoming>Flow_1hkxtai</incoming>
+    </endEvent>
+    <sequenceFlow id="Flow_1hkxtai" sourceRef="SendOrderFormToSupplierEmailTask" targetRef="Event_04yywkw" />
   </process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_process">
     <bpmndi:BPMNPlane id="BPMNPlane_process" bpmnElement="PerformSupplierOrder">
       <bpmndi:BPMNShape id="Participant_14kbpym_di" bpmnElement="JmixBookstoreParticipant" isHorizontal="true">
-        <omgdc:Bounds x="100" y="130" width="1198" height="580" />
+        <omgdc:Bounds x="100" y="130" width="1310" height="580" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Lane_0xe6g31_di" bpmnElement="procurementSupervisorLane" isHorizontal="true">
-        <omgdc:Bounds x="130" y="450" width="1168" height="260" />
+        <omgdc:Bounds x="130" y="450" width="1280" height="260" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Lane_1wuht0x_di" bpmnElement="procurementSpecialistLane" isHorizontal="true">
-        <omgdc:Bounds x="130" y="255" width="1168" height="195" />
+        <omgdc:Bounds x="130" y="255" width="1280" height="195" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Lane_0ohu76m_di" bpmnElement="systemLane" isHorizontal="true">
-        <omgdc:Bounds x="130" y="130" width="1168" height="125" />
+        <omgdc:Bounds x="130" y="130" width="1280" height="125" />
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_1nx6jbs_di" bpmnElement="Flow_1nx6jbs">
+        <di:waypoint x="1200" y="190" />
+        <di:waypoint x="1220" y="190" />
+      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_09bxbik_di" bpmnElement="ReReviewOrderFlow">
         <di:waypoint x="610" y="640" />
         <di:waypoint x="310" y="640" />
@@ -304,14 +348,17 @@
         <di:waypoint x="415" y="310" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_02a3bui_di" bpmnElement="Flow_02a3bui">
-        <di:waypoint x="205" y="180" />
-        <di:waypoint x="233" y="180" />
-        <di:waypoint x="233" y="310" />
+        <di:waypoint x="205" y="310" />
         <di:waypoint x="260" y="310" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape id="BPMNShape_startEvent1" bpmnElement="PerformSupplierOrderStartEvent">
-        <omgdc:Bounds x="175" y="165" width="30" height="30" />
-      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_0lqxmqg_di" bpmnElement="Flow_0lqxmqg">
+        <di:waypoint x="770" y="200" />
+        <di:waypoint x="822" y="200" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1hkxtai_di" bpmnElement="Flow_1hkxtai">
+        <di:waypoint x="1320" y="190" />
+        <di:waypoint x="1342" y="190" />
+      </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="Activity_0j8r59p_di" bpmnElement="NotifyRequestersAboutInvalidRequestServiceTask">
         <omgdc:Bounds x="670" y="160" width="100" height="80" />
       </bpmndi:BPMNShape>
@@ -353,6 +400,18 @@
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1lp1mkx_di" bpmnElement="MarkOrderAsChangesRequiredEntityTask">
         <omgdc:Bounds x="610" y="600" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_startEvent1" bpmnElement="PerformSupplierOrderStartEvent">
+        <omgdc:Bounds x="175" y="295" width="30" height="30" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_12sufjm_di" bpmnElement="Event_12sufjm">
+        <omgdc:Bounds x="822" y="182" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_11lvapc_di" bpmnElement="SendOrderFormToSupplierEmailTask">
+        <omgdc:Bounds x="1220" y="150" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_04yywkw_di" bpmnElement="Event_04yywkw">
+        <omgdc:Bounds x="1342" y="172" width="36" height="36" />
       </bpmndi:BPMNShape>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>

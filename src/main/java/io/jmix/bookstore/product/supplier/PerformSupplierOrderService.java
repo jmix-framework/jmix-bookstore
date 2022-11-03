@@ -1,5 +1,6 @@
 package io.jmix.bookstore.product.supplier;
 
+import com.haulmont.yarg.reporting.ReportOutputDocument;
 import io.jmix.bookstore.entity.User;
 import io.jmix.bookstore.product.Product;
 import io.jmix.core.*;
@@ -7,11 +8,13 @@ import io.jmix.core.metamodel.datatype.DatatypeFormatter;
 import io.jmix.core.querycondition.PropertyCondition;
 import io.jmix.notifications.NotificationManager;
 import io.jmix.notifications.entity.ContentType;
+import io.jmix.reports.runner.ReportRunner;
 import org.flowable.engine.RuntimeService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
+import java.io.ByteArrayInputStream;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -27,13 +30,17 @@ public class PerformSupplierOrderService {
     protected final NotificationManager notificationManager;
     private final DatatypeFormatter datatypeFormatter;
     private final RuntimeService runtimeService;
+    private final ReportRunner reportRunner;
+    private final FileStorage fileStorage;
 
-    public PerformSupplierOrderService(DataManager dataManager, TimeSource timeSource, NotificationManager notificationManager, DatatypeFormatter datatypeFormatter, RuntimeService runtimeService) {
+    public PerformSupplierOrderService(DataManager dataManager, TimeSource timeSource, NotificationManager notificationManager, DatatypeFormatter datatypeFormatter, RuntimeService runtimeService, ReportRunner reportRunner, FileStorage fileStorage) {
         this.dataManager = dataManager;
         this.timeSource = timeSource;
         this.notificationManager = notificationManager;
         this.datatypeFormatter = datatypeFormatter;
         this.runtimeService = runtimeService;
+        this.reportRunner = reportRunner;
+        this.fileStorage = fileStorage;
     }
 
     /**
@@ -91,17 +98,31 @@ public class PerformSupplierOrderService {
      * places a supplier order through the BPM process
      * @param supplierOrder the supplier order to place
      */
-    public void placeSupplierOrder(SupplierOrder supplierOrder) {
+    public FileRef placeSupplierOrder(SupplierOrder supplierOrder, User reviewedBy) {
         log.info("Placing Supplier Order: {}", supplierOrder);
 
         SupplierOrder reloadedSupplierOrder = dataManager.load(Id.of(supplierOrder)).one();
 
         reloadedSupplierOrder.setStatus(SupplierOrderStatus.ORDERED);
 
-        dataManager.save(reloadedSupplierOrder);
+        SupplierOrder supplierOrderWithUpdatedStatus = dataManager.save(reloadedSupplierOrder);
 
         supplierOrder.getOrderLines().stream().map(this::placedOrderNotification)
                 .forEach(NotificationManager.SendNotification::send);
+
+        ReportOutputDocument document = reportRunner.byReportCode("supplier-order-form")
+                .addParam("entity", reloadedSupplierOrder)
+                .addParam("reviewedBy", reviewedBy)
+                .run();
+
+        ByteArrayInputStream documentBytes = new ByteArrayInputStream(document.getContent());
+        FileRef orderFormFile = fileStorage.saveStream("supplier-order-form.docx", documentBytes);
+
+        supplierOrderWithUpdatedStatus.setOrderForm(orderFormFile);
+
+        dataManager.save(supplierOrderWithUpdatedStatus);
+
+        return orderFormFile;
     }
 
 

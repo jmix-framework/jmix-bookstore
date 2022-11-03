@@ -43,11 +43,11 @@
                   width="100%"
                   dataContainer="supplierOrdersDc">
             <actions>
+                <action id="createSupplierOrdersFromRequests" icon="LIST_ALT"
+                        caption="msg://createSupplierOrdersFromRequests"/>
                 <action id="create" type="create"/>
                 <action id="edit" type="edit"/>
                 <action id="remove" type="remove"/>
-                <action id="createSupplierOrdersFromRequests" icon="LIST_ALT"
-                        caption="msg://createSupplierOrdersFromRequests"/>
             </actions>
             <columns>
                 <column property="supplier" id="supplier"/>

@@ -6,6 +6,7 @@ import io.jmix.bookstore.security.EmployeeRole;
 import io.jmix.bpmui.security.role.BpmProcessActorRole;
 import io.jmix.core.DataManager;
 import io.jmix.core.SaveContext;
+import io.jmix.reportsui.role.ReportsRunRole;
 import io.jmix.security.role.assignment.RoleAssignmentRoleType;
 import io.jmix.securitydata.entity.RoleAssignmentEntity;
 import io.jmix.securityui.role.UiMinimalRole;
@@ -78,6 +79,7 @@ public class EmployeeDataProvider {
         return Stream.of(
                 UiMinimalRole.CODE,
                 BpmProcessActorRole.CODE,
+                ReportsRunRole.CODE,
                 "notifications-in-app-notifications-user",
                 EmployeeRole.CODE
         );
