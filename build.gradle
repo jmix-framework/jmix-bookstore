@@ -10,6 +10,7 @@ assertjGenerator {
             'io.jmix.bookstore.order.Order',
             'io.jmix.bookstore.order.OrderLine',
             'io.jmix.bookstore.product.Product',
+            'io.jmix.bookstore.product.supplier.Supplier',
             'io.jmix.bookstore.product.ProductCategory',
             'io.jmix.bookstore.product.ProductPrice',
             'io.jmix.bookstore.customer.Customer',
@@ -86,6 +87,9 @@ dependencies {
     implementation 'io.jmix.ui:jmix-ui-themes'
     implementation 'io.jmix.notifications:jmix-notifications-starter'
     implementation 'io.jmix.notifications:jmix-notifications-ui-starter'
+    implementation 'io.jmix.email:jmix-email-starter'
+    implementation 'io.jmix.email:jmix-email-ui-starter'
+    implementation 'io.jmix.quartz:jmix-quartz-starter'
 }
 
 test {

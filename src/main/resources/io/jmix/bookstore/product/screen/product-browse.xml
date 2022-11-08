@@ -11,6 +11,8 @@
                 <property name="category" fetchPlan="_base"/>
                 <property name="active"/>
                 <property name="supplier" fetchPlan="_base"/>
+                <property name="unitsInStock"/>
+                <property name="unitsOnOrder"/>
             </fetchPlan>
             <loader id="productsDl">
                 <query>
@@ -61,6 +63,8 @@
             <columns>
                 <column property="name" id="name"/>
                 <column property="category" id="category"/>
+                <column property="unitsInStock" id="unitsInStock"/>
+                <column property="unitsOnOrder" id="unitsOnOrder"/>
                 <column property="supplier" id="supplier"/>
                 <column property="supplier.cooperationStatus" id="supplierCooperationStatus"/>
                 <column property="active" id="active"/>

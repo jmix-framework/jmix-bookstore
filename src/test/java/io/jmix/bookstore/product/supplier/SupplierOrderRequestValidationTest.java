@@ -21,7 +21,7 @@ class SupplierOrderRequestValidationTest {
         // given
         var entity = supplierOrderRequests.createDefault();
 
-        // when
+        // expect
         validations.assertNoViolations(entity);
     }
 
@@ -35,7 +35,7 @@ class SupplierOrderRequestValidationTest {
                         .build()
         );
 
-        // when
+        // expect
         validations.assertExactlyOneViolationWith(entity, "product", "NotNull");
     }
 }

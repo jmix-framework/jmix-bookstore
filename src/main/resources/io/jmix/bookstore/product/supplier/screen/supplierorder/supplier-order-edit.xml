@@ -33,36 +33,38 @@
                 modal="true"
                 forceDialog="true"/>
     <layout spacing="true" expand="orderLinesBox">
-            <form id="form" dataContainer="supplierOrderDc">
-                <column width="350px">
-                    <entityPicker id="supplierField" property="supplier">
-                        <actions>
-                            <action id="entityLookup" type="entity_lookup"/>
-                            <action id="entityClear" type="entity_clear"/>
-                        </actions>
-                    </entityPicker>
-                    <comboBox id="statusField" property="status"/>
-                    <dateField id="orderDateField" property="orderDate"/>
-                </column>
-            </form>
-            <groupBox id="orderLinesBox" caption="msg://io.jmix.bookstore.product.supplier/SupplierOrder.orderLines" expand="orderLinesTable">
-                <table id="orderLinesTable" dataContainer="orderLinesDc" width="100%">
+        <form id="form" dataContainer="supplierOrderDc">
+            <column width="350px">
+                <entityPicker id="supplierField" property="supplier">
                     <actions>
-                        <action id="create" type="create"/>
-                        <action id="edit" type="edit"/>
-                        <action id="remove" type="remove"/>
+                        <action id="entityLookup" type="entity_lookup"/>
+                        <action id="entityClear" type="entity_clear"/>
                     </actions>
-                    <columns>
-                        <column id="quantity"/>
-                        <column id="product"/>
-                    </columns>
-                    <buttonsPanel>
-                        <button action="orderLinesTable.create"/>
-                        <button action="orderLinesTable.edit"/>
-                        <button action="orderLinesTable.remove"/>
-                    </buttonsPanel>
-                </table>
-            </groupBox>
+                </entityPicker>
+                <comboBox id="statusField" property="status"/>
+                <dateField id="orderDateField" property="orderDate"/>
+                <fileStorageUpload id="orderFormField" property="orderForm"/>
+            </column>
+        </form>
+        <groupBox id="orderLinesBox" caption="msg://io.jmix.bookstore.product.supplier/SupplierOrder.orderLines"
+                  expand="orderLinesTable">
+            <table id="orderLinesTable" dataContainer="orderLinesDc" width="100%">
+                <actions>
+                    <action id="create" type="create"/>
+                    <action id="edit" type="edit"/>
+                    <action id="remove" type="remove"/>
+                </actions>
+                <columns>
+                    <column id="quantity"/>
+                    <column id="product"/>
+                </columns>
+                <buttonsPanel>
+                    <button action="orderLinesTable.create"/>
+                    <button action="orderLinesTable.edit"/>
+                    <button action="orderLinesTable.remove"/>
+                </buttonsPanel>
+            </table>
+        </groupBox>
         <hbox id="editActions" spacing="true">
             <button id="commitAndCloseBtn" action="windowCommitAndClose"/>
             <button id="closeBtn" action="windowClose"/>

@@ -62,8 +62,8 @@
                 </table>
             </groupBox>
         <hbox id="taskActions" spacing="true">
-            <button id="yesOutcomeBtn" icon="font-icon:CHECK" caption="msg://yes"/>
-            <button id="noOutcomeBtn" icon="CLOSE" caption="msg://no"/>
+            <button id="yesOutcomeBtn" icon="font-icon:CHECK" caption="msg://proceed"/>
+            <button id="noOutcomeBtn" icon="CLOSE" caption="msg://rejectOrder"/>
             <button id="cancelBtn" icon="font-icon:BAN" caption="msg://cancel"/>
         </hbox>
     </layout>

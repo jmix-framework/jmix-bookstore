@@ -14,6 +14,7 @@ import io.jmix.bookstore.test_data.data_provider.employee.*;
 import io.jmix.bpm.entity.UserGroup;
 import io.jmix.core.DataManager;
 import io.jmix.core.TimeSource;
+import io.jmix.reports.entity.Report;
 import net.datafaker.Faker;
 import net.datafaker.Number;
 import org.slf4j.Logger;
@@ -47,6 +48,7 @@ public class TestDataCreation {
     private final OrderFulfillmentManagerDataProvider orderFulfillmentManagerDataProvider;
     private final EmployeePositionDataProvider employeePositionDataProvider;
     private final BpmUserGroupDataProvider bpmUserGroupDataProvider;
+    private final ReportDataProvider reportDataProvider;
 
     public TestDataCreation(
             TimeSource timeSource,
@@ -63,7 +65,7 @@ public class TestDataCreation {
             ItAdministratorEmployeeDataProvider itAdministratorEmployeeDataProvider, ProcurementSpecialistDataProvider procurementSpecialistDataProvider,
             OrderFulfillmentSpecialistDataProvider orderFulfillmentSpecialistDataProvider,
             OrderFulfillmentManagerDataProvider orderFulfillmentManagerDataProvider,
-            EmployeePositionDataProvider employeePositionDataProvider, BpmUserGroupDataProvider bpmUserGroupDataProvider) {
+            EmployeePositionDataProvider employeePositionDataProvider, BpmUserGroupDataProvider bpmUserGroupDataProvider, ReportDataProvider reportDataProvider) {
         this.timeSource = timeSource;
         this.dataManager = dataManager;
         this.productDataProvider = productDataProvider;
@@ -81,6 +83,7 @@ public class TestDataCreation {
         this.orderFulfillmentManagerDataProvider = orderFulfillmentManagerDataProvider;
         this.employeePositionDataProvider = employeePositionDataProvider;
         this.bpmUserGroupDataProvider = bpmUserGroupDataProvider;
+        this.reportDataProvider = reportDataProvider;
     }
 
     public void createData() {
@@ -94,6 +97,9 @@ public class TestDataCreation {
 
         List<UserGroup> bpmUserGroups = generateBpmUserGroups();
         log.info("{} BPM User Groups created", bpmUserGroups.size());
+
+        List<Report> reports = importReports();
+        log.info("{} Reports imported", reports.size());
 
         EmployeePositions employeePositions = generateEmployeePositions();
         log.info("{} Employee Positions created", employeePositions.size());
@@ -129,6 +135,11 @@ public class TestDataCreation {
 
         log.info("Data created");
 
+    }
+
+    private List<Report> importReports() {
+        log.info("Trying to import Report: 'supplier-order-form.zip'");
+        return reportDataProvider.create(new ReportDataProvider.DataContext("supplier-order-form.zip"));
     }
 
     private List<Order> generateOrders(int amount, List<Customer> customers, List<Product> products) {

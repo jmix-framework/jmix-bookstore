@@ -57,8 +57,8 @@
         <textArea width="100%" id="changesRequiredCommentTextArea" rows="5"
                   caption="msg://changesRequiredCommentLabel"/>
         <hbox id="taskActions" spacing="true">
-            <button id="yesOutcomeBtn" icon="font-icon:CHECK" caption="msg://yes"/>
-            <button id="noOutcomeBtn" icon="CLOSE" caption="msg://no"/>
+            <button id="yesOutcomeBtn" icon="font-icon:CHECK" caption="msg://approveOrder"/>
+            <button id="noOutcomeBtn" icon="CLOSE" caption="msg://changesRequired"/>
             <button id="cancelBtn" icon="font-icon:BAN" caption="msg://cancel"/>
         </hbox>
     </layout>

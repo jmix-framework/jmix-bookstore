@@ -50,7 +50,7 @@ class CustomerBrowseTest extends WebIntegrationTest {
 
 
     @Test
-    void given_oneCustomerExists_when_editCustomer_then_editCustomerEditorIsShown(Screens screens) {
+    void given_oneCustomerExists_when_editCustomer_then_editCustomerEditorIsShown() {
 
         // given:
         Customer firstCustomer = customerDataGrid.firstItem();

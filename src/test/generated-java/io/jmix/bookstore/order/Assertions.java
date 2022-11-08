@@ -83,6 +83,17 @@ public class Assertions extends org.assertj.core.api.Assertions {
     return new io.jmix.bookstore.product.ProductCategoryAssert(actual);
   }
 
+  /**
+   * Creates a new instance of <code>{@link io.jmix.bookstore.product.supplier.SupplierAssert}</code>.
+   *
+   * @param actual the actual value.
+   * @return the created assertion object.
+   */
+  @org.assertj.core.util.CheckReturnValue
+  public static io.jmix.bookstore.product.supplier.SupplierAssert assertThat(io.jmix.bookstore.product.supplier.Supplier actual) {
+    return new io.jmix.bookstore.product.supplier.SupplierAssert(actual);
+  }
+
   protected Assertions() {
     // empty
   }

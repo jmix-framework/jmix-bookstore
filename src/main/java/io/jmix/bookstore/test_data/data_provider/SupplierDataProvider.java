@@ -159,7 +159,6 @@ public class SupplierDataProvider implements TestDataProvider<Supplier, Supplier
 
 
         public String email() {
-
             String result = randomOfList(List.of(
                     String.format("contact@%s", domain()),
                     String.format("info@%s", domain())

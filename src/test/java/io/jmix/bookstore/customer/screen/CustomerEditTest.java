@@ -31,21 +31,21 @@ class CustomerEditTest extends WebIntegrationTest {
 
     FormInteractions formInteractions;
 
-
     @BeforeEach
-    void setUp() {
-        databaseCleanup.removeAllEntities();
-    }
-
-    @Test
-    void given_validCustomer_when_saveCustomerThroughTheForm_then_customerIsSaved(Screens screens) {
-
+    void setUp(Screens screens) {
         // given:
+        databaseCleanup.removeAllEntities();
+
+        // and:
         ScreenInteractions screenInteractions = ScreenInteractions.forEditor(screens, dataManager);
         CustomerEdit customerEdit = screenInteractions.openEditorForCreation(CustomerEdit.class, Customer.class);
         formInteractions = FormInteractions.of(customerEdit);
+    }
 
-        // and:
+    @Test
+    void given_validCustomer_when_saveCustomerThroughTheForm_then_customerIsSaved() {
+
+        // given:
         CustomerData customerData = customers.defaultData().build();
 
         formInteractions.setTextFieldValue("firstNameField", customerData.getFirstName());
@@ -70,14 +70,9 @@ class CustomerEditTest extends WebIntegrationTest {
     }
 
     @Test
-    void given_customerWithoutStreet_when_saveCustomerThroughTheForm_then_customerIsNotSaved(Screens screens) {
+    void given_customerWithoutStreet_when_saveCustomerThroughTheForm_then_customerIsNotSaved() {
 
         // given:
-        ScreenInteractions screenInteractions = ScreenInteractions.forEditor(screens, dataManager);
-        CustomerEdit customerEdit = screenInteractions.openEditorForCreation(CustomerEdit.class, Customer.class);
-        formInteractions = FormInteractions.of(customerEdit);
-
-        // and:
         CustomerData customerData = customers.defaultData().build();
 
         formInteractions.setTextFieldValue("firstNameField", customerData.getFirstName());
