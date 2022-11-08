@@ -24,7 +24,7 @@ public class Territories
     public TerritoryData.TerritoryDataBuilder defaultData() {
         return TerritoryData.builder()
                 .name(DEFAULT_NAME + "-" + UUID.randomUUID())
-                .region(regions.saveDefault());
+                .region(regions.createDefault());
     }
 
     @Override

@@ -1,8 +1,10 @@
 package io.jmix.bookstore.employee.screen;
 
+import io.jmix.bookstore.employee.Region;
 import io.jmix.bookstore.employee.Territory;
 import io.jmix.bookstore.employee.territory.screen.TerritoryBrowse;
 import io.jmix.bookstore.employee.territory.screen.TerritoryEdit;
+import io.jmix.bookstore.employee.test_support.Regions;
 import io.jmix.bookstore.employee.test_support.Territories;
 import io.jmix.bookstore.test_data.DatabaseCleanup;
 import io.jmix.bookstore.test_support.ui.DataGridInteractions;
@@ -25,6 +27,8 @@ class TerritoryBrowseTest extends WebIntegrationTest {
     DatabaseCleanup databaseCleanup;
     @Autowired
     private Territories territories;
+    @Autowired
+    private Regions regions;
 
     private Territory territory;
     private ScreenInteractions screenInteractions;
@@ -35,7 +39,12 @@ class TerritoryBrowseTest extends WebIntegrationTest {
     void setUp(Screens screens) {
 
         databaseCleanup.removeAllEntities();
-        territory = territories.saveDefault();
+        Region region = regions.saveDefault();
+        territory = territories.save(
+                territories.defaultData()
+                        .region(region)
+                        .build()
+        );
 
         screenInteractions = ScreenInteractions.forBrowse(screens);
         TerritoryBrowse territoryBrowse = screenInteractions.open(TerritoryBrowse.class);
