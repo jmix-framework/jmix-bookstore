@@ -68,11 +68,10 @@ public class SupplierDataProvider implements TestDataProvider<Supplier, Supplier
         supplier.setContactName(String.format("%s %s", firstName, lastName));
         supplier.setContactTitle(randomEnum(Title.values()));
         supplier.setWebsite(company.website());
-//        supplier.setEmail("supplier@die-davids.de");
         supplier.setEmail(randomOfList(
-                company.email()
-//                company.email(firstName, lastName),
-//                company.email(firstName, lastName)
+                company.email(),
+                company.email(firstName, lastName),
+                company.email(firstName, lastName)
         ));
         supplier.setCooperationStatus(randomEnum(CooperationStatus.values()));
         supplier.setPhone(supplierData.phoneNumber().phoneNumber());
@@ -160,15 +159,12 @@ public class SupplierDataProvider implements TestDataProvider<Supplier, Supplier
 
 
         public String email() {
+            String result = randomOfList(List.of(
+                    String.format("contact@%s", domain()),
+                    String.format("info@%s", domain())
+            ));
 
-            return "%s@die-davids.de".formatted(domain().toLowerCase().replaceAll(" ", "-"));
-
-//            String result = randomOfList(List.of(
-//                    String.format("contact@%s", domain()),
-//                    String.format("info@%s", domain())
-//            ));
-//
-//            return result.toLowerCase().replaceAll(" ", "-");
+            return result.toLowerCase().replaceAll(" ", "-");
         }
 
         public String website() {
