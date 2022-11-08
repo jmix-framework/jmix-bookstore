@@ -24,7 +24,7 @@ class ProductValidationTest {
         // given
         Product product = products.createDefault();
 
-        // when
+        // expect
         validations.assertNoViolations(product);
     }
 
@@ -38,7 +38,7 @@ class ProductValidationTest {
                         .build()
         );
 
-        // when
+        // expect
         validations.assertExactlyOneViolationWith(product, "name", "NotNull");
     }
 }

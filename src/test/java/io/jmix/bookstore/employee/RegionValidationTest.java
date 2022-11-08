@@ -23,7 +23,7 @@ class RegionValidationTest {
         // given
         Region region = regions.createDefault();
 
-        // when
+        // expect
         validations.assertNoViolations(region);
     }
 
@@ -37,7 +37,7 @@ class RegionValidationTest {
                         .build()
         );
 
-        // when
+        // expect
         validations.assertExactlyOneViolationWith(region, "name", "NotNull");
     }
 }
