@@ -82,8 +82,6 @@ public class DatabaseCleanup {
         performDeletion(Product.class, jdbcTemplate);
         performDeletion(ProductCategory.class, jdbcTemplate);
         performDeletion(Supplier.class, jdbcTemplate);
-        performDeletion(Territory.class, jdbcTemplate);
-        performDeletion(Region.class, jdbcTemplate);
     }
 
     public void removeAllEntities(List<?> entities) {

@@ -50,7 +50,6 @@ dependencies {
     implementation 'io.jmix.data:jmix-eclipselink-starter'
     implementation 'io.jmix.ui:jmix-ui-starter'
     implementation 'io.jmix.ui:jmix-ui-data-starter'
-    implementation 'io.jmix.ui:jmix-ui-widgets-compiled'
     implementation 'io.jmix.security:jmix-security-starter'
     implementation 'io.jmix.security:jmix-security-ui-starter'
     implementation 'io.jmix.security:jmix-security-data-starter'
@@ -90,6 +89,13 @@ dependencies {
     implementation 'io.jmix.email:jmix-email-starter'
     implementation 'io.jmix.email:jmix-email-ui-starter'
     implementation 'io.jmix.quartz:jmix-quartz-starter'
+    implementation 'io.jmix.maps:jmix-maps-starter'
+    widgets 'io.jmix.maps:jmix-maps-ui-widgets'
+    widgets 'io.jmix.ui:jmix-ui-widgets'
+    implementation 'io.jmix.maps:jmix-maps-ui-starter'
+
+
+
 }
 
 test {
@@ -107,4 +113,9 @@ tasks.named("bootBuildImage") {
             password = System.getenv("DOCKER_HUB_PASSWORD")
         }
     }
+}
+
+compileWidgets {
+    generate "io.jmix.bookstore.widgets.CustomWidgetSet"
+    includePaths("**/io/jmix/**/widget/**", "**/io/jmix/bookstore/widgets/**")
 }

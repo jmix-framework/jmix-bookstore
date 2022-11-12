@@ -1,8 +1,21 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <window xmlns="http://jmix.io/schema/ui/window"
         caption="msg://territoryEdit.caption"
+        xmlns:maps="http://jmix.io/schema/maps/ui"
         focusComponent="form">
     <data>
+
+        <collection id="otherTerritoriesDc"
+                    class="io.jmix.bookstore.employee.Territory">
+            <fetchPlan extends="_base">
+                <property name="region" fetchPlan="_base"/>
+            </fetchPlan>
+            <loader id="territoriesDl">
+                <query>
+                    <![CDATA[select e from bookstore_Territory e]]>
+                </query>
+            </loader>
+        </collection>
         <instance id="territoryDc"
                   class="io.jmix.bookstore.employee.Territory">
             <fetchPlan extends="_base">
@@ -24,10 +37,7 @@
                 caption="msg:///actions.Close"
                 icon="EDITOR_CANCEL"/>
     </actions>
-    <dialogMode height="AUTO"
-                width="AUTO"
-                forceDialog="true"/>
-    <layout spacing="true" expand="editActions">
+    <layout spacing="true" expand="territoryMap">
         <form id="form" dataContainer="territoryDc">
             <column width="350px">
                 <textField id="nameField" property="name"/>
@@ -39,6 +49,13 @@
                 </entityPicker>
             </column>
         </form>
+        <maps:geoMap id="territoryMap" width="100%" centerX="-99.755859" centerY="39.164141" zoom="4">
+            <maps:layers selectedLayer="territoriesLayer">
+                <maps:tile id="tiles" tileProvider="map_OpenStreetMap"/>
+                <maps:vector id="otherTerritoriesLayer" dataContainer="otherTerritoriesDc"/>
+                <maps:vector id="territoriesLayer" dataContainer="territoryDc" editable="true"/>
+            </maps:layers>
+        </maps:geoMap>
         <hbox id="editActions" spacing="true">
             <button id="commitAndCloseBtn" action="windowCommitAndClose"/>
             <button id="closeBtn" action="windowClose"/>

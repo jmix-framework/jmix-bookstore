@@ -23,6 +23,9 @@
       </entry>
     </moduleSettings>
   </component>
+  <component name="JmixLiquibaseChangesConfig">
+    <exclude-change idName="BOOKSTORE_TERRITORY#GEOGRAPHICAL_AREA" tagName="dropColumn" />
+  </component>
   <component name="JmixPluginProjectSettings">
     <option name="savedDbProperties">
       <list>

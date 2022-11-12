@@ -35,8 +35,6 @@ public class TestDataCreation {
     protected final ProductDataProvider productDataProvider;
     protected final ProductCategoryDataProvider productCategoryDataProvider;
     protected final SupplierDataProvider supplierDataProvider;
-    protected final RegionDataProvider regionDataProvider;
-    protected final TerritoryDataProvider territoryDataProvider;
     protected final CustomerDataProvider customerDataProvider;
     protected final OrderDataProvider orderDataProvider;
     protected final ProcurementManagerDataProvider procurementManagerDataProvider;
@@ -56,8 +54,6 @@ public class TestDataCreation {
             ProductDataProvider productDataProvider,
             ProductCategoryDataProvider productCategoryDataProvider,
             SupplierDataProvider supplierDataProvider,
-            RegionDataProvider regionDataProvider,
-            TerritoryDataProvider territoryDataProvider,
             CustomerDataProvider customerDataProvider,
             OrderDataProvider orderDataProvider,
             ProcurementManagerDataProvider procurementManagerDataProvider,
@@ -71,8 +67,6 @@ public class TestDataCreation {
         this.productDataProvider = productDataProvider;
         this.productCategoryDataProvider = productCategoryDataProvider;
         this.supplierDataProvider = supplierDataProvider;
-        this.regionDataProvider = regionDataProvider;
-        this.territoryDataProvider = territoryDataProvider;
         this.customerDataProvider = customerDataProvider;
         this.orderDataProvider = orderDataProvider;
         this.procurementManagerDataProvider = procurementManagerDataProvider;
@@ -117,13 +111,6 @@ public class TestDataCreation {
         List<Product> products = generateProducts(number.numberBetween(500, 1000), productCategories, suppliers);
         log.info("{} Products created", products.size());
 
-        List<Region> regions = generateRegions(number.numberBetween(50, 200));
-        log.info("{} Regions created", regions.size());
-
-
-        List<Territory> territories = generateTerritories(number.numberBetween(50, 200), regions);
-        log.info("{} Territories created", territories.size());
-
 
         List<Customer> customers = generateCustomers(number.numberBetween(1_000, 2_000));
         log.info("{} Customers created", customers.size());
@@ -150,16 +137,6 @@ public class TestDataCreation {
     private List<Customer> generateCustomers(int amount) {
         log.info("Trying to create a random amount of {} Customers", amount);
         return customerDataProvider.create(new CustomerDataProvider.DataContext(amount));
-    }
-
-    private List<Territory> generateTerritories(int amount, List<Region> regions) {
-        log.info("Trying to create a random amount of {} Territories", amount);
-        return territoryDataProvider.create(new TerritoryDataProvider.DataContext(amount, regions));
-    }
-
-    private List<Region> generateRegions(int amount) {
-        log.info("Trying to create a random amount of {} Regions", amount);
-        return regionDataProvider.create(new RegionDataProvider.DataContext(amount));
     }
 
     private List<Supplier> generateSuppliers(int amount) {

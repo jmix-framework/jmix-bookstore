@@ -3,6 +3,9 @@ package io.jmix.bookstore.employee;
 import io.jmix.bookstore.entity.StandardEntity;
 import io.jmix.core.metamodel.annotation.InstanceName;
 import io.jmix.core.metamodel.annotation.JmixEntity;
+import io.jmix.core.metamodel.annotation.PropertyDatatype;
+import io.jmix.maps.Geometry;
+import org.locationtech.jts.geom.Polygon;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -23,11 +26,26 @@ public class Territory extends StandardEntity {
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     private Region region;
+
     @JoinTable(name = "BOOKSTORE_EMPLOYEE_TERRITORIES",
-            joinColumns = @JoinColumn(name = "TERRITORY_ID"),
-            inverseJoinColumns = @JoinColumn(name = "EMPLOYEE_ID"))
+            joinColumns = @JoinColumn(name = "TERRITORY_ID", referencedColumnName = "ID"),
+            inverseJoinColumns = @JoinColumn(name = "EMPLOYEE_ID", referencedColumnName = "ID"))
     @ManyToMany
     private List<Employee> employees;
+
+
+    @Geometry
+    @PropertyDatatype("geoPolygon")
+    @Column(name = "GEOGRAPHICAL_AREA")
+    private Polygon geographicalArea;
+
+    public void setGeographicalArea(Polygon geographicalArea) {
+        this.geographicalArea = geographicalArea;
+    }
+
+    public Polygon getGeographicalArea() {
+        return geographicalArea;
+    }
 
     public List<Employee> getEmployees() {
         return employees;
