@@ -1,10 +1,7 @@
 package io.jmix.bookstore.employee.territory.screen;
 
 import io.jmix.mapsui.component.GeoMap;
-import io.jmix.mapsui.component.PopupWindow;
-import io.jmix.mapsui.component.PopupWindowOptions;
 import io.jmix.mapsui.component.TooltipOptions;
-import io.jmix.mapsui.component.layer.Layer;
 import io.jmix.mapsui.component.layer.VectorLayer;
 import io.jmix.mapsui.component.layer.style.GeometryStyle;
 import io.jmix.mapsui.component.layer.style.GeometryStyles;
@@ -15,6 +12,9 @@ import io.jmix.ui.model.CollectionContainer;
 import io.jmix.ui.screen.*;
 import io.jmix.bookstore.employee.Territory;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import java.util.Objects;
+import java.util.Optional;
 
 @UiController("bookstore_Territory.browse")
 @UiDescriptor("territory-browse.xml")
@@ -76,7 +76,11 @@ public class TerritoryBrowse extends StandardLookup<Territory> {
     public void onTerritoriesTableSelection(DataGrid.SelectionEvent<Territory> event) {
         selectedTerritoriesDc.setItems(event.getSelected());
         if (zoomOnSelection) {
-            territoryMap.zoomToGeometry(event.getSelected().stream().findFirst().orElseThrow().getGeographicalArea());
+            Optional<Territory> territory = event.getSelected().stream().findFirst();
+
+            territory.map(Territory::getGeographicalArea)
+                    .filter(Objects::nonNull)
+                    .ifPresent(territoryMap::zoomToGeometry);
         }
     }
 
