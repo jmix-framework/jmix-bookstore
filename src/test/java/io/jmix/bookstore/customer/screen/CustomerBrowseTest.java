@@ -33,6 +33,7 @@ class CustomerBrowseTest extends WebIntegrationTest {
     void setUp(Screens screens) {
 
         databaseCleanup.removeAllEntities();
+        databaseCleanup.removeAllEntities(Customer.class);
         customer = customers.saveDefault();
 
         screenInteractions = ScreenInteractions.forBrowse(screens);

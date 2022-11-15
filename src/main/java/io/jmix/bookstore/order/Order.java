@@ -50,7 +50,8 @@ public class Order extends StandardTenantEntity {
     @AttributeOverrides({
             @AttributeOverride(name = "street", column = @Column(name = "SHIPPING_ADDRESS_STREET", nullable = false)),
             @AttributeOverride(name = "postCode", column = @Column(name = "SHIPPING_ADDRESS_POST_CODE")),
-            @AttributeOverride(name = "city", column = @Column(name = "SHIPPING_ADDRESS_CITY"))
+            @AttributeOverride(name = "city", column = @Column(name = "SHIPPING_ADDRESS_CITY")),
+            @AttributeOverride(name = "position", column = @Column(name = "SHIPPING_ADDRESS_POSITION_"))
     })
     private Address shippingAddress;
 

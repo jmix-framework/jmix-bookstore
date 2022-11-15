@@ -3,6 +3,9 @@ package io.jmix.bookstore.entity;
 import io.jmix.core.metamodel.annotation.DependsOnProperties;
 import io.jmix.core.metamodel.annotation.InstanceName;
 import io.jmix.core.metamodel.annotation.JmixEntity;
+import io.jmix.core.metamodel.annotation.PropertyDatatype;
+import io.jmix.maps.Geometry;
+import org.locationtech.jts.geom.Point;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
@@ -22,6 +25,19 @@ public class Address {
 
     @Column(name = "CITY")
     private String city;
+
+    @Geometry
+    @PropertyDatatype("geoPoint")
+    @Column(name = "POSITION_")
+    private Point position;
+
+    public Point getPosition() {
+        return position;
+    }
+
+    public void setPosition(Point position) {
+        this.position = position;
+    }
 
     public String getCity() {
         return city;

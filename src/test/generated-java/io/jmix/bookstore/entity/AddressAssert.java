@@ -75,6 +75,29 @@ public class AddressAssert extends AbstractObjectAssert<AddressAssert, Address> 
   }
 
   /**
+   * Verifies that the actual Address's position is equal to the given one.
+   * @param position the given position to compare the actual Address's position to.
+   * @return this assertion object.
+   * @throws AssertionError - if the actual Address's position is not equal to the given one.
+   */
+  public AddressAssert hasPosition(org.locationtech.jts.geom.Point position) {
+    // check that actual Address we want to make assertions on is not null.
+    isNotNull();
+
+    // overrides the default error message with a more explicit one
+    String assertjErrorMessage = "\nExpecting position of:\n  <%s>\nto be:\n  <%s>\nbut was:\n  <%s>";
+
+    // null safe check
+    org.locationtech.jts.geom.Point actualPosition = actual.getPosition();
+    if (!Objects.deepEquals(actualPosition, position)) {
+      failWithMessage(assertjErrorMessage, actual, position, actualPosition);
+    }
+
+    // return the current assertion for method chaining
+    return this;
+  }
+
+  /**
    * Verifies that the actual Address's postCode is equal to the given one.
    * @param postCode the given postCode to compare the actual Address's postCode to.
    * @return this assertion object.

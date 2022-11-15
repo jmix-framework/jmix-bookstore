@@ -111,14 +111,11 @@ public class TestDataCreation {
         List<Product> products = generateProducts(number.numberBetween(500, 1000), productCategories, suppliers);
         log.info("{} Products created", products.size());
 
-
         List<Customer> customers = generateCustomers(number.numberBetween(1_000, 2_000));
         log.info("{} Customers created", customers.size());
 
-
         List<Order> orders = generateOrders(number.numberBetween(2_000, 5_000), customers, products);
         log.info("{} Orders created", orders.size());
-
 
         log.info("Data created");
 
@@ -136,7 +133,7 @@ public class TestDataCreation {
 
     private List<Customer> generateCustomers(int amount) {
         log.info("Trying to create a random amount of {} Customers", amount);
-        return customerDataProvider.create(new CustomerDataProvider.DataContext(amount));
+        return customerDataProvider.create(new CustomerDataProvider.DataContext(amount, "classpath:test-data/addresses-us-all.json"));
     }
 
     private List<Supplier> generateSuppliers(int amount) {

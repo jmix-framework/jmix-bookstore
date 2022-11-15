@@ -8,6 +8,8 @@ import io.jmix.core.DeletePolicy;
 import io.jmix.core.entity.annotation.EmbeddedParameters;
 import io.jmix.core.entity.annotation.OnDelete;
 import io.jmix.core.metamodel.annotation.*;
+import io.jmix.maps.Geometry;
+import org.locationtech.jts.geom.Point;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -35,7 +37,8 @@ public class Customer extends StandardTenantEntity {
     @AttributeOverrides({
             @AttributeOverride(name = "street", column = @Column(name = "ADDRESS_STREET")),
             @AttributeOverride(name = "postCode", column = @Column(name = "ADDRESS_POST_CODE")),
-            @AttributeOverride(name = "city", column = @Column(name = "ADDRESS_CITY"))
+            @AttributeOverride(name = "city", column = @Column(name = "ADDRESS_CITY")),
+            @AttributeOverride(name = "position", column = @Column(name = "ADDRESS_POSITION_"))
     })
     private Address address;
 
@@ -44,6 +47,11 @@ public class Customer extends StandardTenantEntity {
     @OneToMany(mappedBy = "customer")
     private List<Order> orders;
 
+    @Geometry
+    @JmixProperty
+    public Point getGeometry() {
+        return address != null? address.getPosition() : null;
+    }
     @DependsOnProperties({"firstName", "lastName"})
     @JmixProperty
     public String getFullName() {

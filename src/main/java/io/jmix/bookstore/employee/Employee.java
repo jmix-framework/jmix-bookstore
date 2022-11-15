@@ -45,7 +45,8 @@ public class Employee extends StandardEntity {
     @AttributeOverrides({
             @AttributeOverride(name = "street", column = @Column(name = "ADDRESS_STREET", nullable = false)),
             @AttributeOverride(name = "postCode", column = @Column(name = "ADDRESS_POST_CODE")),
-            @AttributeOverride(name = "city", column = @Column(name = "ADDRESS_CITY"))
+            @AttributeOverride(name = "city", column = @Column(name = "ADDRESS_CITY")),
+            @AttributeOverride(name = "position", column = @Column(name = "ADDRESS_POSITION_"))
     })
     private Address address;
 

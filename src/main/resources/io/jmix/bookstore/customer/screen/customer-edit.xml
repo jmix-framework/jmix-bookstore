@@ -26,8 +26,8 @@
                 caption="msg:///actions.Close"
                 icon="EDITOR_CANCEL"/>
     </actions>
-    <dialogMode height="600"
-                width="800"/>
+    <dialogMode height="75%"
+                width="75%"/>
     <layout spacing="true" expand="scrollBox">
         <scrollBox id="scrollBox" spacing="true">
             <vbox spacing="true" width="100%" expand="ordersBox">
@@ -46,13 +46,16 @@
                     <groupBox id="addressInformationGroupBox" width="100%" height="100%"
                               caption="msg://addressInformation"
                               icon="ADDRESS_BOOK">
-                        <form id="addressForm" dataContainer="customerDc">
-                            <column width="350px">
-                                <textField id="addressStreetField" property="address.street"/>
-                                <textField id="addressPostCodeField" property="address.postCode"/>
-                                <textField id="addressCityField" property="address.city"/>
-                            </column>
-                        </form>
+                        <hbox width="100%" expand="addressForm">
+                            <form id="addressForm" dataContainer="customerDc">
+                                <column width="350px">
+                                    <textField id="addressStreetField" property="address.street"/>
+                                    <textField id="addressPostCodeField" property="address.postCode"/>
+                                    <textField id="addressCityField" property="address.city"/>
+                                </column>
+                            </form>
+                            <button id="showOnMapBtn" align="TOP_RIGHT" stylename="icon-only friendly" icon="font-icon:MAP_MARKER" caption="msg://map" />
+                        </hbox>
                     </groupBox>
                 </hbox>
                 <groupBox id="ordersBox" caption="msg://io.jmix.bookstore.customer/Customer.orders">
@@ -70,6 +73,7 @@
                         </buttonsPanel>
                     </dataGrid>
                 </groupBox>
+
             </vbox>
         </scrollBox>
 

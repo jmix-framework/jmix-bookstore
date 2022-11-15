@@ -41,6 +41,7 @@ class OrderEditCustomerSearchTest extends WebIntegrationTest {
     void setUp() {
 
         databaseCleanup.removeAllEntities();
+        databaseCleanup.removeAllEntities(Customer.class);
 
 
         mrMiyagi = customers.save(
