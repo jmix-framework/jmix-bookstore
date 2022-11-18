@@ -94,6 +94,8 @@ dependencies {
     widgets 'io.jmix.ui:jmix-ui-widgets'
     implementation 'io.jmix.maps:jmix-maps-ui-starter'
 
+    // used for GeoJsonReader to parse geojson format from the LocationIQ API
+    implementation 'org.locationtech.jts.io:jts-io-common:1.17.1'
 
 
 }

@@ -150,5 +150,4 @@ public class CustomerDataProvider implements TestDataProvider<Customer, Customer
 
         return entities;
     }
-
 }
