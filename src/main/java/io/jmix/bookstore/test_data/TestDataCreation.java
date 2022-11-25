@@ -4,6 +4,7 @@ import io.jmix.bookstore.customer.Customer;
 import io.jmix.bookstore.employee.Employee;
 import io.jmix.bookstore.employee.Region;
 import io.jmix.bookstore.employee.Territory;
+import io.jmix.bookstore.fulfillment.FulfillmentCenter;
 import io.jmix.bookstore.order.Order;
 import io.jmix.bookstore.product.Product;
 import io.jmix.bookstore.product.ProductCategory;
@@ -114,7 +115,10 @@ public class TestDataCreation {
         List<Customer> customers = generateCustomers(number.numberBetween(1_000, 2_000));
         log.info("{} Customers created", customers.size());
 
-        List<Order> orders = generateOrders(number.numberBetween(2_000, 5_000), customers, products);
+        List<FulfillmentCenter> fulfillmentCenters = dataManager.load(FulfillmentCenter.class).all().list();
+        List<Territory> territories = dataManager.load(Territory.class).all().list();
+        List<Region> regions = dataManager.load(Region.class).all().list();
+        List<Order> orders = generateOrders(number.numberBetween(2_000, 5_000), customers, products, fulfillmentCenters, territories, regions);
         log.info("{} Orders created", orders.size());
 
         log.info("Data created");
@@ -126,9 +130,9 @@ public class TestDataCreation {
         return reportDataProvider.create(new ReportDataProvider.DataContext("supplier-order-form.zip"));
     }
 
-    private List<Order> generateOrders(int amount, List<Customer> customers, List<Product> products) {
+    private List<Order> generateOrders(int amount, List<Customer> customers, List<Product> products, List<FulfillmentCenter> fulfillmentCenters, List<Territory> territories, List<Region> regions) {
         log.info("Trying to create a random amount of {} Orders", amount);
-        return orderDataProvider.create(new OrderDataProvider.DataContext(amount, customers, products));
+        return orderDataProvider.create(new OrderDataProvider.DataContext(amount, customers, products, fulfillmentCenters, territories, regions));
     }
 
     private List<Customer> generateCustomers(int amount) {

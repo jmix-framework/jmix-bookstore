@@ -60,6 +60,7 @@ public class EmployeeDataProvider {
         employee.setLastName(employeeData.lastName());
         employee.setPosition(employeeData.position());
         employee.setHireDate(employeeData.hireDate());
+        employee.setProbationEndDate(employeeData.hireDate().plusMonths(6));
         employee.setTitle(employeeData.title());
         employee.setReportsTo(employeeData.manager());
 

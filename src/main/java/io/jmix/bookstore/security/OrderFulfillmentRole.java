@@ -2,6 +2,7 @@ package io.jmix.bookstore.security;
 
 import io.jmix.bookstore.customer.Customer;
 import io.jmix.bookstore.entity.Address;
+import io.jmix.bookstore.fulfillment.FulfillmentCenter;
 import io.jmix.bookstore.order.Order;
 import io.jmix.bookstore.order.OrderLine;
 import io.jmix.bookstore.product.Product;
@@ -65,4 +66,8 @@ public interface OrderFulfillmentRole {
     @EntityAttributePolicy(entityClass = SupplierOrderLine.class, attributes = "*", action = EntityAttributePolicyAction.VIEW)
     @EntityPolicy(entityClass = SupplierOrderLine.class, actions = EntityPolicyAction.READ)
     void supplierOrderLine();
+
+    @EntityAttributePolicy(entityClass = FulfillmentCenter.class, attributes = "*", action = EntityAttributePolicyAction.VIEW)
+    @EntityPolicy(entityClass = FulfillmentCenter.class, actions = EntityPolicyAction.READ)
+    void fulfillmentCenter();
 }

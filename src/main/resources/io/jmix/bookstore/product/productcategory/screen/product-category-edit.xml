@@ -27,7 +27,7 @@
                 modal="true"
                 forceDialog="true"/>
     <layout spacing="true" expand="editActions">
-        <form id="form" dataContainer="productCategoryDc">
+        <form captionPosition="TOP" id="form" dataContainer="productCategoryDc">
             <column width="350px">
                 <textField id="nameField" property="name"/>
                 <textArea id="descriptionField" property="description" rows="5"/>

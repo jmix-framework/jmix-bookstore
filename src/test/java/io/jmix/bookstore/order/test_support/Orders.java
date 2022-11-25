@@ -5,6 +5,7 @@ import io.jmix.bookstore.entity.Address;
 import io.jmix.bookstore.entity.test_support.AddressData;
 import io.jmix.bookstore.entity.test_support.AddressMapper;
 import io.jmix.bookstore.order.Order;
+import io.jmix.bookstore.order.OrderStatus;
 import io.jmix.bookstore.test_support.TestDataProvisioning;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -20,6 +21,7 @@ public class Orders
     private static final String DEFAULT_SHIPPING_ADDRESS_POST_CODE = "12345";
     private static final String DEFAULT_SHIPPING_ADDRESS_CITY = "City";
     private static final String DEFAULT_SHIPPING_ADDRESS_STREET = "Street";
+    private static final OrderStatus DEFAULT_ORDER_STATUS = OrderStatus.CONFIRMED;
     @Autowired
     OrderRepository orderRepository;
     @Autowired
@@ -39,6 +41,7 @@ public class Orders
                 .orderDate(DEFAULT_ORDER_DATE)
                 .customer(customers.createDefault())
                 .shippingAddress(defaultShippingAddress())
+                .status(DEFAULT_ORDER_STATUS)
                 .orderLines(List.of());
     }
 

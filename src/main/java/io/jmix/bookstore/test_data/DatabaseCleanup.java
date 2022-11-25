@@ -60,7 +60,9 @@ public class DatabaseCleanup {
 
     private <T> void performDeletion(Class<T> entityClass, JdbcTemplate jdbcTemplate) {
         String tableName = metadataTools.getDatabaseTable(metadata.getClass(entityClass));
-
+        performDeletion(tableName, jdbcTemplate);
+    }
+    private <T> void performDeletion(String tableName, JdbcTemplate jdbcTemplate) {
         jdbcTemplate.update("DELETE FROM " + tableName);
     }
 
@@ -68,6 +70,7 @@ public class DatabaseCleanup {
 
         JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
 
+        performDeletion("BOOKSTORE_EMPLOYEE_TERRITORIES", jdbcTemplate);
         performDeletion(Employee.class, jdbcTemplate);
 
         performDeletion(UserGroupRole.class, jdbcTemplate);

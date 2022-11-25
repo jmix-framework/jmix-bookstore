@@ -145,6 +145,29 @@ public class OrderAssert extends AbstractObjectAssert<OrderAssert, Order> {
   }
 
   /**
+   * Verifies that the actual Order's fulfilledBy is equal to the given one.
+   * @param fulfilledBy the given fulfilledBy to compare the actual Order's fulfilledBy to.
+   * @return this assertion object.
+   * @throws AssertionError - if the actual Order's fulfilledBy is not equal to the given one.
+   */
+  public OrderAssert hasFulfilledBy(io.jmix.bookstore.fulfillment.FulfillmentCenter fulfilledBy) {
+    // check that actual Order we want to make assertions on is not null.
+    isNotNull();
+
+    // overrides the default error message with a more explicit one
+    String assertjErrorMessage = "\nExpecting fulfilledBy of:\n  <%s>\nto be:\n  <%s>\nbut was:\n  <%s>";
+
+    // null safe check
+    io.jmix.bookstore.fulfillment.FulfillmentCenter actualFulfilledBy = actual.getFulfilledBy();
+    if (!Objects.deepEquals(actualFulfilledBy, fulfilledBy)) {
+      failWithMessage(assertjErrorMessage, actual, fulfilledBy, actualFulfilledBy);
+    }
+
+    // return the current assertion for method chaining
+    return this;
+  }
+
+  /**
    * Verifies that the actual Order's id is equal to the given one.
    * @param id the given id to compare the actual Order's id to.
    * @return this assertion object.
@@ -452,6 +475,29 @@ public class OrderAssert extends AbstractObjectAssert<OrderAssert, Order> {
     java.time.LocalDate actualShippingDate = actual.getShippingDate();
     if (!Objects.deepEquals(actualShippingDate, shippingDate)) {
       failWithMessage(assertjErrorMessage, actual, shippingDate, actualShippingDate);
+    }
+
+    // return the current assertion for method chaining
+    return this;
+  }
+
+  /**
+   * Verifies that the actual Order's status is equal to the given one.
+   * @param status the given status to compare the actual Order's status to.
+   * @return this assertion object.
+   * @throws AssertionError - if the actual Order's status is not equal to the given one.
+   */
+  public OrderAssert hasStatus(OrderStatus status) {
+    // check that actual Order we want to make assertions on is not null.
+    isNotNull();
+
+    // overrides the default error message with a more explicit one
+    String assertjErrorMessage = "\nExpecting status of:\n  <%s>\nto be:\n  <%s>\nbut was:\n  <%s>";
+
+    // null safe check
+    OrderStatus actualStatus = actual.getStatus();
+    if (!Objects.deepEquals(actualStatus, status)) {
+      failWithMessage(assertjErrorMessage, actual, status, actualStatus);
     }
 
     // return the current assertion for method chaining

@@ -1,12 +1,17 @@
 package io.jmix.bookstore.directions;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import org.locationtech.jts.geom.Coordinate;
+import org.locationtech.jts.geom.GeometryFactory;
 import org.locationtech.jts.geom.LineString;
 import org.locationtech.jts.geom.Point;
 import org.locationtech.jts.io.ParseException;
 import org.locationtech.jts.io.geojson.GeoJsonReader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.client.RestTemplate;
@@ -59,6 +64,44 @@ public class LocationIqClient {
         }
     }
 
+
+
+    public record AddressInformation(String street, String postalCode, String city, String state, String country){}
+
+    /**
+     * Performs a Forward Geocoding Operation (Address -> Point).
+     * See: <a href="https://locationiq.com/docs-html/index.html#search-forward-geocoding">LocationIQ - Forward Geocoding API</a>
+     * @param addressInformation the address information to search for
+     * @return the Point of the address, if found
+     */
+    public Optional<Point> forwardGeocoding(AddressInformation addressInformation) {
+
+        log.info("Forward Geocoding for Address Information: '{}' via LocationIQ API", addressInformation);
+
+        try {
+            ResponseEntity<List<ForwardGeocodingPlace>> response = restTemplate.exchange(
+                    forwardGeocodingApiUrl(addressInformation),
+                    HttpMethod.GET,
+                    null,
+                    new ParameterizedTypeReference<>() {}
+            );
+
+            return toOptionalPoint(response);
+        } catch (Exception e) {
+            log.warn("Error loading route information from API", e);
+            return Optional.empty();
+        }
+    }
+
+    private Optional<Point> toOptionalPoint(ResponseEntity<List<ForwardGeocodingPlace>> response) {
+        if (CollectionUtils.isEmpty(response.getBody())) {
+            return Optional.empty();
+        }
+
+        ForwardGeocodingPlace forwardGeocodingPlace = response.getBody().get(0);
+        return Optional.ofNullable(forwardGeocodingPlace.point());
+    }
+
     private Optional<LineString> toOptionalLineString(DirectionsApiResponse response) throws ParseException {
         if (CollectionUtils.isEmpty(response.routes())) {
             return Optional.empty();
@@ -72,7 +115,20 @@ public class LocationIqClient {
         return locationIqBaseUrl()
                 .path("/v1/directions/driving/{coordinates}")
                 .queryParam("geometries", "geojson")
+                .queryParam("overview", "full")
                 .buildAndExpand(coordinatesQueryParameter(start, end))
+                .toUri();
+    }
+    private URI forwardGeocodingApiUrl(AddressInformation addressInformation) {
+        return locationIqBaseUrl()
+                .path("/v1/search.php")
+                .queryParam("street", addressInformation.street())
+                .queryParam("city", addressInformation.city())
+                .queryParam("state", addressInformation.state())
+                .queryParam("postalcode", addressInformation.postalCode())
+                .queryParam("country", addressInformation.country())
+                .queryParam("format", "json")
+                .build()
                 .toUri();
     }
 
@@ -123,6 +179,45 @@ public class LocationIqClient {
      */
     record DirectionsApiResponse(List<Route> routes) {
         record Route(JsonNode geometry) { }
+    }
+
+    /**
+     * Record to represent the JSON response of the LocationIQ Directions API with geojson geometry format.
+     * Example JSON response (displayed only relevant parts)
+     * <pre>
+     * {
+     *   "code": "Ok",
+     *   "routes": [
+     *     {
+     *       "geometry": {
+     *         "coordinates": [
+     *           [
+     *             -0.161136,
+     *             51.523832
+     *           ],
+     *           [
+     *             -0.160984,
+     *             51.523516
+     *           ],
+     *           [
+     *             -0.161606,
+     *             51.522557
+     *           ]
+     *         ],
+     *         "type": "LineString"
+     *       },
+     *       "duration": 138.8,
+     *       "distance": 844.5
+     *     }
+     *   ]
+     * }
+     * </pre>
+     */
+    record ForwardGeocodingPlace(double lat, double lon) {
+        public Point point() {
+            GeometryFactory geometryFactory = new GeometryFactory();
+            return geometryFactory.createPoint(new Coordinate(lon, lat));
+        }
     }
 
 }

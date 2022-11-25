@@ -31,6 +31,28 @@ public class Address {
     @Column(name = "POSITION_")
     private Point position;
 
+    @Column(name = "STATE")
+    private String state;
+
+    @Column(name = "COUNTRY")
+    private String country;
+
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
+    public String getState() {
+        return state;
+    }
+
+    public void setState(String state) {
+        this.state = state;
+    }
+
     public Point getPosition() {
         return position;
     }

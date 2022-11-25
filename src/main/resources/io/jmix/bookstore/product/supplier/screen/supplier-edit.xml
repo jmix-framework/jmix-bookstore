@@ -24,26 +24,42 @@
                 caption="msg:///actions.Close"
                 icon="EDITOR_CANCEL"/>
     </actions>
-    <dialogMode height="AUTO"
-                width="AUTO"
-                modal="true"
-                forceDialog="true"/>
-    <layout spacing="true" expand="scrollBox">
-        <scrollBox id="scrollBox" spacing="true">
-            <form id="form" dataContainer="supplierDc">
-                <column width="350px">
-                    <textField id="nameField" property="name"/>
-                    <textField id="addressStreetField" property="address.street"/>
-                    <textField id="addressPostCodeField" property="address.postCode"/>
-                    <textField id="addressCityField" property="address.city"/>
-                    <textField id="contactNameField" property="contactName"/>
-                    <comboBox id="contactTitleField" property="contactTitle"/>
-                    <textField id="phoneField" property="phone"/>
-                    <textField id="emailField" property="email"/>
-                    <textField id="websiteField" property="website"/>
-                </column>
-            </form>
-        </scrollBox>
+    <layout spacing="true" expand="contentBox">
+
+            <hbox id="contentBox" spacing="true" width="100%">
+
+            <groupBox caption="msg://generalInformation"
+                      spacing="true"
+                      height="100%"
+                      icon="BUILDING_O"
+                      width="100%">
+                <form captionPosition="TOP" id="form" dataContainer="supplierDc">
+                    <column width="350px">
+                        <textField id="nameField" property="name"/>
+                        <textField id="addressStreetField" property="address.street"/>
+                        <textField id="addressPostCodeField" property="address.postCode"/>
+                        <textField id="addressCityField" property="address.city"/>
+                        <textField id="addressStateField" property="address.state"/>
+                        <textField id="addressCountryField" property="address.country"/>
+                    </column>
+                </form>
+            </groupBox>
+            <groupBox caption="msg://contactInformation"
+                      spacing="true"
+                      height="100%"
+                      icon="PHONE"
+                      width="100%">
+                <form captionPosition="TOP" id="contactForm" dataContainer="supplierDc">
+                    <column width="350px">
+                        <comboBox id="contactTitleField" property="contactTitle"/>
+                        <textField id="contactNameField" property="contactName"/>
+                        <textField id="phoneField" property="phone"/>
+                        <textField id="emailField" property="email"/>
+                        <textField id="websiteField" property="website"/>
+                    </column>
+                </form>
+            </groupBox>
+            </hbox>
         <hbox id="editActions" spacing="true">
             <button id="commitAndCloseBtn" action="windowCommitAndClose"/>
             <button id="closeBtn" action="windowClose"/>

@@ -52,6 +52,29 @@ public class AddressAssert extends AbstractObjectAssert<AddressAssert, Address> 
   }
 
   /**
+   * Verifies that the actual Address's country is equal to the given one.
+   * @param country the given country to compare the actual Address's country to.
+   * @return this assertion object.
+   * @throws AssertionError - if the actual Address's country is not equal to the given one.
+   */
+  public AddressAssert hasCountry(String country) {
+    // check that actual Address we want to make assertions on is not null.
+    isNotNull();
+
+    // overrides the default error message with a more explicit one
+    String assertjErrorMessage = "\nExpecting country of:\n  <%s>\nto be:\n  <%s>\nbut was:\n  <%s>";
+
+    // null safe check
+    String actualCountry = actual.getCountry();
+    if (!Objects.deepEquals(actualCountry, country)) {
+      failWithMessage(assertjErrorMessage, actual, country, actualCountry);
+    }
+
+    // return the current assertion for method chaining
+    return this;
+  }
+
+  /**
    * Verifies that the actual Address's instanceName is equal to the given one.
    * @param instanceName the given instanceName to compare the actual Address's instanceName to.
    * @return this assertion object.
@@ -114,6 +137,29 @@ public class AddressAssert extends AbstractObjectAssert<AddressAssert, Address> 
     String actualPostCode = actual.getPostCode();
     if (!Objects.deepEquals(actualPostCode, postCode)) {
       failWithMessage(assertjErrorMessage, actual, postCode, actualPostCode);
+    }
+
+    // return the current assertion for method chaining
+    return this;
+  }
+
+  /**
+   * Verifies that the actual Address's state is equal to the given one.
+   * @param state the given state to compare the actual Address's state to.
+   * @return this assertion object.
+   * @throws AssertionError - if the actual Address's state is not equal to the given one.
+   */
+  public AddressAssert hasState(String state) {
+    // check that actual Address we want to make assertions on is not null.
+    isNotNull();
+
+    // overrides the default error message with a more explicit one
+    String assertjErrorMessage = "\nExpecting state of:\n  <%s>\nto be:\n  <%s>\nbut was:\n  <%s>";
+
+    // null safe check
+    String actualState = actual.getState();
+    if (!Objects.deepEquals(actualState, state)) {
+      failWithMessage(assertjErrorMessage, actual, state, actualState);
     }
 
     // return the current assertion for method chaining

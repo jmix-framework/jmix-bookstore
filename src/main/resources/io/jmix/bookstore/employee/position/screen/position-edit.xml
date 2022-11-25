@@ -27,11 +27,11 @@
                 modal="true"
                 forceDialog="true"/>
     <layout spacing="true" expand="editActions">
-        <form id="form" dataContainer="positionDc">
+        <form captionPosition="TOP" id="form" dataContainer="positionDc">
             <column width="350px">
                 <textField id="nameField" property="name"/>
-                <textArea id="descriptionField" property="description" rows="5"/>
                 <textField id="codeField" property="code"/>
+                <textArea id="descriptionField" property="description" rows="5"/>
                 <comboBox id="colorField" property="color"/>
             </column>
         </form>

@@ -22,7 +22,7 @@ assertjGenerator {
 apply plugin: 'org.springframework.boot'
 
 jmix {
-    bomVersion = '1.4.0'
+    bomVersion = '1.4.1'
     projectId = 'bookstore'
 }
 

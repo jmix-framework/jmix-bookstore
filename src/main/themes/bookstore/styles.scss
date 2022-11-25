@@ -295,3 +295,38 @@
 .jmix-app-menubar .jmix-tasks-indicator:hover:not(.v-disabled) .jmix-tasks-indicator-counter-has-new {
   background-color: var(--success-color, #36ab80);
 }
+
+@-webkit-keyframes anim-pulse{
+  0%   {
+    opacity: 0 ;
+    -webkit-transform : scale(.5);
+  }
+  10% {
+    opacity: 1 ;
+  }
+
+  90% {
+    opacity: 0 ;
+  }
+
+  100% {
+    -webkit-transform : scale(1.25)
+  }
+}
+
+
+.core {
+  fill:red;
+}
+
+.ring {
+  opacity: 0;
+  stroke: red;
+  -webkit-transform-origin: center;
+  -webkit-animation: anim-pulse 2s 1s infinite;
+}
+
+.wrapper {
+  float: left;
+  width: 25%;
+}

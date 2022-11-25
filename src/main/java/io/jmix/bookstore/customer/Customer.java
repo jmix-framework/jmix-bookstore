@@ -38,7 +38,9 @@ public class Customer extends StandardTenantEntity {
             @AttributeOverride(name = "street", column = @Column(name = "ADDRESS_STREET")),
             @AttributeOverride(name = "postCode", column = @Column(name = "ADDRESS_POST_CODE")),
             @AttributeOverride(name = "city", column = @Column(name = "ADDRESS_CITY")),
-            @AttributeOverride(name = "position", column = @Column(name = "ADDRESS_POSITION_"))
+            @AttributeOverride(name = "position", column = @Column(name = "ADDRESS_POSITION_")),
+            @AttributeOverride(name = "state", column = @Column(name = "ADDRESS_STATE")),
+            @AttributeOverride(name = "country", column = @Column(name = "ADDRESS_COUNTRY"))
     })
     private Address address;
 

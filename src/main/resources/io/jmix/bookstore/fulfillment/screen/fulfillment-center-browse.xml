@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <window xmlns="http://jmix.io/schema/ui/window"
         xmlns:c="http://jmix.io/schema/ui/jpql-condition"
-        caption="msg://orderBrowse.caption"
-        focusComponent="ordersTable">
+        caption="msg://fulfillmentCenterBrowse.caption"
+        focusComponent="fulfillmentCentersTable">
     <data readOnly="true">
-        <collection id="ordersDc"
-                    class="io.jmix.bookstore.order.Order">
+        <collection id="fulfillmentCentersDc"
+                    class="io.jmix.bookstore.fulfillment.FulfillmentCenter">
             <fetchPlan extends="_base">
-                <property name="fulfilledBy" fetchPlan="_base"/>
+                <property name="region" fetchPlan="_base"/>
             </fetchPlan>
-            <loader id="ordersDl">
+            <loader id="fulfillmentCentersDl">
                 <query>
-                    <![CDATA[select e from bookstore_Order e]]>
+                    <![CDATA[select e from bookstore_FulfillmentCenter e]]>
                 </query>
             </loader>
         </collection>
@@ -32,34 +32,29 @@
     </actions>
     <dialogMode height="600"
                 width="800"/>
-    <layout expand="ordersTable" spacing="true">
+    <layout expand="fulfillmentCentersTable" spacing="true">
         <filter id="filter"
-                dataLoader="ordersDl">
+                dataLoader="fulfillmentCentersDl">
             <properties include=".*"/>
         </filter>
-        <dataGrid id="ordersTable"
+        <dataGrid id="fulfillmentCentersTable"
                   width="100%"
-                  dataContainer="ordersDc">
+                  dataContainer="fulfillmentCentersDc">
             <actions>
                 <action id="create" type="create"/>
                 <action id="edit" type="edit"/>
                 <action id="remove" type="remove"/>
-                <action id="trackDelivery" caption="msg://trackDelivery" icon="TRUCK"/>
             </actions>
             <columns>
-                <column property="orderDate" id="orderDate"/>
-                <column property="customer" id="customer"/>
-                <column property="shippingDate" id="shippingDate"/>
-                <column property="status" id="status"/>
-                <column property="fulfilledBy" id="fulfilledBy"/>
+                <column property="name" id="name"/>
+                <column property="region" id="region"/>
             </columns>
             <simplePagination/>
             <buttonsPanel id="buttonsPanel"
                           alwaysVisible="true">
-                <button id="createBtn" action="ordersTable.create"/>
-                <button id="editBtn" action="ordersTable.edit"/>
-                <button id="removeBtn" action="ordersTable.remove"/>
-                <button id="trackDeliveryBtn" action="ordersTable.trackDelivery"/>
+                <button id="createBtn" action="fulfillmentCentersTable.create"/>
+                <button id="editBtn" action="fulfillmentCentersTable.edit"/>
+                <button id="removeBtn" action="fulfillmentCentersTable.remove"/>
             </buttonsPanel>
         </dataGrid>
         <hbox id="lookupActions" spacing="true" visible="false">

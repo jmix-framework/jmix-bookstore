@@ -1,5 +1,6 @@
 package io.jmix.bookstore.security;
 
+import io.jmix.bookstore.fulfillment.FulfillmentCenter;
 import io.jmix.bookstore.product.Product;
 import io.jmix.bookstore.product.ProductCategory;
 import io.jmix.bookstore.product.supplier.Supplier;
@@ -45,4 +46,8 @@ public interface ProcurementManagerRole {
     @MenuPolicy(menuIds = {"bookstore_Supplier.browse", "bookstore_SupplierOrder.browse"})
     @ScreenPolicy(screenIds = {"bookstore_Supplier.edit", "bookstore_Supplier.browse", "bookstore_SupplierOrderRequest.edit", "bookstore_SupplierOrder.browse", "bookstore_SupplierOrder.edit", "bookstore_MainScreen", "bookstore_LoginScreen", "bookstore_SupplierOrder.approval"})
     void screens();
+
+    @EntityAttributePolicy(entityClass = FulfillmentCenter.class, attributes = "*", action = EntityAttributePolicyAction.VIEW)
+    @EntityPolicy(entityClass = FulfillmentCenter.class, actions = EntityPolicyAction.READ)
+    void fulfillmentCenter();
 }
