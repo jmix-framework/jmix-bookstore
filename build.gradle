@@ -14,6 +14,7 @@ assertjGenerator {
             'io.jmix.bookstore.product.ProductCategory',
             'io.jmix.bookstore.product.ProductPrice',
             'io.jmix.bookstore.customer.Customer',
+            'io.jmix.bookstore.fulfillment.FulfillmentCenter',
             'io.jmix.bookstore.entity.Address',
             'io.jmix.bookstore.entity.Money',
     ]

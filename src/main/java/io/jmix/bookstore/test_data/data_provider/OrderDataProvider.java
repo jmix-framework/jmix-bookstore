@@ -17,6 +17,7 @@ import net.datafaker.Address;
 import net.datafaker.DateAndTime;
 import net.datafaker.Faker;
 import org.locationtech.jts.geom.Point;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;

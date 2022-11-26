@@ -6,6 +6,7 @@ import io.jmix.bookstore.employee.Position;
 import io.jmix.bookstore.employee.Region;
 import io.jmix.bookstore.employee.Territory;
 import io.jmix.bookstore.entity.User;
+import io.jmix.bookstore.fulfillment.FulfillmentCenter;
 import io.jmix.bookstore.order.Order;
 import io.jmix.bookstore.order.OrderLine;
 import io.jmix.bookstore.product.Product;
@@ -82,6 +83,7 @@ public class DatabaseCleanup {
         performDeletion(SupplierOrderLine.class, jdbcTemplate);
         performDeletion(SupplierOrder.class, jdbcTemplate);
         performDeletion(SupplierOrderRequest.class, jdbcTemplate);
+        performDeletion(FulfillmentCenter.class, jdbcTemplate);
         performDeletion(Product.class, jdbcTemplate);
         performDeletion(ProductCategory.class, jdbcTemplate);
         performDeletion(Supplier.class, jdbcTemplate);

@@ -2,6 +2,7 @@ package io.jmix.bookstore.employee.test_support;
 
 import io.jmix.bookstore.employee.Territory;
 import io.jmix.bookstore.test_support.TestDataProvisioning;
+import org.locationtech.jts.geom.GeometryFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -24,7 +25,8 @@ public class Territories
     public TerritoryData.TerritoryDataBuilder defaultData() {
         return TerritoryData.builder()
                 .name(DEFAULT_NAME + "-" + UUID.randomUUID())
-                .region(regions.createDefault());
+                .region(regions.createDefault())
+                .geographicalArea(new GeometryFactory().createPolygon());
     }
 
     @Override

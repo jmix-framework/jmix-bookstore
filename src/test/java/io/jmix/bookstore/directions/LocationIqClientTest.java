@@ -104,12 +104,13 @@ class LocationIqClientTest {
     @NotNull
     private ResponseActions expectDirectionsRequestFor(Point start, Point end) {
         return mockServer.expect(requestToUriTemplate(
-                        BASE_URL + "/v1/{service}/{profile}/{coordinates}?key={key}&geometries={geometries}",
+                        BASE_URL + "/v1/{service}/{profile}/{coordinates}?key={key}&geometries={geometries}&overview={overview}",
                         "directions",
                         "driving",
                         "%s,%s;%s,%s".formatted(start.getX(), start.getY(), end.getX(), end.getY()),
                         API_KEY,
-                        "geojson"
+                        "geojson",
+                        "full"
                 ))
                 .andExpect(method(HttpMethod.GET));
     }

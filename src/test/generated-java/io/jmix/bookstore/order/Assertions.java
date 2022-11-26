@@ -40,6 +40,17 @@ public class Assertions extends org.assertj.core.api.Assertions {
   }
 
   /**
+   * Creates a new instance of <code>{@link io.jmix.bookstore.fulfillment.FulfillmentCenterAssert}</code>.
+   *
+   * @param actual the actual value.
+   * @return the created assertion object.
+   */
+  @org.assertj.core.util.CheckReturnValue
+  public static io.jmix.bookstore.fulfillment.FulfillmentCenterAssert assertThat(io.jmix.bookstore.fulfillment.FulfillmentCenter actual) {
+    return new io.jmix.bookstore.fulfillment.FulfillmentCenterAssert(actual);
+  }
+
+  /**
    * Creates a new instance of <code>{@link io.jmix.bookstore.order.OrderAssert}</code>.
    *
    * @param actual the actual value.

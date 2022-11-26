@@ -4,6 +4,7 @@ import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Value;
+import org.locationtech.jts.geom.Point;
 
 @Value
 @Builder
@@ -12,4 +13,7 @@ public class AddressData {
     String street;
     String postCode;
     String city;
+    String state;
+    String country;
+    Point position;
 }
