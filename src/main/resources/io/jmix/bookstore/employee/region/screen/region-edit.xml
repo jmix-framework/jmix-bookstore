@@ -26,7 +26,7 @@
                 width="AUTO"
                 forceDialog="true"/>
     <layout spacing="true" expand="editActions">
-        <form id="form" dataContainer="regionDc">
+        <form captionPosition="TOP" id="form" dataContainer="regionDc">
             <column width="350px">
                 <textField id="nameField" property="name"/>
             </column>

@@ -39,6 +39,8 @@ class TerritoryBrowseTest extends WebIntegrationTest {
     void setUp(Screens screens) {
 
         databaseCleanup.removeAllEntities();
+        databaseCleanup.removeAllEntities(Territory.class);
+
         Region region = regions.saveDefault();
         territory = territories.save(
                 territories.defaultData()

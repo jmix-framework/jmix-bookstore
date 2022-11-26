@@ -45,7 +45,10 @@ public class Employee extends StandardEntity {
     @AttributeOverrides({
             @AttributeOverride(name = "street", column = @Column(name = "ADDRESS_STREET", nullable = false)),
             @AttributeOverride(name = "postCode", column = @Column(name = "ADDRESS_POST_CODE")),
-            @AttributeOverride(name = "city", column = @Column(name = "ADDRESS_CITY"))
+            @AttributeOverride(name = "city", column = @Column(name = "ADDRESS_CITY")),
+            @AttributeOverride(name = "position", column = @Column(name = "ADDRESS_POSITION_")),
+            @AttributeOverride(name = "state", column = @Column(name = "ADDRESS_STATE")),
+            @AttributeOverride(name = "country", column = @Column(name = "ADDRESS_COUNTRY"))
     })
     private Address address;
 
@@ -71,6 +74,17 @@ public class Employee extends StandardEntity {
     @JoinColumn(name = "POSITION_ID", nullable = false)
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     private Position position;
+
+    @Column(name = "PROBATION_END_DATE")
+    private LocalDate probationEndDate;
+
+    public LocalDate getProbationEndDate() {
+        return probationEndDate;
+    }
+
+    public void setProbationEndDate(LocalDate probationEndDate) {
+        this.probationEndDate = probationEndDate;
+    }
 
     public Position getPosition() {
         return position;

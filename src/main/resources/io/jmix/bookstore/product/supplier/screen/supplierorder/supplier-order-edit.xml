@@ -33,7 +33,7 @@
                 modal="true"
                 forceDialog="true"/>
     <layout spacing="true" expand="orderLinesBox">
-        <form id="form" dataContainer="supplierOrderDc">
+        <form captionPosition="TOP" id="form" dataContainer="supplierOrderDc">
             <column width="350px">
                 <entityPicker id="supplierField" property="supplier">
                     <actions>

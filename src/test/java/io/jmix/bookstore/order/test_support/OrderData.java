@@ -3,6 +3,7 @@ package io.jmix.bookstore.order.test_support;
 import io.jmix.bookstore.customer.Customer;
 import io.jmix.bookstore.entity.Address;
 import io.jmix.bookstore.order.OrderLine;
+import io.jmix.bookstore.order.OrderStatus;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -19,4 +20,5 @@ public class OrderData {
     Customer customer;
     List<OrderLine> orderLines;
     Address shippingAddress;
+    OrderStatus status;
 }

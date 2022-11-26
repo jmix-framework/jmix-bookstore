@@ -1,6 +1,7 @@
 package io.jmix.bookstore.employee.screen;
 
 import io.jmix.bookstore.employee.Region;
+import io.jmix.bookstore.employee.Territory;
 import io.jmix.bookstore.employee.region.screen.RegionBrowse;
 import io.jmix.bookstore.employee.region.screen.RegionEdit;
 import io.jmix.bookstore.employee.test_support.Regions;
@@ -35,6 +36,9 @@ class RegionBrowseTest extends WebIntegrationTest {
     void setUp(Screens screens) {
 
         databaseCleanup.removeAllEntities();
+
+        databaseCleanup.removeAllEntities(Territory.class);
+        databaseCleanup.removeAllEntities(Region.class);
         region = regions.saveDefault();
 
         screenInteractions = ScreenInteractions.forBrowse(screens);

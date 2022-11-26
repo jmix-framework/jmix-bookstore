@@ -35,7 +35,7 @@
                 width="75%"/>
     <layout spacing="true" expand="orderLinesBox">
         <label stylename="failure" id="changesRequiredCommentLabel" visible="false" width="100%" />
-            <form id="form" dataContainer="supplierOrderDc">
+            <form captionPosition="TOP" id="form" dataContainer="supplierOrderDc">
                 <column width="350px">
                     <entityPicker editable="false" id="supplierField" property="supplier" />
                     <valuePicker editable="false" id="supplierStatusField" property="supplier.cooperationStatus" />

@@ -26,6 +26,8 @@ public class Customers
     public static final String DEFAULT_STREET = "street";
     public static final String DEFAULT_POST_CODE = "postcode";
     public static final String DEFAULT_CITY = "city";
+    public static final String DEFAULT_STATE = "state";
+    public static final String DEFAULT_COUNTRY = "country";
 
     @Override
     public CustomerData.CustomerDataBuilder defaultData() {
@@ -41,6 +43,8 @@ public class Customers
                 .street(DEFAULT_STREET)
                 .postCode(DEFAULT_POST_CODE)
                 .city(DEFAULT_CITY)
+                .state(DEFAULT_STATE)
+                .country(DEFAULT_COUNTRY)
                 .build());
     }
 

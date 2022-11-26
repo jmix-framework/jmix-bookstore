@@ -3,6 +3,7 @@ package io.jmix.bookstore.order;
 import io.jmix.bookstore.customer.Customer;
 import io.jmix.bookstore.entity.Address;
 import io.jmix.bookstore.entity.StandardTenantEntity;
+import io.jmix.bookstore.fulfillment.FulfillmentCenter;
 import io.jmix.core.DeletePolicy;
 import io.jmix.core.MetadataTools;
 import io.jmix.core.entity.annotation.EmbeddedParameters;
@@ -14,14 +15,14 @@ import io.jmix.core.metamodel.annotation.JmixEntity;
 import io.jmix.core.metamodel.datatype.DatatypeFormatter;
 
 import javax.persistence.*;
-import javax.validation.constraints.FutureOrPresent;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.util.List;
 
 @JmixEntity
 @Table(name = "BOOKSTORE_ORDER", indexes = {
-        @Index(name = "IDX_ORDER_CUSTOMER_ID", columnList = "CUSTOMER_ID")
+        @Index(name = "IDX_ORDER_CUSTOMER_ID", columnList = "CUSTOMER_ID"),
+        @Index(name = "IDX_BOOKSTORE_ORDER_FULFILLED_BY", columnList = "FULFILLED_BY_ID")
 })
 @Entity(name = "bookstore_Order")
 public class Order extends StandardTenantEntity {
@@ -50,9 +51,36 @@ public class Order extends StandardTenantEntity {
     @AttributeOverrides({
             @AttributeOverride(name = "street", column = @Column(name = "SHIPPING_ADDRESS_STREET", nullable = false)),
             @AttributeOverride(name = "postCode", column = @Column(name = "SHIPPING_ADDRESS_POST_CODE")),
-            @AttributeOverride(name = "city", column = @Column(name = "SHIPPING_ADDRESS_CITY"))
+            @AttributeOverride(name = "city", column = @Column(name = "SHIPPING_ADDRESS_CITY")),
+            @AttributeOverride(name = "position", column = @Column(name = "SHIPPING_ADDRESS_POSITION_")),
+            @AttributeOverride(name = "state", column = @Column(name = "SHIPPING_ADDRESS_STATE")),
+            @AttributeOverride(name = "country", column = @Column(name = "SHIPPING_ADDRESS_COUNTRY"))
     })
     private Address shippingAddress;
+
+    @NotNull
+    @Column(name = "STATUS", nullable = false)
+    private String status;
+
+    @JoinColumn(name = "FULFILLED_BY_ID")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private FulfillmentCenter fulfilledBy;
+
+    public FulfillmentCenter getFulfilledBy() {
+        return fulfilledBy;
+    }
+
+    public void setFulfilledBy(FulfillmentCenter fulfilledBy) {
+        this.fulfilledBy = fulfilledBy;
+    }
+
+    public OrderStatus getStatus() {
+        return status == null ? null : OrderStatus.fromId(status);
+    }
+
+    public void setStatus(OrderStatus status) {
+        this.status = status == null ? null : status.getId();
+    }
 
     public Address getShippingAddress() {
         return shippingAddress;

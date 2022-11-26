@@ -4,6 +4,7 @@ import io.jmix.bookstore.customer.Customer;
 import io.jmix.bookstore.employee.Employee;
 import io.jmix.bookstore.employee.Region;
 import io.jmix.bookstore.employee.Territory;
+import io.jmix.bookstore.fulfillment.FulfillmentCenter;
 import io.jmix.bookstore.order.Order;
 import io.jmix.bookstore.product.Product;
 import io.jmix.bookstore.product.ProductCategory;
@@ -35,8 +36,6 @@ public class TestDataCreation {
     protected final ProductDataProvider productDataProvider;
     protected final ProductCategoryDataProvider productCategoryDataProvider;
     protected final SupplierDataProvider supplierDataProvider;
-    protected final RegionDataProvider regionDataProvider;
-    protected final TerritoryDataProvider territoryDataProvider;
     protected final CustomerDataProvider customerDataProvider;
     protected final OrderDataProvider orderDataProvider;
     protected final ProcurementManagerDataProvider procurementManagerDataProvider;
@@ -56,8 +55,6 @@ public class TestDataCreation {
             ProductDataProvider productDataProvider,
             ProductCategoryDataProvider productCategoryDataProvider,
             SupplierDataProvider supplierDataProvider,
-            RegionDataProvider regionDataProvider,
-            TerritoryDataProvider territoryDataProvider,
             CustomerDataProvider customerDataProvider,
             OrderDataProvider orderDataProvider,
             ProcurementManagerDataProvider procurementManagerDataProvider,
@@ -71,8 +68,6 @@ public class TestDataCreation {
         this.productDataProvider = productDataProvider;
         this.productCategoryDataProvider = productCategoryDataProvider;
         this.supplierDataProvider = supplierDataProvider;
-        this.regionDataProvider = regionDataProvider;
-        this.territoryDataProvider = territoryDataProvider;
         this.customerDataProvider = customerDataProvider;
         this.orderDataProvider = orderDataProvider;
         this.procurementManagerDataProvider = procurementManagerDataProvider;
@@ -117,21 +112,14 @@ public class TestDataCreation {
         List<Product> products = generateProducts(number.numberBetween(500, 1000), productCategories, suppliers);
         log.info("{} Products created", products.size());
 
-        List<Region> regions = generateRegions(number.numberBetween(50, 200));
-        log.info("{} Regions created", regions.size());
-
-
-        List<Territory> territories = generateTerritories(number.numberBetween(50, 200), regions);
-        log.info("{} Territories created", territories.size());
-
-
         List<Customer> customers = generateCustomers(number.numberBetween(1_000, 2_000));
         log.info("{} Customers created", customers.size());
 
-
-        List<Order> orders = generateOrders(number.numberBetween(2_000, 5_000), customers, products);
+        List<FulfillmentCenter> fulfillmentCenters = dataManager.load(FulfillmentCenter.class).all().list();
+        List<Territory> territories = dataManager.load(Territory.class).all().list();
+        List<Region> regions = dataManager.load(Region.class).all().list();
+        List<Order> orders = generateOrders(number.numberBetween(2_000, 5_000), customers, products, fulfillmentCenters, territories, regions);
         log.info("{} Orders created", orders.size());
-
 
         log.info("Data created");
 
@@ -142,24 +130,14 @@ public class TestDataCreation {
         return reportDataProvider.create(new ReportDataProvider.DataContext("supplier-order-form.zip"));
     }
 
-    private List<Order> generateOrders(int amount, List<Customer> customers, List<Product> products) {
+    private List<Order> generateOrders(int amount, List<Customer> customers, List<Product> products, List<FulfillmentCenter> fulfillmentCenters, List<Territory> territories, List<Region> regions) {
         log.info("Trying to create a random amount of {} Orders", amount);
-        return orderDataProvider.create(new OrderDataProvider.DataContext(amount, customers, products));
+        return orderDataProvider.create(new OrderDataProvider.DataContext(amount, customers, products, fulfillmentCenters, territories, regions));
     }
 
     private List<Customer> generateCustomers(int amount) {
         log.info("Trying to create a random amount of {} Customers", amount);
-        return customerDataProvider.create(new CustomerDataProvider.DataContext(amount));
-    }
-
-    private List<Territory> generateTerritories(int amount, List<Region> regions) {
-        log.info("Trying to create a random amount of {} Territories", amount);
-        return territoryDataProvider.create(new TerritoryDataProvider.DataContext(amount, regions));
-    }
-
-    private List<Region> generateRegions(int amount) {
-        log.info("Trying to create a random amount of {} Regions", amount);
-        return regionDataProvider.create(new RegionDataProvider.DataContext(amount));
+        return customerDataProvider.create(new CustomerDataProvider.DataContext(amount, "classpath:test-data/addresses-us-all.json"));
     }
 
     private List<Supplier> generateSuppliers(int amount) {

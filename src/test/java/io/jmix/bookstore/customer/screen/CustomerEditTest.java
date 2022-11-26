@@ -35,6 +35,7 @@ class CustomerEditTest extends WebIntegrationTest {
     void setUp(Screens screens) {
         // given:
         databaseCleanup.removeAllEntities();
+        databaseCleanup.removeAllEntities(Customer.class);
 
         // and:
         ScreenInteractions screenInteractions = ScreenInteractions.forEditor(screens, dataManager);

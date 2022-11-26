@@ -6,6 +6,7 @@ import io.jmix.bookstore.employee.Position;
 import io.jmix.bookstore.employee.Region;
 import io.jmix.bookstore.employee.Territory;
 import io.jmix.bookstore.entity.User;
+import io.jmix.bookstore.fulfillment.FulfillmentCenter;
 import io.jmix.bookstore.order.Order;
 import io.jmix.bookstore.order.OrderLine;
 import io.jmix.bookstore.product.Product;
@@ -60,7 +61,9 @@ public class DatabaseCleanup {
 
     private <T> void performDeletion(Class<T> entityClass, JdbcTemplate jdbcTemplate) {
         String tableName = metadataTools.getDatabaseTable(metadata.getClass(entityClass));
-
+        performDeletion(tableName, jdbcTemplate);
+    }
+    private <T> void performDeletion(String tableName, JdbcTemplate jdbcTemplate) {
         jdbcTemplate.update("DELETE FROM " + tableName);
     }
 
@@ -68,6 +71,7 @@ public class DatabaseCleanup {
 
         JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
 
+        performDeletion("BOOKSTORE_EMPLOYEE_TERRITORIES", jdbcTemplate);
         performDeletion(Employee.class, jdbcTemplate);
 
         performDeletion(UserGroupRole.class, jdbcTemplate);
@@ -79,11 +83,10 @@ public class DatabaseCleanup {
         performDeletion(SupplierOrderLine.class, jdbcTemplate);
         performDeletion(SupplierOrder.class, jdbcTemplate);
         performDeletion(SupplierOrderRequest.class, jdbcTemplate);
+        performDeletion(FulfillmentCenter.class, jdbcTemplate);
         performDeletion(Product.class, jdbcTemplate);
         performDeletion(ProductCategory.class, jdbcTemplate);
         performDeletion(Supplier.class, jdbcTemplate);
-        performDeletion(Territory.class, jdbcTemplate);
-        performDeletion(Region.class, jdbcTemplate);
     }
 
     public void removeAllEntities(List<?> entities) {

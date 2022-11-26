@@ -15,6 +15,15 @@
             <loader/>
             <collection id="territoriesDc" property="territories"/>
         </instance>
+        <collection id="positionsDc"
+                    class="io.jmix.bookstore.employee.Position">
+            <fetchPlan extends="_base"/>
+            <loader id="positionsDl">
+                <query>
+                    <![CDATA[select e from bookstore_Position e]]>
+                </query>
+            </loader>
+        </collection>
     </data>
     <facets>
         <dataLoadCoordinator auto="true"/>
@@ -37,86 +46,127 @@
                  caption="msg://io.jmix.bookstore.product/generalInformation"
                  margin="true"
                  spacing="true"
+                 icon="USER_CIRCLE"
+                 expand="contentBox"
             >
-                <hbox spacing="true" height="350px" width="100%">
-
-                <groupBox caption="msg://personalInformation"
-                          spacing="true"
-                          height="100%"
-                          width="100%">
-                    <form id="form" dataContainer="employeeDc">
+                <hbox id="contentBox" spacing="true" width="100%">
+                    <groupBox caption="msg://personalInformation"
+                              spacing="true"
+                              height="100%"
+                              icon="USER_CIRCLE"
+                              width="100%">
+                        <form captionPosition="TOP" id="form" dataContainer="employeeDc">
+                            <column width="350px">
+                                <comboBox id="titleField" property="title"/>
+                                <textField id="firstNameField" property="firstName"/>
+                                <textField id="lastNameField" property="lastName"/>
+                                <dateField id="birthDateField" property="birthDate"/>
+                                <entityPicker id="userField" property="user">
+                                    <actions>
+                                        <action id="entityLookup" type="entity_lookup"/>
+                                        <action id="entityClear" type="entity_clear"/>
+                                    </actions>
+                                </entityPicker>
+                            </column>
+                        </form>
+                    </groupBox>
+                    <groupBox id="addressInformationGroupBox" width="100%" height="100%"
+                              caption="msg://addressInformation"
+                              icon="ADDRESS_BOOK">
+                        <hbox width="100%" expand="addressForm">
+                            <form captionPosition="TOP" id="addressForm" dataContainer="employeeDc">
+                                <column width="350px">
+                                    <textField id="addressStreetField" property="address.street"/>
+                                    <textField id="addressPostCodeField" property="address.postCode"/>
+                                    <textField id="addressCityField" property="address.city"/>
+                                    <textField id="addressStateField" property="address.state"/>
+                                    <textField id="addressCountryField" property="address.country"/>
+                                </column>
+                            </form>
+                            <button id="showOnMapBtn" align="TOP_RIGHT" stylename="icon-only friendly"
+                                    icon="font-icon:MAP_MARKER"/>
+                        </hbox>
+                    </groupBox>
+                </hbox>
+            </tab>
+            <tab id="positionTab"
+                 caption="msg://positionTab"
+                 margin="true"
+                 spacing="true"
+                 icon="SITEMAP"
+                 expand="positionGroupBox"
+            >
+                <groupBox
+                        id="positionGroupBox"
+                        caption="msg://positionInformation"
+                        spacing="true"
+                        icon="SITEMAP"
+                        width="100%">
+                    <form captionPosition="TOP" id="positionForm" dataContainer="employeeDc">
                         <column width="350px">
-                            <comboBox id="titleField" property="title"/>
-                            <textField id="firstNameField" property="firstName"/>
-                            <textField id="lastNameField" property="lastName"/>
-                            <dateField id="birthDateField" property="birthDate"/>
-                            <textField id="addressStreetField" property="address.street"/>
-                            <textField id="addressPostCodeField" property="address.postCode"/>
-                            <textField id="addressCityField" property="address.city"/>
-                        </column>
-                    </form>
-                </groupBox>
-
-                <groupBox caption="msg://positionInformation"
-                          spacing="true"
-                          height="100%"
-                          width="100%">
-                    <form id="positionForm" dataContainer="employeeDc">
-                        <column width="350px">
-                            <dateField id="hireDateField" property="hireDate"/>
+                            <entityComboBox id="positionField" property="position" optionsContainer="positionsDc"/>
                             <entityPicker id="reportsToField" property="reportsTo">
                                 <actions>
                                     <action id="entityLookup" type="entity_lookup"/>
                                     <action id="entityClear" type="entity_clear"/>
                                 </actions>
                             </entityPicker>
-                            <entityPicker id="userField" property="user">
-                                <actions>
-                                    <action id="entityLookup" type="entity_lookup"/>
-                                    <action id="entityClear" type="entity_clear"/>
-                                </actions>
-                            </entityPicker>
-                            <entityPicker id="positionField" property="position">
-                                <actions>
-                                    <action id="entityLookup" type="entity_lookup"/>
-                                    <action id="entityClear" type="entity_clear"/>
-                                </actions>
-                            </entityPicker>
+                        </column>
+                        <column width="350px">
+                            <dateField id="hireDateField" property="hireDate"/>
+                            <dateField id="probationEndDateField" property="probationEndDate"/>
                         </column>
                     </form>
                 </groupBox>
-                </hbox>
             </tab>
             <tab id="territoriesTab"
                  caption="msg://io.jmix.bookstore.employee/Employee.territories"
                  margin="true"
                  spacing="true"
-                 expand="territoriesTable"
+                 icon="MAP"
+                 expand="territoriesGroupBox"
             >
-                <table id="territoriesTable" dataContainer="territoriesDc" width="100%">
-                    <actions>
-                        <action id="add" type="add"/>
-                        <action id="exclude" type="exclude"/>
-                    </actions>
-                    <columns>
-                        <column id="name"/>
-                    </columns>
-                    <buttonsPanel>
-                        <button action="territoriesTable.add"/>
-                        <button action="territoriesTable.exclude"/>
-                    </buttonsPanel>
-                </table>
+                <groupBox
+                        id="territoriesGroupBox"
+                        caption="msg://io.jmix.bookstore.employee/Employee.territories"
+                        spacing="true"
+                        icon="MAP"
+                        expand="territoriesTable"
+                        width="100%">
+                    <table id="territoriesTable" dataContainer="territoriesDc" width="100%">
+                        <actions>
+                            <action id="add" type="add"/>
+                            <action id="exclude" type="exclude"/>
+                        </actions>
+                        <columns>
+                            <column id="name"/>
+                        </columns>
+                        <buttonsPanel>
+                            <button action="territoriesTable.add"/>
+                            <button action="territoriesTable.exclude"/>
+                        </buttonsPanel>
+                    </table>
+                </groupBox>
             </tab>
             <tab id="notesTag"
                  caption="msg://io.jmix.bookstore.employee/Employee.notes"
                  margin="true"
                  spacing="true"
-                 expand="notesField"
+                 icon="STICKY_NOTE"
+                 expand="notesGroupBox"
             >
-                <textArea id="notesField" property="notes" width="100%" dataContainer="employeeDc"/>
+
+                <groupBox
+                        id="notesGroupBox"
+                        caption="msg://io.jmix.bookstore.employee/Employee.notes"
+                        spacing="true"
+                        icon="STICKY_NOTE"
+                        expand="notesField"
+                        width="100%">
+                    <textArea id="notesField" property="notes" width="100%" dataContainer="employeeDc"/>
+                </groupBox>
             </tab>
         </tabSheet>
-
         <hbox id="editActions" spacing="true">
             <button id="commitAndCloseBtn" action="windowCommitAndClose"/>
             <button id="closeBtn" action="windowClose"/>

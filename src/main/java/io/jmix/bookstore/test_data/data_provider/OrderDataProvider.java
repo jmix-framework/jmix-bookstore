@@ -1,10 +1,14 @@
 package io.jmix.bookstore.test_data.data_provider;
 
 import io.jmix.bookstore.customer.Customer;
+import io.jmix.bookstore.employee.Region;
+import io.jmix.bookstore.employee.Territory;
 import io.jmix.bookstore.entity.Currency;
 import io.jmix.bookstore.entity.Money;
+import io.jmix.bookstore.fulfillment.FulfillmentCenter;
 import io.jmix.bookstore.order.Order;
 import io.jmix.bookstore.order.OrderLine;
+import io.jmix.bookstore.order.OrderStatus;
 import io.jmix.bookstore.product.Product;
 import io.jmix.core.DataManager;
 import io.jmix.core.EntitySet;
@@ -12,11 +16,14 @@ import io.jmix.core.SaveContext;
 import net.datafaker.Address;
 import net.datafaker.DateAndTime;
 import net.datafaker.Faker;
+import org.locationtech.jts.geom.Point;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -25,7 +32,9 @@ import static io.jmix.bookstore.test_data.data_provider.RandomValues.*;
 @Component("bookstore_OrderDataProvider")
 public class OrderDataProvider implements TestDataProvider<Order, OrderDataProvider.DataContext> {
 
-    public record DataContext(int amount, List<Customer> customers, List<Product> products){}
+    public record DataContext(int amount, List<Customer> customers, List<Product> products, List<FulfillmentCenter> fulfillmentCenters,
+                              List<Territory> territories,
+                              List<Region> regions){}
 
     protected final DataManager dataManager;
 
@@ -35,7 +44,14 @@ public class OrderDataProvider implements TestDataProvider<Order, OrderDataProvi
 
     @Override
     public List<Order> create(DataContext dataContext) {
-        List<Order> orders = createOrders(dataContext.amount(), dataContext.customers(), dataContext.products());
+        List<Order> orders = createOrders(
+                dataContext.amount(),
+                dataContext.customers(),
+                dataContext.products(),
+                dataContext.fulfillmentCenters(),
+                dataContext.territories(),
+                dataContext.regions()
+        );
         SaveContext saveContext = new SaveContext();
         orders.forEach(saveContext::saving);
 
@@ -48,27 +64,54 @@ public class OrderDataProvider implements TestDataProvider<Order, OrderDataProvi
     }
 
 
-    private List<Order> createOrders(int amount, List<Customer> customers, List<Product> products) {
+    private List<Order> createOrders(int amount, List<Customer> customers, List<Product> products, List<FulfillmentCenter> fulfillmentCenters, List<Territory> territories, List<Region> regions) {
         Faker faker = new Faker();
 
         return Stream.generate(faker::address).limit(amount)
-                .map(address -> toOrder(address, customers, products))
+                .map(address -> toOrder(address, customers, products, fulfillmentCenters, territories, regions))
                 .collect(Collectors.toList());
     }
 
-    private  Order toOrder(Address address, List<Customer> customers, List<Product> products) {
+    private  Order toOrder(Address address, List<Customer> customers, List<Product> products, List<FulfillmentCenter> fulfillmentCenters, List<Territory> territories, List<Region> regions) {
         Order order = dataManager.create(Order.class);
 
-        order.setCustomer(randomOfList(customers));
+        Customer customer = randomOfList(customers);
+
+        Point position = customer.getAddress().getPosition();
+
+
+
+
+        order.setCustomer(customer);
         LocalDate orderDate = randomPastLocalDate(10);
         order.setOrderDate(orderDate);
         order.setShippingDate(orderDate.plusDays(randomPositiveNumber(30)));
         order.setShippingAddress(toAddress(address));
+        OrderStatus orderStatus = randomEnum(OrderStatus.values());
+        order.setStatus(orderStatus);
+
+
+
+        if (!orderStatus.equals(OrderStatus.NEW)) {
+            territories.stream()
+                    .filter(territory -> territory.getGeographicalArea().contains(position))
+                    .findFirst()
+                    .flatMap(territory -> fulfillmentCenterByTerritory(territory, fulfillmentCenters))
+                    .ifPresent(order::setFulfilledBy);
+        }
+
         order.setOrderLines(
                 generateOrderLines(randomPositiveNumber(5), order, products)
         );
         return order;
     }
+
+    private Optional<FulfillmentCenter> fulfillmentCenterByTerritory(Territory territory, List<FulfillmentCenter> fulfillmentCenters) {
+        return fulfillmentCenters.stream()
+                .filter(fulfillmentCenter -> fulfillmentCenter.getRegion().equals(territory.getRegion()))
+                .findFirst();
+    }
+
     private io.jmix.bookstore.entity.Address toAddress(Address address) {
         io.jmix.bookstore.entity.Address addressEntity = dataManager.create(io.jmix.bookstore.entity.Address.class);
         addressEntity.setCity(address.city());

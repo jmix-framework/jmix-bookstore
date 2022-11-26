@@ -14,6 +14,7 @@ assertjGenerator {
             'io.jmix.bookstore.product.ProductCategory',
             'io.jmix.bookstore.product.ProductPrice',
             'io.jmix.bookstore.customer.Customer',
+            'io.jmix.bookstore.fulfillment.FulfillmentCenter',
             'io.jmix.bookstore.entity.Address',
             'io.jmix.bookstore.entity.Money',
     ]
@@ -22,7 +23,7 @@ assertjGenerator {
 apply plugin: 'org.springframework.boot'
 
 jmix {
-    bomVersion = '1.4.0'
+    bomVersion = '1.4.1'
     projectId = 'bookstore'
 }
 
@@ -50,7 +51,6 @@ dependencies {
     implementation 'io.jmix.data:jmix-eclipselink-starter'
     implementation 'io.jmix.ui:jmix-ui-starter'
     implementation 'io.jmix.ui:jmix-ui-data-starter'
-    implementation 'io.jmix.ui:jmix-ui-widgets-compiled'
     implementation 'io.jmix.security:jmix-security-starter'
     implementation 'io.jmix.security:jmix-security-ui-starter'
     implementation 'io.jmix.security:jmix-security-data-starter'
@@ -90,6 +90,15 @@ dependencies {
     implementation 'io.jmix.email:jmix-email-starter'
     implementation 'io.jmix.email:jmix-email-ui-starter'
     implementation 'io.jmix.quartz:jmix-quartz-starter'
+    implementation 'io.jmix.maps:jmix-maps-starter'
+    widgets 'io.jmix.maps:jmix-maps-ui-widgets'
+    widgets 'io.jmix.ui:jmix-ui-widgets'
+    implementation 'io.jmix.maps:jmix-maps-ui-starter'
+
+    // used for GeoJsonReader to parse geojson format from the LocationIQ API
+    implementation 'org.locationtech.jts.io:jts-io-common:1.17.1'
+
+
 }
 
 test {
@@ -107,4 +116,9 @@ tasks.named("bootBuildImage") {
             password = System.getenv("DOCKER_HUB_PASSWORD")
         }
     }
+}
+
+compileWidgets {
+    generate "io.jmix.bookstore.widgets.CustomWidgetSet"
+    includePaths("**/io/jmix/**/widget/**", "**/io/jmix/bookstore/widgets/**")
 }

@@ -6,7 +6,9 @@
     <data readOnly="true">
         <collection id="ordersDc"
                     class="io.jmix.bookstore.order.Order">
-            <fetchPlan extends="_base"/>
+            <fetchPlan extends="_base">
+                <property name="fulfilledBy" fetchPlan="_base"/>
+            </fetchPlan>
             <loader id="ordersDl">
                 <query>
                     <![CDATA[select e from bookstore_Order e]]>
@@ -42,11 +44,14 @@
                 <action id="create" type="create"/>
                 <action id="edit" type="edit"/>
                 <action id="remove" type="remove"/>
+                <action id="trackDelivery" caption="msg://trackDelivery" icon="TRUCK"/>
             </actions>
             <columns>
                 <column property="orderDate" id="orderDate"/>
                 <column property="customer" id="customer"/>
                 <column property="shippingDate" id="shippingDate"/>
+                <column property="status" id="status"/>
+                <column property="fulfilledBy" id="fulfilledBy"/>
             </columns>
             <simplePagination/>
             <buttonsPanel id="buttonsPanel"
@@ -54,6 +59,7 @@
                 <button id="createBtn" action="ordersTable.create"/>
                 <button id="editBtn" action="ordersTable.edit"/>
                 <button id="removeBtn" action="ordersTable.remove"/>
+                <button id="trackDeliveryBtn" action="ordersTable.trackDelivery"/>
             </buttonsPanel>
         </dataGrid>
         <hbox id="lookupActions" spacing="true" visible="false">

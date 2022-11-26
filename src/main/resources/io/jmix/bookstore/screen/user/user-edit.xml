@@ -25,7 +25,7 @@
     <dialogMode height="600"
                 width="800"/>
     <layout spacing="true" expand="editActions">
-        <form id="form" dataContainer="userDc">
+        <form captionPosition="TOP" id="form" dataContainer="userDc">
             <column width="350px">
                 <textField id="usernameField" property="username" editable="false"/>
                 <passwordField id="passwordField"

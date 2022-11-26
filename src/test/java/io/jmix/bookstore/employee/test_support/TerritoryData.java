@@ -5,6 +5,7 @@ import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Value;
+import org.locationtech.jts.geom.Polygon;
 
 @Value
 @Builder
@@ -12,4 +13,5 @@ import lombok.Value;
 public class TerritoryData {
     String name;
     Region region;
+    Polygon geographicalArea;
 }
