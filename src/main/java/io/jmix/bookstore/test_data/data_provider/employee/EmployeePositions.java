@@ -22,7 +22,8 @@ public record EmployeePositions(List<Position> positions) {
         PROCUREMENT_SPECIALIST("procurement-specialist"),
         PROCUREMENT_MANAGER("procurement-manager"),
         ORDER_FULFILLMENT_SPECIALIST("order-fulfillment-specialist"),
-        ORDER_FULFILLMENT_MANAGER("order-fulfillment-manager");
+        ORDER_FULFILLMENT_MANAGER("order-fulfillment-manager"),
+        SALES_REPRESENTATIVE("sales-representative");
 
         private final String code;
 

@@ -32,6 +32,10 @@ public class EmployeeDataProvider {
         this.passwordEncoder = passwordEncoder;
     }
 
+    private static LocalDate randomBirthday() {
+        DateAndTime date = new Faker().date();
+        return date.birthday().toLocalDateTime().toLocalDate();
+    }
 
     public List<Employee> save(List<EmployeeData> employeeData) {
         return findEmployeesOf(commit(toEmployeesWithUser(employeeData)));
@@ -67,12 +71,20 @@ public class EmployeeDataProvider {
         employee.setBirthDate(randomBirthday());
         employee.setAddress(toAddress(new Faker().address()));
 
+        employee.setTerritories(employeeData.territories().stream().toList());
 
-        Stream<RoleAssignmentEntity> roleAssignments =
-                Stream.concat(employeeData.roleCodes().stream(), baseEmployeeRoles()).map(roleCode -> toRoleAssignment(user, roleCode));
+
+        Stream<RoleAssignmentEntity> resourceRoleAssignments =
+                Stream.concat(employeeData.resourceRoleCodes().stream(), baseEmployeeRoles())
+                        .map(roleCode -> toRoleAssignment(user, roleCode, RoleAssignmentRoleType.RESOURCE));
+
+        Stream<RoleAssignmentEntity> rowLevelRoleAssignments =
+                employeeData.rowLevelRoleCodes().stream()
+                        .map(roleCode -> toRoleAssignment(user, roleCode, RoleAssignmentRoleType.ROW_LEVEL));
 
         return Stream.concat(
-                Stream.of(user, employee), roleAssignments
+                Stream.concat(resourceRoleAssignments, rowLevelRoleAssignments),
+                Stream.of(user, employee)
         );
     }
 
@@ -93,15 +105,11 @@ public class EmployeeDataProvider {
         addressEntity.setPostCode(address.postcode());
         return addressEntity;
     }
-    private static LocalDate randomBirthday() {
-        DateAndTime date = new Faker().date();
-        return date.birthday().toLocalDateTime().toLocalDate();
-    }
 
-    private RoleAssignmentEntity toRoleAssignment(User user, String roleCode) {
+    private RoleAssignmentEntity toRoleAssignment(User user, String roleCode, String roleType) {
         RoleAssignmentEntity userRole = dataManager.create(RoleAssignmentEntity.class);
         userRole.setUsername(user.getUsername());
-        userRole.setRoleType(RoleAssignmentRoleType.RESOURCE);
+        userRole.setRoleType(roleType);
         userRole.setRoleCode(roleCode);
         return userRole;
     }

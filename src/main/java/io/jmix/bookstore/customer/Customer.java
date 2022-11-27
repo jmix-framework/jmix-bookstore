@@ -1,6 +1,6 @@
 package io.jmix.bookstore.customer;
 
-import com.google.common.base.Strings;
+import io.jmix.bookstore.employee.Region;
 import io.jmix.bookstore.entity.Address;
 import io.jmix.bookstore.entity.StandardTenantEntity;
 import io.jmix.bookstore.order.Order;
@@ -18,7 +18,9 @@ import java.util.List;
 import static com.google.common.base.Strings.nullToEmpty;
 
 @JmixEntity
-@Table(name = "BOOKSTORE_CUSTOMER")
+@Table(name = "BOOKSTORE_CUSTOMER", indexes = {
+        @Index(name = "IDX_BOOKSTORE_CUSTOMER_ASSOCIATED_REGION", columnList = "ASSOCIATED_REGION_ID")
+})
 @Entity(name = "bookstore_Customer")
 public class Customer extends StandardTenantEntity {
 
@@ -48,6 +50,18 @@ public class Customer extends StandardTenantEntity {
     @Composition
     @OneToMany(mappedBy = "customer")
     private List<Order> orders;
+
+    @JoinColumn(name = "ASSOCIATED_REGION_ID")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Region associatedRegion;
+
+    public Region getAssociatedRegion() {
+        return associatedRegion;
+    }
+
+    public void setAssociatedRegion(Region associatedRegion) {
+        this.associatedRegion = associatedRegion;
+    }
 
     @Geometry
     @JmixProperty

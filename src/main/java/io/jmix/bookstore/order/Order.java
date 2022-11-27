@@ -40,9 +40,6 @@ public class Order extends StandardTenantEntity {
     @OneToMany(mappedBy = "order")
     private List<OrderLine> orderLines;
 
-    @Column(name = "REQUIRED_DATE")
-    private LocalDate requiredDate;
-
     @Column(name = "SHIPPING_DATE")
     private LocalDate shippingDate;
 
@@ -96,14 +93,6 @@ public class Order extends StandardTenantEntity {
 
     public void setShippingDate(LocalDate shippedDate) {
         this.shippingDate = shippedDate;
-    }
-
-    public LocalDate getRequiredDate() {
-        return requiredDate;
-    }
-
-    public void setRequiredDate(LocalDate requiredDate) {
-        this.requiredDate = requiredDate;
     }
 
     public List<OrderLine> getOrderLines() {

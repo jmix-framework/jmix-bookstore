@@ -43,7 +43,6 @@
                     </hbox>
                     <ntf:notificationsIndicator id="ntfIndicator" align="TOP_RIGHT"/>
 
-
                     <userIndicator id="userIndicator"
                                    align="MIDDLE_CENTER"/>
 

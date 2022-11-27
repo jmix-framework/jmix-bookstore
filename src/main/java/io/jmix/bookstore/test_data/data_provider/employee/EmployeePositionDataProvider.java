@@ -35,7 +35,8 @@ public class EmployeePositionDataProvider implements TestDataProvider<Position, 
                 new PositionData("Procurement Specialist", PROCUREMENT_SPECIALIST, PositionColor.PURPLE),
                 new PositionData("Procurement Manager", PROCUREMENT_MANAGER, PositionColor.YELLOW),
                 new PositionData("Order Fulfillment Specialist", ORDER_FULFILLMENT_SPECIALIST, PositionColor.RED),
-                new PositionData("Order Fulfillment Manager", ORDER_FULFILLMENT_MANAGER, PositionColor.BLUE)
+                new PositionData("Order Fulfillment Manager", ORDER_FULFILLMENT_MANAGER, PositionColor.BLUE),
+                new PositionData("Sales Representative", SALES_REPRESENTATIVE, PositionColor.YELLOW)
         );
 
         return positionData.stream()

@@ -1,7 +1,6 @@
 package io.jmix.bookstore.test_data.data_provider;
 
 import io.jmix.bookstore.customer.Customer;
-import io.jmix.bookstore.employee.Region;
 import io.jmix.bookstore.employee.Territory;
 import io.jmix.bookstore.entity.Currency;
 import io.jmix.bookstore.entity.Money;
@@ -17,7 +16,6 @@ import net.datafaker.Address;
 import net.datafaker.DateAndTime;
 import net.datafaker.Faker;
 import org.locationtech.jts.geom.Point;
-import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
@@ -33,8 +31,8 @@ import static io.jmix.bookstore.test_data.data_provider.RandomValues.*;
 public class OrderDataProvider implements TestDataProvider<Order, OrderDataProvider.DataContext> {
 
     public record DataContext(int amount, List<Customer> customers, List<Product> products, List<FulfillmentCenter> fulfillmentCenters,
-                              List<Territory> territories,
-                              List<Region> regions){}
+                              List<Territory> territories
+    ){}
 
     protected final DataManager dataManager;
 
@@ -49,8 +47,7 @@ public class OrderDataProvider implements TestDataProvider<Order, OrderDataProvi
                 dataContext.customers(),
                 dataContext.products(),
                 dataContext.fulfillmentCenters(),
-                dataContext.territories(),
-                dataContext.regions()
+                dataContext.territories()
         );
         SaveContext saveContext = new SaveContext();
         orders.forEach(saveContext::saving);
@@ -64,22 +61,20 @@ public class OrderDataProvider implements TestDataProvider<Order, OrderDataProvi
     }
 
 
-    private List<Order> createOrders(int amount, List<Customer> customers, List<Product> products, List<FulfillmentCenter> fulfillmentCenters, List<Territory> territories, List<Region> regions) {
+    private List<Order> createOrders(int amount, List<Customer> customers, List<Product> products, List<FulfillmentCenter> fulfillmentCenters, List<Territory> territories) {
         Faker faker = new Faker();
 
         return Stream.generate(faker::address).limit(amount)
-                .map(address -> toOrder(address, customers, products, fulfillmentCenters, territories, regions))
+                .map(address -> toOrder(address, customers, products, fulfillmentCenters, territories))
                 .collect(Collectors.toList());
     }
 
-    private  Order toOrder(Address address, List<Customer> customers, List<Product> products, List<FulfillmentCenter> fulfillmentCenters, List<Territory> territories, List<Region> regions) {
+    private  Order toOrder(Address address, List<Customer> customers, List<Product> products, List<FulfillmentCenter> fulfillmentCenters, List<Territory> territories) {
         Order order = dataManager.create(Order.class);
 
         Customer customer = randomOfList(customers);
 
         Point position = customer.getAddress().getPosition();
-
-
 
 
         order.setCustomer(customer);
@@ -94,6 +89,7 @@ public class OrderDataProvider implements TestDataProvider<Order, OrderDataProvi
 
         if (!orderStatus.equals(OrderStatus.NEW)) {
             territories.stream()
+                    .filter(territory -> territory.getGeographicalArea() != null)
                     .filter(territory -> territory.getGeographicalArea().contains(position))
                     .findFirst()
                     .flatMap(territory -> fulfillmentCenterByTerritory(territory, fulfillmentCenters))

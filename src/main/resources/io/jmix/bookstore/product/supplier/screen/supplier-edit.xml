@@ -25,9 +25,7 @@
                 icon="EDITOR_CANCEL"/>
     </actions>
     <layout spacing="true" expand="contentBox">
-
-            <hbox id="contentBox" spacing="true" width="100%">
-
+        <hbox id="contentBox" spacing="true" width="100%">
             <groupBox caption="msg://generalInformation"
                       spacing="true"
                       height="100%"
@@ -41,6 +39,7 @@
                         <textField id="addressCityField" property="address.city"/>
                         <textField id="addressStateField" property="address.state"/>
                         <textField id="addressCountryField" property="address.country"/>
+                        <comboBox id="cooperationStatusField" property="cooperationStatus"/>
                     </column>
                 </form>
             </groupBox>
@@ -59,7 +58,7 @@
                     </column>
                 </form>
             </groupBox>
-            </hbox>
+        </hbox>
         <hbox id="editActions" spacing="true">
             <button id="commitAndCloseBtn" action="windowCommitAndClose"/>
             <button id="closeBtn" action="windowClose"/>

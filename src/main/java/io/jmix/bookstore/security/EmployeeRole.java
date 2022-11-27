@@ -22,7 +22,7 @@ public interface EmployeeRole {
     @EntityPolicy(entityClass = Position.class, actions = EntityPolicyAction.READ)
     void position();
 
-    @ScreenPolicy(screenIds = "bookstore_bpm_MyTasks.browse")
+    @ScreenPolicy(screenIds = {"bookstore_bpm_MyTasks.browse", "bookstore_AddressMap"})
     void screens();
 
     @EntityAttributePolicy(entityClass = FulfillmentCenter.class, attributes = "*", action = EntityAttributePolicyAction.VIEW)

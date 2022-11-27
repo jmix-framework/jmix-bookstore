@@ -2,7 +2,6 @@ package io.jmix.bookstore.test_data;
 
 import io.jmix.bookstore.customer.Customer;
 import io.jmix.bookstore.employee.Employee;
-import io.jmix.bookstore.employee.Region;
 import io.jmix.bookstore.employee.Territory;
 import io.jmix.bookstore.fulfillment.FulfillmentCenter;
 import io.jmix.bookstore.order.Order;
@@ -14,6 +13,7 @@ import io.jmix.bookstore.test_data.data_provider.bpm.BpmUserGroupDataProvider;
 import io.jmix.bookstore.test_data.data_provider.employee.*;
 import io.jmix.bpm.entity.UserGroup;
 import io.jmix.core.DataManager;
+import io.jmix.core.FetchPlan;
 import io.jmix.core.TimeSource;
 import io.jmix.reports.entity.Report;
 import net.datafaker.Faker;
@@ -44,6 +44,7 @@ public class TestDataCreation {
     private final ItAdministratorEmployeeDataProvider itAdministratorEmployeeDataProvider;
     private final ProcurementSpecialistDataProvider procurementSpecialistDataProvider;
     private final OrderFulfillmentSpecialistDataProvider orderFulfillmentSpecialistDataProvider;
+    private final SalesRepresentativeDataProvider salesRepresentativeDataProvider;
     private final OrderFulfillmentManagerDataProvider orderFulfillmentManagerDataProvider;
     private final EmployeePositionDataProvider employeePositionDataProvider;
     private final BpmUserGroupDataProvider bpmUserGroupDataProvider;
@@ -61,7 +62,7 @@ public class TestDataCreation {
             DatabaseCleanup databaseCleanup,
             ItAdministratorEmployeeDataProvider itAdministratorEmployeeDataProvider, ProcurementSpecialistDataProvider procurementSpecialistDataProvider,
             OrderFulfillmentSpecialistDataProvider orderFulfillmentSpecialistDataProvider,
-            OrderFulfillmentManagerDataProvider orderFulfillmentManagerDataProvider,
+            SalesRepresentativeDataProvider salesRepresentativeDataProvider, OrderFulfillmentManagerDataProvider orderFulfillmentManagerDataProvider,
             EmployeePositionDataProvider employeePositionDataProvider, BpmUserGroupDataProvider bpmUserGroupDataProvider, ReportDataProvider reportDataProvider) {
         this.timeSource = timeSource;
         this.dataManager = dataManager;
@@ -75,6 +76,7 @@ public class TestDataCreation {
         this.itAdministratorEmployeeDataProvider = itAdministratorEmployeeDataProvider;
         this.procurementSpecialistDataProvider = procurementSpecialistDataProvider;
         this.orderFulfillmentSpecialistDataProvider = orderFulfillmentSpecialistDataProvider;
+        this.salesRepresentativeDataProvider = salesRepresentativeDataProvider;
         this.orderFulfillmentManagerDataProvider = orderFulfillmentManagerDataProvider;
         this.employeePositionDataProvider = employeePositionDataProvider;
         this.bpmUserGroupDataProvider = bpmUserGroupDataProvider;
@@ -90,6 +92,13 @@ public class TestDataCreation {
 
         Number number = new Faker().number();
 
+
+        List<Territory> territories = dataManager.load(Territory.class).all().fetchPlan(fetchPlanBuilder -> {
+            fetchPlanBuilder.addFetchPlan(FetchPlan.BASE);
+            fetchPlanBuilder.add("region", FetchPlan.BASE);
+        }).list();
+
+
         List<UserGroup> bpmUserGroups = generateBpmUserGroups();
         log.info("{} BPM User Groups created", bpmUserGroups.size());
 
@@ -99,7 +108,7 @@ public class TestDataCreation {
         EmployeePositions employeePositions = generateEmployeePositions();
         log.info("{} Employee Positions created", employeePositions.size());
 
-        List<Employee> employees = generateEmployees(employeePositions);
+        List<Employee> employees = generateEmployees(employeePositions, territories);
         log.info("{} Employees created", employees.size());
 
 
@@ -112,13 +121,11 @@ public class TestDataCreation {
         List<Product> products = generateProducts(number.numberBetween(500, 1000), productCategories, suppliers);
         log.info("{} Products created", products.size());
 
-        List<Customer> customers = generateCustomers(number.numberBetween(1_000, 2_000));
+        List<Customer> customers = generateCustomers(number.numberBetween(1_000, 2_000), territories);
         log.info("{} Customers created", customers.size());
 
         List<FulfillmentCenter> fulfillmentCenters = dataManager.load(FulfillmentCenter.class).all().list();
-        List<Territory> territories = dataManager.load(Territory.class).all().list();
-        List<Region> regions = dataManager.load(Region.class).all().list();
-        List<Order> orders = generateOrders(number.numberBetween(2_000, 5_000), customers, products, fulfillmentCenters, territories, regions);
+        List<Order> orders = generateOrders(number.numberBetween(2_000, 5_000), customers, products, fulfillmentCenters, territories);
         log.info("{} Orders created", orders.size());
 
         log.info("Data created");
@@ -130,14 +137,14 @@ public class TestDataCreation {
         return reportDataProvider.create(new ReportDataProvider.DataContext("supplier-order-form.zip"));
     }
 
-    private List<Order> generateOrders(int amount, List<Customer> customers, List<Product> products, List<FulfillmentCenter> fulfillmentCenters, List<Territory> territories, List<Region> regions) {
+    private List<Order> generateOrders(int amount, List<Customer> customers, List<Product> products, List<FulfillmentCenter> fulfillmentCenters, List<Territory> territories) {
         log.info("Trying to create a random amount of {} Orders", amount);
-        return orderDataProvider.create(new OrderDataProvider.DataContext(amount, customers, products, fulfillmentCenters, territories, regions));
+        return orderDataProvider.create(new OrderDataProvider.DataContext(amount, customers, products, fulfillmentCenters, territories));
     }
 
-    private List<Customer> generateCustomers(int amount) {
+    private List<Customer> generateCustomers(int amount, List<Territory> territories) {
         log.info("Trying to create a random amount of {} Customers", amount);
-        return customerDataProvider.create(new CustomerDataProvider.DataContext(amount, "classpath:test-data/addresses-us-all.json"));
+        return customerDataProvider.create(new CustomerDataProvider.DataContext(amount, "classpath:test-data/addresses-us-all.json", territories));
     }
 
     private List<Supplier> generateSuppliers(int amount) {
@@ -165,22 +172,24 @@ public class TestDataCreation {
         return new EmployeePositions(employeePositionDataProvider.create(new EmployeePositionDataProvider.DataContext()));
     }
 
-    public List<Employee> generateEmployees(EmployeePositions employeePositions) {
+    public List<Employee> generateEmployees(EmployeePositions employeePositions, List<Territory> territories) {
         log.info("Trying to create pre-defined Employees");
         List<Employee> itEmployees = itAdministratorEmployeeDataProvider.create(new ItAdministratorEmployeeDataProvider.DataContext(employeePositions));
         List<Employee> procurementManagers = procurementManagerDataProvider.create(new ProcurementManagerDataProvider.DataContext(employeePositions));
         List<Employee> procurementSpecialists = procurementSpecialistDataProvider.create(new ProcurementSpecialistDataProvider.DataContext(procurementManagers, employeePositions));
 
 
-        List<Employee> orderFulfillmentManagers = orderFulfillmentManagerDataProvider.create(new OrderFulfillmentManagerDataProvider.DataContext(employeePositions));
-        List<Employee> orderFulfillmentEmployees = orderFulfillmentSpecialistDataProvider.create(new OrderFulfillmentSpecialistDataProvider.DataContext(orderFulfillmentManagers, employeePositions));
+        List<Employee> orderFulfillmentManagers = orderFulfillmentManagerDataProvider.create(new OrderFulfillmentManagerDataProvider.DataContext(employeePositions, territories));
+        List<Employee> orderFulfillmentEmployees = orderFulfillmentSpecialistDataProvider.create(new OrderFulfillmentSpecialistDataProvider.DataContext(orderFulfillmentManagers, employeePositions, territories));
+        List<Employee> salesRepresentatives = salesRepresentativeDataProvider.create(new SalesRepresentativeDataProvider.DataContext(employeePositions, territories));
 
         return joinLists(
                 itEmployees,
                 procurementManagers,
                 procurementSpecialists,
                 orderFulfillmentManagers,
-                orderFulfillmentEmployees
+                orderFulfillmentEmployees,
+                salesRepresentatives
         );
     }
 
