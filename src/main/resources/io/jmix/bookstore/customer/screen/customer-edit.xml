@@ -67,7 +67,6 @@
                         </actions>
                         <columns>
                             <column property="orderDate" id="orderDate"/>
-                            <column property="requiredDate" id="requiredDate"/>
                             <column property="shippingDate" id="shippingDate"/>
                         </columns>
                         <buttonsPanel>

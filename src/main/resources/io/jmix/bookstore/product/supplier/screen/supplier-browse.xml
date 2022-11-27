@@ -51,6 +51,7 @@
                 <column property="contactName" id="contactName"/>
                 <column property="phone" id="phone"/>
                 <column property="email" id="email"/>
+                <column property="cooperationStatus" id="cooperationStatus"/>
             </columns>
             <simplePagination/>
             <buttonsPanel id="buttonsPanel"

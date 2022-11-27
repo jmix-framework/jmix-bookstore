@@ -9,6 +9,7 @@
                     class="io.jmix.bookstore.customer.Customer">
             <fetchPlan extends="_base">
                 <property name="address"/>
+                <property name="associatedRegion" fetchPlan="_base"/>
             </fetchPlan>
             <loader id="customersDl">
                 <query>
@@ -49,6 +50,7 @@
                         <action id="remove" type="remove"/>
                     </actions>
                     <columns>
+                        <column property="associatedRegion" id="associatedRegion"/>
                         <column property="firstName" id="firstName"/>
                         <column property="lastName" id="lastName"/>
                         <column property="email" id="email"/>

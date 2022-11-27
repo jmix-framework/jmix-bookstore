@@ -2,6 +2,7 @@ package io.jmix.bookstore.test_data.data_provider.employee;
 
 import io.jmix.bookstore.employee.Employee;
 import io.jmix.bookstore.employee.Position;
+import io.jmix.bookstore.employee.Territory;
 import io.jmix.bookstore.entity.Title;
 import io.jmix.bookstore.security.EmployeeRole;
 import io.jmix.bookstore.security.ProcurementManagerRole;
@@ -12,6 +13,8 @@ import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import static io.jmix.bookstore.test_data.data_provider.RandomValues.randomOfList;
 
@@ -38,7 +41,9 @@ public class ProcurementManagerDataProvider implements TestDataProvider<Employee
                         procurementManager(dataContext),
                         LocalDate.now().minusYears(5).minusMonths(2).minusDays(9),
                         null,
-                        procurementManagerRoles()
+                        procurementManagerRoles(),
+                        List.of(),
+                        Set.of()
                 )
         );
 

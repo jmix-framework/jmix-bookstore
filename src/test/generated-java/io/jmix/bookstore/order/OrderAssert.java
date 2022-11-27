@@ -413,29 +413,6 @@ public class OrderAssert extends AbstractObjectAssert<OrderAssert, Order> {
 
 
   /**
-   * Verifies that the actual Order's requiredDate is equal to the given one.
-   * @param requiredDate the given requiredDate to compare the actual Order's requiredDate to.
-   * @return this assertion object.
-   * @throws AssertionError - if the actual Order's requiredDate is not equal to the given one.
-   */
-  public OrderAssert hasRequiredDate(java.time.LocalDate requiredDate) {
-    // check that actual Order we want to make assertions on is not null.
-    isNotNull();
-
-    // overrides the default error message with a more explicit one
-    String assertjErrorMessage = "\nExpecting requiredDate of:\n  <%s>\nto be:\n  <%s>\nbut was:\n  <%s>";
-
-    // null safe check
-    java.time.LocalDate actualRequiredDate = actual.getRequiredDate();
-    if (!Objects.deepEquals(actualRequiredDate, requiredDate)) {
-      failWithMessage(assertjErrorMessage, actual, requiredDate, actualRequiredDate);
-    }
-
-    // return the current assertion for method chaining
-    return this;
-  }
-
-  /**
    * Verifies that the actual Order's shippingAddress is equal to the given one.
    * @param shippingAddress the given shippingAddress to compare the actual Order's shippingAddress to.
    * @return this assertion object.

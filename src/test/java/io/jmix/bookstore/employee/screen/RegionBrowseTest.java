@@ -5,6 +5,7 @@ import io.jmix.bookstore.employee.Territory;
 import io.jmix.bookstore.employee.region.screen.RegionBrowse;
 import io.jmix.bookstore.employee.region.screen.RegionEdit;
 import io.jmix.bookstore.employee.test_support.Regions;
+import io.jmix.bookstore.fulfillment.FulfillmentCenter;
 import io.jmix.bookstore.test_data.DatabaseCleanup;
 import io.jmix.bookstore.test_support.ui.DataGridInteractions;
 import io.jmix.bookstore.test_support.ui.ScreenInteractions;
@@ -37,6 +38,7 @@ class RegionBrowseTest extends WebIntegrationTest {
 
         databaseCleanup.removeAllEntities();
 
+        databaseCleanup.removeAllEntities(FulfillmentCenter.class);
         databaseCleanup.removeAllEntities(Territory.class);
         databaseCleanup.removeAllEntities(Region.class);
         region = regions.saveDefault();

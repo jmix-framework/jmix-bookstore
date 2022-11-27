@@ -14,6 +14,7 @@ import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Set;
 
 import static io.jmix.bookstore.test_data.data_provider.RandomValues.randomBirthday;
 
@@ -41,7 +42,9 @@ public class ItAdministratorEmployeeDataProvider implements TestDataProvider<Emp
                 itAdministrator(dataContext),
                 LocalDate.now().minusYears(7).minusMonths(1).minusDays(30),
                 null,
-                List.of(FullAccessRole.CODE)
+                List.of(FullAccessRole.CODE),
+                List.of(),
+                Set.of()
         );
 
         Employee employee = dataManager.create(Employee.class);

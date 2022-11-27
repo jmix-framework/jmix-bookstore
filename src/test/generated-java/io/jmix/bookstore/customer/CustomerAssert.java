@@ -53,6 +53,29 @@ public class CustomerAssert extends AbstractObjectAssert<CustomerAssert, Custome
   }
 
   /**
+   * Verifies that the actual Customer's associatedRegion is equal to the given one.
+   * @param associatedRegion the given associatedRegion to compare the actual Customer's associatedRegion to.
+   * @return this assertion object.
+   * @throws AssertionError - if the actual Customer's associatedRegion is not equal to the given one.
+   */
+  public CustomerAssert hasAssociatedRegion(io.jmix.bookstore.employee.Region associatedRegion) {
+    // check that actual Customer we want to make assertions on is not null.
+    isNotNull();
+
+    // overrides the default error message with a more explicit one
+    String assertjErrorMessage = "\nExpecting associatedRegion of:\n  <%s>\nto be:\n  <%s>\nbut was:\n  <%s>";
+
+    // null safe check
+    io.jmix.bookstore.employee.Region actualAssociatedRegion = actual.getAssociatedRegion();
+    if (!Objects.deepEquals(actualAssociatedRegion, associatedRegion)) {
+      failWithMessage(assertjErrorMessage, actual, associatedRegion, actualAssociatedRegion);
+    }
+
+    // return the current assertion for method chaining
+    return this;
+  }
+
+  /**
    * Verifies that the actual Customer's createdBy is equal to the given one.
    * @param createdBy the given createdBy to compare the actual Customer's createdBy to.
    * @return this assertion object.

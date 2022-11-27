@@ -3,14 +3,13 @@ package io.jmix.bookstore.test_data.data_provider;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jmix.bookstore.customer.Customer;
+import io.jmix.bookstore.employee.Territory;
 import io.jmix.core.DataManager;
 import io.jmix.core.SaveContext;
 import net.datafaker.*;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.GeometryFactory;
 import org.locationtech.jts.geom.Point;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Component;
@@ -32,7 +31,8 @@ public class CustomerDataProvider implements TestDataProvider<Customer, Customer
     protected final ObjectMapper objectMapper;
     protected final RestTemplate restTemplate;
 
-    public record DataContext(int amount, String addressesFileName){
+    public record DataContext(int amount, String addressesFileName,
+                              List<io.jmix.bookstore.employee.Territory> territories){
     }
 
     /**
@@ -60,10 +60,10 @@ public class CustomerDataProvider implements TestDataProvider<Customer, Customer
 
     @Override
     public List<Customer> create(DataContext dataContext) {
-        return commit(createCustomer(dataContext.amount(), dataContext.addressesFileName()));
+        return commit(createCustomer(dataContext.amount(), dataContext.addressesFileName(), dataContext.territories()));
     }
 
-    private List<Customer> createCustomer(int amount, String addressesFileName) {
+    private List<Customer> createCustomer(int amount, String addressesFileName, List<Territory> territories) {
         Faker faker = new Faker();
 
         AddressEntries addresses = addresses(addressesFileName);
@@ -71,7 +71,7 @@ public class CustomerDataProvider implements TestDataProvider<Customer, Customer
 
         return addresses.addresses().stream()
                 .map(address -> new CustomerData(address, faker.name(), faker.internet(), faker.phoneNumber())).limit(amount)
-                .map(this::toCustomer)
+                .map(customerData -> toCustomer(customerData, territories))
                 .collect(Collectors.groupingBy(customer -> customer.getAddress().getPosition().getX()))
                 .values().stream()
                 .map(customers -> customers.get(0))
@@ -91,7 +91,7 @@ public class CustomerDataProvider implements TestDataProvider<Customer, Customer
 
     public record CustomerData(AddressEntry address, Name name, Internet internet, PhoneNumber phoneNumber){}
 
-    private Customer toCustomer(CustomerData customerData) {
+    private Customer toCustomer(CustomerData customerData, List<Territory> territories) {
         Customer customer = dataManager.create(Customer.class);
         Name nameFaker = customerData.name();
         String firstName = nameFaker.firstName();
@@ -104,6 +104,14 @@ public class CustomerDataProvider implements TestDataProvider<Customer, Customer
         customer.setEmail(email);
 
         customer.setAddress(toAddress(customerData.address()));
+
+        territories.stream()
+                .filter(territory -> territory.getGeographicalArea() != null)
+                .filter(territory -> territory.getGeographicalArea().contains(customer.getAddress().getPosition()))
+                .findFirst()
+                .map(Territory::getRegion)
+                .ifPresent(customer::setAssociatedRegion);
+        
         return customer;
     }
 
@@ -137,6 +145,7 @@ public class CustomerDataProvider implements TestDataProvider<Customer, Customer
         addressEntity.setCity(address.city());
         addressEntity.setStreet(address.address1());
         addressEntity.setPostCode(address.postalCode());
+        addressEntity.setStreet(address.state());
         Point point = new GeometryFactory().createPoint(new Coordinate(address.coordinates().lng(), address.coordinates().lat()));
         addressEntity.setPosition(point);
 

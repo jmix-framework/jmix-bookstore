@@ -1,15 +1,12 @@
 package io.jmix.bookstore.screen.main;
 
-import io.jmix.bookstore.employee.Employee;
-import io.jmix.bookstore.employee.Position;
 import io.jmix.bookstore.entity.User;
 import io.jmix.bookstore.screen.bookstoremytasksbrowse.BookstoreMyTasksBrowse;
+import io.jmix.bookstore.security.session.EmployeeSessionData;
 import io.jmix.bpm.entity.UserGroup;
 import io.jmix.bpm.multitenancy.BpmTenantProvider;
 import io.jmix.bpm.service.UserGroupService;
 import io.jmix.core.DataManager;
-import io.jmix.core.FetchPlan;
-import io.jmix.core.querycondition.PropertyCondition;
 import io.jmix.core.security.CurrentAuthentication;
 import io.jmix.core.usersubstitution.CurrentUserSubstitution;
 import io.jmix.notificationsui.component.NotificationsIndicator;
@@ -31,8 +28,13 @@ import java.util.stream.Collectors;
 public class MainScreen extends Screen implements Window.HasWorkArea {
 
     @Autowired
+    protected TaskService taskService;
+    @Autowired(required = false)
+    protected BpmTenantProvider bpmTenantProvider;
+    protected List<String> userGroupCodes;
+    protected String currentUserName;
+    @Autowired
     private ScreenTools screenTools;
-
     @Autowired
     private AppWorkArea workArea;
     @Autowired
@@ -41,8 +43,6 @@ public class MainScreen extends Screen implements Window.HasWorkArea {
     private Image userAvatarMainScreen;
     @Autowired
     private NotificationsIndicator ntfIndicator;
-
-
     @Autowired
     private CurrentAuthentication currentAuthentication;
     @Autowired
@@ -51,26 +51,16 @@ public class MainScreen extends Screen implements Window.HasWorkArea {
     private MessageBundle messageBundle;
     @Autowired
     private Label<String> positionBadgeLabel;
-
-    @Autowired
-    private DataManager dataManager;
-    @Autowired
-    protected TaskService taskService;
     @Autowired
     private ScreenBuilders screenBuilders;
-    @Autowired(required = false)
-    protected BpmTenantProvider bpmTenantProvider;
     @Autowired
     private CurrentUserSubstitution currentUserSubstitution;
     @Autowired
     private UserGroupService userGroupService;
-
-
-    protected List<String> userGroupCodes;
-    protected String currentUserName;
     @Autowired
     private Label<String> tasksIndicator_counterLabel;
-
+    @Autowired
+    private EmployeeSessionData employeeSessionData;
     @Override
     public AppWorkArea getWorkArea() {
         return workArea;
@@ -80,7 +70,6 @@ public class MainScreen extends Screen implements Window.HasWorkArea {
     public void onBeforeShow(BeforeShowEvent event) {
         currentUserName = currentUserSubstitution.getEffectiveUser().getUsername();
     }
-
 
 
     @Subscribe
@@ -132,17 +121,16 @@ public class MainScreen extends Screen implements Window.HasWorkArea {
 
     private void initMainScreenUserAvatar() {
         welcomeMessage.setValue(messageBundle.formatMessage("welcomeMessageUser", currentUser().getFirstName()));
-        List<Employee> currentEmployees = dataManager.load(Employee.class).condition(PropertyCondition.equal("user", currentUser()))
-                .fetchPlan(fetchPlanBuilder -> fetchPlanBuilder.add("position", FetchPlan.BASE)).list();
+        employeeSessionData.employee()
+                .ifPresent(it -> {
+                    positionBadgeLabel.setValue(it.getPosition().getName());
+                    String colorStyleName = it.getPosition().getColor().getStyleName();
+                    positionBadgeLabel.setStyleName("position-badge " + colorStyleName);
+                    userAvatar.setStyleName("user-avatar user-avatar-border-" + colorStyleName);
+                    userAvatarMainScreen.setStyleName("user-avatar user-avatar-border-" + colorStyleName);
 
-        if (currentEmployees.size() == 1)  {
-            Position position = currentEmployees.get(0).getPosition();
-            positionBadgeLabel.setValue(position.getName());
-            String colorStyleName = position.getColor().getStyleName();
-            positionBadgeLabel.setStyleName("position-badge " + colorStyleName);
-            userAvatar.setStyleName("user-avatar user-avatar-border-" + colorStyleName);
-            userAvatarMainScreen.setStyleName("user-avatar user-avatar-border-" + colorStyleName);
-        }
+                });
+
     }
 
     private void initUserAvatar() {
