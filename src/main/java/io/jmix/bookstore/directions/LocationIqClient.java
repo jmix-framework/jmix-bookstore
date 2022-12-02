@@ -18,6 +18,7 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
@@ -32,8 +33,6 @@ public class LocationIqClient {
 
     private final LocationIqProperties locationIqProperties;
     private final RestTemplate restTemplate;
-
-
     public LocationIqClient(LocationIqProperties locationIqProperties, RestTemplate restTemplate) {
         this.locationIqProperties = locationIqProperties;
         this.restTemplate = restTemplate;
@@ -47,17 +46,32 @@ public class LocationIqClient {
      * @param end the end point of the route
      * @return a LineString representing the route if possible to calculate
      */
-    public Optional<LineString> calculateRoute(Point start, Point end) {
+    public Optional<CalculatedRoute> calculateRoute(Point start, Point end) {
+        return calculateRoute(start, end, RouteCalculationAccuracy.HIGH_ACCURACY);
+    }
+
+    public Optional<CalculatedRoute> calculateRoute(Point start, Point end, RouteCalculationAccuracy accuracy) {
 
         log.info("Calculating route between start: '{}' and end: '{}' via LocationIQ API", start, end);
 
         try {
             DirectionsApiResponse response = restTemplate.getForObject(
-                    directionsApiUrl(start, end),
+                    directionsApiUrl(start, end, accuracy),
                     DirectionsApiResponse.class
             );
 
-            return toOptionalLineString(response);
+            if (CollectionUtils.isEmpty(response.routes())) {
+                return Optional.empty();
+            }
+
+            DirectionsApiResponse.Route route = response.routes.get(0);
+
+            return CalculatedRoute.fromValues(
+                    route.toLineString(),
+                    route.duration(),
+                    route.distance()
+            );
+
         } catch (Exception e) {
             log.warn("Error loading route information from API", e);
             return Optional.empty();
@@ -111,14 +125,22 @@ public class LocationIqClient {
         return Optional.of((LineString) new GeoJsonReader().read(json));
     }
 
-    private URI directionsApiUrl(Point start, Point end) {
+    private URI directionsApiUrl(Point start, Point end, RouteCalculationAccuracy accuracy) {
         return locationIqBaseUrl()
                 .path("/v1/directions/driving/{coordinates}")
                 .queryParam("geometries", "geojson")
-                .queryParam("overview", "full")
+                .queryParam("overview", toDirectionsApiOverviewAttribute(accuracy))
                 .buildAndExpand(coordinatesQueryParameter(start, end))
                 .toUri();
     }
+
+    private String toDirectionsApiOverviewAttribute(RouteCalculationAccuracy accuracy) {
+        return switch (accuracy) {
+            case HIGH_ACCURACY -> "full";
+            case LOW_ACCURACY -> "simplified";
+        };
+    }
+
     private URI forwardGeocodingApiUrl(AddressInformation addressInformation) {
         return locationIqBaseUrl()
                 .path("/v1/search.php")
@@ -178,7 +200,14 @@ public class LocationIqClient {
      * </pre>
      */
     record DirectionsApiResponse(List<Route> routes) {
-        record Route(JsonNode geometry) { }
+        record Route(JsonNode geometry, float duration, float distance) {
+
+            public LineString toLineString() throws ParseException {
+                return (LineString) new GeoJsonReader().read(
+                        this.geometry().toString()
+                );
+            }
+        }
     }
 
     /**

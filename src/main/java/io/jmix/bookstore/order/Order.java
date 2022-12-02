@@ -8,11 +8,10 @@ import io.jmix.core.DeletePolicy;
 import io.jmix.core.MetadataTools;
 import io.jmix.core.entity.annotation.EmbeddedParameters;
 import io.jmix.core.entity.annotation.OnDelete;
-import io.jmix.core.metamodel.annotation.Composition;
-import io.jmix.core.metamodel.annotation.DependsOnProperties;
-import io.jmix.core.metamodel.annotation.InstanceName;
-import io.jmix.core.metamodel.annotation.JmixEntity;
+import io.jmix.core.metamodel.annotation.*;
 import io.jmix.core.metamodel.datatype.DatatypeFormatter;
+import io.jmix.maps.Geometry;
+import org.locationtech.jts.geom.Point;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -46,7 +45,7 @@ public class Order extends StandardTenantEntity {
     @EmbeddedParameters(nullAllowed = false)
     @Embedded
     @AttributeOverrides({
-            @AttributeOverride(name = "street", column = @Column(name = "SHIPPING_ADDRESS_STREET", nullable = false)),
+            @AttributeOverride(name = "street", column = @Column(name = "SHIPPING_ADDRESS_STREET")),
             @AttributeOverride(name = "postCode", column = @Column(name = "SHIPPING_ADDRESS_POST_CODE")),
             @AttributeOverride(name = "city", column = @Column(name = "SHIPPING_ADDRESS_CITY")),
             @AttributeOverride(name = "position", column = @Column(name = "SHIPPING_ADDRESS_POSITION_")),
@@ -55,6 +54,11 @@ public class Order extends StandardTenantEntity {
     })
     private Address shippingAddress;
 
+    @Geometry
+    @JmixProperty
+    public Point getGeometry() {
+        return shippingAddress != null? shippingAddress.getPosition() : null;
+    }
     @NotNull
     @Column(name = "STATUS", nullable = false)
     private String status;

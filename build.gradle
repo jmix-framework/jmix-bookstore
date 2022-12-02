@@ -83,6 +83,10 @@ dependencies {
     testAnnotationProcessor 'org.mapstruct:mapstruct-processor:1.5.3.Final'
 
     testImplementation 'io.jmix.ui:jmix-ui-test-assist'
+
+    // used for tests that check @Async annotated methods
+    testImplementation 'org.awaitility:awaitility:4.2.0'
+
     themes 'io.jmix.ui:jmix-ui-themes'
     implementation 'io.jmix.ui:jmix-ui-themes'
     implementation 'io.jmix.notifications:jmix-notifications-starter'

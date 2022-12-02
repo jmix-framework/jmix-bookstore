@@ -28,21 +28,8 @@ class AddressValidationTest {
 
     @Test
     void given_validAddress_when_validateAddress_then_noViolationOccurs() {
-
-        // given
-        address.setStreet("Sesame Street");
-
         // expect
         validations.assertNoViolations(address);
-    }
-    @Test
-    void given_addressWithInvalidStreet_when_validateAddress_then_oneViolationOccurs() {
-
-        // given
-        address.setStreet(null);
-
-        // expect
-        validations.assertOneViolationWith(address, "street", "NotBlank");
     }
 
 }

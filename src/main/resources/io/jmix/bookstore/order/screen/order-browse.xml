@@ -2,16 +2,46 @@
 <window xmlns="http://jmix.io/schema/ui/window"
         xmlns:c="http://jmix.io/schema/ui/jpql-condition"
         caption="msg://orderBrowse.caption"
-        focusComponent="ordersTable">
+        focusComponent="confirmedOrdersTable">
     <data readOnly="true">
-        <collection id="ordersDc"
+        <collection id="confirmedOrdersDc"
                     class="io.jmix.bookstore.order.Order">
             <fetchPlan extends="_base">
                 <property name="fulfilledBy" fetchPlan="_base"/>
             </fetchPlan>
-            <loader id="ordersDl">
+            <loader id="confirmedOrdersDl">
                 <query>
                     <![CDATA[select e from bookstore_Order e]]>
+                    <condition>
+                        <and>
+                            <c:jpql>
+                                <c:where><![CDATA[e.status <> 'NEW']]></c:where>
+                            </c:jpql>
+                        </and>
+                    </condition>
+                </query>
+            </loader>
+        </collection>
+        <collection id="newOrdersDc"
+                    class="io.jmix.bookstore.order.Order">
+            <fetchPlan extends="_base">
+                <property name="fulfilledBy" fetchPlan="_base"/>
+            </fetchPlan>
+            <loader id="newOrdersDl">
+                <query>
+                    <![CDATA[select e from bookstore_Order e where e.status = 'NEW']]>
+                </query>
+            </loader>
+        </collection>
+
+        <collection id="fulfillmentCentersDc"
+                    class="io.jmix.bookstore.fulfillment.FulfillmentCenter">
+            <fetchPlan extends="_base">
+                <property name="region" fetchPlan="_base"/>
+            </fetchPlan>
+            <loader id="fulfillmentCentersDl">
+                <query>
+                    <![CDATA[select e from bookstore_FulfillmentCenter e]]>
                 </query>
             </loader>
         </collection>
@@ -19,6 +49,7 @@
     <facets>
         <dataLoadCoordinator auto="true"/>
         <screenSettings id="settingsFacet" auto="true"/>
+        <notification id="orderConfirmedNotification" type="HUMANIZED" caption="msg://orderConfirmed" />
     </facets>
     <actions>
         <action id="lookupSelectAction"
@@ -32,36 +63,91 @@
     </actions>
     <dialogMode height="600"
                 width="800"/>
-    <layout expand="ordersTable" spacing="true">
-        <filter id="filter"
-                dataLoader="ordersDl">
-            <properties include=".*"/>
-        </filter>
-        <dataGrid id="ordersTable"
-                  width="100%"
-                  dataContainer="ordersDc">
-            <actions>
-                <action id="create" type="create"/>
-                <action id="edit" type="edit"/>
-                <action id="remove" type="remove"/>
-                <action id="trackDelivery" caption="msg://trackDelivery" icon="TRUCK"/>
-            </actions>
-            <columns>
-                <column property="orderDate" id="orderDate"/>
-                <column property="customer" id="customer"/>
-                <column property="shippingDate" id="shippingDate"/>
-                <column property="status" id="status"/>
-                <column property="fulfilledBy" id="fulfilledBy"/>
-            </columns>
-            <simplePagination/>
-            <buttonsPanel id="buttonsPanel"
-                          alwaysVisible="true">
-                <button id="createBtn" action="ordersTable.create"/>
-                <button id="editBtn" action="ordersTable.edit"/>
-                <button id="removeBtn" action="ordersTable.remove"/>
-                <button id="trackDeliveryBtn" action="ordersTable.trackDelivery"/>
-            </buttonsPanel>
-        </dataGrid>
+    <layout expand="contentTabSheet" spacing="true">
+        <tabSheet id="contentTabSheet" width="100%" stylename="centered-tabs icons-on-top">
+
+            <tab id="newOrdersTab" caption="msg://newOrders" spacing="true" margin="true" icon="font-icon:CERTIFICATE" expand="newOrdersTable">
+
+                <groupBox id="filterGroupBox" orientation="horizontal" align="MIDDLE_CENTER" width="75%" caption="msg://newOrdersFilter" icon="SEARCH">
+                    <propertyFilter property="customer"
+                                    operation="EQUAL"
+                                    operationEditable="true"
+                                    dataLoader="newOrdersDl">
+                        <entitySuggestionField id="customerField"
+                                               metaClass="bookstore_Customer"
+                                               inputPrompt="Search for Customer"
+                                               width="100%">
+                            <actions>
+                                <action id="lookup" type="entity_lookup"/>
+                                <action id="clear" type="entity_clear"/>
+                            </actions>
+                            <query entityClass="io.jmix.bookstore.customer.Customer"
+                                   escapeValueForLike="true"
+                                   searchStringFormat="%${searchString}%">
+                                select c from bookstore_Customer c where
+                                lower(c.firstName) like lower(:searchString) escape '\' or
+                                lower(c.lastName) like lower(:searchString) escape '\'
+                            </query>
+                        </entitySuggestionField>
+                    </propertyFilter>
+                    <propertyFilter
+                                    property="orderDate"
+                                    operationEditable="true"
+                                    operation="EQUAL"
+                                    dataLoader="newOrdersDl"/>
+
+                </groupBox>
+                <dataGrid id="newOrdersTable"
+                          width="100%"
+                          dataContainer="newOrdersDc">
+                    <actions>
+                        <action id="create" type="create"/>
+                        <action id="edit" type="edit"/>
+                        <action id="confirm" icon="font-icon:CHECK_CIRCLE" caption="msg://confirmOrder" trackSelection="true"/>
+                    </actions>
+                    <columns>
+                        <column property="orderDate" id="orderDate"/>
+                        <column property="customer" id="customer"/>
+                    </columns>
+                    <simplePagination/>
+                    <buttonsPanel id="newOrdersButtonsPanel"
+                                  alwaysVisible="true">
+                        <button id="newOrdersTableCreateBtn" action="newOrdersTable.create"/>
+                        <button id="confirmBtn" action="newOrdersTable.confirm"/>
+                    </buttonsPanel>
+                </dataGrid>
+            </tab>
+            
+            <tab id="confirmedOrdersTab" caption="msg://confirmedOrders" spacing="true" margin="true" icon="font-icon:CHECK_CIRCLE" expand="confirmedOrdersTable">
+                <filter id="filter"
+                        dataLoader="confirmedOrdersDl">
+                    <properties include=".*"/>
+                </filter>
+                <dataGrid id="confirmedOrdersTable"
+                          width="100%"
+                          dataContainer="confirmedOrdersDc">
+                    <actions>
+                        <action id="edit" type="edit"/>
+                        <action id="remove" type="remove"/>
+                        <action id="trackDelivery" caption="msg://trackDelivery" icon="TRUCK"/>
+                    </actions>
+                    <columns>
+                        <column property="orderDate" id="orderDate"/>
+                        <column property="customer" id="customer"/>
+                        <column property="shippingDate" id="shippingDate"/>
+                        <column property="status" id="status"/>
+                        <column property="fulfilledBy" id="fulfilledBy"/>
+                    </columns>
+                    <simplePagination/>
+                    <buttonsPanel id="buttonsPanel"
+                                  alwaysVisible="true">
+                        <button id="editBtn" action="confirmedOrdersTable.edit"/>
+                        <button id="removeBtn" action="confirmedOrdersTable.remove"/>
+                        <button id="trackDeliveryBtn" action="confirmedOrdersTable.trackDelivery"/>
+                    </buttonsPanel>
+                </dataGrid>
+            </tab>
+        </tabSheet>
         <hbox id="lookupActions" spacing="true" visible="false">
             <button action="lookupSelectAction"/>
             <button action="lookupCancelAction"/>

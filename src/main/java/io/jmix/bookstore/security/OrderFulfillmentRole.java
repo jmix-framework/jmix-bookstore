@@ -2,6 +2,7 @@ package io.jmix.bookstore.security;
 
 import io.jmix.bookstore.customer.Customer;
 import io.jmix.bookstore.entity.Address;
+import io.jmix.bookstore.entity.Money;
 import io.jmix.bookstore.fulfillment.FulfillmentCenter;
 import io.jmix.bookstore.order.Order;
 import io.jmix.bookstore.order.OrderLine;
@@ -36,7 +37,7 @@ public interface OrderFulfillmentRole {
     void productCategory();
 
     @MenuPolicy(menuIds = {"bookstore_Supplier.browse", "bookstore_SupplierOrder.browse", "bookstore_Order.browse", "bookstore_Customer.browse", "bookstore_Product.browse"})
-    @ScreenPolicy(screenIds = {"bookstore_Supplier.edit", "bookstore_Supplier.browse", "bookstore_SupplierOrderRequest.edit", "bookstore_SupplierOrder.browse", "bookstore_SupplierOrder.edit", "bookstore_SupplierOrder.review", "bookstore_MainScreen", "bookstore_LoginScreen", "bookstore_Order.browse", "bookstore_Customer.browse", "bookstore_Product.browse"})
+    @ScreenPolicy(screenIds = {"bookstore_Supplier.edit", "bookstore_Supplier.browse", "bookstore_SupplierOrderRequest.edit", "bookstore_SupplierOrder.browse", "bookstore_SupplierOrder.edit", "bookstore_SupplierOrder.review", "bookstore_MainScreen", "bookstore_LoginScreen", "bookstore_Order.browse", "bookstore_Customer.browse", "bookstore_Product.browse", "bookstore_Order.edit", "bookstore_OrderLine.edit"})
     void screens();
 
     @EntityAttributePolicy(entityClass = Supplier.class, attributes = "*", action = EntityAttributePolicyAction.VIEW)
@@ -70,4 +71,8 @@ public interface OrderFulfillmentRole {
     @EntityAttributePolicy(entityClass = FulfillmentCenter.class, attributes = "*", action = EntityAttributePolicyAction.VIEW)
     @EntityPolicy(entityClass = FulfillmentCenter.class, actions = EntityPolicyAction.READ)
     void fulfillmentCenter();
+
+    @EntityAttributePolicy(entityClass = Money.class, attributes = "*", action = EntityAttributePolicyAction.MODIFY)
+    @EntityPolicy(entityClass = Money.class, actions = EntityPolicyAction.ALL)
+    void money();
 }

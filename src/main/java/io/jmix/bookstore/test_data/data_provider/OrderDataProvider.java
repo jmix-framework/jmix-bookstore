@@ -74,14 +74,15 @@ public class OrderDataProvider implements TestDataProvider<Order, OrderDataProvi
 
         Customer customer = randomOfList(customers);
 
-        Point position = customer.getAddress().getPosition();
+        io.jmix.bookstore.entity.Address customerAddress = customer.getAddress();
+        Point position = customerAddress.getPosition();
 
 
         order.setCustomer(customer);
         LocalDate orderDate = randomPastLocalDate(10);
         order.setOrderDate(orderDate);
         order.setShippingDate(orderDate.plusDays(randomPositiveNumber(30)));
-        order.setShippingAddress(toAddress(address));
+        order.setShippingAddress(customerAddress);
         OrderStatus orderStatus = randomEnum(OrderStatus.values());
         order.setStatus(orderStatus);
 
