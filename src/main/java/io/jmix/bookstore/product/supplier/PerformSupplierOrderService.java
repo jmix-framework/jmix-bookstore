@@ -44,7 +44,7 @@ public class PerformSupplierOrderService {
     }
 
     /**
-     * Notifies the requester about a declined request through the BPM process.
+     * Notifies the requester about a declined order through the BPM process.
      * @param supplierOrder the supplier order that was declined
      */
     @SuppressWarnings("UnusedMethod")
@@ -62,8 +62,8 @@ public class PerformSupplierOrderService {
         Product requestedProduct = request.getProduct();
         String productName = requestedProduct.getName();
 
-        String subject = "Fill-Up request for %s declined".formatted(productName);
-        String body = "Your fill-up request from %s for %s has been declined.".formatted(
+        String subject = "Fill-Up order for %s declined".formatted(productName);
+        String body = "Your fill-up order from %s for %s has been declined.".formatted(
                 datatypeFormatter.formatDate(request.getCreatedDate()),
                 productName
         );
@@ -76,8 +76,8 @@ public class PerformSupplierOrderService {
         Product requestedProduct = request.getProduct();
         String productName = requestedProduct.getName();
 
-        String subject = "Order with Fill-Up request placed".formatted(productName);
-        String body = "Your fill-up request from %s for '%s' has been approved and an order has been placed.".formatted(
+        String subject = "Order with Fill-Up order placed".formatted(productName);
+        String body = "Your fill-up order from %s for '%s' has been approved and an order has been placed.".formatted(
                 datatypeFormatter.formatDate(request.getCreatedDate()),
                 productName
         );

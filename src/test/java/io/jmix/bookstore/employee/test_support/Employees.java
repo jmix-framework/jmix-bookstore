@@ -60,13 +60,13 @@ public class Employees
     }
 
     @Override
-    public Employee save(EmployeeData productCategoryData) {
-        return repository.save(productCategoryData);
+    public Employee save(EmployeeData data) {
+        return repository.save(data);
     }
 
     @Override
-    public Employee create(EmployeeData productCategoryData) {
-        return mapper.toEntity(productCategoryData);
+    public Employee create(EmployeeData data) {
+        return mapper.toEntity(data);
     }
 
     @Override

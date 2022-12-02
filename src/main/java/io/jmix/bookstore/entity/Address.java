@@ -9,15 +9,13 @@ import org.locationtech.jts.geom.Point;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
-import javax.validation.constraints.NotBlank;
 
 import static com.google.common.base.Strings.nullToEmpty;
 
 @Embeddable
 @JmixEntity(name = "bookstore_Address")
 public class Address {
-    @NotBlank
-    @Column(name = "STREET", nullable = false)
+    @Column(name = "STREET")
     private String street;
 
     @Column(name = "POST_CODE")

@@ -76,14 +76,14 @@ public class TrackDeliveryMap extends Screen {
         locationIqClient.calculateRoute(start.getPosition(), end.getPosition())
                 .ifPresent(route -> {
                     CanvasLayer canvas = map.getCanvas();
-                    canvas.addPolyline(route);
+                    canvas.addPolyline(route.lineString());
                     map.selectLayer(canvas);
-                    Point truckPosition = route.getPointN(new Random().nextInt(route.getNumPoints()));
+                    Point truckPosition = route.lineString().getPointN(new Random().nextInt(route.lineString().getNumPoints()));
                     CanvasLayer.Point truckPositionPoint = canvas.addPoint(truckPosition);
                     truckPositionPoint.setStyle(geometryStyles.point()
-                                .withFontIcon(JmixIcon.TRUCK)
+                            .withFontIcon(JmixIcon.TRUCK)
                             .setIconPathFillColor("#ff0000"));
-                    map.zoomToGeometry(route);
+                    map.zoomToGeometry(route.lineString());
                 });
 
     }

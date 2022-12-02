@@ -23,7 +23,7 @@ public class Supplier extends StandardEntity {
     @EmbeddedParameters(nullAllowed = false)
     @Embedded
     @AttributeOverrides({
-            @AttributeOverride(name = "street", column = @Column(name = "ADDRESS_STREET", nullable = false)),
+            @AttributeOverride(name = "street", column = @Column(name = "ADDRESS_STREET")),
             @AttributeOverride(name = "postCode", column = @Column(name = "ADDRESS_POST_CODE")),
             @AttributeOverride(name = "city", column = @Column(name = "ADDRESS_CITY")),
             @AttributeOverride(name = "position", column = @Column(name = "ADDRESS_POSITION_")),

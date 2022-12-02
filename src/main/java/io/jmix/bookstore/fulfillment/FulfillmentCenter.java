@@ -6,6 +6,9 @@ import io.jmix.bookstore.entity.StandardEntity;
 import io.jmix.core.entity.annotation.EmbeddedParameters;
 import io.jmix.core.metamodel.annotation.InstanceName;
 import io.jmix.core.metamodel.annotation.JmixEntity;
+import io.jmix.core.metamodel.annotation.JmixProperty;
+import io.jmix.maps.Geometry;
+import org.locationtech.jts.geom.Point;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -21,10 +24,17 @@ public class FulfillmentCenter extends StandardEntity {
     @NotNull
     private String name;
 
+
+    @Geometry
+    @JmixProperty
+    public Point getGeometry() {
+        return address != null? address.getPosition() : null;
+    }
+
     @EmbeddedParameters(nullAllowed = false)
     @Embedded
     @AttributeOverrides({
-            @AttributeOverride(name = "street", column = @Column(name = "ADDRESS_STREET", nullable = false)),
+            @AttributeOverride(name = "street", column = @Column(name = "ADDRESS_STREET")),
             @AttributeOverride(name = "postCode", column = @Column(name = "ADDRESS_POST_CODE")),
             @AttributeOverride(name = "city", column = @Column(name = "ADDRESS_CITY")),
             @AttributeOverride(name = "position", column = @Column(name = "ADDRESS_POSITION_")),

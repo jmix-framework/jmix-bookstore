@@ -1,6 +1,8 @@
 package io.jmix.bookstore.product.supplier;
 
-public record SupplierOrderRequestCreatedEvent(SupplierOrderRequest request) {
+import io.jmix.bookstore.notification.InAppNotificationSource;
+
+public record SupplierOrderRequestCreatedEvent(SupplierOrderRequest request) implements InAppNotificationSource {
     public String productName() {
         return request.getProduct().getName();
     }

@@ -144,6 +144,29 @@ public class FulfillmentCenterAssert extends AbstractObjectAssert<FulfillmentCen
   }
 
   /**
+   * Verifies that the actual FulfillmentCenter's geometry is equal to the given one.
+   * @param geometry the given geometry to compare the actual FulfillmentCenter's geometry to.
+   * @return this assertion object.
+   * @throws AssertionError - if the actual FulfillmentCenter's geometry is not equal to the given one.
+   */
+  public FulfillmentCenterAssert hasGeometry(org.locationtech.jts.geom.Point geometry) {
+    // check that actual FulfillmentCenter we want to make assertions on is not null.
+    isNotNull();
+
+    // overrides the default error message with a more explicit one
+    String assertjErrorMessage = "\nExpecting geometry of:\n  <%s>\nto be:\n  <%s>\nbut was:\n  <%s>";
+
+    // null safe check
+    org.locationtech.jts.geom.Point actualGeometry = actual.getGeometry();
+    if (!Objects.deepEquals(actualGeometry, geometry)) {
+      failWithMessage(assertjErrorMessage, actual, geometry, actualGeometry);
+    }
+
+    // return the current assertion for method chaining
+    return this;
+  }
+
+  /**
    * Verifies that the actual FulfillmentCenter's id is equal to the given one.
    * @param id the given id to compare the actual FulfillmentCenter's id to.
    * @return this assertion object.

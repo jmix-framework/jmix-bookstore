@@ -82,14 +82,14 @@ class LocationIqClientTest {
 
 
             // when:
-            Optional<LineString> possibleLineString = client.calculateRoute(fifthAvenue, empireStateBuilding);
+            Optional<CalculatedRoute> possibleLineString = client.calculateRoute(fifthAvenue, empireStateBuilding);
 
             // then:
             assertThat(possibleLineString)
                     .isPresent();
 
             // and:
-            assertThat(possibleLineString.get().getCoordinates())
+            assertThat(possibleLineString.get().lineString().getCoordinates())
                     .containsExactly(
                             new Coordinate( -0.161136, 51.523832),
                             new Coordinate( -0.160984, 51.523516),
@@ -185,6 +185,5 @@ class LocationIqClientTest {
             // and:
             mockServer.verify();
         }
-
     }
 }
