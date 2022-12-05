@@ -7,7 +7,11 @@
                 icon="CHECK"
                 shortcut="ENTER"/>
     </actions>
-
+    <facets>
+        <messageDialog id="possibleUsersDialog" caption="msg://possibleUsersLoginDialogCaption"
+                       width="80%"
+                       message="msg://possibleUsersDialogMessage" contentMode="HTML" />
+    </facets>
     <layout stylename="jmix-login-main-layout">
         <vbox id="loginWrapper" height="100%" width="100%">
             <vbox id="loginMainBox"
@@ -31,6 +35,9 @@
                       stylename="jmix-login-form">
                     <cssLayout id="loginCredentials"
                                stylename="jmix-login-credentials">
+
+                        <linkButton id="possibleUsersBtn" icon="font-icon:QUESTION_CIRCLE_O" caption="msg://possibleUsersHelp"
+                                    align="BOTTOM_RIGHT" />
                         <textField id="usernameField"
                                    htmlName="usernameField"
                                    inputPrompt="msg://usernamePlaceholder"

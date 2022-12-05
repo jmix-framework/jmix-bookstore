@@ -57,6 +57,9 @@ public class LoginScreen extends Screen {
     private JmixApp app;
 
     private final Logger log = LoggerFactory.getLogger(LoginScreen.class);
+    @Autowired
+    private MessageDialogFacet possibleUsersDialog;
+
 
     @Subscribe
     private void onInit(InitEvent event) {
@@ -123,5 +126,10 @@ public class LoginScreen extends Screen {
                     .withDescription(messages.getMessage(getClass(), "badCredentials"))
                     .show();
         }
+    }
+
+    @Subscribe("possibleUsersBtn")
+    public void onPossibleUsersBtnClick(Button.ClickEvent event) {
+        possibleUsersDialog.show();
     }
 }
