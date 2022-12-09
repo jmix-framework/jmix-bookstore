@@ -6,6 +6,7 @@ import io.jmix.ui.ScreenBuilders;
 import io.jmix.ui.component.Button;
 import io.jmix.ui.component.HasValue;
 import io.jmix.ui.component.Label;
+import io.jmix.ui.navigation.Route;
 import io.jmix.ui.screen.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
@@ -15,6 +16,7 @@ import java.util.Map;
 @UiController("bookstore_Customer.edit")
 @UiDescriptor("customer-edit.xml")
 @EditedEntityContainer("customerDc")
+@Route(value = "customers/edit", parentPrefix = "customers")
 public class CustomerEdit extends StandardEditor<Customer> {
     @Autowired
     private Label<String> customerNameHeaderLabel;

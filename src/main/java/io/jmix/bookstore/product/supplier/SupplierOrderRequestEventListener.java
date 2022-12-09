@@ -23,6 +23,7 @@ public class SupplierOrderRequestEventListener {
 
         Id<SupplierOrderRequest> supplierOrderRequestId = event.getEntityId();
 
+
         SupplierOrderRequest supplierOrderRequest = dataManager.load(supplierOrderRequestId)
                 .joinTransaction(false)
                 .one();

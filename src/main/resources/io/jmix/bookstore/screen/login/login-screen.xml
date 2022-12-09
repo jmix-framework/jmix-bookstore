@@ -10,7 +10,7 @@
     <facets>
         <messageDialog id="possibleUsersDialog" caption="msg://possibleUsersLoginDialogCaption"
                        width="80%"
-                       message="msg://possibleUsersDialogMessage" contentMode="HTML" />
+                       message="msg://possibleUsersDialogMessage" contentMode="HTML" htmlSanitizerEnabled="false" />
     </facets>
     <layout stylename="jmix-login-main-layout">
         <vbox id="loginWrapper" height="100%" width="100%">

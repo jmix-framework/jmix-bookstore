@@ -4,12 +4,14 @@ import io.jmix.bookstore.product.supplier.PerformSupplierOrderService;
 import io.jmix.bookstore.product.supplier.SupplierOrder;
 import io.jmix.ui.action.Action;
 import io.jmix.ui.component.NotificationFacet;
+import io.jmix.ui.navigation.Route;
 import io.jmix.ui.screen.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
 @UiController("bookstore_SupplierOrder.browse")
 @UiDescriptor("supplier-order-browse.xml")
 @LookupComponent("supplierOrdersTable")
+@Route(value = "supplier-orders")
 public class SupplierOrderBrowse extends StandardLookup<SupplierOrder> {
     @Autowired
     private PerformSupplierOrderService performSupplierOrderService;

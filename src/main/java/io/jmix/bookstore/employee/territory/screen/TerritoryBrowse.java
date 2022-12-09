@@ -9,6 +9,7 @@ import io.jmix.ui.component.CheckBox;
 import io.jmix.ui.component.DataGrid;
 import io.jmix.ui.component.HasValue;
 import io.jmix.ui.model.CollectionContainer;
+import io.jmix.ui.navigation.Route;
 import io.jmix.ui.screen.*;
 import io.jmix.bookstore.employee.Territory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,7 @@ import java.util.Optional;
 @UiController("bookstore_Territory.browse")
 @UiDescriptor("territory-browse.xml")
 @LookupComponent("territoriesTable")
+@Route(value = "territories")
 public class TerritoryBrowse extends StandardLookup<Territory> {
 
     @Autowired

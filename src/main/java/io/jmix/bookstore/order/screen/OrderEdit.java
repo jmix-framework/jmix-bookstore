@@ -6,12 +6,14 @@ import io.jmix.bookstore.order.Order;
 import io.jmix.bookstore.order.OrderStatus;
 import io.jmix.core.TimeSource;
 import io.jmix.ui.component.*;
+import io.jmix.ui.navigation.Route;
 import io.jmix.ui.screen.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
 @UiController("bookstore_Order.edit")
 @UiDescriptor("order-edit.xml")
 @EditedEntityContainer("orderDc")
+@Route(value = "orders/edit", parentPrefix = "orders")
 public class OrderEdit extends StandardEditor<Order> {
     @Autowired
     private VBoxLayout customerSearchBox;

@@ -9,6 +9,7 @@ import io.jmix.ui.ScreenBuilders;
 import io.jmix.ui.action.Action;
 import io.jmix.ui.component.DataGrid;
 import io.jmix.ui.component.NotificationFacet;
+import io.jmix.ui.navigation.Route;
 import io.jmix.ui.screen.*;
 import io.jmix.bookstore.product.Product;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 @UiController("bookstore_Product.browse")
 @UiDescriptor("product-browse.xml")
 @LookupComponent("productsTable")
+@Route(value = "products")
 public class ProductBrowse extends StandardLookup<Product> {
 
     @Autowired

@@ -12,6 +12,7 @@ import io.jmix.core.security.CurrentAuthentication;
 import io.jmix.ui.Notifications;
 import io.jmix.ui.action.list.RemoveAction;
 import io.jmix.ui.component.*;
+import io.jmix.ui.navigation.Route;
 import io.jmix.ui.screen.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
@@ -30,6 +31,7 @@ import java.util.Map;
                 @Outcome(id = SupplierOrderApproval.NO_OUTCOME)
         }
 )
+@Route(value = "supplier-orders/approve", parentPrefix = "supplier-orders")
 public class SupplierOrderApproval extends StandardEditor<SupplierOrder> {
 
 
