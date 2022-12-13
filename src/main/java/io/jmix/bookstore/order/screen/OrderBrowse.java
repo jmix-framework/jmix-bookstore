@@ -16,6 +16,7 @@ import io.jmix.ui.component.EntityComboBox;
 import io.jmix.ui.component.NotificationFacet;
 import io.jmix.ui.component.PropertyFilter;
 import io.jmix.ui.model.CollectionContainer;
+import io.jmix.ui.navigation.Route;
 import io.jmix.ui.screen.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -25,6 +26,7 @@ import java.time.LocalDate;
 @UiController("bookstore_Order.browse")
 @UiDescriptor("order-browse.xml")
 @LookupComponent("confirmedOrdersTable")
+@Route(value = "orders")
 public class OrderBrowse extends StandardLookup<Order> {
     @Autowired
     private DataGrid<Order> confirmedOrdersTable;

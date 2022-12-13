@@ -18,6 +18,7 @@ import io.jmix.ui.executor.BackgroundTask;
 import io.jmix.ui.executor.TaskLifeCycle;
 import io.jmix.ui.icon.JmixIcon;
 import io.jmix.ui.model.CollectionContainer;
+import io.jmix.ui.navigation.Route;
 import io.jmix.ui.screen.*;
 import io.jmix.bookstore.order.Order;
 import org.locationtech.jts.geom.LineString;
@@ -31,6 +32,7 @@ import java.util.stream.Collectors;
 @UiController("bookstore_ConfirmOrder")
 @UiDescriptor("confirm-order.xml")
 @EditedEntityContainer("orderDc")
+@Route(value = "orders/confirm", parentPrefix = "owners")
 public class ConfirmOrder extends StandardEditor<Order> {
 
     @Autowired

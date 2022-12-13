@@ -5,6 +5,7 @@ import io.jmix.bookstore.entity.Money;
 import io.jmix.bookstore.order.OrderLine;
 import io.jmix.bookstore.product.Product;
 import io.jmix.ui.component.HasValue;
+import io.jmix.ui.navigation.Route;
 import io.jmix.ui.screen.*;
 
 import java.math.BigDecimal;
@@ -12,6 +13,7 @@ import java.math.BigDecimal;
 @UiController("bookstore_OrderLine.edit")
 @UiDescriptor("order-line-edit.xml")
 @EditedEntityContainer("orderLineDc")
+@Route(value = "order-lines/edit", parentPrefix = "order-lines")
 public class OrderLineEdit extends StandardEditor<OrderLine> {
     @Subscribe
     public void onInitEntity(InitEntityEvent<OrderLine> event) {

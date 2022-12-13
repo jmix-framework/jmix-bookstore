@@ -35,12 +35,12 @@ public interface ProcurementManagerRole {
     @EntityPolicy(entityClass = SupplierOrderRequest.class, actions = EntityPolicyAction.READ)
     void supplierOrderRequest();
 
-    @EntityAttributePolicy(entityClass = Product.class, attributes = "*", action = EntityAttributePolicyAction.VIEW)
-    @EntityPolicy(entityClass = Product.class, actions = EntityPolicyAction.READ)
+    @EntityAttributePolicy(entityClass = Product.class, attributes = "*", action = EntityAttributePolicyAction.MODIFY)
+    @EntityPolicy(entityClass = Product.class, actions = EntityPolicyAction.ALL)
     void product();
 
-    @EntityAttributePolicy(entityClass = ProductCategory.class, attributes = "*", action = EntityAttributePolicyAction.VIEW)
-    @EntityPolicy(entityClass = ProductCategory.class, actions = EntityPolicyAction.READ)
+    @EntityAttributePolicy(entityClass = ProductCategory.class, attributes = "*", action = EntityAttributePolicyAction.MODIFY)
+    @EntityPolicy(entityClass = ProductCategory.class, actions = EntityPolicyAction.ALL)
     void productCategory();
 
     @MenuPolicy(menuIds = {"bookstore_Supplier.browse", "bookstore_SupplierOrder.browse", "bookstore_Product.browse", "bookstore_ProductCategory.browse"})

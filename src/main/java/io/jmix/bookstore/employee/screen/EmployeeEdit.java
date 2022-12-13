@@ -3,6 +3,7 @@ package io.jmix.bookstore.employee.screen;
 import io.jmix.bookstore.screen.addressmap.AddressMap;
 import io.jmix.ui.ScreenBuilders;
 import io.jmix.ui.component.Button;
+import io.jmix.ui.navigation.Route;
 import io.jmix.ui.screen.*;
 import io.jmix.bookstore.employee.Employee;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 @UiController("bookstore_Employee.edit")
 @UiDescriptor("employee-edit.xml")
 @EditedEntityContainer("employeeDc")
+@Route(value = "employees/edit", parentPrefix = "employees")
 public class EmployeeEdit extends StandardEditor<Employee> {
 
 

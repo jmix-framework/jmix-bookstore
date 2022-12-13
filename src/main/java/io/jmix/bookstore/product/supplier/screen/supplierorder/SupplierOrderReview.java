@@ -14,6 +14,7 @@ import io.jmix.ui.component.Button;
 import io.jmix.ui.component.DateField;
 import io.jmix.ui.component.Label;
 import io.jmix.ui.component.Table;
+import io.jmix.ui.navigation.Route;
 import io.jmix.ui.screen.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
@@ -32,6 +33,7 @@ import java.util.Map;
                 @Outcome(id = SupplierOrderReview.NO_OUTCOME)
         }
 )
+@Route(value = "supplier-orders/review", parentPrefix = "supplier-orders")
 public class SupplierOrderReview extends StandardEditor<SupplierOrder> {
 
 

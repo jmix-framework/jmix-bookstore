@@ -9,10 +9,11 @@ public enum PositionColor implements EnumClass<String> {
 
     GREEN("GREEN", "position-green"),
     RED("RED", "position-red"),
+    DARK_RED("DARK_RED", "position-dark-red" ),
     YELLOW("YELLOW", "position-yellow"),
+    DARK_PURPLE("DARK_PURPLE", "position-dark-purple"),
     PURPLE("PURPLE", "position-purple"),
-    BLUE("BLUE", "position-blue"),
-    ;
+    BLUE("BLUE", "position-blue");
 
     private String id;
     private String styleName;

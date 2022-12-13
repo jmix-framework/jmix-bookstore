@@ -158,8 +158,14 @@
     color: #DF6679;
     background-color: #FFC8D0;
   }
-
   .user-avatar-border-position-red {
+    border-color: #FFC8D0 !important;
+  }
+  .position-dark-red {
+    color: white;
+    background-color: #DF6679;
+  }
+  .user-avatar-border-position-dark-red {
     border-color: #FFC8D0 !important;
   }
   .position-green {
@@ -182,6 +188,13 @@
   }
   .user-avatar-border-position-purple {
     border-color: #D6D0FF !important;
+  }
+  .position-dark-purple {
+    color: white;
+    background-color: #6E64B9;
+  }
+  .user-avatar-border-position-dark-purple {
+    border-color: #6E64B9 !important;
   }
   .position-blue {
     color: #249FAF;
@@ -329,4 +342,33 @@
 .wrapper {
   float: left;
   width: 25%;
+}
+
+.possible-users {
+  width: 100%;
+
+  td {
+    border-radius: 3px;
+    padding:10px;
+  }
+}
+
+.possible-role {
+  width: 60%;
+}
+
+.possible-user-password::before {
+  font-family: FontAwesome;
+  content: '\f023';
+  padding-right: 10px;
+}
+.possible-user::before {
+  padding-right: 10px;
+  font-family: FontAwesome;
+  content: '\f007';
+}
+.possible-role::before {
+  padding-right: 10px;
+  font-family: FontAwesome;
+  content: '\f0c0';
 }

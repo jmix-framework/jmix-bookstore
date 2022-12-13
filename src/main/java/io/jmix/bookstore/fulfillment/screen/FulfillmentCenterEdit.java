@@ -9,6 +9,7 @@ import io.jmix.ui.component.Button;
 import io.jmix.ui.component.HasValue;
 import io.jmix.ui.component.Label;
 import io.jmix.ui.model.InstancePropertyContainer;
+import io.jmix.ui.navigation.Route;
 import io.jmix.ui.screen.*;
 import io.jmix.bookstore.fulfillment.FulfillmentCenter;
 import org.locationtech.jts.geom.Point;
@@ -20,6 +21,7 @@ import java.util.Optional;
 @UiController("bookstore_FulfillmentCenter.edit")
 @UiDescriptor("fulfillment-center-edit.xml")
 @EditedEntityContainer("fulfillmentCenterDc")
+@Route(value = "fulfillment-centers/edit", parentPrefix = "fulfillment-centers")
 public class FulfillmentCenterEdit extends StandardEditor<FulfillmentCenter> {
 
     @Autowired

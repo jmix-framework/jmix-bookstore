@@ -6,6 +6,7 @@ import io.jmix.mapsui.component.GeoMap;
 import io.jmix.mapsui.component.layer.VectorLayer;
 import io.jmix.ui.ScreenBuilders;
 import io.jmix.ui.model.CollectionContainer;
+import io.jmix.ui.navigation.Route;
 import io.jmix.ui.screen.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -16,6 +17,7 @@ import java.util.stream.Collectors;
 @UiController("bookstore_Customer.browse")
 @UiDescriptor("customer-browse.xml")
 @LookupComponent("customersTable")
+@Route(value = "customers")
 public class CustomerBrowse extends StandardLookup<Customer> {
     @Autowired
     private GeoMap customersMap;

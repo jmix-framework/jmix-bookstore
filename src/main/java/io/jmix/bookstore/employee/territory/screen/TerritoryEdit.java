@@ -2,6 +2,7 @@ package io.jmix.bookstore.employee.territory.screen;
 
 import io.jmix.mapsui.component.layer.style.GeometryStyle;
 import io.jmix.mapsui.component.layer.style.GeometryStyles;
+import io.jmix.ui.navigation.Route;
 import io.jmix.ui.screen.*;
 import io.jmix.bookstore.employee.Territory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 @UiController("bookstore_Territory.edit")
 @UiDescriptor("territory-edit.xml")
 @EditedEntityContainer("territoryDc")
+@Route(value = "territories/edit", parentPrefix = "territories")
 public class TerritoryEdit extends StandardEditor<Territory> {
 
 

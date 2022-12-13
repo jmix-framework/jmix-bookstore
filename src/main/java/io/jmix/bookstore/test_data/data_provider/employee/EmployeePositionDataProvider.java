@@ -33,9 +33,9 @@ public class EmployeePositionDataProvider implements TestDataProvider<Position, 
         List<PositionData> positionData = List.of(
                 new PositionData("IT Administrator", IT_ADMINISTRATOR, PositionColor.GREEN),
                 new PositionData("Procurement Specialist", PROCUREMENT_SPECIALIST, PositionColor.PURPLE),
-                new PositionData("Procurement Manager", PROCUREMENT_MANAGER, PositionColor.YELLOW),
+                new PositionData("Procurement Manager", PROCUREMENT_MANAGER, PositionColor.DARK_PURPLE),
                 new PositionData("Order Fulfillment Specialist", ORDER_FULFILLMENT_SPECIALIST, PositionColor.RED),
-                new PositionData("Order Fulfillment Manager", ORDER_FULFILLMENT_MANAGER, PositionColor.BLUE),
+                new PositionData("Order Fulfillment Manager", ORDER_FULFILLMENT_MANAGER, PositionColor.DARK_RED),
                 new PositionData("Sales Representative", SALES_REPRESENTATIVE, PositionColor.YELLOW)
         );
 

@@ -7,6 +7,6 @@ import io.jmix.ui.screen.*;
 @UiController("bookstore_User.browse")
 @UiDescriptor("user-browse.xml")
 @LookupComponent("usersTable")
-@Route("users")
+@Route(value = "users")
 public class UserBrowse extends StandardLookup<User> {
 }
