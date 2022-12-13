@@ -349,10 +349,13 @@
 
   td {
     border-radius: 3px;
-    padding-left:10px;
+    padding:10px;
   }
 }
 
+.possible-role {
+  width: 60%;
+}
 
 .possible-user-password::before {
   font-family: FontAwesome;
