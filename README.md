@@ -1,7 +1,7 @@
 # Jmix Bookstore
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/Haulmont/jmix-bookstore/main/img/logo.png"/>
+  <img src="https://raw.githubusercontent.com/jmix-framework/jmix-bookstore/main/img/logo.png"/>
 </p>
 
 
