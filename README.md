@@ -1,5 +1,3 @@
-# Jmix Bookstore
-
 <p align="center">
   <img src="https://github.com/jmix-framework/jmix-bookstore/blob/main/img/logo.png?raw=true"/>
 </p>
