@@ -2,6 +2,7 @@ package io.jmix.bookstore.security;
 
 import io.jmix.bookstore.employee.Employee;
 import io.jmix.bookstore.employee.Position;
+import io.jmix.bookstore.entity.Address;
 import io.jmix.bookstore.fulfillment.FulfillmentCenter;
 import io.jmix.security.model.EntityAttributePolicyAction;
 import io.jmix.security.model.EntityPolicyAction;
@@ -22,10 +23,14 @@ public interface EmployeeRole {
     @EntityPolicy(entityClass = Position.class, actions = EntityPolicyAction.READ)
     void position();
 
-    @ScreenPolicy(screenIds = {"bookstore_bpm_MyTasks.browse", "bookstore_AddressMap"})
+    @ScreenPolicy(screenIds = {"bookstore_bpm_MyTasks.browse", "bookstore_AddressMap", "ntf_UserInAppNotification.browse", "ntf_InAppNotification.view", "ui_DateIntervalDialog", "selectValueDialog", "inputDialog", "backgroundWorkProgressScreen", "singleFileUploadDialog", "bulkEditorWindow"})
     void screens();
 
     @EntityAttributePolicy(entityClass = FulfillmentCenter.class, attributes = "*", action = EntityAttributePolicyAction.VIEW)
     @EntityPolicy(entityClass = FulfillmentCenter.class, actions = EntityPolicyAction.READ)
     void fulfillmentCenter();
+
+    @EntityAttributePolicy(entityClass = Address.class, attributes = "*", action = EntityAttributePolicyAction.VIEW)
+    @EntityPolicy(entityClass = Address.class, actions = EntityPolicyAction.READ)
+    void address();
 }

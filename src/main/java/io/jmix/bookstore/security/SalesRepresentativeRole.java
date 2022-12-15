@@ -6,6 +6,7 @@ import io.jmix.bookstore.employee.Position;
 import io.jmix.bookstore.employee.Region;
 import io.jmix.bookstore.employee.Territory;
 import io.jmix.bookstore.entity.Address;
+import io.jmix.bookstore.entity.Money;
 import io.jmix.bookstore.fulfillment.FulfillmentCenter;
 import io.jmix.bookstore.order.Order;
 import io.jmix.bookstore.order.OrderLine;
@@ -39,16 +40,16 @@ public interface SalesRepresentativeRole {
     @EntityPolicy(entityClass = Address.class, actions = EntityPolicyAction.ALL)
     void address();
 
-    @EntityAttributePolicy(entityClass = Order.class, attributes = "*", action = EntityAttributePolicyAction.VIEW)
-    @EntityPolicy(entityClass = Order.class, actions = EntityPolicyAction.READ)
+    @EntityAttributePolicy(entityClass = Order.class, attributes = "*", action = EntityAttributePolicyAction.MODIFY)
+    @EntityPolicy(entityClass = Order.class, actions = EntityPolicyAction.ALL)
     void order();
 
     @EntityAttributePolicy(entityClass = Customer.class, attributes = "*", action = EntityAttributePolicyAction.VIEW)
     @EntityPolicy(entityClass = Customer.class, actions = EntityPolicyAction.READ)
     void customer();
 
-    @EntityAttributePolicy(entityClass = OrderLine.class, attributes = "*", action = EntityAttributePolicyAction.VIEW)
-    @EntityPolicy(entityClass = OrderLine.class, actions = EntityPolicyAction.READ)
+    @EntityAttributePolicy(entityClass = OrderLine.class, attributes = "*", action = EntityAttributePolicyAction.MODIFY)
+    @EntityPolicy(entityClass = OrderLine.class, actions = EntityPolicyAction.ALL)
     void orderLine();
 
     @EntityAttributePolicy(entityClass = Position.class, attributes = "*", action = EntityAttributePolicyAction.VIEW)
@@ -70,4 +71,8 @@ public interface SalesRepresentativeRole {
     @EntityAttributePolicy(entityClass = Territory.class, attributes = "*", action = EntityAttributePolicyAction.VIEW)
     @EntityPolicy(entityClass = Territory.class, actions = EntityPolicyAction.READ)
     void territory();
+
+    @EntityAttributePolicy(entityClass = Money.class, attributes = "*", action = EntityAttributePolicyAction.MODIFY)
+    @EntityPolicy(entityClass = Money.class, actions = EntityPolicyAction.ALL)
+    void money();
 }
