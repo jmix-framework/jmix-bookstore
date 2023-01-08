@@ -60,6 +60,12 @@ public class TestEnvironmentTenantsBean implements TestEnvironmentTenants {
 
         markAsTestdataInitialised(tenantId);
     }
+
+    @Override
+    public String generateRandomTenantId() {
+        return tenantCreation.generateRandomTenantId();
+    }
+
     private Optional<TestEnvironmentTenant> optionalTenant(String tenantId) {
         return dataManager.load(TestEnvironmentTenant.class)
                 .condition(PropertyCondition.equal("tenantId", tenantId))

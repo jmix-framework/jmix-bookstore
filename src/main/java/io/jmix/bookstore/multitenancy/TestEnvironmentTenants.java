@@ -43,4 +43,6 @@ public interface TestEnvironmentTenants {
     @Authenticated
     void generateRandomTestdata(String tenantId);
 
+    String generateRandomTenantId();
+
 }

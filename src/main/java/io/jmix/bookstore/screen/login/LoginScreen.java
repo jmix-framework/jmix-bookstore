@@ -1,7 +1,6 @@
 package io.jmix.bookstore.screen.login;
 
 import io.jmix.bookstore.multitenancy.TestEnvironmentTenants;
-import io.jmix.bookstore.test_data.data_provider.RandomValues;
 import io.jmix.core.MessageTools;
 import io.jmix.core.Messages;
 import io.jmix.multitenancy.MultitenancyProperties;
@@ -24,7 +23,6 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.LockedException;
 
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
@@ -64,7 +62,7 @@ public class LoginScreen extends Screen {
     @Autowired
     private MultitenancyProperties multitenancyProperties;
     @Autowired
-    private TestEnvironmentTenants TestEnvironmentTenants;
+    private TestEnvironmentTenants testEnvironmentTenants;
 
     @Subscribe
     public void onAfterShow(AfterShowEvent event) {
@@ -94,28 +92,8 @@ public class LoginScreen extends Screen {
                 .orElse(app.getCookieValue(multitenancyProperties.getTenantIdUrlParamName()));
 
         return Optional.ofNullable(tenantId)
-                .orElse(generateTenantId());
+                .orElse(testEnvironmentTenants.generateRandomTenantId());
 
-    }
-
-    private String generateTenantId() {
-        List<String> verbs = List.of(
-                "grumpy",
-                "funny",
-                "cute",
-                "lovely"
-        );
-
-        List<String> animals = List.of(
-                "cat",
-                "dog",
-                "horse",
-                "pig"
-        );
-        return "%s-%s".formatted(
-                RandomValues.randomOfList(verbs),
-                RandomValues.randomOfList(animals)
-        );
     }
 
     private Optional<String> tenantIdFromUrlParams() {
@@ -184,8 +162,8 @@ public class LoginScreen extends Screen {
         }
 
 
-        if (!TestEnvironmentTenants.isPresent(tenantId)) {
-            TestEnvironmentTenants.createTenant(tenantId);
+        if (!testEnvironmentTenants.isPresent(tenantId)) {
+            testEnvironmentTenants.createTenant(tenantId);
         }
 
         performLogin(username, password, this);
