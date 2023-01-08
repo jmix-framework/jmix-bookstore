@@ -5,6 +5,7 @@ import io.jmix.bookstore.employee.Position;
 import io.jmix.bookstore.entity.Title;
 import io.jmix.bookstore.security.ProcurementSpecialistRole;
 import io.jmix.bookstore.security.ShowOnlyActiveSuppliersRole;
+import io.jmix.bookstore.test_data.data_provider.RandomValues;
 import io.jmix.bookstore.test_data.data_provider.TestDataProvider;
 import org.springframework.stereotype.Component;
 
@@ -19,7 +20,7 @@ public class ProcurementSpecialistDataProvider implements TestDataProvider<Emplo
 
     protected final EmployeeDataProvider employeeDataProvider;
 
-    public record DataContext(List<Employee> managers, EmployeePositions employeePositions) {
+    public record DataContext(List<Employee> managers, EmployeePositions employeePositions, String tenantId) {
     }
 
     public ProcurementSpecialistDataProvider(EmployeeDataProvider employeeDataProvider) {
@@ -31,25 +32,27 @@ public class ProcurementSpecialistDataProvider implements TestDataProvider<Emplo
 
         List<EmployeeData> employees = List.of(
                 new EmployeeData(
+                        dataContext.tenantId(),
                         "william",
                         Title.MR,
                         "William",
                         "Linville",
                         procurementSpecialist(dataContext),
                         LocalDate.now().minusYears(0).minusMonths(5).minusDays(1),
-                        randomOfList(dataContext.managers()),
+                        RandomValues.randomOfList(dataContext.managers()),
                         procurementSpecialistResourceRoles(),
                         procurementSpecialistRowLevelRoles(),
                         Set.of()
                 ),
                 new EmployeeData(
+                        dataContext.tenantId(),
                         "sophia",
                         Title.MRS,
                         "Sophia",
                         "Burnett",
                         procurementSpecialist(dataContext),
                         LocalDate.now().minusYears(4).minusMonths(4).minusDays(2),
-                        randomOfList(dataContext.managers()),
+                        RandomValues.randomOfList(dataContext.managers()),
                         procurementSpecialistResourceRoles(),
                         procurementSpecialistRowLevelRoles(),
                         Set.of()

@@ -1,7 +1,7 @@
 package io.jmix.bookstore.order.test_support;
 
 import io.jmix.bookstore.entity.test_support.JmixEntityFactory;
-import io.jmix.bookstore.order.OrderLine;
+import io.jmix.bookstore.order.entity.OrderLine;
 import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring", uses = {JmixEntityFactory.class})

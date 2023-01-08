@@ -1,7 +1,9 @@
 package io.jmix.bookstore.screen.login;
 
+import io.jmix.bookstore.multitenancy.TestEnvironmentTenants;
 import io.jmix.core.MessageTools;
 import io.jmix.core.Messages;
+import io.jmix.multitenancy.MultitenancyProperties;
 import io.jmix.securityui.authentication.AuthDetails;
 import io.jmix.securityui.authentication.LoginScreenSupport;
 import io.jmix.ui.JmixApp;
@@ -9,6 +11,8 @@ import io.jmix.ui.Notifications;
 import io.jmix.ui.action.Action;
 import io.jmix.ui.component.*;
 import io.jmix.ui.navigation.Route;
+import io.jmix.ui.navigation.UrlParamsChangedEvent;
+import io.jmix.ui.navigation.UrlRouting;
 import io.jmix.ui.screen.*;
 import io.jmix.ui.security.UiLoginProperties;
 import org.apache.commons.lang3.StringUtils;
@@ -20,45 +24,87 @@ import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.LockedException;
 
 import java.util.Locale;
+import java.util.Map;
+import java.util.Optional;
 
 @UiController("bookstore_LoginScreen")
 @UiDescriptor("login-screen.xml")
 @Route(path = "login", root = true)
 public class LoginScreen extends Screen {
 
-    @Autowired
-    private TextField<String> usernameField;
-
-    @Autowired
-    private PasswordField passwordField;
-
-    @Autowired
-    private CheckBox rememberMeCheckBox;
-
-    @Autowired
-    private ComboBox<Locale> localesField;
-
-    @Autowired
-    private Notifications notifications;
-
-    @Autowired
-    private Messages messages;
-
-    @Autowired
-    private MessageTools messageTools;
-
-    @Autowired
-    private LoginScreenSupport loginScreenSupport;
-
-    @Autowired
-    private UiLoginProperties loginProperties;
-
-    @Autowired
-    private JmixApp app;
-
     private final Logger log = LoggerFactory.getLogger(LoginScreen.class);
     @Autowired
+    private TextField<String> usernameField;
+    @Autowired
+    private PasswordField passwordField;
+    @Autowired
+    private CheckBox rememberMeCheckBox;
+    @Autowired
+    private ComboBox<Locale> localesField;
+    @Autowired
+    private Notifications notifications;
+    @Autowired
+    private Messages messages;
+    @Autowired
+    private MessageTools messageTools;
+    @Autowired
+    private LoginScreenSupport loginScreenSupport;
+    @Autowired
+    private UiLoginProperties loginProperties;
+    @Autowired
+    private JmixApp app;
+    @Autowired
+    private UrlRouting urlRouting;
+    @Autowired
     private MessageDialogFacet possibleUsersDialog;
+    @Autowired
+    private TextField<String> tenantField;
+    @Autowired
+    private MultitenancyProperties multitenancyProperties;
+    @Autowired
+    private TestEnvironmentTenants testEnvironmentTenants;
+
+    @Subscribe
+    public void onAfterShow(AfterShowEvent event) {
+        setTenantId(findOrGenerateTenantId());
+    }
+
+
+    @Subscribe
+    public void onUrlParamsChanged(UrlParamsChangedEvent event) {
+        setTenantId(findOrGenerateTenantId());
+    }
+
+    private void setTenantId(String tenantId) {
+        tenantField.setValue(tenantId);
+        app.addCookie("tenantId", tenantId);
+    }
+
+
+    @Subscribe("tenantField")
+    public void onTenantFieldValueChange(HasValue.ValueChangeEvent<String> event) {
+        app.addCookie("tenantId", event.getValue());
+    }
+
+    private String findOrGenerateTenantId() {
+
+        String tenantId = tenantIdFromUrlParams()
+                .orElse(app.getCookieValue(multitenancyProperties.getTenantIdUrlParamName()));
+
+        return Optional.ofNullable(tenantId)
+                .orElse(testEnvironmentTenants.generateRandomTenantId());
+
+    }
+
+    private Optional<String> tenantIdFromUrlParams() {
+        Map<String, String> params = urlRouting.getState().getParams();
+
+        if (params == null) {
+            return Optional.empty();
+        }
+
+        return Optional.ofNullable(params.get(multitenancyProperties.getTenantIdUrlParamName()));
+    }
 
 
     @Subscribe
@@ -104,7 +150,8 @@ public class LoginScreen extends Screen {
     }
 
     private void login() {
-        String username = usernameField.getValue();
+        String tenantId = tenantField.getValue();
+        String username = "%s|%s".formatted(tenantId, usernameField.getValue());
         String password = passwordField.getValue();
 
         if (StringUtils.isEmpty(username) || StringUtils.isEmpty(password)) {
@@ -114,11 +161,21 @@ public class LoginScreen extends Screen {
             return;
         }
 
+
+        if (!testEnvironmentTenants.isPresent(tenantId)) {
+            testEnvironmentTenants.createTenant(tenantId);
+        }
+
+        performLogin(username, password, this);
+    }
+
+
+    private void performLogin(String username, String password, FrameOwner frameOwner) {
         try {
             loginScreenSupport.authenticate(
                     AuthDetails.of(username, password)
                             .withLocale(localesField.getValue())
-                            .withRememberMe(rememberMeCheckBox.isChecked()), this);
+                            .withRememberMe(rememberMeCheckBox.isChecked()), frameOwner);
         } catch (BadCredentialsException | DisabledException | LockedException e) {
             log.warn("Login failed for user '{}': {}", username, e.toString());
             notifications.create(Notifications.NotificationType.ERROR)
@@ -132,4 +189,10 @@ public class LoginScreen extends Screen {
     public void onPossibleUsersBtnClick(Button.ClickEvent event) {
         possibleUsersDialog.show();
     }
+
+    @Subscribe("editTenantField")
+    public void onEditTenantFieldClick(Button.ClickEvent event) {
+        tenantField.setEditable(true);
+    }
+
 }

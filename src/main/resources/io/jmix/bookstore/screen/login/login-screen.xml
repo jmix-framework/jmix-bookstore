@@ -33,6 +33,23 @@
                 <vbox id="loginForm"
                       spacing="true"
                       stylename="jmix-login-form">
+
+                    <hbox spacing="true" width="100%" expand="tenantField">
+
+                        <textField id="tenantField"
+                                   caption="msg://tenant"
+                                   icon="HOME"
+                                   editable="false"
+                                   width="100%"
+                                   contextHelpText="msg://tenantFieldHelpText"
+                                   stylename="jmix-login-tenant"/>
+                        <button id="editTenantField"
+                                icon="EDIT"
+                                align="BOTTOM_CENTER"
+                                />
+                    </hbox>
+
+
                     <cssLayout id="loginCredentials"
                                stylename="jmix-login-credentials">
 

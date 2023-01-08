@@ -7,8 +7,8 @@ plugins {
 
 assertjGenerator {
     classOrPackageNames = [
-            'io.jmix.bookstore.order.Order',
-            'io.jmix.bookstore.order.OrderLine',
+            'io.jmix.bookstore.order.entity.Order',
+            'io.jmix.bookstore.order.entity.OrderLine',
             'io.jmix.bookstore.product.Product',
             'io.jmix.bookstore.product.supplier.Supplier',
             'io.jmix.bookstore.product.ProductCategory',
@@ -23,7 +23,7 @@ assertjGenerator {
 apply plugin: 'org.springframework.boot'
 
 jmix {
-    bomVersion = '1.4.1'
+    bomVersion = '1.4.2'
     projectId = 'bookstore'
 }
 
@@ -102,6 +102,9 @@ dependencies {
     // used for GeoJsonReader to parse geojson format from the LocationIQ API
     implementation 'org.locationtech.jts.io:jts-io-common:1.17.1'
 
+
+    implementation 'io.jmix.multitenancy:jmix-multitenancy-starter'
+    implementation 'io.jmix.multitenancy:jmix-multitenancy-ui-starter'
 
 }
 

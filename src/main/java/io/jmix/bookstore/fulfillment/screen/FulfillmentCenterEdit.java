@@ -1,6 +1,7 @@
 package io.jmix.bookstore.fulfillment.screen;
 
-import io.jmix.bookstore.directions.LocationIqClient;
+import io.jmix.bookstore.directions.AddressInformation;
+import io.jmix.bookstore.directions.DirectionsProvider;
 import io.jmix.bookstore.entity.Address;
 import io.jmix.mapsui.component.GeoMap;
 import io.jmix.mapsui.component.layer.VectorLayer;
@@ -14,7 +15,6 @@ import io.jmix.ui.screen.*;
 import io.jmix.bookstore.fulfillment.FulfillmentCenter;
 import org.locationtech.jts.geom.Point;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.util.StringUtils;
 
 import java.util.Optional;
 
@@ -33,7 +33,7 @@ public class FulfillmentCenterEdit extends StandardEditor<FulfillmentCenter> {
     @Autowired
     private Label<String> emptyNameHeaderLabel;
     @Autowired
-    private LocationIqClient locationIqClient;
+    private DirectionsProvider directionsProvider;
     @Autowired
     private Notifications notifications;
     @Autowired
@@ -78,8 +78,8 @@ public class FulfillmentCenterEdit extends StandardEditor<FulfillmentCenter> {
     @Subscribe("locationLookupBtn")
     public void onLocationLookupBtnClick(Button.ClickEvent event) {
         Address address = getEditedEntity().getAddress();
-        Optional<Point> possibleLocation = locationIqClient
-                .forwardGeocoding(new LocationIqClient.AddressInformation(
+        Optional<Point> possibleLocation = directionsProvider
+                .forwardGeocoding(new AddressInformation(
                         address.getStreet(),
                         address.getPostCode(),
                         address.getCity(),

@@ -5,7 +5,7 @@
         focusComponent="confirmedOrdersTable">
     <data readOnly="true">
         <collection id="confirmedOrdersDc"
-                    class="io.jmix.bookstore.order.Order">
+                    class="io.jmix.bookstore.order.entity.Order">
             <fetchPlan extends="_base">
                 <property name="fulfilledBy" fetchPlan="_base"/>
             </fetchPlan>
@@ -23,7 +23,7 @@
             </loader>
         </collection>
         <collection id="newOrdersDc"
-                    class="io.jmix.bookstore.order.Order">
+                    class="io.jmix.bookstore.order.entity.Order">
             <fetchPlan extends="_base">
                 <property name="fulfilledBy" fetchPlan="_base"/>
             </fetchPlan>
@@ -117,7 +117,7 @@
                     </buttonsPanel>
                 </dataGrid>
             </tab>
-            
+
             <tab id="confirmedOrdersTab" caption="msg://confirmedOrders" spacing="true" margin="true" icon="font-icon:CHECK_CIRCLE" expand="confirmedOrdersTable">
                 <filter id="filter"
                         dataLoader="confirmedOrdersDl">
@@ -129,7 +129,7 @@
                     <actions>
                         <action id="edit" type="edit"/>
                         <action id="remove" type="remove"/>
-                        <action id="trackDelivery" caption="msg://trackDelivery" icon="TRUCK"/>
+                        <action id="trackDelivery" caption="msg://trackDelivery" icon="TRUCK" trackSelection="true"/>
                     </actions>
                     <columns>
                         <column property="orderDate" id="orderDate"/>

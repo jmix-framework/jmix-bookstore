@@ -2,8 +2,8 @@ package io.jmix.bookstore.order.screen;
 
 import io.jmix.bookstore.customer.Customer;
 import io.jmix.bookstore.fulfillment.FulfillmentCenter;
-import io.jmix.bookstore.order.Order;
-import io.jmix.bookstore.order.OrderStatus;
+import io.jmix.bookstore.order.entity.Order;
+import io.jmix.bookstore.order.entity.OrderStatus;
 import io.jmix.core.TimeSource;
 import io.jmix.ui.component.*;
 import io.jmix.ui.navigation.Route;

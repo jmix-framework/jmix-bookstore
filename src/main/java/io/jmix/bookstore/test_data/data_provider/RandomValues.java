@@ -5,10 +5,8 @@ import net.datafaker.Faker;
 import net.datafaker.Number;
 import org.springframework.util.CollectionUtils;
 
-import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;

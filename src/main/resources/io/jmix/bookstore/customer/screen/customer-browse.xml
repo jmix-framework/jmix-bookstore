@@ -9,7 +9,6 @@
                     class="io.jmix.bookstore.customer.Customer">
             <fetchPlan extends="_base">
                 <property name="address"/>
-                <property name="associatedRegion" fetchPlan="_base"/>
             </fetchPlan>
             <loader id="customersDl">
                 <query>
@@ -50,7 +49,6 @@
                         <action id="remove" type="remove"/>
                     </actions>
                     <columns>
-                        <column property="associatedRegion" id="associatedRegion"/>
                         <column property="firstName" id="firstName"/>
                         <column property="lastName" id="lastName"/>
                         <column property="email" id="email"/>
@@ -63,15 +61,18 @@
                     </buttonsPanel>
                 </dataGrid>
             </tab>
-            <tab id="mapTab" caption="msg://customerMap" spacing="true" margin="true" icon="font-icon:MAP" expand="customersMap">
-                <maps:geoMap id="customersMap" width="100%" centerX="-99.755859" centerY="39.164141" zoom="4">
-                    <maps:layers selectedLayer="tiles">
-                        <maps:tile id="tiles" tileProvider="map_OpenStreetMap"/>
-                        <maps:vector id="customersLayer" dataContainer="customersDc">
-                            <maps:cluster showCoverage="true" disableAtZoom="7"/>
-                        </maps:vector>
-                    </maps:layers>
-                </maps:geoMap>
+            <tab id="mapTab" caption="msg://customerMap" spacing="true" margin="true" icon="font-icon:MAP" expand="mapGroupBox">
+                <groupBox id="mapGroupBox" width="100%" expand="customersMap">
+                    <maps:geoMap id="customersMap" width="100%" centerX="-99.755859" centerY="39.164141" zoom="4">
+                        <maps:layers selectedLayer="tiles">
+                            <maps:tile id="tiles" tileProvider="map_OpenStreetMap"/>
+                            <maps:vector id="customersLayer" dataContainer="customersDc">
+                                <maps:cluster showCoverage="true" disableAtZoom="7"/>
+                            </maps:vector>
+                        </maps:layers>
+                    </maps:geoMap>
+
+                </groupBox>
             </tab>
         </tabSheet>
         <pagination align="MIDDLE_CENTER" itemsPerPageVisible="true">

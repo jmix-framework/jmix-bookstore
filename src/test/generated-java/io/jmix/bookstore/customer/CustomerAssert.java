@@ -375,16 +375,16 @@ public class CustomerAssert extends AbstractObjectAssert<CustomerAssert, Custome
   }
 
   /**
-   * Verifies that the actual Customer's orders contains the given io.jmix.bookstore.order.Order elements.
+   * Verifies that the actual Customer's orders contains the given io.jmix.bookstore.order.entity.Order elements.
    * @param orders the given elements that should be contained in actual Customer's orders.
    * @return this assertion object.
-   * @throws AssertionError if the actual Customer's orders does not contain all given io.jmix.bookstore.order.Order elements.
+   * @throws AssertionError if the actual Customer's orders does not contain all given io.jmix.bookstore.order.entity.Order elements.
    */
-  public CustomerAssert hasOrders(io.jmix.bookstore.order.Order... orders) {
+  public CustomerAssert hasOrders(io.jmix.bookstore.order.entity.Order... orders) {
     // check that actual Customer we want to make assertions on is not null.
     isNotNull();
 
-    // check that given io.jmix.bookstore.order.Order varargs is not null.
+    // check that given io.jmix.bookstore.order.entity.Order varargs is not null.
     if (orders == null) failWithMessage("Expecting orders parameter not to be null.");
 
     // check with standard error message, to set another message call: info.overridingErrorMessage("my error message");
@@ -395,16 +395,16 @@ public class CustomerAssert extends AbstractObjectAssert<CustomerAssert, Custome
   }
 
   /**
-   * Verifies that the actual Customer's orders contains the given io.jmix.bookstore.order.Order elements in Collection.
+   * Verifies that the actual Customer's orders contains the given io.jmix.bookstore.order.entity.Order elements in Collection.
    * @param orders the given elements that should be contained in actual Customer's orders.
    * @return this assertion object.
-   * @throws AssertionError if the actual Customer's orders does not contain all given io.jmix.bookstore.order.Order elements.
+   * @throws AssertionError if the actual Customer's orders does not contain all given io.jmix.bookstore.order.entity.Order elements.
    */
-  public CustomerAssert hasOrders(java.util.Collection<? extends io.jmix.bookstore.order.Order> orders) {
+  public CustomerAssert hasOrders(java.util.Collection<? extends io.jmix.bookstore.order.entity.Order> orders) {
     // check that actual Customer we want to make assertions on is not null.
     isNotNull();
 
-    // check that given io.jmix.bookstore.order.Order collection is not null.
+    // check that given io.jmix.bookstore.order.entity.Order collection is not null.
     if (orders == null) {
       failWithMessage("Expecting orders parameter not to be null.");
       return this; // to fool Eclipse "Null pointer access" warning on toArray.
@@ -418,16 +418,16 @@ public class CustomerAssert extends AbstractObjectAssert<CustomerAssert, Custome
   }
 
   /**
-   * Verifies that the actual Customer's orders contains <b>only</b> the given io.jmix.bookstore.order.Order elements and nothing else in whatever order.
+   * Verifies that the actual Customer's orders contains <b>only</b> the given io.jmix.bookstore.order.entity.Order elements and nothing else in whatever order.
    * @param orders the given elements that should be contained in actual Customer's orders.
    * @return this assertion object.
-   * @throws AssertionError if the actual Customer's orders does not contain all given io.jmix.bookstore.order.Order elements.
+   * @throws AssertionError if the actual Customer's orders does not contain all given io.jmix.bookstore.order.entity.Order elements.
    */
-  public CustomerAssert hasOnlyOrders(io.jmix.bookstore.order.Order... orders) {
+  public CustomerAssert hasOnlyOrders(io.jmix.bookstore.order.entity.Order... orders) {
     // check that actual Customer we want to make assertions on is not null.
     isNotNull();
 
-    // check that given io.jmix.bookstore.order.Order varargs is not null.
+    // check that given io.jmix.bookstore.order.entity.Order varargs is not null.
     if (orders == null) failWithMessage("Expecting orders parameter not to be null.");
 
     // check with standard error message, to set another message call: info.overridingErrorMessage("my error message");
@@ -438,16 +438,16 @@ public class CustomerAssert extends AbstractObjectAssert<CustomerAssert, Custome
   }
 
   /**
-   * Verifies that the actual Customer's orders contains <b>only</b> the given io.jmix.bookstore.order.Order elements in Collection and nothing else in whatever order.
+   * Verifies that the actual Customer's orders contains <b>only</b> the given io.jmix.bookstore.order.entity.Order elements in Collection and nothing else in whatever order.
    * @param orders the given elements that should be contained in actual Customer's orders.
    * @return this assertion object.
-   * @throws AssertionError if the actual Customer's orders does not contain all given io.jmix.bookstore.order.Order elements.
+   * @throws AssertionError if the actual Customer's orders does not contain all given io.jmix.bookstore.order.entity.Order elements.
    */
-  public CustomerAssert hasOnlyOrders(java.util.Collection<? extends io.jmix.bookstore.order.Order> orders) {
+  public CustomerAssert hasOnlyOrders(java.util.Collection<? extends io.jmix.bookstore.order.entity.Order> orders) {
     // check that actual Customer we want to make assertions on is not null.
     isNotNull();
 
-    // check that given io.jmix.bookstore.order.Order collection is not null.
+    // check that given io.jmix.bookstore.order.entity.Order collection is not null.
     if (orders == null) {
       failWithMessage("Expecting orders parameter not to be null.");
       return this; // to fool Eclipse "Null pointer access" warning on toArray.
@@ -461,17 +461,17 @@ public class CustomerAssert extends AbstractObjectAssert<CustomerAssert, Custome
   }
 
   /**
-   * Verifies that the actual Customer's orders does not contain the given io.jmix.bookstore.order.Order elements.
+   * Verifies that the actual Customer's orders does not contain the given io.jmix.bookstore.order.entity.Order elements.
    *
    * @param orders the given elements that should not be in actual Customer's orders.
    * @return this assertion object.
-   * @throws AssertionError if the actual Customer's orders contains any given io.jmix.bookstore.order.Order elements.
+   * @throws AssertionError if the actual Customer's orders contains any given io.jmix.bookstore.order.entity.Order elements.
    */
-  public CustomerAssert doesNotHaveOrders(io.jmix.bookstore.order.Order... orders) {
+  public CustomerAssert doesNotHaveOrders(io.jmix.bookstore.order.entity.Order... orders) {
     // check that actual Customer we want to make assertions on is not null.
     isNotNull();
 
-    // check that given io.jmix.bookstore.order.Order varargs is not null.
+    // check that given io.jmix.bookstore.order.entity.Order varargs is not null.
     if (orders == null) failWithMessage("Expecting orders parameter not to be null.");
 
     // check with standard error message (use overridingErrorMessage before contains to set your own message).
@@ -482,17 +482,17 @@ public class CustomerAssert extends AbstractObjectAssert<CustomerAssert, Custome
   }
 
   /**
-   * Verifies that the actual Customer's orders does not contain the given io.jmix.bookstore.order.Order elements in Collection.
+   * Verifies that the actual Customer's orders does not contain the given io.jmix.bookstore.order.entity.Order elements in Collection.
    *
    * @param orders the given elements that should not be in actual Customer's orders.
    * @return this assertion object.
-   * @throws AssertionError if the actual Customer's orders contains any given io.jmix.bookstore.order.Order elements.
+   * @throws AssertionError if the actual Customer's orders contains any given io.jmix.bookstore.order.entity.Order elements.
    */
-  public CustomerAssert doesNotHaveOrders(java.util.Collection<? extends io.jmix.bookstore.order.Order> orders) {
+  public CustomerAssert doesNotHaveOrders(java.util.Collection<? extends io.jmix.bookstore.order.entity.Order> orders) {
     // check that actual Customer we want to make assertions on is not null.
     isNotNull();
 
-    // check that given io.jmix.bookstore.order.Order collection is not null.
+    // check that given io.jmix.bookstore.order.entity.Order collection is not null.
     if (orders == null) {
       failWithMessage("Expecting orders parameter not to be null.");
       return this; // to fool Eclipse "Null pointer access" warning on toArray.

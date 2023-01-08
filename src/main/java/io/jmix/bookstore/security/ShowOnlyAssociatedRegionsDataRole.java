@@ -1,7 +1,7 @@
 package io.jmix.bookstore.security;
 
 import io.jmix.bookstore.customer.Customer;
-import io.jmix.bookstore.order.Order;
+import io.jmix.bookstore.order.entity.Order;
 import io.jmix.security.role.annotation.JpqlRowLevelPolicy;
 import io.jmix.security.role.annotation.RowLevelRole;
 

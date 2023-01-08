@@ -86,13 +86,12 @@
     border-radius: 20px;
     padding: 10px;
     margin-right:10px;
+
+    .v-icon {
+      margin-right: 5px;
+    }
   }
-  //.position-badge-side-menu {
-  //  border-radius: 20px;
-  //  padding: 10px;
-  //  margin: 10px;
-  //  text-align: center;
-  //}
+
 
   .jmix-logout-button {
     margin-top: 7px;
@@ -202,6 +201,10 @@
   }
   .user-avatar-border-position-blue {
     border-color: #BAF7FF !important;
+  }
+
+  .top-menu {
+    margin-right: 30px;
   }
 
 

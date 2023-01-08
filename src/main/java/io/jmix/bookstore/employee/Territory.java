@@ -1,6 +1,6 @@
 package io.jmix.bookstore.employee;
 
-import io.jmix.bookstore.entity.StandardEntity;
+import io.jmix.bookstore.entity.StandardTenantEntity;
 import io.jmix.core.metamodel.annotation.InstanceName;
 import io.jmix.core.metamodel.annotation.JmixEntity;
 import io.jmix.core.metamodel.annotation.PropertyDatatype;
@@ -16,7 +16,7 @@ import java.util.List;
         @Index(name = "IDX_BOOKSTORE_TERRITORY_REGION", columnList = "REGION_ID")
 })
 @Entity(name = "bookstore_Territory")
-public class Territory extends StandardEntity {
+public class Territory extends StandardTenantEntity {
     @InstanceName
     @Column(name = "NAME", nullable = false)
     @NotNull

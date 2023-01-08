@@ -3,6 +3,7 @@ package io.jmix.bookstore.fulfillment;
 import io.jmix.bookstore.employee.Region;
 import io.jmix.bookstore.entity.Address;
 import io.jmix.bookstore.entity.StandardEntity;
+import io.jmix.bookstore.entity.StandardTenantEntity;
 import io.jmix.core.entity.annotation.EmbeddedParameters;
 import io.jmix.core.metamodel.annotation.InstanceName;
 import io.jmix.core.metamodel.annotation.JmixEntity;
@@ -18,7 +19,7 @@ import javax.validation.constraints.NotNull;
         @Index(name = "IDX_BOOKSTORE_FULFILLMENT_CENTER_REGION", columnList = "REGION_ID")
 })
 @Entity(name = "bookstore_FulfillmentCenter")
-public class FulfillmentCenter extends StandardEntity {
+public class FulfillmentCenter extends StandardTenantEntity {
     @InstanceName
     @Column(name = "NAME", nullable = false)
     @NotNull

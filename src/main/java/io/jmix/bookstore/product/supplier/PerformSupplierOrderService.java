@@ -3,9 +3,11 @@ package io.jmix.bookstore.product.supplier;
 import com.haulmont.yarg.reporting.ReportOutputDocument;
 import io.jmix.bookstore.entity.User;
 import io.jmix.bookstore.product.Product;
+import io.jmix.bpm.multitenancy.BpmTenantProvider;
 import io.jmix.core.*;
 import io.jmix.core.metamodel.datatype.DatatypeFormatter;
 import io.jmix.core.querycondition.PropertyCondition;
+import io.jmix.multitenancy.core.TenantProvider;
 import io.jmix.notifications.NotificationManager;
 import io.jmix.notifications.entity.ContentType;
 import io.jmix.reports.runner.ReportRunner;
@@ -32,8 +34,9 @@ public class PerformSupplierOrderService {
     private final RuntimeService runtimeService;
     private final ReportRunner reportRunner;
     private final FileStorage fileStorage;
+    private final TenantProvider tenantProvider;
 
-    public PerformSupplierOrderService(DataManager dataManager, TimeSource timeSource, NotificationManager notificationManager, DatatypeFormatter datatypeFormatter, RuntimeService runtimeService, ReportRunner reportRunner, FileStorage fileStorage) {
+    public PerformSupplierOrderService(DataManager dataManager, TimeSource timeSource, NotificationManager notificationManager, DatatypeFormatter datatypeFormatter, RuntimeService runtimeService, ReportRunner reportRunner, FileStorage fileStorage, TenantProvider tenantProvider) {
         this.dataManager = dataManager;
         this.timeSource = timeSource;
         this.notificationManager = notificationManager;
@@ -41,6 +44,7 @@ public class PerformSupplierOrderService {
         this.runtimeService = runtimeService;
         this.reportRunner = reportRunner;
         this.fileStorage = fileStorage;
+        this.tenantProvider = tenantProvider;
     }
 
     /**
@@ -98,6 +102,7 @@ public class PerformSupplierOrderService {
      * places a supplier order through the BPM process
      * @param supplierOrder the supplier order to place
      */
+    @SuppressWarnings("UnusedMethod")
     public FileRef placeSupplierOrder(SupplierOrder supplierOrder, User reviewedBy) {
         log.info("Placing Supplier Order: {}", supplierOrder);
 
@@ -155,10 +160,12 @@ public class PerformSupplierOrderService {
     private void startProcess(SupplierOrder supplierOrder) {
         Map<String, Object> params = new HashMap<>();
         params.put("supplierOrder", supplierOrder);
-        runtimeService.startProcessInstanceByKey(
+        runtimeService.startProcessInstanceByKeyAndTenantId(
                 "perform-supplier-order",
                 businessKey(supplierOrder),
-                params);
+                params,
+                tenantProvider.getCurrentUserTenantId()
+        );
     }
 
     private String businessKey(SupplierOrder supplierOrder) {

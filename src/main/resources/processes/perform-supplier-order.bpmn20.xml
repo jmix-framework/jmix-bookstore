@@ -172,7 +172,7 @@
       </extensionElements>
       <conditionExpression xsi:type="tFormalExpression">${execution.getVariable('ApproveSupplierOrderHumanTask_result') != null &amp;&amp; bpm_UserTaskResults.containsOutcome(execution.getVariable('ApproveSupplierOrderHumanTask_result'), 'Yes')}</conditionExpression>
     </sequenceFlow>
-    <serviceTask id="PlaceSupplierOrderServiceTask" name="Place Supplier Order" flowable:expression="${bookstore_PerformSupplierOrderService.placeSupplierOrder(supplierOrder, reviewedBy)}" jmix:taskType="springBean" jmix:beanName="bookstore_PerformSupplierOrderService">
+    <serviceTask id="PlaceSupplierOrderServiceTask" name="Place Supplier Order" flowable:expression="${bookstore_PerformSupplierOrderService.placeSupplierOrder(supplierOrder, reviewedBy)}" flowable:resultVariable="supplierOrderForm" jmix:taskType="springBean" jmix:beanName="bookstore_PerformSupplierOrderService">
       <extensionElements>
         <jmix:springBean beanName="bookstore_PerformSupplierOrderService" methodName="placeSupplierOrder">
           <jmix:methodParam name="supplierOrder" type="io.jmix.bookstore.product.supplier.SupplierOrder" isVariable="true">supplierOrder</jmix:methodParam>
@@ -238,13 +238,16 @@
           <flowable:string>Jmix Bookstore Order</flowable:string>
         </flowable:field>
         <flowable:field name="content">
-          <flowable:string>Hello,&amp;nbsp;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;the Jmix Bookstore would like to order new Books.&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;Attached you will find an new Order from the Jmix Bookstore with all details attached.&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;Best regards,&lt;/div&gt;&lt;div&gt;Jmix Bookstore&lt;/div&gt;</flowable:string>
+          <flowable:string>Hello,&amp;nbsp;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;the Jmix Bookstore would like to order new Books.&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;Attached you will find an new Order from the Jmix Bookstore with all details.&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;Best regards,&lt;/div&gt;&lt;div&gt;Jmix Bookstore&lt;/div&gt;</flowable:string>
         </flowable:field>
         <flowable:field name="contentType">
           <flowable:string>text/html; charset=UTF-8</flowable:string>
         </flowable:field>
         <flowable:field name="sendAsync">
           <flowable:string>true</flowable:string>
+        </flowable:field>
+        <flowable:field name="attachments">
+          <flowable:string>[{"name":"supplier-order-form.docx","expression":"${supplierOrderForm}"}]</flowable:string>
         </flowable:field>
       </extensionElements>
       <incoming>Flow_1nx6jbs</incoming>
@@ -269,6 +272,14 @@
       <bpmndi:BPMNShape id="Lane_0ohu76m_di" bpmnElement="systemLane" isHorizontal="true">
         <omgdc:Bounds x="130" y="130" width="1280" height="125" />
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_1hkxtai_di" bpmnElement="Flow_1hkxtai">
+        <di:waypoint x="1320" y="190" />
+        <di:waypoint x="1342" y="190" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0lqxmqg_di" bpmnElement="Flow_0lqxmqg">
+        <di:waypoint x="770" y="200" />
+        <di:waypoint x="822" y="200" />
+      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1nx6jbs_di" bpmnElement="Flow_1nx6jbs">
         <di:waypoint x="1200" y="190" />
         <di:waypoint x="1220" y="190" />
@@ -350,14 +361,6 @@
       <bpmndi:BPMNEdge id="Flow_02a3bui_di" bpmnElement="Flow_02a3bui">
         <di:waypoint x="205" y="310" />
         <di:waypoint x="260" y="310" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0lqxmqg_di" bpmnElement="Flow_0lqxmqg">
-        <di:waypoint x="770" y="200" />
-        <di:waypoint x="822" y="200" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_1hkxtai_di" bpmnElement="Flow_1hkxtai">
-        <di:waypoint x="1320" y="190" />
-        <di:waypoint x="1342" y="190" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="Activity_0j8r59p_di" bpmnElement="NotifyRequestersAboutInvalidRequestServiceTask">
         <omgdc:Bounds x="670" y="160" width="100" height="80" />

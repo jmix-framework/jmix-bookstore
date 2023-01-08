@@ -11,8 +11,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static io.jmix.bookstore.test_data.data_provider.employee.EmployeePositions.AvailablePosition.*;
-
 @Component("bookstore_ProvisionDataProvider")
 public class EmployeePositionDataProvider implements TestDataProvider<Position, EmployeePositionDataProvider.DataContext> {
 
@@ -31,12 +29,12 @@ public class EmployeePositionDataProvider implements TestDataProvider<Position, 
     private List<Object> createPositions() {
 
         List<PositionData> positionData = List.of(
-                new PositionData("IT Administrator", IT_ADMINISTRATOR, PositionColor.GREEN),
-                new PositionData("Procurement Specialist", PROCUREMENT_SPECIALIST, PositionColor.PURPLE),
-                new PositionData("Procurement Manager", PROCUREMENT_MANAGER, PositionColor.DARK_PURPLE),
-                new PositionData("Order Fulfillment Specialist", ORDER_FULFILLMENT_SPECIALIST, PositionColor.RED),
-                new PositionData("Order Fulfillment Manager", ORDER_FULFILLMENT_MANAGER, PositionColor.DARK_RED),
-                new PositionData("Sales Representative", SALES_REPRESENTATIVE, PositionColor.YELLOW)
+                new PositionData("IT Administrator", EmployeePositions.AvailablePosition.IT_ADMINISTRATOR, PositionColor.GREEN),
+                new PositionData("Procurement Specialist", EmployeePositions.AvailablePosition.PROCUREMENT_SPECIALIST, PositionColor.PURPLE),
+                new PositionData("Procurement Manager", EmployeePositions.AvailablePosition.PROCUREMENT_MANAGER, PositionColor.DARK_PURPLE),
+                new PositionData("Order Fulfillment Specialist", EmployeePositions.AvailablePosition.ORDER_FULFILLMENT_SPECIALIST, PositionColor.RED),
+                new PositionData("Order Fulfillment Manager", EmployeePositions.AvailablePosition.ORDER_FULFILLMENT_MANAGER, PositionColor.DARK_RED),
+                new PositionData("Sales Representative", EmployeePositions.AvailablePosition.SALES_REPRESENTATIVE, PositionColor.YELLOW)
         );
 
         return positionData.stream()

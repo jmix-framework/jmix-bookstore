@@ -282,6 +282,29 @@ public class FulfillmentCenterAssert extends AbstractObjectAssert<FulfillmentCen
   }
 
   /**
+   * Verifies that the actual FulfillmentCenter's tenant is equal to the given one.
+   * @param tenant the given tenant to compare the actual FulfillmentCenter's tenant to.
+   * @return this assertion object.
+   * @throws AssertionError - if the actual FulfillmentCenter's tenant is not equal to the given one.
+   */
+  public FulfillmentCenterAssert hasTenant(String tenant) {
+    // check that actual FulfillmentCenter we want to make assertions on is not null.
+    isNotNull();
+
+    // overrides the default error message with a more explicit one
+    String assertjErrorMessage = "\nExpecting tenant of:\n  <%s>\nto be:\n  <%s>\nbut was:\n  <%s>";
+
+    // null safe check
+    String actualTenant = actual.getTenant();
+    if (!Objects.deepEquals(actualTenant, tenant)) {
+      failWithMessage(assertjErrorMessage, actual, tenant, actualTenant);
+    }
+
+    // return the current assertion for method chaining
+    return this;
+  }
+
+  /**
    * Verifies that the actual FulfillmentCenter's version is equal to the given one.
    * @param version the given version to compare the actual FulfillmentCenter's version to.
    * @return this assertion object.

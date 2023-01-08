@@ -1,7 +1,7 @@
 package io.jmix.bookstore.order.screen;
 
 import io.jmix.bookstore.customer.Customer;
-import io.jmix.bookstore.order.Order;
+import io.jmix.bookstore.order.entity.Order;
 import io.jmix.bookstore.test_data.DatabaseCleanup;
 import io.jmix.bookstore.customer.test_support.Customers;
 import io.jmix.bookstore.order.test_support.Orders;
@@ -16,7 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 
-import static io.jmix.bookstore.order.Assertions.assertThat;
+import static io.jmix.bookstore.entity.Assertions.assertThat;
 
 
 class OrderEditCustomerSearchTest extends WebIntegrationTest {

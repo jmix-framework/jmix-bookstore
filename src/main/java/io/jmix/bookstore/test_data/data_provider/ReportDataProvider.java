@@ -1,8 +1,13 @@
 package io.jmix.bookstore.test_data.data_provider;
 
 import io.jmix.core.DataManager;
+import io.jmix.core.querycondition.LogicalCondition;
+import io.jmix.core.querycondition.PropertyCondition;
+import io.jmix.core.security.SystemAuthenticator;
 import io.jmix.reports.ReportImportExport;
 import io.jmix.reports.entity.Report;
+import io.jmix.reports.entity.ReportGroup;
+import org.apache.xmpbox.type.ProperNameType;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Component;
@@ -32,6 +37,10 @@ public class ReportDataProvider implements TestDataProvider<Report, ReportDataPr
 
     @Override
     public List<Report> create(DataContext dataContext) {
+
+        ReportGroup defaultReportGroup = dataManager.create(ReportGroup.class);
+        defaultReportGroup.setTitle("General");
+        dataManager.save(defaultReportGroup);
 
         Resource supplierOrderForm = resourceLoader.getResource(dataContext.resourceName());
         try {

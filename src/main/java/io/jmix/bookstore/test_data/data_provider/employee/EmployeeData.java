@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Set;
 
 public record EmployeeData(
+        String tenantId,
         String username,
         Title title,
         String firstName,
@@ -20,4 +21,8 @@ public record EmployeeData(
         List<String> resourceRoleCodes,
         List<String> rowLevelRoleCodes,
         Set<Territory> territories
-) { }
+) {
+    public String fullUsername() {
+        return "%s|%s".formatted(tenantId, username);
+    }
+}

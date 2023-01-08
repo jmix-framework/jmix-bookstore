@@ -1,6 +1,7 @@
 package io.jmix.bookstore.product.supplier;
 
 import io.jmix.bookstore.entity.StandardEntity;
+import io.jmix.bookstore.entity.StandardTenantEntity;
 import io.jmix.core.DeletePolicy;
 import io.jmix.core.FileRef;
 import io.jmix.core.entity.annotation.OnDelete;
@@ -17,7 +18,7 @@ import java.util.List;
         @Index(name = "IDX_BOOKSTORE_SUPPLIER_ORDER_SUPPLIER", columnList = "SUPPLIER_ID")
 })
 @Entity(name = "bookstore_SupplierOrder")
-public class SupplierOrder extends StandardEntity {
+public class SupplierOrder extends StandardTenantEntity {
     @JoinColumn(name = "SUPPLIER_ID", nullable = false)
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional = false)

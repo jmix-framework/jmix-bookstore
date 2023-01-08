@@ -2,17 +2,17 @@ package io.jmix.bookstore.test_data.data_provider.employee;
 
 import io.jmix.bookstore.employee.Employee;
 import io.jmix.bookstore.employee.Position;
-import io.jmix.bookstore.employee.Territory;
 import io.jmix.bookstore.entity.Title;
 import io.jmix.bookstore.security.OrderFulfillmentRole;
 import io.jmix.bookstore.security.ShowOnlyAssociatedRegionsDataRole;
+import io.jmix.bookstore.test_data.data_provider.RandomValues;
 import io.jmix.bookstore.test_data.data_provider.TestDataProvider;
+import io.jmix.bookstore.test_data.data_provider.region.AvailableRegions;
+import io.jmix.bookstore.test_data.data_provider.territory.AvailableTerritories;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 import static io.jmix.bookstore.test_data.data_provider.RandomValues.randomOfList;
 
@@ -21,7 +21,8 @@ public class OrderFulfillmentSpecialistDataProvider implements TestDataProvider<
 
     protected final EmployeeDataProvider employeeDataProvider;
 
-    public record DataContext(List<Employee> managers, EmployeePositions employeePositions, List<Territory> territories) {
+    public record DataContext(List<Employee> managers, EmployeePositions employeePositions, AvailableTerritories territories,
+                              String tenantId) {
     }
 
     public OrderFulfillmentSpecialistDataProvider(EmployeeDataProvider employeeDataProvider) {
@@ -33,28 +34,30 @@ public class OrderFulfillmentSpecialistDataProvider implements TestDataProvider<
 
         List<EmployeeData> employees = List.of(
                 new EmployeeData(
+                        dataContext.tenantId(),
                         "melissa",
                         Title.MR,
                         "Melissa",
                         "Arendt",
                         orderFulfillmentSpecialist(dataContext),
                         LocalDate.now().minusYears(5).minusMonths(1).minusDays(10),
-                        randomOfList(dataContext.managers()),
+                        RandomValues.randomOfList(dataContext.managers()),
                         orderFulfillmentSpecialistResourceRoles(),
                         orderFulfillmentSpecialistRowLevelRoles(),
-                        territoriesForRegion(dataContext.territories(), "US-South")
+                        dataContext.territories().findTerritoriesFromRegion(AvailableRegions.Entry.US_SOUTH)
                 ),
                 new EmployeeData(
+                        dataContext.tenantId(),
                         "hikari",
                         Title.MRS,
                         "Hikari",
                         "Miyama",
                         orderFulfillmentSpecialist(dataContext),
                         LocalDate.now().minusYears(12).minusMonths(1).minusDays(0),
-                        randomOfList(dataContext.managers()),
+                        RandomValues.randomOfList(dataContext.managers()),
                         orderFulfillmentSpecialistResourceRoles(),
                         orderFulfillmentSpecialistRowLevelRoles(),
-                        territoriesForRegion(dataContext.territories(), "US-East")
+                        dataContext.territories().findTerritoriesFromRegion(AvailableRegions.Entry.US_EAST)
                 )
         );
 
@@ -65,11 +68,6 @@ public class OrderFulfillmentSpecialistDataProvider implements TestDataProvider<
         return List.of(
                 ShowOnlyAssociatedRegionsDataRole.CODE
         );
-    }
-    private Set<Territory> territoriesForRegion(List<Territory> territories, String regionName) {
-        return territories.stream()
-                .filter(territory -> regionName.equals(territory.getRegion().getName()))
-                .collect(Collectors.toSet());
     }
     private static List<String> orderFulfillmentSpecialistResourceRoles() {
         return List.of(
