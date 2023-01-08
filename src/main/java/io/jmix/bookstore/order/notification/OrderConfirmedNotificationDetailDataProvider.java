@@ -6,7 +6,7 @@ import io.jmix.bookstore.entity.Address;
 import io.jmix.bookstore.entity.User;
 import io.jmix.bookstore.notification.NotificationDetailDataProvider;
 import io.jmix.bookstore.notification.InAppNotificationSource;
-import io.jmix.bookstore.order.OrderConfirmedEvent;
+import io.jmix.bookstore.order.event.OrderConfirmedEvent;
 import io.jmix.bookstore.test_data.data_provider.employee.EmployeePositions;
 import io.jmix.core.DataManager;
 import io.jmix.core.FetchPlan;
@@ -16,6 +16,12 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Provides data for an oder confirmed event for the confirmation center to create a notification
+ * with the correctly formatted messages
+ *
+ * @see io.jmix.bookstore.notification.NotificationCenter
+ */
 @Component("bookstore_OrderConfirmedNotificationRecipientResolver")
 public class OrderConfirmedNotificationDetailDataProvider implements NotificationDetailDataProvider<OrderConfirmedEvent> {
 

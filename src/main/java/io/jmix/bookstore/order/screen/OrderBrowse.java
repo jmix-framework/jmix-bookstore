@@ -1,27 +1,16 @@
 package io.jmix.bookstore.order.screen;
 
-import io.jmix.bookstore.fulfillment.FulfillmentCenter;
-import io.jmix.bookstore.order.Order;
-import io.jmix.bookstore.order.OrderStatus;
+import io.jmix.bookstore.order.entity.Order;
+import io.jmix.bookstore.order.entity.OrderStatus;
 import io.jmix.core.Messages;
-import io.jmix.core.MetadataTools;
-import io.jmix.ui.Dialogs;
 import io.jmix.ui.Notifications;
 import io.jmix.ui.ScreenBuilders;
-import io.jmix.ui.UiComponents;
 import io.jmix.ui.action.Action;
-import io.jmix.ui.app.inputdialog.InputParameter;
 import io.jmix.ui.component.DataGrid;
-import io.jmix.ui.component.EntityComboBox;
 import io.jmix.ui.component.NotificationFacet;
-import io.jmix.ui.component.PropertyFilter;
-import io.jmix.ui.model.CollectionContainer;
 import io.jmix.ui.navigation.Route;
 import io.jmix.ui.screen.*;
 import org.springframework.beans.factory.annotation.Autowired;
-
-import javax.inject.Named;
-import java.time.LocalDate;
 
 @UiController("bookstore_Order.browse")
 @UiDescriptor("order-browse.xml")

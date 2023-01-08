@@ -1,4 +1,4 @@
-package io.jmix.bookstore.order;
+package io.jmix.bookstore.order.entity;
 
 import java.util.Objects;
 import org.assertj.core.api.AbstractObjectAssert;

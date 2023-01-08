@@ -1,4 +1,4 @@
-package io.jmix.bookstore.order;
+package io.jmix.bookstore.order.entity;
 
 import io.jmix.core.metamodel.datatype.impl.EnumClass;
 

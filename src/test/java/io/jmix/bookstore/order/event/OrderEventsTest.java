@@ -1,13 +1,16 @@
-package io.jmix.bookstore.order;
+package io.jmix.bookstore.order.event;
 
 
 import io.jmix.bookstore.customer.Customer;
 import io.jmix.bookstore.customer.test_support.Customers;
+import io.jmix.bookstore.order.entity.Order;
+import io.jmix.bookstore.order.entity.OrderStatus;
 import io.jmix.bookstore.order.test_support.OrderLines;
 import io.jmix.bookstore.order.test_support.Orders;
 import io.jmix.bookstore.product.test_support.Products;
 import io.jmix.bookstore.test_support.AuthenticatedAsAdmin;
 import io.jmix.core.DataManager;
+import org.assertj.core.api.Assertions;
 import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -22,7 +25,7 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static io.jmix.bookstore.order.Assertions.assertThat;
+import static io.jmix.bookstore.entity.Assertions.assertThat;
 
 
 @SpringBootTest
@@ -73,7 +76,7 @@ public class OrderEventsTest {
         Order confirmedOrder = dataManager.save(newOrder);
 
         // then
-        assertThat(publishedEvents(OrderConfirmedEvent.class))
+        Assertions.assertThat(publishedEvents(OrderConfirmedEvent.class))
                 .isNotEmpty()
                 .first()
                 .extracting(OrderConfirmedEvent::order)

@@ -4,7 +4,7 @@ import io.jmix.bookstore.customer.Customer;
 import io.jmix.bookstore.employee.Employee;
 import io.jmix.bookstore.employee.Region;
 import io.jmix.bookstore.employee.Territory;
-import io.jmix.bookstore.order.Order;
+import io.jmix.bookstore.order.entity.Order;
 import io.jmix.bookstore.product.Product;
 import io.jmix.bookstore.product.ProductCategory;
 import io.jmix.bookstore.product.supplier.Supplier;

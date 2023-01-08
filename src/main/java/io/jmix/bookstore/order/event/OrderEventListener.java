@@ -1,5 +1,7 @@
-package io.jmix.bookstore.order;
+package io.jmix.bookstore.order.event;
 
+import io.jmix.bookstore.order.entity.Order;
+import io.jmix.bookstore.order.entity.OrderStatus;
 import io.jmix.core.DataManager;
 import io.jmix.core.Id;
 import io.jmix.core.event.EntityChangedEvent;

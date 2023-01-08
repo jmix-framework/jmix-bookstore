@@ -7,8 +7,8 @@ plugins {
 
 assertjGenerator {
     classOrPackageNames = [
-            'io.jmix.bookstore.order.Order',
-            'io.jmix.bookstore.order.OrderLine',
+            'io.jmix.bookstore.order.entity.Order',
+            'io.jmix.bookstore.order.entity.OrderLine',
             'io.jmix.bookstore.product.Product',
             'io.jmix.bookstore.product.supplier.Supplier',
             'io.jmix.bookstore.product.ProductCategory',

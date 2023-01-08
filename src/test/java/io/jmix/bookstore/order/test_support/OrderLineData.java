@@ -1,7 +1,7 @@
 package io.jmix.bookstore.order.test_support;
 
 import io.jmix.bookstore.entity.Money;
-import io.jmix.bookstore.order.Order;
+import io.jmix.bookstore.order.entity.Order;
 import io.jmix.bookstore.product.Product;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;

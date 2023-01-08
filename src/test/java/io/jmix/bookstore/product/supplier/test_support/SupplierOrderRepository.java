@@ -1,7 +1,6 @@
 package io.jmix.bookstore.product.supplier.test_support;
 
 import io.jmix.bookstore.entity.test_support.EntityRepository;
-import io.jmix.bookstore.order.Order;
 import io.jmix.bookstore.product.supplier.SupplierOrder;
 import io.jmix.bookstore.test_support.EntityValidation;
 import io.jmix.core.DataManager;

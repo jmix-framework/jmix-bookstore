@@ -2,7 +2,7 @@ package io.jmix.bookstore.order.screen;
 
 import io.jmix.bookstore.entity.Currency;
 import io.jmix.bookstore.entity.Money;
-import io.jmix.bookstore.order.OrderLine;
+import io.jmix.bookstore.order.entity.OrderLine;
 import io.jmix.bookstore.product.Product;
 import io.jmix.ui.component.HasValue;
 import io.jmix.ui.navigation.Route;

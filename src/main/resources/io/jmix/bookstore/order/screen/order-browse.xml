@@ -5,7 +5,7 @@
         focusComponent="confirmedOrdersTable">
     <data readOnly="true">
         <collection id="confirmedOrdersDc"
-                    class="io.jmix.bookstore.order.Order">
+                    class="io.jmix.bookstore.order.entity.Order">
             <fetchPlan extends="_base">
                 <property name="fulfilledBy" fetchPlan="_base"/>
             </fetchPlan>
@@ -23,7 +23,7 @@
             </loader>
         </collection>
         <collection id="newOrdersDc"
-                    class="io.jmix.bookstore.order.Order">
+                    class="io.jmix.bookstore.order.entity.Order">
             <fetchPlan extends="_base">
                 <property name="fulfilledBy" fetchPlan="_base"/>
             </fetchPlan>

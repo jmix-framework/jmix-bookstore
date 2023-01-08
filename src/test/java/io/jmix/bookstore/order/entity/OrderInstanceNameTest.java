@@ -1,7 +1,8 @@
-package io.jmix.bookstore.order;
+package io.jmix.bookstore.order.entity;
 
 import io.jmix.bookstore.customer.Customer;
 
+import io.jmix.bookstore.order.entity.Order;
 import io.jmix.bookstore.test_support.AuthenticatedAsAdmin;
 import io.jmix.bookstore.customer.test_support.Customers;
 import io.jmix.bookstore.order.test_support.Orders;

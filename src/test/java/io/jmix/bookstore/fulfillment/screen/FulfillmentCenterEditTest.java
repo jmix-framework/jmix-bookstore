@@ -26,7 +26,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static io.jmix.bookstore.order.Assertions.assertThat;
+import static io.jmix.bookstore.entity.Assertions.assertThat;
 
 
 class FulfillmentCenterEditTest extends WebIntegrationTest {

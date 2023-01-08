@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
-import static io.jmix.bookstore.order.Assertions.assertThat;
+import static io.jmix.bookstore.entity.Assertions.assertThat;
 
 
 @SpringBootTest

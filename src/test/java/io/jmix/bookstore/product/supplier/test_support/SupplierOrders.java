@@ -4,7 +4,6 @@ import io.jmix.bookstore.customer.test_support.Customers;
 import io.jmix.bookstore.entity.Address;
 import io.jmix.bookstore.entity.test_support.AddressData;
 import io.jmix.bookstore.entity.test_support.AddressMapper;
-import io.jmix.bookstore.order.Order;
 import io.jmix.bookstore.product.supplier.SupplierOrder;
 import io.jmix.bookstore.product.supplier.SupplierOrderStatus;
 import io.jmix.bookstore.test_support.TestDataProvisioning;

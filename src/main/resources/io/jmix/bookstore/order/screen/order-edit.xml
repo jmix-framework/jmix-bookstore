@@ -4,7 +4,7 @@
         focusComponent="form">
     <data>
         <instance id="orderDc"
-                  class="io.jmix.bookstore.order.Order">
+                  class="io.jmix.bookstore.order.entity.Order">
             <fetchPlan extends="_base">
                 <property name="orderLines" fetchPlan="_base">
                 </property>

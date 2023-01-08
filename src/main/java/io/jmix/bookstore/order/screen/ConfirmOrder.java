@@ -5,7 +5,7 @@ import io.jmix.bookstore.directions.DirectionsProvider;
 import io.jmix.bookstore.directions.RouteAccuracy;
 import io.jmix.bookstore.entity.Address;
 import io.jmix.bookstore.fulfillment.FulfillmentCenter;
-import io.jmix.bookstore.order.OrderStatus;
+import io.jmix.bookstore.order.entity.OrderStatus;
 import io.jmix.mapsui.component.CanvasLayer;
 import io.jmix.mapsui.component.GeoMap;
 import io.jmix.mapsui.component.layer.VectorLayer;
@@ -20,7 +20,7 @@ import io.jmix.ui.icon.JmixIcon;
 import io.jmix.ui.model.CollectionContainer;
 import io.jmix.ui.navigation.Route;
 import io.jmix.ui.screen.*;
-import io.jmix.bookstore.order.Order;
+import io.jmix.bookstore.order.entity.Order;
 import org.locationtech.jts.geom.LineString;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -48,10 +48,12 @@ public class ConfirmOrder extends StandardEditor<Order> {
     private TextField<String> distanceField;
     @Autowired
     private CollectionContainer<FulfillmentCenter> fulfillmentCentersDc;
-
-    private Map<FulfillmentCenter, Optional<CalculatedRoute>> calculatedRoutes;
     @Autowired
     private Dialogs dialogs;
+    @Autowired
+    private MessageBundle messageBundle;
+
+    private Map<FulfillmentCenter, Optional<CalculatedRoute>> calculatedRoutes;
 
     @Subscribe
     public void onAfterShow(AfterShowEvent event) {
@@ -62,8 +64,8 @@ public class ConfirmOrder extends StandardEditor<Order> {
                 getEditedEntity().getShippingAddress()
         );
         dialogs.createBackgroundWorkDialog(this, task)
-                .withCaption("Calculating Routes")
-                .withMessage("Routes to Fulfillment Centers are calculated")
+                .withCaption(messageBundle.getMessage("calculatingRoutesCaption"))
+                .withMessage(messageBundle.getMessage("calculatingRoutesMessage"))
                 .withCancelAllowed(true)
                 .withTotal(fulfillmentCenters.size())
                 .withShowProgressInPercentage(true)
@@ -188,6 +190,4 @@ public class ConfirmOrder extends StandardEditor<Order> {
     public void onBeforeCommitChanges(BeforeCommitChangesEvent event) {
         getEditedEntity().setStatus(OrderStatus.CONFIRMED);
     }
-
-
 }

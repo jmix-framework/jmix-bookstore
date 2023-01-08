@@ -15,7 +15,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import static io.jmix.bookstore.order.Assertions.assertThat;
+import static io.jmix.bookstore.entity.Assertions.assertThat;
 
 class FulfillmentCenterBrowseTest extends WebIntegrationTest {
 

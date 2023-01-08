@@ -1,4 +1,4 @@
-package io.jmix.bookstore.order;
+package io.jmix.bookstore.order.entity;
 
 import io.jmix.bookstore.customer.Customer;
 import io.jmix.bookstore.entity.Address;

@@ -1,5 +1,6 @@
-package io.jmix.bookstore.order;
+package io.jmix.bookstore.order.entity;
 
+import io.jmix.bookstore.order.entity.Order;
 import io.jmix.bookstore.test_support.Validations;
 import io.jmix.bookstore.order.test_support.Orders;
 import org.junit.jupiter.api.Test;

@@ -1,13 +1,12 @@
-package io.jmix.bookstore.order;
+package io.jmix.bookstore.order.entity;
 
+import io.jmix.bookstore.order.entity.OrderLine;
 import io.jmix.bookstore.test_support.Validations;
 import io.jmix.bookstore.order.test_support.OrderLines;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
-
-import java.time.LocalDateTime;
 
 @SpringBootTest
 @ActiveProfiles("integration-test")

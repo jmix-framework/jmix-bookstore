@@ -1,8 +1,10 @@
-package io.jmix.bookstore.order;
+package io.jmix.bookstore.order.entity;
 
 
 import io.jmix.bookstore.customer.Customer;
 import io.jmix.bookstore.customer.test_support.Customers;
+import io.jmix.bookstore.order.entity.Order;
+import io.jmix.bookstore.order.entity.OrderLine;
 import io.jmix.bookstore.order.test_support.OrderLines;
 import io.jmix.bookstore.order.test_support.Orders;
 import io.jmix.bookstore.product.Product;
@@ -19,9 +21,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
-import static io.jmix.bookstore.order.Assertions.assertThat;
+import static io.jmix.bookstore.entity.Assertions.assertThat;
 
 
 @SpringBootTest

@@ -3,7 +3,7 @@ package io.jmix.bookstore.customer;
 import io.jmix.bookstore.employee.Region;
 import io.jmix.bookstore.entity.Address;
 import io.jmix.bookstore.entity.StandardTenantEntity;
-import io.jmix.bookstore.order.Order;
+import io.jmix.bookstore.order.entity.Order;
 import io.jmix.core.DeletePolicy;
 import io.jmix.core.entity.annotation.EmbeddedParameters;
 import io.jmix.core.entity.annotation.OnDelete;

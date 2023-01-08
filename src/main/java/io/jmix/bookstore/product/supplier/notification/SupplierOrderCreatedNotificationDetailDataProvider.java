@@ -3,7 +3,6 @@ package io.jmix.bookstore.product.supplier.notification;
 import io.jmix.bookstore.entity.User;
 import io.jmix.bookstore.notification.NotificationDetailDataProvider;
 import io.jmix.bookstore.notification.InAppNotificationSource;
-import io.jmix.bookstore.order.OrderConfirmedEvent;
 import io.jmix.bookstore.product.supplier.SupplierOrderRequestCreatedEvent;
 import io.jmix.bookstore.security.ProcurementSpecialistRole;
 import io.jmix.core.Messages;

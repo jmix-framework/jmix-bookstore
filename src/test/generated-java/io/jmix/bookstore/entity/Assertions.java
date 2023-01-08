@@ -1,4 +1,4 @@
-package io.jmix.bookstore.order;
+package io.jmix.bookstore.entity;
 
 /**
  * Entry point for assertions of different data types. Each method in this class is a static factory for the
@@ -51,25 +51,25 @@ public class Assertions extends org.assertj.core.api.Assertions {
   }
 
   /**
-   * Creates a new instance of <code>{@link io.jmix.bookstore.order.OrderAssert}</code>.
+   * Creates a new instance of <code>{@link io.jmix.bookstore.order.entity.OrderAssert}</code>.
    *
    * @param actual the actual value.
    * @return the created assertion object.
    */
   @org.assertj.core.util.CheckReturnValue
-  public static io.jmix.bookstore.order.OrderAssert assertThat(io.jmix.bookstore.order.Order actual) {
-    return new io.jmix.bookstore.order.OrderAssert(actual);
+  public static io.jmix.bookstore.order.entity.OrderAssert assertThat(io.jmix.bookstore.order.entity.Order actual) {
+    return new io.jmix.bookstore.order.entity.OrderAssert(actual);
   }
 
   /**
-   * Creates a new instance of <code>{@link io.jmix.bookstore.order.OrderLineAssert}</code>.
+   * Creates a new instance of <code>{@link io.jmix.bookstore.order.entity.OrderLineAssert}</code>.
    *
    * @param actual the actual value.
    * @return the created assertion object.
    */
   @org.assertj.core.util.CheckReturnValue
-  public static io.jmix.bookstore.order.OrderLineAssert assertThat(io.jmix.bookstore.order.OrderLine actual) {
-    return new io.jmix.bookstore.order.OrderLineAssert(actual);
+  public static io.jmix.bookstore.order.entity.OrderLineAssert assertThat(io.jmix.bookstore.order.entity.OrderLine actual) {
+    return new io.jmix.bookstore.order.entity.OrderLineAssert(actual);
   }
 
   /**
