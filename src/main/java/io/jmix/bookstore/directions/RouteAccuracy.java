@@ -1,6 +1,6 @@
 package io.jmix.bookstore.directions;
 
-public enum RouteCalculationAccuracy {
+public enum RouteAccuracy {
     HIGH_ACCURACY,
     LOW_ACCURACY
 }

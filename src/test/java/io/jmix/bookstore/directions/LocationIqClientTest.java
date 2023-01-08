@@ -6,7 +6,6 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.GeometryFactory;
-import org.locationtech.jts.geom.LineString;
 import org.locationtech.jts.geom.Point;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -39,7 +38,7 @@ class LocationIqClientTest {
     public static final String BASE_URL = "https://locationiq-dummy.com";
     public static final String API_KEY = "api-key-123";
     @Autowired
-    private LocationIqClient client;
+    private DirectionsProvider locationIqClient;
     @Autowired
     private RestTemplate restTemplate;
 
@@ -82,7 +81,7 @@ class LocationIqClientTest {
 
 
             // when:
-            Optional<CalculatedRoute> possibleLineString = client.calculateRoute(fifthAvenue, empireStateBuilding);
+            Optional<CalculatedRoute> possibleLineString = locationIqClient.calculateRoute(fifthAvenue, empireStateBuilding);
 
             // then:
             assertThat(possibleLineString)
@@ -133,7 +132,7 @@ class LocationIqClientTest {
                                     """));
 
             // expect:
-            assertThat(client.calculateRoute(fifthAvenue, empireStateBuilding))
+            assertThat(locationIqClient.calculateRoute(fifthAvenue, empireStateBuilding))
                     .isEmpty();
 
             // and:
@@ -149,7 +148,7 @@ class LocationIqClientTest {
                     .andRespond(withStatus(HttpStatus.UNAUTHORIZED));
 
             // expect:
-            assertThat(client.calculateRoute(fifthAvenue, empireStateBuilding))
+            assertThat(locationIqClient.calculateRoute(fifthAvenue, empireStateBuilding))
                     .isEmpty();
 
             // and:
@@ -164,7 +163,7 @@ class LocationIqClientTest {
                     .andRespond(withStatus(HttpStatus.INTERNAL_SERVER_ERROR));
 
             // expect:
-            assertThat(client.calculateRoute(fifthAvenue, empireStateBuilding))
+            assertThat(locationIqClient.calculateRoute(fifthAvenue, empireStateBuilding))
                     .isEmpty();
 
             // and:
@@ -179,7 +178,7 @@ class LocationIqClientTest {
                     .andRespond(withStatus(HttpStatus.BAD_REQUEST));
 
             // expect:
-            assertThat(client.calculateRoute(fifthAvenue, empireStateBuilding))
+            assertThat(locationIqClient.calculateRoute(fifthAvenue, empireStateBuilding))
                     .isEmpty();
 
             // and:

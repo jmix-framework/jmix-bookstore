@@ -113,12 +113,27 @@ public class TestDataCreation {
         this.tenantProvider = tenantProvider;
     }
 
+    public enum TestdataAmount {
+        SMALL(1),
+        MEDIUM(5),
+        LARGE(10);
+
+        private final int factor;
+
+        TestdataAmount(int factor) {
+            this.factor = factor;
+        }
+
+        public int getFactor() {
+            return factor;
+        }
+    }
 
     /**
      * Generates full set of test data for the current tenant.
      * A random number of customers, orders and products and suppliers are generated
      */
-    public void generateRandomTestdataForTenant() {
+    public void generateRandomTestdataForTenant(TestdataAmount amount) {
 
         String tenantId = tenantProvider.getCurrentUserTenantId();
         log.info("Random test data will be generated for Tenant '{}'...", tenantId);
@@ -131,27 +146,27 @@ public class TestDataCreation {
 
         AvailableFulfillmentCenters fulfillmentCenters = generateFulfillmentCenters(regions);
 
-//        List<Report> reports = importReports();
-//        log.info("{} Reports imported", reports.size());
-
-
         createBpmUserGroups();
         importBpmProcesses(tenantId);
         importDmnTables(tenantId);
         importTenantReport(tenantId);
 
 
-        List<ProductCategory> productCategories = generateProductCategories(number.numberBetween(5, 20));
+        List<ProductCategory> productCategories = generateProductCategories(randomAmount(amount.getFactor(), number, 5, 20));
 
-        List<Supplier> suppliers = generateSuppliers(number.numberBetween(10, 70));
+        List<Supplier> suppliers = generateSuppliers(randomAmount(amount.getFactor(), number, 10 * amount.getFactor(), 70));
 
-        List<Product> products = generateProducts(number.numberBetween(100, 200), productCategories, suppliers);
+        List<Product> products = generateProducts(randomAmount(amount.getFactor(), number, 100 * amount.getFactor(), 200 * amount.getFactor()), productCategories, suppliers);
 
-        List<Customer> customers = generateCustomers(number.numberBetween(100, 200), territories);
+        List<Customer> customers = generateCustomers(randomAmount(amount.getFactor(), number, 100, 200), territories);
 
-        generateOrders(number.numberBetween(500, 800), customers, products, fulfillmentCenters, territories);
+        generateOrders(randomAmount(amount.getFactor(), number, 500, 800), customers, products, fulfillmentCenters, territories);
 
         log.info("Random test data generation finished");
+    }
+
+    private static int randomAmount(int factor, Number number, int min, int max) {
+        return number.numberBetween(min * factor, max * factor);
     }
 
     /**
@@ -180,13 +195,6 @@ public class TestDataCreation {
         return new AvailableTerritories(dataManager.load(Territory.class).all().list());
     }
 
-
-    private List<Report> importReports() {
-        log.info("Trying to import Report: 'supplier-order-form.zip'");
-        List<Report> reports = reportDataProvider.create(new ReportDataProvider.DataContext("supplier-order-form.zip"));
-        log.info("{} Reports imported", reports.size());
-        return reports;
-    }
 
     private void importBpmProcesses(String tenantId) {
         log.info("Trying to import BPM Process Definition: 'supplier-order-form.zip'");
@@ -242,20 +250,20 @@ public class TestDataCreation {
         return productCategories;
     }
 
-    public List<UserGroup> createBpmUserGroups() {
+    private List<UserGroup> createBpmUserGroups() {
         log.info("Trying to create pre-defined BPM User Groups");
         List<UserGroup> userGroups = bpmUserGroupDataProvider.create(new BpmUserGroupDataProvider.DataContext());
         log.info("{} BPM User Groups created", userGroups.size());
         return userGroups;
     }
 
-    public EmployeePositions generateEmployeePositions() {
+    private EmployeePositions generateEmployeePositions() {
         log.info("Trying to create pre-defined Employee Positions");
         EmployeePositions employeePositions = new EmployeePositions(employeePositionDataProvider.create(new EmployeePositionDataProvider.DataContext()));
         log.info("{} Employee Positions created", employeePositions.size());
         return employeePositions;
     }
-    public AvailableRegions generateRegions() {
+    private AvailableRegions generateRegions() {
         log.info("Trying to create pre-defined Regions");
         AvailableRegions regions = new AvailableRegions(regionDataProvider.create(new RegionDataProvider.DataContext()));
         log.info("{} Regions created", regions.size());
@@ -274,7 +282,7 @@ public class TestDataCreation {
         log.info("{} Territories created", territories.size());
         return territories;
     }
-    public List<Employee> generateEmployees(EmployeePositions employeePositions, AvailableTerritories territories, String tenantId) {
+    private List<Employee> generateEmployees(EmployeePositions employeePositions, AvailableTerritories territories, String tenantId) {
         log.info("Trying to create pre-defined Employees");
         List<Employee> itEmployees = itAdministratorEmployeeDataProvider.create(new ItAdministratorEmployeeDataProvider.DataContext(employeePositions, tenantId));
         List<Employee> procurementManagers = procurementManagerDataProvider.create(new ProcurementManagerDataProvider.DataContext(employeePositions, tenantId));
@@ -297,11 +305,13 @@ public class TestDataCreation {
         return employees;
     }
 
-    public <T> List<T> joinLists(List<T>... lists) {
+    private  <T> List<T> joinLists(List<T>... lists) {
         return Arrays.stream(lists).flatMap(Collection::stream).collect(Collectors.toList());
     }
 
     public void importInitialReport() {
-        importReports();
+        log.info("Trying to import Report: 'supplier-order-form.zip'");
+        List<Report> reports = reportDataProvider.create(new ReportDataProvider.DataContext("supplier-order-form.zip"));
+        log.info("{} Reports imported", reports.size());
     }
 }

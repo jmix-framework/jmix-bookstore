@@ -53,6 +53,7 @@ class TenantTestdataIntegrationTest {
         asSystem(() -> {
             databaseCleanup.removeAllEntities();
             databaseCleanup.removeNonAdminUsers();
+            testDataCreation.importInitialReport();
         });
     }
 
@@ -89,11 +90,11 @@ class TenantTestdataIntegrationTest {
 
             // given:
             asSystem(() ->
-                    testEnvironmentTenants.createTenant(TENANT_ID)
+                testEnvironmentTenants.createTenant(TENANT_ID)
             );
 
             asTenantAdmin(() ->
-                    testDataCreation.generateRandomTestdataForTenant()
+                    testDataCreation.generateRandomTestdataForTenant(TestDataCreation.TestdataAmount.SMALL)
             );
 
             // and:
@@ -126,7 +127,7 @@ class TenantTestdataIntegrationTest {
             );
 
             asTenantAdmin(() ->
-                    testDataCreation.generateRandomTestdataForTenant()
+                    testDataCreation.generateRandomTestdataForTenant(TestDataCreation.TestdataAmount.SMALL)
             );
 
             // and:

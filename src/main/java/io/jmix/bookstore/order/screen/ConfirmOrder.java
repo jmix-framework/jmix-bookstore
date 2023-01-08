@@ -1,8 +1,8 @@
 package io.jmix.bookstore.order.screen;
 
 import io.jmix.bookstore.directions.CalculatedRoute;
-import io.jmix.bookstore.directions.LocationIqClient;
-import io.jmix.bookstore.directions.RouteCalculationAccuracy;
+import io.jmix.bookstore.directions.DirectionsProvider;
+import io.jmix.bookstore.directions.RouteAccuracy;
 import io.jmix.bookstore.entity.Address;
 import io.jmix.bookstore.fulfillment.FulfillmentCenter;
 import io.jmix.bookstore.order.OrderStatus;
@@ -40,7 +40,7 @@ public class ConfirmOrder extends StandardEditor<Order> {
     @Autowired
     private GeoMap fulfilledByMap;
     @Autowired
-    private LocationIqClient locationIqClient;
+    private DirectionsProvider directionsProvider;
     private CanvasLayer.Polyline drawnPolyline;
     @Autowired
     private TextField<String> durationField;
@@ -97,10 +97,10 @@ public class ConfirmOrder extends StandardEditor<Order> {
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
-            return locationIqClient.calculateRoute(
+            return directionsProvider.calculateRoute(
                     fulfillmentCenter.getAddress().getPosition(),
                     shippingAddress.getPosition(),
-                    RouteCalculationAccuracy.LOW_ACCURACY);
+                    RouteAccuracy.LOW_ACCURACY);
         }
 
         @Override

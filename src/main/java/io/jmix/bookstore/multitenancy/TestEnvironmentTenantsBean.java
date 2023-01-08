@@ -56,7 +56,7 @@ public class TestEnvironmentTenantsBean implements TestEnvironmentTenants {
     @Authenticated
     public void generateRandomTestdata(String tenantId) {
         User tenantAdmin = findAdminForTenant(tenantId);
-        systemAuthenticator.runWithUser(tenantAdmin.getUsername(), testDataCreation::generateRandomTestdataForTenant);
+        systemAuthenticator.runWithUser(tenantAdmin.getUsername(), () -> testDataCreation.generateRandomTestdataForTenant(TestDataCreation.TestdataAmount.MEDIUM));
 
         markAsTestdataInitialised(tenantId);
     }

@@ -1,4 +1,4 @@
-package io.jmix.bookstore.directions;
+package io.jmix.bookstore.directions.locationiq;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;

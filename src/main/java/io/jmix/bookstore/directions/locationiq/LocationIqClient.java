@@ -1,6 +1,10 @@
-package io.jmix.bookstore.directions;
+package io.jmix.bookstore.directions.locationiq;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import io.jmix.bookstore.directions.AddressInformation;
+import io.jmix.bookstore.directions.CalculatedRoute;
+import io.jmix.bookstore.directions.DirectionsProvider;
+import io.jmix.bookstore.directions.RouteAccuracy;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.GeometryFactory;
 import org.locationtech.jts.geom.LineString;
@@ -18,7 +22,6 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
-import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
@@ -27,8 +30,8 @@ import java.util.Optional;
  * It is possible to create a free account for personal / experimental usage.
  * See: <a href="https://locationiq.com/">LocationIQ</a>
  */
-@Component
-public class LocationIqClient {
+@Component(DirectionsProvider.NAME)
+public class LocationIqClient implements DirectionsProvider {
     private static final Logger log = LoggerFactory.getLogger(LocationIqClient.class);
 
     private final LocationIqProperties locationIqProperties;
@@ -39,18 +42,29 @@ public class LocationIqClient {
     }
 
     /**
-     * Calculating a route based on two points.
+     * Calculating a route based on two points against the LocationIQ API.
      * See: <a href="https://locationiq.com/docs-html/index.html#directions">LocationIQ - Directions API</a>
      *
      * @param start the starting point of the route
      * @param end the end point of the route
-     * @return a LineString representing the route if possible to calculate
+     * @return a CalculatedRoute representing the route if possible to calculate
      */
+    @Override
     public Optional<CalculatedRoute> calculateRoute(Point start, Point end) {
-        return calculateRoute(start, end, RouteCalculationAccuracy.HIGH_ACCURACY);
+        return calculateRoute(start, end, RouteAccuracy.HIGH_ACCURACY);
     }
 
-    public Optional<CalculatedRoute> calculateRoute(Point start, Point end, RouteCalculationAccuracy accuracy) {
+    /**
+     * Calculating a route based on two points against the LocationIQ API.
+     * See: <a href="https://locationiq.com/docs-html/index.html#directions">LocationIQ - Directions API</a>
+     *
+     * @param start the starting point of the route
+     * @param end the end point of the route
+     * @param accuracy the calculation accuracy which is considered when calculating the route
+     * @return a CalculatedRoute representing the route if possible to calculate
+     */
+    @Override
+    public Optional<CalculatedRoute> calculateRoute(Point start, Point end, RouteAccuracy accuracy) {
 
         log.info("Calculating route between start: '{}' and end: '{}' via LocationIQ API", start, end);
 
@@ -80,14 +94,13 @@ public class LocationIqClient {
 
 
 
-    public record AddressInformation(String street, String postalCode, String city, String state, String country){}
-
     /**
      * Performs a Forward Geocoding Operation (Address -> Point).
      * See: <a href="https://locationiq.com/docs-html/index.html#search-forward-geocoding">LocationIQ - Forward Geocoding API</a>
      * @param addressInformation the address information to search for
      * @return the Point of the address, if found
      */
+    @Override
     public Optional<Point> forwardGeocoding(AddressInformation addressInformation) {
 
         log.info("Forward Geocoding for Address Information: '{}' via LocationIQ API", addressInformation);
@@ -125,7 +138,7 @@ public class LocationIqClient {
         return Optional.of((LineString) new GeoJsonReader().read(json));
     }
 
-    private URI directionsApiUrl(Point start, Point end, RouteCalculationAccuracy accuracy) {
+    private URI directionsApiUrl(Point start, Point end, RouteAccuracy accuracy) {
         return locationIqBaseUrl()
                 .path("/v1/directions/driving/{coordinates}")
                 .queryParam("geometries", "geojson")
@@ -134,7 +147,7 @@ public class LocationIqClient {
                 .toUri();
     }
 
-    private String toDirectionsApiOverviewAttribute(RouteCalculationAccuracy accuracy) {
+    private String toDirectionsApiOverviewAttribute(RouteAccuracy accuracy) {
         return switch (accuracy) {
             case HIGH_ACCURACY -> "full";
             case LOW_ACCURACY -> "simplified";
