@@ -52,7 +52,7 @@ public class EmployeeDataProvider {
 
         user.setFirstName(employeeData.firstName());
         user.setLastName(employeeData.lastName());
-        user.setUsername(employeeData.username());
+        user.setUsername("%s|%s".formatted(employeeData.tenantId(), employeeData.username()));
         user.setPassword(passwordEncoder.encode(employeeData.username()));
         user.setEmail("%s@jmix-bookstore.com".formatted(employeeData.username()));
 

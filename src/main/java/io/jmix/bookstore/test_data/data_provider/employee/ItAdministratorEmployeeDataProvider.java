@@ -24,7 +24,7 @@ public class ItAdministratorEmployeeDataProvider implements TestDataProvider<Emp
 
     protected final DataManager dataManager;
 
-    public record DataContext(EmployeePositions employeePositions) {
+    public record DataContext(EmployeePositions employeePositions, String tenantId) {
     }
 
     public ItAdministratorEmployeeDataProvider(DataManager dataManager) {
@@ -35,6 +35,7 @@ public class ItAdministratorEmployeeDataProvider implements TestDataProvider<Emp
     public List<Employee> create(DataContext dataContext) {
 
         EmployeeData employeeData = new EmployeeData(
+                dataContext.tenantId(),
                 "admin",
                 Title.MR,
                 "Mike",
@@ -49,7 +50,7 @@ public class ItAdministratorEmployeeDataProvider implements TestDataProvider<Emp
 
         Employee employee = dataManager.create(Employee.class);
 
-        employee.setUser(dataManager.load(User.class).condition(PropertyCondition.equal("username", "admin")).one());
+        employee.setUser(dataManager.load(User.class).condition(PropertyCondition.equal("username", employeeData.fullUsername())).one());
         employee.setFirstName(employeeData.firstName());
         employee.setLastName(employeeData.lastName());
         employee.setPosition(employeeData.position());

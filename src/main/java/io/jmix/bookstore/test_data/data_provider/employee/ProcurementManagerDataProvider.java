@@ -2,19 +2,14 @@ package io.jmix.bookstore.test_data.data_provider.employee;
 
 import io.jmix.bookstore.employee.Employee;
 import io.jmix.bookstore.employee.Position;
-import io.jmix.bookstore.employee.Territory;
 import io.jmix.bookstore.entity.Title;
-import io.jmix.bookstore.security.EmployeeRole;
 import io.jmix.bookstore.security.ProcurementManagerRole;
 import io.jmix.bookstore.test_data.data_provider.TestDataProvider;
-import io.jmix.bpmui.security.role.BpmProcessActorRole;
-import io.jmix.securityui.role.UiMinimalRole;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 import static io.jmix.bookstore.test_data.data_provider.RandomValues.randomOfList;
 
@@ -23,7 +18,7 @@ public class ProcurementManagerDataProvider implements TestDataProvider<Employee
 
     protected final EmployeeDataProvider employeeDataProvider;
 
-    public record DataContext(EmployeePositions employeePositions) {
+    public record DataContext(EmployeePositions employeePositions, String tenantId) {
     }
     public ProcurementManagerDataProvider(EmployeeDataProvider employeeDataProvider) {
         this.employeeDataProvider = employeeDataProvider;
@@ -34,6 +29,7 @@ public class ProcurementManagerDataProvider implements TestDataProvider<Employee
 
         List<EmployeeData> employees = List.of(
                 new EmployeeData(
+                        dataContext.tenantId(),
                         "nicole",
                         Title.MRS,
                         "Nicole",

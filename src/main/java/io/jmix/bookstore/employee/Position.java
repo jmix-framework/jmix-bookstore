@@ -1,6 +1,7 @@
 package io.jmix.bookstore.employee;
 
 import io.jmix.bookstore.entity.StandardEntity;
+import io.jmix.bookstore.entity.StandardTenantEntity;
 import io.jmix.core.metamodel.annotation.InstanceName;
 import io.jmix.core.metamodel.annotation.JmixEntity;
 
@@ -13,7 +14,7 @@ import javax.validation.constraints.NotNull;
 @JmixEntity
 @Table(name = "BOOKSTORE_POSITION")
 @Entity(name = "bookstore_Position")
-public class Position extends StandardEntity {
+public class Position extends StandardTenantEntity {
     @InstanceName
     @Column(name = "NAME", nullable = false)
     @NotNull

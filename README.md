@@ -11,8 +11,11 @@ The application uses the following add-ons:
 * Reports
 * Email
 * data-tools
+* Multi-Tenancy
+* Quartz
 * BPM (premium)
 * Notifications (premium)
+* Maps (premium)
 
 ## Online Demo
 

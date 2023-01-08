@@ -2,23 +2,22 @@ package io.jmix.bookstore.test_data.data_provider.employee;
 
 import io.jmix.bookstore.employee.Employee;
 import io.jmix.bookstore.employee.Position;
-import io.jmix.bookstore.employee.Territory;
 import io.jmix.bookstore.entity.Title;
 import io.jmix.bookstore.security.OrderFulfillmentRole;
 import io.jmix.bookstore.test_data.data_provider.TestDataProvider;
+import io.jmix.bookstore.test_data.data_provider.region.AvailableRegions;
+import io.jmix.bookstore.test_data.data_provider.territory.AvailableTerritories;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 @Component("bookstore_OrderFulfillmentManagerDataProvider")
 public class OrderFulfillmentManagerDataProvider implements TestDataProvider<Employee, OrderFulfillmentManagerDataProvider.DataContext> {
 
     protected final EmployeeDataProvider employeeDataProvider;
 
-    public record DataContext(EmployeePositions employeePositions, List<Territory> territories) {
+    public record DataContext(EmployeePositions employeePositions, AvailableTerritories territories, String tenantId) {
     }
 
     public OrderFulfillmentManagerDataProvider(EmployeeDataProvider employeeDataProvider) {
@@ -30,6 +29,7 @@ public class OrderFulfillmentManagerDataProvider implements TestDataProvider<Emp
 
         List<EmployeeData> employees = List.of(
                 new EmployeeData(
+                        dataContext.tenantId(),
                         "adrian",
                         Title.MR,
                         "Adrian",
@@ -39,18 +39,13 @@ public class OrderFulfillmentManagerDataProvider implements TestDataProvider<Emp
                         null,
                         orderFulfillmentManagerRoles(),
                         List.of(),
-                        territoriesForRegion(dataContext.territories(), "US-South")
+                        dataContext.territories().findTerritoriesFromRegion(AvailableRegions.Entry.US_SOUTH)
                 )
         );
 
         return employeeDataProvider.save(employees);
     }
 
-    private Set<Territory> territoriesForRegion(List<Territory> territories, String regionName) {
-        return territories.stream()
-                .filter(territory -> regionName.equals(territory.getRegion().getName()))
-                .collect(Collectors.toSet());
-    }
 
     private static List<String> orderFulfillmentManagerRoles() {
         return List.of(

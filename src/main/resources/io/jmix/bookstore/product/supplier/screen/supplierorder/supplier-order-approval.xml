@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <window xmlns="http://jmix.io/schema/ui/window"
-        caption="msg://supplierOrderReview.caption"
+        caption="msg://supplierOrderApproval.caption"
         focusComponent="form">
     <data>
         <instance id="supplierOrderDc"

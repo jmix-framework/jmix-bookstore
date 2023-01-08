@@ -351,6 +351,29 @@ public class SupplierAssert extends AbstractObjectAssert<SupplierAssert, Supplie
   }
 
   /**
+   * Verifies that the actual Supplier's tenant is equal to the given one.
+   * @param tenant the given tenant to compare the actual Supplier's tenant to.
+   * @return this assertion object.
+   * @throws AssertionError - if the actual Supplier's tenant is not equal to the given one.
+   */
+  public SupplierAssert hasTenant(String tenant) {
+    // check that actual Supplier we want to make assertions on is not null.
+    isNotNull();
+
+    // overrides the default error message with a more explicit one
+    String assertjErrorMessage = "\nExpecting tenant of:\n  <%s>\nto be:\n  <%s>\nbut was:\n  <%s>";
+
+    // null safe check
+    String actualTenant = actual.getTenant();
+    if (!Objects.deepEquals(actualTenant, tenant)) {
+      failWithMessage(assertjErrorMessage, actual, tenant, actualTenant);
+    }
+
+    // return the current assertion for method chaining
+    return this;
+  }
+
+  /**
    * Verifies that the actual Supplier's version is equal to the given one.
    * @param version the given version to compare the actual Supplier's version to.
    * @return this assertion object.

@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jmix.bookstore.customer.Customer;
 import io.jmix.bookstore.employee.Territory;
+import io.jmix.bookstore.test_data.data_provider.territory.AvailableTerritories;
 import io.jmix.core.DataManager;
 import io.jmix.core.SaveContext;
 import net.datafaker.*;
@@ -32,7 +33,7 @@ public class CustomerDataProvider implements TestDataProvider<Customer, Customer
     protected final RestTemplate restTemplate;
 
     public record DataContext(int amount, String addressesFileName,
-                              List<io.jmix.bookstore.employee.Territory> territories){
+                              AvailableTerritories territories){
     }
 
     /**
@@ -63,7 +64,7 @@ public class CustomerDataProvider implements TestDataProvider<Customer, Customer
         return commit(createCustomer(dataContext.amount(), dataContext.addressesFileName(), dataContext.territories()));
     }
 
-    private List<Customer> createCustomer(int amount, String addressesFileName, List<Territory> territories) {
+    private List<Customer> createCustomer(int amount, String addressesFileName, AvailableTerritories territories) {
         Faker faker = new Faker();
 
         AddressEntries addresses = addresses(addressesFileName);
@@ -91,7 +92,7 @@ public class CustomerDataProvider implements TestDataProvider<Customer, Customer
 
     public record CustomerData(AddressEntry address, Name name, Internet internet, PhoneNumber phoneNumber){}
 
-    private Customer toCustomer(CustomerData customerData, List<Territory> territories) {
+    private Customer toCustomer(CustomerData customerData, AvailableTerritories territories) {
         Customer customer = dataManager.create(Customer.class);
         Name nameFaker = customerData.name();
         String firstName = nameFaker.firstName();
@@ -105,13 +106,10 @@ public class CustomerDataProvider implements TestDataProvider<Customer, Customer
 
         customer.setAddress(toAddress(customerData.address()));
 
-        territories.stream()
-                .filter(territory -> territory.getGeographicalArea() != null)
-                .filter(territory -> territory.getGeographicalArea().contains(customer.getAddress().getPosition()))
-                .findFirst()
+        territories.findTerritoryForPosition(customer.getAddress().getPosition())
                 .map(Territory::getRegion)
                 .ifPresent(customer::setAssociatedRegion);
-        
+
         return customer;
     }
 

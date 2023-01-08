@@ -1,9 +1,6 @@
 package io.jmix.bookstore.employee;
 
-import io.jmix.bookstore.entity.Address;
-import io.jmix.bookstore.entity.StandardEntity;
-import io.jmix.bookstore.entity.Title;
-import io.jmix.bookstore.entity.User;
+import io.jmix.bookstore.entity.*;
 import io.jmix.core.entity.annotation.EmbeddedParameters;
 import io.jmix.core.metamodel.annotation.InstanceName;
 import io.jmix.core.metamodel.annotation.JmixEntity;
@@ -20,7 +17,7 @@ import java.util.List;
         @Index(name = "IDX_BOOKSTORE_EMPLOYEE_POSITION", columnList = "POSITION_ID")
 })
 @Entity(name = "bookstore_Employee")
-public class Employee extends StandardEntity {
+public class Employee extends StandardTenantEntity {
     @InstanceName
     @Column(name = "FIRST_NAME")
     private String firstName;

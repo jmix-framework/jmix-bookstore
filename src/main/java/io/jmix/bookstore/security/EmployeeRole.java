@@ -4,6 +4,7 @@ import io.jmix.bookstore.employee.Employee;
 import io.jmix.bookstore.employee.Position;
 import io.jmix.bookstore.entity.Address;
 import io.jmix.bookstore.fulfillment.FulfillmentCenter;
+import io.jmix.bookstore.multitenancy.TestEnvironmentTenant;
 import io.jmix.security.model.EntityAttributePolicyAction;
 import io.jmix.security.model.EntityPolicyAction;
 import io.jmix.security.role.annotation.EntityAttributePolicy;
@@ -33,4 +34,9 @@ public interface EmployeeRole {
     @EntityAttributePolicy(entityClass = Address.class, attributes = "*", action = EntityAttributePolicyAction.VIEW)
     @EntityPolicy(entityClass = Address.class, actions = EntityPolicyAction.READ)
     void address();
+
+    @EntityAttributePolicy(entityClass = TestEnvironmentTenant.class, attributes = {"lastLogin", "testdataInitialised"}, action = EntityAttributePolicyAction.MODIFY)
+    @EntityAttributePolicy(entityClass = TestEnvironmentTenant.class, attributes = {"id", "version", "createTs", "createdBy", "updateTs", "updatedBy", "deleteTs", "deletedBy", "tenantId", "name"}, action = EntityAttributePolicyAction.VIEW)
+    @EntityPolicy(entityClass = TestEnvironmentTenant.class, actions = {EntityPolicyAction.READ, EntityPolicyAction.UPDATE})
+    void testEnvironmentTenant();
 }

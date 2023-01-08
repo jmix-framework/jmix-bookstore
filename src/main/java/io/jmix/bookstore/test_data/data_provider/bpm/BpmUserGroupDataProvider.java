@@ -1,7 +1,5 @@
 package io.jmix.bookstore.test_data.data_provider.bpm;
 
-import io.jmix.bookstore.employee.Employee;
-import io.jmix.bookstore.employee.Region;
 import io.jmix.bookstore.security.OrderFulfillmentRole;
 import io.jmix.bookstore.security.ProcurementSpecialistRole;
 import io.jmix.bookstore.security.ProcurementManagerRole;
@@ -10,8 +8,6 @@ import io.jmix.bpm.entity.UserGroup;
 import io.jmix.bpm.entity.UserGroupRole;
 import io.jmix.core.DataManager;
 import io.jmix.core.SaveContext;
-import net.datafaker.Address;
-import net.datafaker.Faker;
 import org.springframework.stereotype.Component;
 
 import java.util.List;

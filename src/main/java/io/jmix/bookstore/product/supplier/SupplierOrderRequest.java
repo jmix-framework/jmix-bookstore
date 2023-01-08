@@ -1,6 +1,7 @@
 package io.jmix.bookstore.product.supplier;
 
 import io.jmix.bookstore.entity.StandardEntity;
+import io.jmix.bookstore.entity.StandardTenantEntity;
 import io.jmix.bookstore.entity.User;
 import io.jmix.bookstore.product.Product;
 import io.jmix.core.metamodel.annotation.InstanceName;
@@ -15,7 +16,7 @@ import javax.validation.constraints.NotNull;
         @Index(name = "IDX_BOOKSTORE_SUPPLIER_ORDER_REQUEST_REQUESTED_BY", columnList = "REQUESTED_BY_ID")
 })
 @Entity(name = "bookstore_SupplierOrderRequest")
-public class SupplierOrderRequest extends StandardEntity {
+public class SupplierOrderRequest extends StandardTenantEntity {
     @InstanceName
     @JoinColumn(name = "PRODUCT_ID", nullable = false)
     @NotNull

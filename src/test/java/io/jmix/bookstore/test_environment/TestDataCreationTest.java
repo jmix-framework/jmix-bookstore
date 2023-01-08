@@ -1,10 +1,12 @@
-package io.jmix.bookstore.test_data;
+package io.jmix.bookstore.test_environment;
 
 import io.jmix.bookstore.product.Product;
 import io.jmix.bookstore.product.ProductCategory;
 import io.jmix.bookstore.product.supplier.Supplier;
 import io.jmix.bookstore.product.test_support.ProductCategories;
 import io.jmix.bookstore.product.test_support.Suppliers;
+import io.jmix.bookstore.test_data.DatabaseCleanup;
+import io.jmix.bookstore.test_data.TestDataCreation;
 import io.jmix.bookstore.test_support.AuthenticatedAsAdmin;
 import io.jmix.core.DataManager;
 import io.jmix.core.TimeSource;

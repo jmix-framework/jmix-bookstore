@@ -32,7 +32,7 @@ public interface ProcurementSpecialistRole {
     void supplierOrderLine();
 
     @EntityAttributePolicy(entityClass = SupplierOrderRequest.class, attributes = "status", action = EntityAttributePolicyAction.MODIFY)
-    @EntityAttributePolicy(entityClass = SupplierOrderRequest.class, attributes = {"id", "version", "createdBy", "createdDate", "lastModifiedBy", "lastModifiedDate", "deletedBy", "deletedDate", "product", "requestedAmount", "comment", "requestedBy"}, action = EntityAttributePolicyAction.VIEW)
+    @EntityAttributePolicy(entityClass = SupplierOrderRequest.class, attributes = {"id", "version", "createdBy", "createdDate", "lastModifiedBy", "lastModifiedDate", "deletedBy", "deletedDate", "product", "requestedAmount", "comment", "requestedBy", "tenant"}, action = EntityAttributePolicyAction.VIEW)
     @EntityPolicy(entityClass = SupplierOrderRequest.class, actions = {EntityPolicyAction.UPDATE, EntityPolicyAction.READ})
     void supplierOrderRequest();
 

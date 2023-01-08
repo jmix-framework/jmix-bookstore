@@ -25,9 +25,8 @@
                           stylename="jmix-drawer-content"/>
             </drawer>
             <vbox expand="workArea" width="100%" height="100%">
-                <hbox align="TOP_RIGHT" spacing="true">
+                <hbox stylename="top-menu" align="TOP_RIGHT" spacing="true">
 
-                    <label id="positionBadgeLabel" align="MIDDLE_CENTER"/>
                     <hbox id="taskIndicator_rootBox"
                           expand="tasksIndicator_captionLabel"
                           stylename="jmix-tasks-indicator"
@@ -54,6 +53,8 @@
                             <theme path="avatars/unknown.png"/>
                         </resource>
                     </image>
+                    <label id="positionBadgeLabel" align="MIDDLE_CENTER" icon="USERS"/>
+                    <label id="tenantBadgeLabel" align="MIDDLE_CENTER" icon="HOME" stylename="position-blue position-badge"/>
 
                     <logoutButton id="logoutButton"
                                   icon="SIGN_OUT"

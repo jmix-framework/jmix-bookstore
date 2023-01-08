@@ -378,6 +378,7 @@
         <createIndex indexName="IDX_BOOKSTORE_PRODUCT_CATEGORY_UNQ" tableName="BOOKSTORE_PRODUCT_CATEGORY"
                      unique="true">
             <column name="NAME"/>
+            <column name="TENANT"/>
         </createIndex>
     </changeSet>
     <changeSet id="18" author="bookstore">

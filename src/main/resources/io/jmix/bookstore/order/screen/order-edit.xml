@@ -88,6 +88,7 @@
                     </actions>
                     <columns>
                         <column property="product" id="product"/>
+                        <column property="quantity" id="quantity"/>
                     </columns>
                     <buttonsPanel>
                         <button action="orderLinesTable.create"/>

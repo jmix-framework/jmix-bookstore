@@ -9,7 +9,7 @@ import javax.validation.constraints.NotBlank;
 
 @JmixEntity
 @Table(name = "BOOKSTORE_PRODUCT_CATEGORY", uniqueConstraints = {
-        @UniqueConstraint(name = "IDX_BOOKSTORE_PRODUCT_CATEGORY_UNQ", columnNames = {"NAME"})
+        @UniqueConstraint(name = "IDX_BOOKSTORE_PRODUCT_CATEGORY_UNQ", columnNames = {"NAME", "TENANT"})
 })
 @Entity(name = "bookstore_ProductCategory")
 public class ProductCategory extends StandardTenantEntity {
