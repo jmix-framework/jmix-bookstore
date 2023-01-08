@@ -1,10 +1,14 @@
 package io.jmix.bookstore.screen.user;
 
+import com.google.common.base.Strings;
 import io.jmix.bookstore.entity.User;
 import io.jmix.core.EntityStates;
 import io.jmix.core.security.event.SingleUserPasswordChangeEvent;
+import io.jmix.multitenancy.core.TenantProvider;
+import io.jmix.multitenancyui.MultitenancyUiSupport;
 import io.jmix.ui.Notifications;
 import io.jmix.ui.component.ComboBox;
+import io.jmix.ui.component.HasValue;
 import io.jmix.ui.component.PasswordField;
 import io.jmix.ui.component.TextField;
 import io.jmix.ui.model.DataContext;
@@ -27,6 +31,11 @@ public class UserEdit extends StandardEditor<User> {
     private EntityStates entityStates;
 
     @Autowired
+    private ComboBox<String> tenantField;
+
+    @Autowired
+    private TenantProvider tenantProvider;
+    @Autowired
     private PasswordEncoder passwordEncoder;
 
     @Autowired
@@ -48,6 +57,27 @@ public class UserEdit extends StandardEditor<User> {
     private ComboBox<String> timeZoneField;
 
     private boolean isNewEntity;
+
+
+    @Autowired
+    private MultitenancyUiSupport multitenancyUiSupport;
+
+    @Subscribe
+    public void onBeforeShow(BeforeShowEvent event) {
+        String currentTenantId = tenantProvider.getCurrentUserTenantId();
+        if (!currentTenantId.equals(TenantProvider.NO_TENANT)
+            && Strings.isNullOrEmpty(tenantField.getValue())) {
+            tenantField.setEditable(false);
+            tenantField.setValue(currentTenantId);
+        }
+    }
+
+    @Subscribe("tenantField")
+    public void onTenantFieldValueChange(HasValue.ValueChangeEvent<String> event) {
+        usernameField.setValue(
+                multitenancyUiSupport.getUsernameByTenant(
+                        usernameField.getValue(), event.getValue()));
+    }
 
     @Subscribe
     public void onInitEntity(InitEntityEvent<User> event) {
