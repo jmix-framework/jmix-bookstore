@@ -154,13 +154,13 @@ public class TestDataCreation {
 
         List<ProductCategory> productCategories = generateProductCategories(randomAmount(amount.getFactor(), number, 5, 20));
 
-        List<Supplier> suppliers = generateSuppliers(randomAmount(amount.getFactor(), number, 10 * amount.getFactor(), 70));
+        List<Supplier> suppliers = generateSuppliers(randomAmount(amount.getFactor(), number, 10, 70));
 
-        List<Product> products = generateProducts(randomAmount(amount.getFactor(), number, 100 * amount.getFactor(), 200 * amount.getFactor()), productCategories, suppliers);
+        List<Product> products = generateProducts(randomAmount(amount.getFactor(), number, 100, 200), productCategories, suppliers);
 
         List<Customer> customers = generateCustomers(randomAmount(amount.getFactor(), number, 100, 200), territories);
 
-        generateOrders(randomAmount(amount.getFactor(), number, 500, 800), customers, products, fulfillmentCenters, territories);
+        generateOrders(randomAmount(amount.getFactor(), number, 200, 500), customers, products, fulfillmentCenters, territories);
 
         log.info("Random test data generation finished");
     }
