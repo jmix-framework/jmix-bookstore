@@ -45,9 +45,7 @@
             <actions>
                 <action id="createSupplierOrdersFromRequests" icon="LIST_ALT"
                         caption="msg://createSupplierOrdersFromRequests"/>
-                <action id="create" type="create"/>
                 <action id="edit" type="edit"/>
-                <action id="remove" type="remove"/>
             </actions>
             <columns>
                 <column property="supplier" id="supplier"/>
@@ -59,9 +57,7 @@
             <buttonsPanel id="buttonsPanel"
                           alwaysVisible="true">
                 <button id="createSupplierOrdersFromRequestsBtn" primary="true" action="supplierOrdersTable.createSupplierOrdersFromRequests"/>
-                <button id="createBtn" action="supplierOrdersTable.create" primary="false"/>
                 <button id="editBtn" action="supplierOrdersTable.edit"/>
-                <button id="removeBtn" action="supplierOrdersTable.remove"/>
             </buttonsPanel>
         </dataGrid>
         <hbox id="lookupActions" spacing="true" visible="false">
