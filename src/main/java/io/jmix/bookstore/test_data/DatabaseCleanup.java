@@ -126,6 +126,9 @@ public class DatabaseCleanup {
         performDeletionWhere("BOOKSTORE_EMPLOYEE_TERRITORIES", "1=1", jdbcTemplate);
         performDeletionWhere(Employee.class,  tenantEquals("TENANT", tenant), jdbcTemplate);
 
+
+        performDeletionWhere(User.class,  tenantEquals("TENANT", tenant), jdbcTemplate);
+        performDeletionWhere(RoleAssignmentEntity.class,  usernameStartsWith(tenant), jdbcTemplate);
         performDeletionWhere(UserGroupRole.class,  tenantEquals("SYS_TENANT_ID", tenant), jdbcTemplate);
         performDeletionWhere(UserGroup.class, tenantEquals("SYS_TENANT_ID", tenant), jdbcTemplate);
         performDeletionWhere(Position.class, tenantEquals("TENANT", tenant), jdbcTemplate);
@@ -142,6 +145,9 @@ public class DatabaseCleanup {
 
     private static String tenantEquals(String columnName, Tenant tenant) {
         return "%s='%s'".formatted(columnName, tenant.getTenantId());
+    }
+    private static String usernameStartsWith(Tenant tenant) {
+        return "username like '%s|'".formatted(tenant.getTenantId());
     }
 
 }
