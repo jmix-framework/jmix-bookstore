@@ -115,7 +115,7 @@ public class TestDataCreation {
 
     public enum TestdataAmount {
         SMALL(1),
-        MEDIUM(5),
+        MEDIUM(2),
         LARGE(10);
 
         private final int factor;
@@ -152,15 +152,15 @@ public class TestDataCreation {
         importTenantReport(tenantId);
 
 
-        List<ProductCategory> productCategories = generateProductCategories(randomAmount(amount.getFactor(), number, 5, 20));
+        List<ProductCategory> productCategories = generateProductCategories(randomAmount(amount.getFactor(), number, 5, 10));
 
-        List<Supplier> suppliers = generateSuppliers(randomAmount(amount.getFactor(), number, 10, 70));
+        List<Supplier> suppliers = generateSuppliers(randomAmount(amount.getFactor(), number, 10, 50));
 
-        List<Product> products = generateProducts(randomAmount(amount.getFactor(), number, 100, 200), productCategories, suppliers);
+        List<Product> products = generateProducts(randomAmount(amount.getFactor(), number, 25, 50), productCategories, suppliers);
 
-        List<Customer> customers = generateCustomers(randomAmount(amount.getFactor(), number, 100, 200), territories);
+        List<Customer> customers = generateCustomers(randomAmount(amount.getFactor(), number, 50, 100), territories);
 
-        generateOrders(randomAmount(amount.getFactor(), number, 200, 500), customers, products, fulfillmentCenters, territories);
+        generateOrders(randomAmount(amount.getFactor(), number, 100, 150), customers, products, fulfillmentCenters, territories);
 
         log.info("Random test data generation finished");
     }
