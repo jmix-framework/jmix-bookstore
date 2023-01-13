@@ -106,6 +106,10 @@ dependencies {
     implementation 'io.jmix.multitenancy:jmix-multitenancy-starter'
     implementation 'io.jmix.multitenancy:jmix-multitenancy-ui-starter'
 
+    runtimeOnly 'org.postgresql:postgresql'
+
+    implementation "org.hsqldb:hsqldb"
+
 }
 
 test {

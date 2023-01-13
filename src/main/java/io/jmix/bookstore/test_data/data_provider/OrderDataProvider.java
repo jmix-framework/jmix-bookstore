@@ -52,6 +52,8 @@ public class OrderDataProvider implements TestDataProvider<Order, OrderDataProvi
                 dataContext.territories()
         );
         SaveContext saveContext = new SaveContext();
+        saveContext.setDiscardSaved(true);
+
         orders.forEach(saveContext::saving);
 
         orders.stream().flatMap(order -> order.getOrderLines().stream())

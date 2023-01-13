@@ -6,5 +6,25 @@ services:
     environment:
       - SPRING_PROFILES_ACTIVE=test
       - SERVER_SERVLET_CONTEXT_PATH=/bookstore
+      - MAIN_DATASOURCE_URL=jdbc:postgresql://db/bookstore
+      - MAIN_DATASOURCE_USERNAME=bookstore_user
+      - MAIN_DATASOURCE_PASSWORD=bookstore_password
     ports:
       - "8807:8080"
+    networks:
+      - bookstore-network
+  db:
+    image: postgres:13.5-alpine
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: bookstore
+      POSTGRES_USER: bookstore_user
+      POSTGRES_PASSWORD: bookstore_password
+    volumes:
+      - ./.jmix/postgres:/var/lib/postgresql/data
+    networks:
+      - bookstore-network
+
+networks:
+  bookstore-network:
