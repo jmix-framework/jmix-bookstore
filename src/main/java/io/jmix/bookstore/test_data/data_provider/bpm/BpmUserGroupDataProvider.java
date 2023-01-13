@@ -66,6 +66,7 @@ public class BpmUserGroupDataProvider implements TestDataProvider<UserGroup, Bpm
 
     private <T> List<T> commit(List<T> entities) {
         SaveContext saveContext = new SaveContext();
+        saveContext.setDiscardSaved(true);
         entities.forEach(saveContext::saving);
         dataManager.save(saveContext);
 

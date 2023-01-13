@@ -41,6 +41,7 @@ public class TerritoryDataProvider implements TestDataProvider<Territory, Territ
 
     private <T> List<T> commit(List<T> entities) {
         SaveContext saveContext = new SaveContext();
+        saveContext.setDiscardSaved(true);
         entities.forEach(saveContext::saving);
         dataManager.save(saveContext);
 
