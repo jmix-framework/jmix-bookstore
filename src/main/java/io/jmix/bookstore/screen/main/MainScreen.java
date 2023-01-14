@@ -114,6 +114,7 @@ public class MainScreen extends Screen implements Window.HasWorkArea {
                         @Override
                         public Boolean run(TaskLifeCycle<Number> taskLifeCycle) {
                             try {
+                                taskLifeCycle.publish();
                                 testEnvironmentTenants.generateRandomTestdata(tenantId);
                             }
                             catch (Exception e) {

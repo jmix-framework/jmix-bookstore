@@ -1,5 +1,6 @@
 package io.jmix.bookstore.test_environment.tenant;
 
+import io.jmix.bookstore.entity.User;
 import io.jmix.bookstore.multitenancy.test_environment.cleanup.TenantCleanup;
 import io.jmix.bookstore.multitenancy.test_environment.TenantCreation;
 import io.jmix.bookstore.multitenancy.TestEnvironmentTenants;
@@ -8,7 +9,9 @@ import io.jmix.bookstore.test_data.DatabaseCleanup;
 import io.jmix.bookstore.test_data.TestDataCreation;
 import io.jmix.core.DataManager;
 import io.jmix.core.TimeSource;
+import io.jmix.core.querycondition.PropertyCondition;
 import io.jmix.core.security.SystemAuthenticator;
+import io.jmix.multitenancy.entity.Tenant;
 import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
@@ -114,8 +117,10 @@ class TenantTestdataIntegrationTest {
             );
 
             // then:
-            assertThat(asTenantAdmin(() -> dbProducts().size()))
-                    .isEqualTo(0);
+            assertThat(asSystem(() -> dataManager.load(Tenant.class).condition(PropertyCondition.equal("tenantId", TENANT_ID)).optional()))
+                    .isEmpty();
+            assertThat(asSystem(() -> dataManager.load(User.class).condition(PropertyCondition.equal("tenant", TENANT_ID)).list()))
+                    .isEmpty();
         }
 
         @Test
