@@ -213,6 +213,15 @@
     box-shadow: none;
     -webkit-box-shadow: none;
   }
+
+
+  .demo-info {
+    background-color: #BAF7FF;
+  }
+
+  .collapsed.demo-info {
+    background-color: #BAF7FF !important;
+  }
 }
 
 

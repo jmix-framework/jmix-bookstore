@@ -3,7 +3,7 @@ package io.jmix.bookstore.product.supplier.notification;
 import io.jmix.bookstore.entity.User;
 import io.jmix.bookstore.product.Product;
 import io.jmix.bookstore.product.supplier.SupplierOrderRequest;
-import io.jmix.bookstore.product.supplier.SupplierOrderRequestCreatedEvent;
+import io.jmix.bookstore.product.supplier.event.SupplierOrderRequestCreatedEvent;
 import io.jmix.bookstore.security.ProcurementSpecialistRole;
 import io.jmix.bookstore.security.SalesRepresentativeRole;
 import io.jmix.core.Messages;
@@ -31,12 +31,12 @@ import static org.mockito.Mockito.*;
  *
  * Instead, Mockito is used to mock interactions with dependencies.
  */
-class SupplierOrderCreatedNotificationDetailDataProviderTest {
+class SupplierOrderRequestCreatedNotificationDetailDataProviderTest {
 
     /**
      * @Autowired is missing as the class is manually instantiated
      */
-    SupplierOrderCreatedNotificationDetailDataProvider dataProvider;
+    SupplierOrderRequestCreatedNotificationDetailDataProvider dataProvider;
 
     /**
      * Messages API from Jmix is mocked
@@ -53,7 +53,7 @@ class SupplierOrderCreatedNotificationDetailDataProviderTest {
 
 
         // class under test is manually created and mocks pased in via the constructor
-        dataProvider = new SupplierOrderCreatedNotificationDetailDataProvider(
+        dataProvider = new SupplierOrderRequestCreatedNotificationDetailDataProvider(
                 roleAssignmentRepository,
                 messages
         );

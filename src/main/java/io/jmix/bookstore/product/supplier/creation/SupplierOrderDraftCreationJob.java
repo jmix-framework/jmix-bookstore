@@ -21,8 +21,8 @@ public class SupplierOrderDraftCreationJob implements Job {
     @Authenticated
     public void execute(JobExecutionContext context) {
 
-        log.info("Starting Tenant Cleanup Job for Tenants {} older than hours", deleteTenantsOlderThanHours);
-        int amountOfCleanedUpTenants = supplierOrderDraftCreation.cleanupUnusedTenantsOlderThan(deleteTenantsOlderThanHours);
-        log.info("Finished Tenant Cleanup Job: {} tenants removed", amountOfCleanedUpTenants);
+        log.info("Starting Supplier Order Draft Creation Job for all Tenants");
+        int amountOfCreatedSupplierOrders = supplierOrderDraftCreation.createDraftSupplierOrders();
+        log.info("Finished Supplier Order Draft Creation Job: {} Supplier Orders created", amountOfCreatedSupplierOrders);
     }
 }

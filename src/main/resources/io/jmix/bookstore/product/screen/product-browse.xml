@@ -40,6 +40,20 @@
     <dialogMode height="600"
                 width="800"/>
     <layout expand="productsTable" spacing="true">
+        <groupBox
+                orientation="horizontal"
+                collapsable="true"
+                width="75%"
+                caption="msg://io.jmix.bookstore.screen/demoInfo"
+                icon="GRADUATION_CAP"
+                stylename="demo-info"
+                expand="demoInfoLabel"
+                align="MIDDLE_CENTER"
+                spacing="true">
+            <label id="demoInfoLabel"
+                   htmlEnabled="true"
+                   value="msg://productBrowse.demoInfo"/>
+        </groupBox>
         <filter id="filter"
                 dataLoader="productsDl">
             <properties include=".*"/>

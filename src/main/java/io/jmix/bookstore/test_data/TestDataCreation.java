@@ -146,12 +146,6 @@ public class TestDataCreation {
 
         AvailableFulfillmentCenters fulfillmentCenters = generateFulfillmentCenters(regions);
 
-        createBpmUserGroups();
-        importBpmProcesses(tenantId);
-        importDmnTables(tenantId);
-        importTenantReport(tenantId);
-
-
         List<ProductCategory> productCategories = generateProductCategories(randomAmount(amount.getFactor(), number, 5, 10));
 
         List<Supplier> suppliers = generateSuppliers(randomAmount(amount.getFactor(), number, 10, 50));
@@ -184,6 +178,12 @@ public class TestDataCreation {
         EmployeePositions employeePositions = generateEmployeePositions();
 
         generateEmployees(employeePositions, territories, tenantId);
+
+
+        createBpmUserGroups();
+        importBpmProcesses(tenantId);
+        importDmnTables(tenantId);
+        importTenantReport(tenantId);
 
     }
 

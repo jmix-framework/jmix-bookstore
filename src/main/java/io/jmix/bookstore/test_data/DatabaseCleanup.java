@@ -22,6 +22,8 @@ import io.jmix.core.querycondition.PropertyCondition;
 import io.jmix.core.security.SystemAuthenticator;
 import io.jmix.multitenancy.entity.Tenant;
 import io.jmix.securitydata.entity.RoleAssignmentEntity;
+import org.flowable.engine.RuntimeService;
+import org.flowable.engine.runtime.ProcessInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -40,6 +42,8 @@ public class DatabaseCleanup {
 
     @Autowired
     DataManager dataManager;
+    @Autowired
+    RuntimeService runtimeService;
 
     @Autowired
     Metadata metadata;
@@ -77,6 +81,8 @@ public class DatabaseCleanup {
     }
     public void removeAllEntities() {
 
+        deleteBpmProcessInstancesFor("perform-supplier-order");
+
         JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
 
         performDeletion("BOOKSTORE_EMPLOYEE_TERRITORIES", jdbcTemplate);
@@ -94,6 +100,15 @@ public class DatabaseCleanup {
         performDeletion(Product.class, jdbcTemplate);
         performDeletion(ProductCategory.class, jdbcTemplate);
         performDeletion(Supplier.class, jdbcTemplate);
+    }
+
+    private void deleteBpmProcessInstancesFor(String processDefinitionKey) {
+        List<ProcessInstance> processInstances = runtimeService.createProcessInstanceQuery()
+                .processDefinitionKey(processDefinitionKey)
+                .list();
+        processInstances.forEach(processInstance ->
+            runtimeService.deleteProcessInstance(processInstance.getProcessInstanceId(), "test data cleanup")
+        );
     }
 
     public void removeAllEntities(List<?> entities) {

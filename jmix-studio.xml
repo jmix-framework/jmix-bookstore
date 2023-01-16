@@ -30,11 +30,11 @@
     <option name="savedDbProperties">
       <list>
         <SavedDbProperties>
-          <option name="databaseName" value="bookstore10" />
+          <option name="databaseName" value="bookstore5" />
           <option name="dbType" value="hsqlfile" />
           <option name="dbmsVersion" />
           <option name="host" value=".jmix/hsqldb" />
-          <option name="url" value="jdbc:hsqldb:file:.jmix/hsqldb/bookstore10" />
+          <option name="url" value="jdbc:hsqldb:file:.jmix/hsqldb/bookstore5" />
           <option name="user" value="sa" />
         </SavedDbProperties>
         <SavedDbProperties>

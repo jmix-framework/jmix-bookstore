@@ -28,7 +28,7 @@ public class SupplierOrderDraftCreation {
     }
 
 
-    public void createDraftSupplierOrders() {
+    public int createDraftSupplierOrders() {
         List<SupplierOrderRequest> supplierOrderRequests = dataManager.load(SupplierOrderRequest.class)
                 .condition(PropertyCondition.equal("status", SupplierOrderRequestStatus.NEW))
                 .fetchPlan(this::supplierOrderRequestsFetchPlan)
@@ -51,16 +51,18 @@ public class SupplierOrderDraftCreation {
         dataManager.save(saveContext);
 
         supplierOrders.forEach(this::startProcess);
+        return supplierOrders.size();
     }
 
     private void startProcess(SupplierOrder supplierOrder) {
         Map<String, Object> params = new HashMap<>();
         params.put("supplierOrder", supplierOrder);
+
         runtimeService.startProcessInstanceByKeyAndTenantId(
                 "perform-supplier-order",
                 businessKey(supplierOrder),
                 params,
-                tenantProvider.getCurrentUserTenantId()
+                supplierOrder.getTenant()
         );
     }
 
@@ -71,6 +73,7 @@ public class SupplierOrderDraftCreation {
     private SupplierOrder createSupplierOrder(Supplier supplier, List<SupplierOrderRequest> requests) {
 
         SupplierOrder supplierOrder = dataManager.create(SupplierOrder.class);
+        supplierOrder.setTenant(supplier.getTenant());
         supplierOrder.setSupplier(supplier);
         supplierOrder.setStatus(SupplierOrderStatus.DRAFT);
         supplierOrder.setOrderDate(timeSource.now().toLocalDate().plusDays(7));
@@ -86,6 +89,7 @@ public class SupplierOrderDraftCreation {
 
     private SupplierOrderLine createSupplierOrderLine(SupplierOrder supplierOrder, SupplierOrderRequest supplierOrderRequest) {
         SupplierOrderLine supplierOrderLine = dataManager.create(SupplierOrderLine.class);
+        supplierOrderLine.setTenant(supplierOrderRequest.getTenant());
         supplierOrderLine.setProduct(supplierOrderRequest.getProduct());
         supplierOrderLine.setQuantity(supplierOrderRequest.getRequestedAmount());
         supplierOrderLine.setSupplierOrder(supplierOrder);

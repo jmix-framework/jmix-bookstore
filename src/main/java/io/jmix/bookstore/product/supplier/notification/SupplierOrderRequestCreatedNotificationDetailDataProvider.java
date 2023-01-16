@@ -3,7 +3,7 @@ package io.jmix.bookstore.product.supplier.notification;
 import io.jmix.bookstore.entity.User;
 import io.jmix.bookstore.notification.NotificationDetailDataProvider;
 import io.jmix.bookstore.notification.InAppNotificationSource;
-import io.jmix.bookstore.product.supplier.SupplierOrderRequestCreatedEvent;
+import io.jmix.bookstore.product.supplier.event.SupplierOrderRequestCreatedEvent;
 import io.jmix.bookstore.security.ProcurementSpecialistRole;
 import io.jmix.core.Messages;
 import io.jmix.security.role.assignment.RoleAssignment;
@@ -12,13 +12,13 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
-@Component("bookstore_SupplierOrderCreatedNotificationDetailDataProvider")
-public class SupplierOrderCreatedNotificationDetailDataProvider implements NotificationDetailDataProvider<SupplierOrderRequestCreatedEvent> {
+@Component("bookstore_SupplierOrderRequestCreatedNotificationDetailDataProvider")
+public class SupplierOrderRequestCreatedNotificationDetailDataProvider implements NotificationDetailDataProvider<SupplierOrderRequestCreatedEvent> {
 
     protected final RoleAssignmentRepository roleAssignmentRepository;
     private final Messages messages;
 
-    public SupplierOrderCreatedNotificationDetailDataProvider(RoleAssignmentRepository roleAssignmentRepository, Messages messages) {
+    public SupplierOrderRequestCreatedNotificationDetailDataProvider(RoleAssignmentRepository roleAssignmentRepository, Messages messages) {
         this.roleAssignmentRepository = roleAssignmentRepository;
         this.messages = messages;
     }
