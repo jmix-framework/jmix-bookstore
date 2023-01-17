@@ -71,7 +71,7 @@ public class TenantCreation {
     }
 
     public String generateRandomTenantId() {
-        return "test-environment-%s".formatted(
+        return "test-%s".formatted(
                 new Faker().hashing().md5().substring(0,6).toLowerCase()
         );
     }

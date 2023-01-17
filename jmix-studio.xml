@@ -44,6 +44,15 @@
           <option name="url" value="jdbc:hsqldb:mem:bookstore" />
           <option name="user" value="sa" />
         </SavedDbProperties>
+        <SavedDbProperties>
+          <option name="databaseName" value="bookstore" />
+          <option name="dbType" value="postgres" />
+          <option name="dbmsVersion" />
+          <option name="host" value="localhost" />
+          <option name="pass" value="postgres" />
+          <option name="url" value="jdbc:postgresql://localhost/bookstore" />
+          <option name="user" value="postgres" />
+        </SavedDbProperties>
       </list>
     </option>
   </component>

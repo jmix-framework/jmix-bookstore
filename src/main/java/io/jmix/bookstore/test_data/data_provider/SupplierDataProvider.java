@@ -87,6 +87,7 @@ public class SupplierDataProvider implements TestDataProvider<Supplier, Supplier
 
     private <T> List<T> commit(List<T> entities) {
         SaveContext saveContext = new SaveContext();
+        saveContext.setDiscardSaved(true);
         entities.forEach(saveContext::saving);
         dataManager.save(saveContext);
 

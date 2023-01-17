@@ -15,6 +15,7 @@ import org.springframework.stereotype.Component;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 
 @Component("bookstore_ReportDataProvider")
 public class ReportDataProvider implements TestDataProvider<Report, ReportDataProvider.DataContext> {
@@ -38,9 +39,8 @@ public class ReportDataProvider implements TestDataProvider<Report, ReportDataPr
     @Override
     public List<Report> create(DataContext dataContext) {
 
-        ReportGroup defaultReportGroup = dataManager.create(ReportGroup.class);
-        defaultReportGroup.setTitle("General");
-        dataManager.save(defaultReportGroup);
+        ensureGeneralReportGroupIsPresent();
+
 
         Resource supplierOrderForm = resourceLoader.getResource(dataContext.resourceName());
         try {
@@ -51,6 +51,17 @@ public class ReportDataProvider implements TestDataProvider<Report, ReportDataPr
         } catch (IOException e) {
             throw new RuntimeException("Error while importing report", e);
         }
+    }
+
+    private void ensureGeneralReportGroupIsPresent() {
+        dataManager.load(ReportGroup.class)
+                .condition(PropertyCondition.equal("title", "General"))
+                .optional()
+                .orElseGet(() -> {
+                    ReportGroup defaultReportGroup = dataManager.create(ReportGroup.class);
+                    defaultReportGroup.setTitle("General");
+                    return dataManager.save(defaultReportGroup);
+                });
     }
 
 }
