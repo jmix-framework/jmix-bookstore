@@ -6,7 +6,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 
 import static org.quartz.CronScheduleBuilder.cronSchedule;
-import static org.quartz.SimpleScheduleBuilder.simpleSchedule;
 
 @Configuration
 @Profile("!integration-test")
@@ -25,6 +24,7 @@ public class SupplierOrderDraftCreationConfig {
     Trigger supplierOrderDraftTrigger(JobDetail supplierOrderDraft) {
         return TriggerBuilder.newTrigger()
                 .forJob(supplierOrderDraft)
+                .withIdentity("supplierOrderDraftTrigger")
                 .startNow()
                 .withSchedule(
                         cronSchedule("0 0/5 * * * ?")
