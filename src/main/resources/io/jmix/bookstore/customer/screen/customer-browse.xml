@@ -8,6 +8,7 @@
                     class="io.jmix.bookstore.customer.Customer">
             <fetchPlan extends="_base">
                 <property name="address"/>
+                <property name="associatedRegion" fetchPlan="_base"/>
             </fetchPlan>
             <loader id="customersDl">
                 <query>

@@ -9,6 +9,7 @@
                 <property name="orderLines" fetchPlan="_base">
                 </property>
                 <property name="fulfilledBy" fetchPlan="_base"/>
+                <property name="shippingAddress" fetchPlan="_base"/>
             </fetchPlan>
             <loader/>
             <collection id="orderLinesDc" property="orderLines"/>

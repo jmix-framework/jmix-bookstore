@@ -56,9 +56,11 @@ public class Order extends StandardTenantEntity {
 
     @Geometry
     @JmixProperty
+    @DependsOnProperties({"shippingAddress"})
     public Point getGeometry() {
-        return shippingAddress != null? shippingAddress.getPosition() : null;
+        return shippingAddress != null ? shippingAddress.getPosition() : null;
     }
+
     @NotNull
     @Column(name = "STATUS", nullable = false)
     private String status;
