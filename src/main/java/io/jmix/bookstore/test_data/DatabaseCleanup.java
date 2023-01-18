@@ -22,6 +22,8 @@ import io.jmix.core.querycondition.PropertyCondition;
 import io.jmix.core.security.SystemAuthenticator;
 import io.jmix.multitenancy.entity.Tenant;
 import io.jmix.securitydata.entity.RoleAssignmentEntity;
+import org.flowable.engine.RuntimeService;
+import org.flowable.engine.runtime.ProcessInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -40,6 +42,8 @@ public class DatabaseCleanup {
 
     @Autowired
     DataManager dataManager;
+    @Autowired
+    RuntimeService runtimeService;
 
     @Autowired
     Metadata metadata;
@@ -77,6 +81,8 @@ public class DatabaseCleanup {
     }
     public void removeAllEntities() {
 
+        deleteBpmProcessInstancesFor("perform-supplier-order");
+
         JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
 
         performDeletion("BOOKSTORE_EMPLOYEE_TERRITORIES", jdbcTemplate);
@@ -94,6 +100,15 @@ public class DatabaseCleanup {
         performDeletion(Product.class, jdbcTemplate);
         performDeletion(ProductCategory.class, jdbcTemplate);
         performDeletion(Supplier.class, jdbcTemplate);
+    }
+
+    private void deleteBpmProcessInstancesFor(String processDefinitionKey) {
+        List<ProcessInstance> processInstances = runtimeService.createProcessInstanceQuery()
+                .processDefinitionKey(processDefinitionKey)
+                .list();
+        processInstances.forEach(processInstance ->
+            runtimeService.deleteProcessInstance(processInstance.getProcessInstanceId(), "test data cleanup")
+        );
     }
 
     public void removeAllEntities(List<?> entities) {
@@ -115,6 +130,11 @@ public class DatabaseCleanup {
         PropertyCondition notAdmin = PropertyCondition.notEqual("username", "admin");
         List<RoleAssignmentEntity> allRoleAssignmentExceptAdmin = dataManager.load(RoleAssignmentEntity.class).condition(notAdmin).list();
         List<User> allUsersExceptAdmin = dataManager.load(User.class).condition(notAdmin).list();
+
+        JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
+
+        allUsersExceptAdmin.forEach(user -> performDeletionWhere("BOOKSTORE_USER_REGION_LINK", "USER_ID='%s'".formatted(user.getId()), jdbcTemplate));
+
         removeAllEntities(Stream.concat(allRoleAssignmentExceptAdmin.stream(), allUsersExceptAdmin.stream()).collect(Collectors.toList()));
     }
 
@@ -126,6 +146,11 @@ public class DatabaseCleanup {
         performDeletionWhere("BOOKSTORE_EMPLOYEE_TERRITORIES", "1=1", jdbcTemplate);
         performDeletionWhere(Employee.class,  tenantEquals("TENANT", tenant), jdbcTemplate);
 
+        performDeletionWhere(
+                "BOOKSTORE_USER_REGION_LINK",
+                "USER_ID IN (SELECT USER_ID FROM BOOKSTORE_USER WHERE TENANT='%s')".formatted(tenant.getTenantId()),
+                jdbcTemplate
+        );
 
         performDeletionWhere(User.class,  tenantEquals("TENANT", tenant), jdbcTemplate);
         performDeletionWhere(RoleAssignmentEntity.class,  usernameStartsWith(tenant), jdbcTemplate);

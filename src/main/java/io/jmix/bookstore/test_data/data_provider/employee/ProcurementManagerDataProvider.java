@@ -39,6 +39,7 @@ public class ProcurementManagerDataProvider implements TestDataProvider<Employee
                         null,
                         procurementManagerRoles(),
                         List.of(),
+                        Set.of(),
                         Set.of()
                 )
         );

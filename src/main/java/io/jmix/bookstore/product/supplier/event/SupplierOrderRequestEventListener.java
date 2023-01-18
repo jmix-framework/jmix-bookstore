@@ -1,5 +1,6 @@
-package io.jmix.bookstore.product.supplier;
+package io.jmix.bookstore.product.supplier.event;
 
+import io.jmix.bookstore.product.supplier.SupplierOrderRequest;
 import io.jmix.core.DataManager;
 import io.jmix.core.Id;
 import io.jmix.core.event.EntityChangedEvent;

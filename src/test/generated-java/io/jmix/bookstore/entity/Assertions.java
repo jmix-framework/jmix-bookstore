@@ -105,6 +105,39 @@ public class Assertions extends org.assertj.core.api.Assertions {
     return new io.jmix.bookstore.product.supplier.SupplierAssert(actual);
   }
 
+  /**
+   * Creates a new instance of <code>{@link io.jmix.bookstore.product.supplier.SupplierOrderAssert}</code>.
+   *
+   * @param actual the actual value.
+   * @return the created assertion object.
+   */
+  @org.assertj.core.util.CheckReturnValue
+  public static io.jmix.bookstore.product.supplier.SupplierOrderAssert assertThat(io.jmix.bookstore.product.supplier.SupplierOrder actual) {
+    return new io.jmix.bookstore.product.supplier.SupplierOrderAssert(actual);
+  }
+
+  /**
+   * Creates a new instance of <code>{@link io.jmix.bookstore.product.supplier.SupplierOrderLineAssert}</code>.
+   *
+   * @param actual the actual value.
+   * @return the created assertion object.
+   */
+  @org.assertj.core.util.CheckReturnValue
+  public static io.jmix.bookstore.product.supplier.SupplierOrderLineAssert assertThat(io.jmix.bookstore.product.supplier.SupplierOrderLine actual) {
+    return new io.jmix.bookstore.product.supplier.SupplierOrderLineAssert(actual);
+  }
+
+  /**
+   * Creates a new instance of <code>{@link io.jmix.bookstore.product.supplier.SupplierOrderRequestAssert}</code>.
+   *
+   * @param actual the actual value.
+   * @return the created assertion object.
+   */
+  @org.assertj.core.util.CheckReturnValue
+  public static io.jmix.bookstore.product.supplier.SupplierOrderRequestAssert assertThat(io.jmix.bookstore.product.supplier.SupplierOrderRequest actual) {
+    return new io.jmix.bookstore.product.supplier.SupplierOrderRequestAssert(actual);
+  }
+
   protected Assertions() {
     // empty
   }

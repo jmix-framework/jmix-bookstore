@@ -12,20 +12,33 @@ import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Set;
+
+import static io.jmix.bookstore.test_data.data_provider.region.AvailableRegions.Entry.*;
 
 @Component("bookstore_SalesRepresentativeDataProvider")
 public class SalesRepresentativeDataProvider implements TestDataProvider<Employee, SalesRepresentativeDataProvider.DataContext> {
 
     protected final EmployeeDataProvider employeeDataProvider;
 
-    public record DataContext(
-            EmployeePositions employeePositions,
-            AvailableTerritories availableTerritories,
-            String tenantId
-    ) {}
-
     public SalesRepresentativeDataProvider(EmployeeDataProvider employeeDataProvider) {
         this.employeeDataProvider = employeeDataProvider;
+    }
+
+    private static List<String> salesRepresentativeResourceRoles() {
+        return List.of(
+                SalesRepresentativeRole.CODE
+        );
+    }
+
+    private static List<String> salesRepresentativeRowLevelRoles() {
+        return List.of(
+                ShowOnlyAssociatedRegionsDataRole.CODE
+        );
+    }
+
+    private static Position salesRepresentative(DataContext dataContext) {
+        return dataContext.employeePositions().find(EmployeePositions.AvailablePosition.SALES_REPRESENTATIVE);
     }
 
     @Override
@@ -44,8 +57,12 @@ public class SalesRepresentativeDataProvider implements TestDataProvider<Employe
                         salesRepresentativeResourceRoles(),
                         salesRepresentativeRowLevelRoles(),
                         dataContext.availableTerritories().findTerritoriesFromRegion(
-                                AvailableRegions.Entry.US_EAST,
-                                AvailableRegions.Entry.US_SOUTH
+                                US_EAST,
+                                US_SOUTH
+                        ),
+                        Set.of(
+                                dataContext.regions().find(US_EAST),
+                                dataContext.regions().find(US_SOUTH)
                         )
                 ),
                 new EmployeeData(
@@ -60,8 +77,12 @@ public class SalesRepresentativeDataProvider implements TestDataProvider<Employe
                         salesRepresentativeResourceRoles(),
                         salesRepresentativeRowLevelRoles(),
                         dataContext.availableTerritories().findTerritoriesFromRegion(
-                                AvailableRegions.Entry.US_NORTH,
-                                AvailableRegions.Entry.US_WEST
+                                US_NORTH,
+                                US_WEST
+                        ),
+                        Set.of(
+                                dataContext.regions().find(US_NORTH),
+                                dataContext.regions().find(US_WEST)
                         )
                 )
         );
@@ -69,19 +90,11 @@ public class SalesRepresentativeDataProvider implements TestDataProvider<Employe
         return employeeDataProvider.save(employees);
     }
 
-    private static List<String> salesRepresentativeResourceRoles() {
-        return List.of(
-                SalesRepresentativeRole.CODE
-        );
-    }
-    private static List<String> salesRepresentativeRowLevelRoles() {
-        return List.of(
-                ShowOnlyAssociatedRegionsDataRole.CODE
-        );
-    }
-
-    private static Position salesRepresentative(DataContext dataContext) {
-        return dataContext.employeePositions().find(EmployeePositions.AvailablePosition.SALES_REPRESENTATIVE);
+    public record DataContext(
+            EmployeePositions employeePositions,
+            AvailableRegions regions, AvailableTerritories availableTerritories,
+            String tenantId
+    ) {
     }
 
 }

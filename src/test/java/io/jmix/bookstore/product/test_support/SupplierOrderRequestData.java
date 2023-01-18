@@ -17,4 +17,5 @@ public class SupplierOrderRequestData {
     String comment;
     User requestedBy;
     SupplierOrderRequestStatus status;
+    String tenant;
 }

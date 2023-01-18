@@ -44,8 +44,8 @@ public interface SalesRepresentativeRole {
     @EntityPolicy(entityClass = Order.class, actions = EntityPolicyAction.ALL)
     void order();
 
-    @EntityAttributePolicy(entityClass = Customer.class, attributes = "*", action = EntityAttributePolicyAction.VIEW)
-    @EntityPolicy(entityClass = Customer.class, actions = EntityPolicyAction.READ)
+    @EntityAttributePolicy(entityClass = Customer.class, attributes = "*", action = EntityAttributePolicyAction.MODIFY)
+    @EntityPolicy(entityClass = Customer.class, actions = EntityPolicyAction.ALL)
     void customer();
 
     @EntityAttributePolicy(entityClass = OrderLine.class, attributes = "*", action = EntityAttributePolicyAction.MODIFY)

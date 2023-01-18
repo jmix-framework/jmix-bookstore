@@ -41,6 +41,20 @@
     <dialogMode height="600"
                 width="800"/>
     <layout spacing="true" expand="contentTabSheet">
+        <groupBox
+                orientation="horizontal"
+                collapsable="true"
+                width="75%"
+                caption="msg://io.jmix.bookstore.screen/demoInfo"
+                icon="GRADUATION_CAP"
+                stylename="demo-info"
+                expand="demoInfoLabel"
+                align="MIDDLE_CENTER"
+                spacing="true">
+            <label id="demoInfoLabel"
+                   htmlEnabled="true"
+                   value="msg://employeeEdit.demoInfo"/>
+        </groupBox>
         <tabSheet id="contentTabSheet">
             <tab id="formTab"
                  caption="msg://io.jmix.bookstore.product/generalInformation"

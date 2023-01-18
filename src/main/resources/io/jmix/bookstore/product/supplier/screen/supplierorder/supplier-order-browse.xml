@@ -19,8 +19,10 @@
     <facets>
         <dataLoadCoordinator auto="true"/>
         <screenSettings id="settingsFacet" auto="true"/>
-        <notification id="supplierOrdersFromRequestsCreatedConfirmation" type="TRAY"
-                      caption="msg://supplierOrdersFromRequestsCreatedConfirmation"/>
+        <timer id="remainingTimeTimer"
+               autostart="true"
+               delay="5000"
+               repeating="true"/>
     </facets>
     <actions>
         <action id="lookupSelectAction"
@@ -35,6 +37,32 @@
     <dialogMode height="600"
                 width="800"/>
     <layout expand="supplierOrdersTable" spacing="true">
+
+        <groupBox
+                orientation="horizontal"
+                collapsable="true"
+                width="75%"
+                expand="scheduledSupplierOrderCreationDemoInfoLabel"
+                caption="msg://io.jmix.bookstore.screen/demoInfo"
+                icon="GRADUATION_CAP"
+                stylename="demo-info"
+                align="MIDDLE_CENTER"
+                spacing="true">
+            <label id="scheduledSupplierOrderCreationDemoInfoLabel"
+                   htmlEnabled="true"
+                   value="msg://supplierOrderBrowse.demoInfo"/>
+            <hbox id="nextCalculationLabelHBox"
+                  spacing="true"
+                  stylename="position-badge position-yellow"
+                  align="MIDDLE_CENTER">
+                <label id="nextCalculationLabel"
+                       align="MIDDLE_CENTER"
+                       width="100%"
+                       htmlEnabled="true"/>
+                <label  align="MIDDLE_CENTER" stylename="spinner"/>
+            </hbox>
+        </groupBox>
+
         <filter id="filter"
                 dataLoader="supplierOrdersDl">
             <properties include=".*"/>
@@ -43,11 +71,7 @@
                   width="100%"
                   dataContainer="supplierOrdersDc">
             <actions>
-                <action id="createSupplierOrdersFromRequests" icon="LIST_ALT"
-                        caption="msg://createSupplierOrdersFromRequests"/>
-                <action id="create" type="create"/>
-                <action id="edit" type="edit"/>
-                <action id="remove" type="remove"/>
+                <action id="view" type="view"/>
             </actions>
             <columns>
                 <column property="supplier" id="supplier"/>
@@ -58,10 +82,7 @@
             <simplePagination/>
             <buttonsPanel id="buttonsPanel"
                           alwaysVisible="true">
-                <button id="createSupplierOrdersFromRequestsBtn" primary="true" action="supplierOrdersTable.createSupplierOrdersFromRequests"/>
-                <button id="createBtn" action="supplierOrdersTable.create" primary="false"/>
-                <button id="editBtn" action="supplierOrdersTable.edit"/>
-                <button id="removeBtn" action="supplierOrdersTable.remove"/>
+                <button id="viewBtn" action="supplierOrdersTable.view"/>
             </buttonsPanel>
         </dataGrid>
         <hbox id="lookupActions" spacing="true" visible="false">

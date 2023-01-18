@@ -19,6 +19,7 @@ public class TenantCleanupConfig {
     @Bean
     Trigger tenantCleanupTrigger(JobDetail tenantCleanup) {
         return TriggerBuilder.newTrigger()
+                .withIdentity("tenantCleanupTrigger")
                 .forJob(tenantCleanup)
                 .startNow()
                 .withSchedule(CronScheduleBuilder.dailyAtHourAndMinute(4, 0))

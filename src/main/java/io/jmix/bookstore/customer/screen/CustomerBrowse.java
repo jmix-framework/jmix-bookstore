@@ -5,8 +5,12 @@ import io.jmix.bookstore.entity.Address;
 import io.jmix.mapsui.component.GeoMap;
 import io.jmix.mapsui.component.layer.VectorLayer;
 import io.jmix.ui.ScreenBuilders;
+import io.jmix.ui.component.Label;
+import io.jmix.ui.component.TabSheet;
 import io.jmix.ui.model.CollectionContainer;
 import io.jmix.ui.navigation.Route;
+import io.jmix.ui.navigation.UrlParamsChangedEvent;
+import io.jmix.ui.navigation.UrlRouting;
 import io.jmix.ui.screen.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -23,6 +27,8 @@ public class CustomerBrowse extends StandardLookup<Customer> {
     private GeoMap customersMap;
     @Autowired
     private ScreenBuilders screenBuilders;
+    @Autowired
+    private TabSheet contentTabSheet;
 
     @Subscribe
     public void onAfterShow(AfterShowEvent event) {
@@ -34,6 +40,14 @@ public class CustomerBrowse extends StandardLookup<Customer> {
                 .show()
         );
     }
+
+    @Subscribe
+    public void onUrlParamsChanged(UrlParamsChangedEvent event) {
+        String focusTab = event.getParams().get("focusTab");
+        contentTabSheet.setSelectedTab(focusTab);
+    }
+
+
 
 
     @Install(to = "customersMap.customersLayer", subject = "tooltipContentProvider")

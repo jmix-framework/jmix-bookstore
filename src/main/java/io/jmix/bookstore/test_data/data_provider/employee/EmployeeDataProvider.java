@@ -55,6 +55,7 @@ public class EmployeeDataProvider {
         user.setUsername("%s|%s".formatted(employeeData.tenantId(), employeeData.username()));
         user.setPassword(passwordEncoder.encode(employeeData.username()));
         user.setEmail("%s@jmix-bookstore.com".formatted(employeeData.username()));
+        user.setAssociatedRegions(employeeData.associatedRegions());
 
 
         Employee employee = dataManager.create(Employee.class);

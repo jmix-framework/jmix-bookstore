@@ -48,7 +48,7 @@ public class TestEnvironmentTenantsBean implements TestEnvironmentTenants {
     @Override
     @Authenticated
     public void createTenant(String tenantId) {
-        tenantCreation.createTenant(tenantId, adminUsername(tenantId));
+        tenantCreation.initialiseTenant(tenantId, adminUsername(tenantId));
     }
 
 

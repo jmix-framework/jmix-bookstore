@@ -39,6 +39,20 @@
     <dialogMode height="600"
                 width="800"/>
     <layout expand="tableMapSplit" spacing="true">
+        <groupBox
+                orientation="horizontal"
+                collapsable="true"
+                width="75%"
+                caption="msg://io.jmix.bookstore.screen/demoInfo"
+                icon="GRADUATION_CAP"
+                stylename="demo-info"
+                expand="demoInfoLabel"
+                align="MIDDLE_CENTER"
+                spacing="true">
+            <label id="demoInfoLabel"
+                   htmlEnabled="true"
+                   value="msg://territoryBrowse.demoInfo"/>
+        </groupBox>
         <filter id="filter"
                 dataLoader="territoriesDl">
             <properties include=".*"/>

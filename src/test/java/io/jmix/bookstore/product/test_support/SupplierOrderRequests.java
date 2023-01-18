@@ -36,7 +36,7 @@ public class SupplierOrderRequests
     @Override
     public SupplierOrderRequestData.SupplierOrderRequestDataBuilder defaultData() {
         return SupplierOrderRequestData.builder()
-                .requestedBy(databaseUserRepository.loadUserByUsername("admin"))
+                .requestedBy(null)
                 .product(products.createDefault())
                 .status(DEFAULT_STATUS)
                 .comment(DEFAULT_COMMENT)

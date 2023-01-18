@@ -33,7 +33,6 @@
                 </query>
             </loader>
         </collection>
-
         <collection id="fulfillmentCentersDc"
                     class="io.jmix.bookstore.fulfillment.FulfillmentCenter">
             <fetchPlan extends="_base">
@@ -64,6 +63,20 @@
     <dialogMode height="600"
                 width="800"/>
     <layout expand="contentTabSheet" spacing="true">
+        <groupBox
+                orientation="horizontal"
+                collapsable="true"
+                width="75%"
+                caption="msg://io.jmix.bookstore.screen/demoInfo"
+                icon="GRADUATION_CAP"
+                stylename="demo-info"
+                expand="demoInfoLabel"
+                align="MIDDLE_CENTER"
+                spacing="true">
+            <label id="demoInfoLabel"
+                   htmlEnabled="true"
+                   value="msg://orderBrowse.demoInfo"/>
+        </groupBox>
         <tabSheet id="contentTabSheet" width="100%" stylename="centered-tabs icons-on-top">
 
             <tab id="newOrdersTab" caption="msg://newOrders" spacing="true" margin="true" icon="font-icon:CERTIFICATE" expand="newOrdersTable">

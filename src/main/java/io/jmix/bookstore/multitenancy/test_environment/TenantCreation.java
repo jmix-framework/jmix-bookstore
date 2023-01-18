@@ -4,7 +4,6 @@ import io.jmix.bookstore.entity.User;
 import io.jmix.bookstore.multitenancy.TestEnvironmentTenant;
 import io.jmix.bookstore.security.FullAccessRole;
 import io.jmix.bookstore.test_data.TestDataCreation;
-import io.jmix.bookstore.test_data.data_provider.RandomValues;
 import io.jmix.core.DataManager;
 import io.jmix.core.TimeSource;
 import io.jmix.core.security.SystemAuthenticator;
@@ -13,8 +12,6 @@ import io.jmix.securitydata.entity.RoleAssignmentEntity;
 import net.datafaker.Faker;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
-
-import java.util.List;
 
 @Component("bookstore_TenantCreation")
 public class TenantCreation {
@@ -33,8 +30,16 @@ public class TenantCreation {
         this.timeSource = timeSource;
     }
 
-    public void createTenant(String tenantId, String adminUsername) {
+    public User initialiseTenant(String tenantId, String adminUsername) {
 
+        User tenantAdmin = createTenant(tenantId, adminUsername);
+
+        systemAuthenticator.runWithUser(tenantAdmin.getUsername(), () -> testDataCreation.initialiseTenantWithData(tenantId));
+
+        return tenantAdmin;
+    }
+
+    public User createTenant(String tenantId, String adminUsername) {
         TestEnvironmentTenant tenant = dataManager.create(TestEnvironmentTenant.class);
         tenant.setTenantId(tenantId);
         tenant.setName(tenantId);
@@ -53,8 +58,7 @@ public class TenantCreation {
         RoleAssignmentEntity tenantAdminRole = toRoleAssignment(tenantAdmin, FullAccessRole.CODE, RoleAssignmentRoleType.RESOURCE);
 
         dataManager.save(tenant, tenantAdmin, tenantAdminRole);
-
-        systemAuthenticator.runWithUser(tenantAdmin.getUsername(), () -> testDataCreation.initialiseTenantWithData(tenantId));
+        return tenantAdmin;
     }
 
 

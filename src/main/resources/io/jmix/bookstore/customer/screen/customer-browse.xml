@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <window xmlns="http://jmix.io/schema/ui/window"
-        xmlns:c="http://jmix.io/schema/ui/jpql-condition"
         xmlns:maps="http://jmix.io/schema/maps/ui"
         caption="msg://customerBrowse.caption"
         focusComponent="customersTable">
@@ -9,6 +8,7 @@
                     class="io.jmix.bookstore.customer.Customer">
             <fetchPlan extends="_base">
                 <property name="address"/>
+                <property name="associatedRegion" fetchPlan="_base"/>
             </fetchPlan>
             <loader id="customersDl">
                 <query>
@@ -34,12 +34,31 @@
     <dialogMode height="600"
                 width="800"/>
     <layout expand="contentTabSheet" spacing="true">
+        <groupBox
+                orientation="horizontal"
+                collapsable="true"
+                width="75%"
+                caption="msg://io.jmix.bookstore.screen/demoInfo"
+                icon="GRADUATION_CAP"
+                stylename="demo-info"
+                expand="demoInfoLabel"
+                align="MIDDLE_CENTER"
+                spacing="true">
+            <label id="demoInfoLabel"
+                   htmlEnabled="true"
+                   value="msg://customerBrowse.demoInfo"/>
+        </groupBox>
         <filter id="filter"
                 dataLoader="customersDl">
             <properties include=".*"/>
         </filter>
         <tabSheet id="contentTabSheet" width="100%">
-            <tab id="tableTab" caption="msg://customerList" spacing="true" margin="true" icon="font-icon:LIST" expand="customersTable">
+            <tab id="tableTab"
+                 caption="msg://customerList"
+                 spacing="true"
+                 margin="true"
+                 icon="font-icon:LIST"
+                 expand="customersTable">
                 <dataGrid id="customersTable"
                           width="100%"
                           dataContainer="customersDc">
@@ -61,7 +80,8 @@
                     </buttonsPanel>
                 </dataGrid>
             </tab>
-            <tab id="mapTab" caption="msg://customerMap" spacing="true" margin="true" icon="font-icon:MAP" expand="mapGroupBox">
+            <tab id="mapTab" caption="msg://customerMap" spacing="true" margin="true" icon="font-icon:MAP"
+                 expand="mapGroupBox">
                 <groupBox id="mapGroupBox" width="100%" expand="customersMap">
                     <maps:geoMap id="customersMap" width="100%" centerX="-99.755859" centerY="39.164141" zoom="4">
                         <maps:layers selectedLayer="tiles">
@@ -82,5 +102,6 @@
             <button action="lookupSelectAction"/>
             <button action="lookupCancelAction"/>
         </hbox>
+
     </layout>
 </window>

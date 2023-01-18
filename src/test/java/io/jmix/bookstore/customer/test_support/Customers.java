@@ -5,6 +5,9 @@ import io.jmix.bookstore.entity.Address;
 import io.jmix.bookstore.entity.test_support.AddressData;
 import io.jmix.bookstore.entity.test_support.AddressMapper;
 import io.jmix.bookstore.test_support.TestDataProvisioning;
+import org.locationtech.jts.geom.Coordinate;
+import org.locationtech.jts.geom.GeometryFactory;
+import org.locationtech.jts.geom.Point;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.stereotype.Component;
@@ -45,6 +48,7 @@ public class Customers
                 .city(DEFAULT_CITY)
                 .state(DEFAULT_STATE)
                 .country(DEFAULT_COUNTRY)
+                        .position(new GeometryFactory().createPoint(new Coordinate( 0,0)))
                 .build());
     }
 
