@@ -130,6 +130,11 @@ public class DatabaseCleanup {
         PropertyCondition notAdmin = PropertyCondition.notEqual("username", "admin");
         List<RoleAssignmentEntity> allRoleAssignmentExceptAdmin = dataManager.load(RoleAssignmentEntity.class).condition(notAdmin).list();
         List<User> allUsersExceptAdmin = dataManager.load(User.class).condition(notAdmin).list();
+
+        JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
+
+        allUsersExceptAdmin.forEach(user -> performDeletionWhere("BOOKSTORE_USER_REGION_LINK", "USER_ID='%s'".formatted(user.getId()), jdbcTemplate));
+
         removeAllEntities(Stream.concat(allRoleAssignmentExceptAdmin.stream(), allUsersExceptAdmin.stream()).collect(Collectors.toList()));
     }
 
@@ -141,6 +146,11 @@ public class DatabaseCleanup {
         performDeletionWhere("BOOKSTORE_EMPLOYEE_TERRITORIES", "1=1", jdbcTemplate);
         performDeletionWhere(Employee.class,  tenantEquals("TENANT", tenant), jdbcTemplate);
 
+        performDeletionWhere(
+                "BOOKSTORE_USER_REGION_LINK",
+                "USER_ID IN (SELECT USER_ID FROM BOOKSTORE_USER WHERE TENANT='%s')".formatted(tenant.getTenantId()),
+                jdbcTemplate
+        );
 
         performDeletionWhere(User.class,  tenantEquals("TENANT", tenant), jdbcTemplate);
         performDeletionWhere(RoleAssignmentEntity.class,  usernameStartsWith(tenant), jdbcTemplate);

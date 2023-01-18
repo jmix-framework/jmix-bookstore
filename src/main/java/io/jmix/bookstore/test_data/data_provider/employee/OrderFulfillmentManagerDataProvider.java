@@ -11,17 +11,27 @@ import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Set;
+
+import static io.jmix.bookstore.test_data.data_provider.region.AvailableRegions.Entry.US_SOUTH;
 
 @Component("bookstore_OrderFulfillmentManagerDataProvider")
 public class OrderFulfillmentManagerDataProvider implements TestDataProvider<Employee, OrderFulfillmentManagerDataProvider.DataContext> {
 
     protected final EmployeeDataProvider employeeDataProvider;
 
-    public record DataContext(EmployeePositions employeePositions, AvailableTerritories territories, String tenantId) {
-    }
-
     public OrderFulfillmentManagerDataProvider(EmployeeDataProvider employeeDataProvider) {
         this.employeeDataProvider = employeeDataProvider;
+    }
+
+    private static List<String> orderFulfillmentManagerRoles() {
+        return List.of(
+                OrderFulfillmentRole.CODE
+        );
+    }
+
+    private static Position orderFulfillmentManager(DataContext dataContext) {
+        return dataContext.employeePositions().find(EmployeePositions.AvailablePosition.ORDER_FULFILLMENT_MANAGER);
     }
 
     @Override
@@ -39,22 +49,17 @@ public class OrderFulfillmentManagerDataProvider implements TestDataProvider<Emp
                         null,
                         orderFulfillmentManagerRoles(),
                         List.of(),
-                        dataContext.territories().findTerritoriesFromRegion(AvailableRegions.Entry.US_SOUTH)
+                        dataContext.territories().findTerritoriesFromRegion(US_SOUTH),
+                        Set.of(
+                                dataContext.regions().find(US_SOUTH)
+                        )
                 )
         );
 
         return employeeDataProvider.save(employees);
     }
 
-
-    private static List<String> orderFulfillmentManagerRoles() {
-        return List.of(
-                OrderFulfillmentRole.CODE
-        );
-    }
-
-    private static Position orderFulfillmentManager(DataContext dataContext) {
-        return dataContext.employeePositions().find(EmployeePositions.AvailablePosition.ORDER_FULFILLMENT_MANAGER);
+    public record DataContext(EmployeePositions employeePositions, AvailableRegions regions, AvailableTerritories territories, String tenantId) {
     }
 
 }

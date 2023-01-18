@@ -69,7 +69,7 @@
                                     <textField id="addressCityField" property="address.city"/>
                                     <textField id="addressStateField" property="address.state"/>
                                     <textField id="addressCountryField" property="address.country"/>
-                                    <entityPicker id="associatedRegionField" property="associatedRegion"/>
+                                    <entityPicker id="associatedRegionField" property="associatedRegion" editable="false"/>
                                 </column>
                             </form>
                             <button id="showOnMapBtn" align="TOP_RIGHT" stylename="icon-only friendly"

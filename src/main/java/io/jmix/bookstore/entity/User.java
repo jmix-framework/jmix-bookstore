@@ -1,5 +1,6 @@
 package io.jmix.bookstore.entity;
 
+import io.jmix.bookstore.employee.Region;
 import io.jmix.core.HasTimeZone;
 import io.jmix.core.annotation.Secret;
 import io.jmix.core.annotation.TenantId;
@@ -11,10 +12,12 @@ import io.jmix.core.metamodel.annotation.JmixEntity;
 import io.jmix.multitenancy.core.AcceptsTenant;
 import io.jmix.security.authentication.JmixUserDetails;
 import org.springframework.security.core.GrantedAuthority;
+
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Set;
 import java.util.UUID;
 
 @JmixEntity
@@ -25,7 +28,7 @@ import java.util.UUID;
 public class User implements JmixUserDetails, HasTimeZone, AcceptsTenant {
 
     @Id
-    @Column(name = "ID")
+    @Column(name = "ID", nullable = false)
     @JmixGeneratedValue
     private UUID id;
 
@@ -75,8 +78,22 @@ public class User implements JmixUserDetails, HasTimeZone, AcceptsTenant {
     @Column(name = "TIME_ZONE_ID")
     protected String timeZoneId;
 
+    @JoinTable(name = "BOOKSTORE_USER_REGION_LINK",
+            joinColumns = @JoinColumn(name = "USER_ID", referencedColumnName = "ID"),
+            inverseJoinColumns = @JoinColumn(name = "REGION_ID", referencedColumnName = "ID"))
+    @ManyToMany
+    private Set<Region> associatedRegions;
+
     @Transient
     protected Collection<? extends GrantedAuthority> authorities;
+
+    public void setAssociatedRegions(Set<Region> associatedRegions) {
+        this.associatedRegions = associatedRegions;
+    }
+
+    public Set<Region> getAssociatedRegions() {
+        return associatedRegions;
+    }
 
     public UUID getId() {
         return id;

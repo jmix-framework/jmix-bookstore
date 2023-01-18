@@ -177,7 +177,7 @@ public class TestDataCreation {
 
         EmployeePositions employeePositions = generateEmployeePositions();
 
-        generateEmployees(employeePositions, territories, tenantId);
+        generateEmployees(employeePositions, regions, territories, tenantId);
 
 
         createBpmUserGroups();
@@ -282,16 +282,16 @@ public class TestDataCreation {
         log.info("{} Territories created", territories.size());
         return territories;
     }
-    private List<Employee> generateEmployees(EmployeePositions employeePositions, AvailableTerritories territories, String tenantId) {
+    private List<Employee> generateEmployees(EmployeePositions employeePositions, AvailableRegions regions, AvailableTerritories territories, String tenantId) {
         log.info("Trying to create pre-defined Employees");
         List<Employee> itEmployees = itAdministratorEmployeeDataProvider.create(new ItAdministratorEmployeeDataProvider.DataContext(employeePositions, tenantId));
         List<Employee> procurementManagers = procurementManagerDataProvider.create(new ProcurementManagerDataProvider.DataContext(employeePositions, tenantId));
         List<Employee> procurementSpecialists = procurementSpecialistDataProvider.create(new ProcurementSpecialistDataProvider.DataContext(procurementManagers, employeePositions, tenantId));
 
 
-        List<Employee> orderFulfillmentManagers = orderFulfillmentManagerDataProvider.create(new OrderFulfillmentManagerDataProvider.DataContext(employeePositions, territories, tenantId));
-        List<Employee> orderFulfillmentEmployees = orderFulfillmentSpecialistDataProvider.create(new OrderFulfillmentSpecialistDataProvider.DataContext(orderFulfillmentManagers, employeePositions, territories, tenantId));
-        List<Employee> salesRepresentatives = salesRepresentativeDataProvider.create(new SalesRepresentativeDataProvider.DataContext(employeePositions, territories, tenantId));
+        List<Employee> orderFulfillmentManagers = orderFulfillmentManagerDataProvider.create(new OrderFulfillmentManagerDataProvider.DataContext(employeePositions, regions, territories, tenantId));
+        List<Employee> orderFulfillmentEmployees = orderFulfillmentSpecialistDataProvider.create(new OrderFulfillmentSpecialistDataProvider.DataContext(orderFulfillmentManagers, employeePositions, regions, territories, tenantId));
+        List<Employee> salesRepresentatives = salesRepresentativeDataProvider.create(new SalesRepresentativeDataProvider.DataContext(employeePositions, regions, territories, tenantId));
 
         List<Employee> employees = joinLists(
                 itEmployees,

@@ -13,20 +13,28 @@ import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Set;
 
-import static io.jmix.bookstore.test_data.data_provider.RandomValues.randomOfList;
+import static io.jmix.bookstore.test_data.data_provider.region.AvailableRegions.Entry.US_EAST;
+import static io.jmix.bookstore.test_data.data_provider.region.AvailableRegions.Entry.US_SOUTH;
 
 @Component("bookstore_OrderFulfillmentEmployeeDataProvider")
 public class OrderFulfillmentSpecialistDataProvider implements TestDataProvider<Employee, OrderFulfillmentSpecialistDataProvider.DataContext> {
 
     protected final EmployeeDataProvider employeeDataProvider;
 
-    public record DataContext(List<Employee> managers, EmployeePositions employeePositions, AvailableTerritories territories,
-                              String tenantId) {
-    }
-
     public OrderFulfillmentSpecialistDataProvider(EmployeeDataProvider employeeDataProvider) {
         this.employeeDataProvider = employeeDataProvider;
+    }
+
+    private static List<String> orderFulfillmentSpecialistResourceRoles() {
+        return List.of(
+                OrderFulfillmentRole.CODE
+        );
+    }
+
+    private static Position orderFulfillmentSpecialist(DataContext dataContext) {
+        return dataContext.employeePositions().find(EmployeePositions.AvailablePosition.ORDER_FULFILLMENT_SPECIALIST);
     }
 
     @Override
@@ -44,7 +52,10 @@ public class OrderFulfillmentSpecialistDataProvider implements TestDataProvider<
                         RandomValues.randomOfList(dataContext.managers()),
                         orderFulfillmentSpecialistResourceRoles(),
                         orderFulfillmentSpecialistRowLevelRoles(),
-                        dataContext.territories().findTerritoriesFromRegion(AvailableRegions.Entry.US_SOUTH)
+                        dataContext.territories().findTerritoriesFromRegion(US_SOUTH),
+                        Set.of(
+                                dataContext.regions().find(US_SOUTH)
+                        )
                 ),
                 new EmployeeData(
                         dataContext.tenantId(),
@@ -57,7 +68,10 @@ public class OrderFulfillmentSpecialistDataProvider implements TestDataProvider<
                         RandomValues.randomOfList(dataContext.managers()),
                         orderFulfillmentSpecialistResourceRoles(),
                         orderFulfillmentSpecialistRowLevelRoles(),
-                        dataContext.territories().findTerritoriesFromRegion(AvailableRegions.Entry.US_EAST)
+                        dataContext.territories().findTerritoriesFromRegion(US_EAST),
+                        Set.of(
+                                dataContext.regions().find(US_EAST)
+                        )
                 )
         );
 
@@ -69,13 +83,13 @@ public class OrderFulfillmentSpecialistDataProvider implements TestDataProvider<
                 ShowOnlyAssociatedRegionsDataRole.CODE
         );
     }
-    private static List<String> orderFulfillmentSpecialistResourceRoles() {
-        return List.of(
-                OrderFulfillmentRole.CODE
-        );
-    }
 
-    private static Position orderFulfillmentSpecialist(DataContext dataContext) {
-        return dataContext.employeePositions().find(EmployeePositions.AvailablePosition.ORDER_FULFILLMENT_SPECIALIST);
+    public record DataContext(
+            List<Employee> managers,
+            EmployeePositions employeePositions,
+            AvailableRegions regions,
+            AvailableTerritories territories,
+            String tenantId
+    ) {
     }
 }

@@ -42,6 +42,7 @@ public class ProcurementSpecialistDataProvider implements TestDataProvider<Emplo
                         RandomValues.randomOfList(dataContext.managers()),
                         procurementSpecialistResourceRoles(),
                         procurementSpecialistRowLevelRoles(),
+                        Set.of(),
                         Set.of()
                 ),
                 new EmployeeData(
@@ -55,6 +56,7 @@ public class ProcurementSpecialistDataProvider implements TestDataProvider<Emplo
                         RandomValues.randomOfList(dataContext.managers()),
                         procurementSpecialistResourceRoles(),
                         procurementSpecialistRowLevelRoles(),
+                        Set.of(),
                         Set.of()
                 )
         );
