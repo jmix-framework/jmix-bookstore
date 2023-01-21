@@ -1,57 +1,51 @@
-package io.jmix.bookstore.product.supplier;
+package io.jmix.bookstore.product.supplier.bpm;
 
 import com.haulmont.yarg.reporting.ReportOutputDocument;
 import io.jmix.bookstore.entity.User;
 import io.jmix.bookstore.product.Product;
-import io.jmix.bpm.multitenancy.BpmTenantProvider;
-import io.jmix.core.*;
+import io.jmix.bookstore.product.supplier.SupplierOrder;
+import io.jmix.bookstore.product.supplier.SupplierOrderLine;
+import io.jmix.bookstore.product.supplier.SupplierOrderRequest;
+import io.jmix.bookstore.product.supplier.SupplierOrderStatus;
+import io.jmix.core.DataManager;
+import io.jmix.core.FileRef;
+import io.jmix.core.FileStorage;
+import io.jmix.core.Id;
 import io.jmix.core.metamodel.datatype.DatatypeFormatter;
-import io.jmix.core.querycondition.PropertyCondition;
-import io.jmix.multitenancy.core.TenantProvider;
 import io.jmix.notifications.NotificationManager;
 import io.jmix.notifications.entity.ContentType;
 import io.jmix.reports.runner.ReportRunner;
-import org.flowable.engine.RuntimeService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import java.io.ByteArrayInputStream;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
-@Component(value = "bookstore_PerformSupplierOrderService")
-public class PerformSupplierOrderService {
-    private static final Logger log = LoggerFactory.getLogger(PerformSupplierOrderService.class);
-
-
-    private final DataManager dataManager;
-    private final TimeSource timeSource;
+@Component(value = PerformSupplierOrderService.NAME)
+public class PerformSupplierOrderServiceBean implements PerformSupplierOrderService {
+    private static final Logger log = LoggerFactory.getLogger(PerformSupplierOrderServiceBean.class);
     protected final NotificationManager notificationManager;
+    private final DataManager dataManager;
     private final DatatypeFormatter datatypeFormatter;
-    private final RuntimeService runtimeService;
     private final ReportRunner reportRunner;
     private final FileStorage fileStorage;
-    private final TenantProvider tenantProvider;
 
-    public PerformSupplierOrderService(DataManager dataManager, TimeSource timeSource, NotificationManager notificationManager, DatatypeFormatter datatypeFormatter, RuntimeService runtimeService, ReportRunner reportRunner, FileStorage fileStorage, TenantProvider tenantProvider) {
+    public PerformSupplierOrderServiceBean(
+            DataManager dataManager,
+            NotificationManager notificationManager,
+            DatatypeFormatter datatypeFormatter,
+            ReportRunner reportRunner,
+            FileStorage fileStorage
+    ) {
         this.dataManager = dataManager;
-        this.timeSource = timeSource;
         this.notificationManager = notificationManager;
         this.datatypeFormatter = datatypeFormatter;
-        this.runtimeService = runtimeService;
         this.reportRunner = reportRunner;
         this.fileStorage = fileStorage;
-        this.tenantProvider = tenantProvider;
     }
 
-    /**
-     * Notifies the requester about a declined order through the BPM process.
-     * @param supplierOrder the supplier order that was declined
-     */
-    @SuppressWarnings("UnusedMethod")
+
+    @Override
     public void notifyRequestersAboutInvalidRequest(SupplierOrder supplierOrder) {
 
         log.info("Notifying requesters about invalid requests for supplier Order: {}", supplierOrder);
@@ -87,6 +81,7 @@ public class PerformSupplierOrderService {
         );
         return requesterNotification(supplierOrderLine, subject, body);
     }
+
     private NotificationManager.NotificationRequestBuilder requesterNotification(SupplierOrderLine supplierOrderLine, String subject, String body) {
         User requestedBy = supplierOrderLine.getRequest().getRequestedBy();
         return notificationManager.createNotification()
@@ -98,11 +93,7 @@ public class PerformSupplierOrderService {
     }
 
 
-    /**
-     * places a supplier order through the BPM process
-     * @param supplierOrder the supplier order to place
-     */
-    @SuppressWarnings("UnusedMethod")
+    @Override
     public FileRef placeSupplierOrder(SupplierOrder supplierOrder, User reviewedBy) {
         log.info("Placing Supplier Order: {}", supplierOrder);
 
@@ -115,19 +106,23 @@ public class PerformSupplierOrderService {
         supplierOrder.getOrderLines().stream().map(this::placedOrderNotification)
                 .forEach(NotificationManager.SendNotification::send);
 
-        ReportOutputDocument document = reportRunner.byReportCode("supplier-order-form")
-                .addParam("entity", reloadedSupplierOrder)
-                .addParam("reviewedBy", reviewedBy)
-                .run();
-
-        ByteArrayInputStream documentBytes = new ByteArrayInputStream(document.getContent());
-        FileRef orderFormFile = fileStorage.saveStream("supplier-order-form.docx", documentBytes);
+        FileRef orderFormFile = createSupplierOrderForm(reviewedBy, reloadedSupplierOrder);
 
         supplierOrderWithUpdatedStatus.setOrderForm(orderFormFile);
 
         dataManager.save(supplierOrderWithUpdatedStatus);
 
         return orderFormFile;
+    }
+
+    private FileRef createSupplierOrderForm(User reviewedBy, SupplierOrder reloadedSupplierOrder) {
+        ReportOutputDocument document = reportRunner.byReportCode("supplier-order-form")
+                .addParam("entity", reloadedSupplierOrder)
+                .addParam("reviewedBy", reviewedBy)
+                .run();
+
+        ByteArrayInputStream documentBytes = new ByteArrayInputStream(document.getContent());
+        return fileStorage.saveStream("supplier-order-form.docx", documentBytes);
     }
 
 }

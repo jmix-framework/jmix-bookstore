@@ -43,6 +43,10 @@ public interface TestEnvironmentTenants {
     @Authenticated
     void generateRandomTestdata(String tenantId);
 
+    /**
+     * generates a random tenant ID that can be used for a new user using the system
+     * @return the random tenant ID in the form: 'test-b39b7f' where the last part is random 6 character string
+     */
     String generateRandomTenantId();
 
 }
