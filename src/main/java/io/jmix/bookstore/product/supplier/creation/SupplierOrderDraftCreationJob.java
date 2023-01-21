@@ -20,7 +20,6 @@ public class SupplierOrderDraftCreationJob implements Job {
     @Override
     @Authenticated
     public void execute(JobExecutionContext context) {
-
         log.info("Starting Supplier Order Draft Creation Job for all Tenants");
         int amountOfCreatedSupplierOrders = supplierOrderDraftCreation.createDraftSupplierOrders();
         log.info("Finished Supplier Order Draft Creation Job: {} Supplier Orders created", amountOfCreatedSupplierOrders);
