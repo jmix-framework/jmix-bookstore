@@ -86,8 +86,9 @@ The Implementation of the version 1.0 of the Bookstore example was done in a _on
 * data model implementation (10%)
 * custom business logic implementation (15%)
 * test automation (20%)
-* UI development (25%)
+* UI development (20%)
 * UI styling / theming (10%)
+* documentation (5%)
 
 Besides this little overall effort, the resulting application of the Jmix Bookstore has the following important characteristics:
 
