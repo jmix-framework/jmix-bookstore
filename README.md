@@ -153,13 +153,11 @@ This section describes different functionalities that are part of the Jmix Books
 
 ### Multitenancy
 
-In the bookstore example the [Multitenancy add-on](https://www.jmix.io/marketplace/multitenancy/) is used to provide the different users ephemeral test environments of the bookstore. This is mainly used for the hosted version at [https://demo.jmix.io/bookstore](https://demo.jmix.io/bookstore) to prevent cluttered test data from various users when trying out the bookstore online demo.
+In the bookstore example the [Multitenancy add-on](https://www.jmix.io/marketplace/multitenancy/) is used to provide the different users ephemeral test environments of the bookstore. This is mainly used for the hosted version at [https://demo.jmix.io/bookstore](https://demo.jmix.io/bookstore) to prevent cluttered test data from various users when trying out the bookstore online demo. In this application, the Multitenancy add-on is used is the following:
 
-In this application, the Multitenancy addon is used is the following:
+All business entities (Customer, Order, Product, etc.) have an attribute `tenant` annotated with `@TenantId` through the superclass `StandardTenantEntity`.
 
-First of all, all business entities (Customer, Order, Product, etc.) have an attribute `tenant` annotated with `@TenantId` through the superclass `StandardTenantEntity`.
-
-As for the test environment use-case of the Multitenancy usage it is needed to store additional data on the tenant entity. This is achieved by using Jmix extension mechanism. The entity [TestEnvironmentTenant](https://github.com/jmix-framework/jmix-bookstore/blob/main/src/main/java/io/jmix/bookstore/multitenancy/TestEnvironmentTenant.java) extends the `Tenant` entity that comes from the addon. It uses `@ReplaceEntity(Tenant.class)` to indicate to Jmix that this entity should be used throughout the application instead of the original `Tenant` entity class.
+As for the test environment use-case of the Multitenancy usage it is needed to store additional data on the tenant entity. This is achieved by using Jmix extension mechanism. The entity [TestEnvironmentTenant](https://github.com/jmix-framework/jmix-bookstore/blob/main/src/main/java/io/jmix/bookstore/multitenancy/TestEnvironmentTenant.java) extends the `Tenant` entity that comes from the add-on. It uses `@ReplaceEntity(Tenant.class)` to indicate to Jmix that this entity should be used throughout the application instead of the original `Tenant` entity class.
 
 See also: [Jmix Documentation: 
 Modularity and Extension / 
@@ -172,10 +170,10 @@ When the user opens the app for the first time, a random tenant identifier is ge
 When logging in and the tenant is not already initialised in the DB, the following operations are performed:
 
 1. Tenant is created
-2. Tenant administrator user is created
-3. All business tenant users are created
-4. System data (BPM process definition, System Reports) are imported for the tenant
-5. Master data (Employee Positions, Regions, Territories, etc.) are created
+2. Tenant `admin` user is created
+3. all example business users are created
+4. system data (BPM process definition, System Reports) are imported for the tenant
+5. master data (Employee Positions, Regions, Territories, etc.) are created
 6. random test data for all business entities are generated
 
 See the following classes that represent the described behaviour: 
@@ -304,7 +302,7 @@ The Bookstore notifies about the following business events:
 
 #### Notification Implementation
 
-The notifications are send out by the system as part of state transitions of entities. Generally it uses the `NotificationManager` API from the notifications addon to deliver the in-app notifications to the users. See [NotificationCenter](https://github.com/jmix-framework/jmix-bookstore/blob/main/src/main/java/io/jmix/bookstore/notification/NotificationCenter.java).
+The notifications are send out by the system as part of state transitions of entities. Generally it uses the `NotificationManager` API from the notifications add-on to deliver the in-app notifications to the users. See [NotificationCenter](https://github.com/jmix-framework/jmix-bookstore/blob/main/src/main/java/io/jmix/bookstore/notification/NotificationCenter.java).
 
 In the bookstore example an additional abstraction is implemented. The Notification Center is the main class responsible for sending out the in-app notifications. It listens to all Spring events of type [InAppNotificationSource](https://github.com/jmix-framework/jmix-bookstore/blob/main/src/main/java/io/jmix/bookstore/notification/InAppNotificationSource.java). This means that within the application the Spring application events mechanism is used to produce custom events at various points in the application.
 
@@ -328,7 +326,7 @@ The `NotificationCenter` finds the corresponding data provider bean that match a
 
 ### Background Tasks: Quartz
 
-In the Bookstore example the [Quartz addon](https://www.jmix.io/marketplace/quartz/) is used to run periodic tasks by the system. Mainly the following two scheduled tasks are implemented:
+In the Bookstore example the [Quartz add-on](https://www.jmix.io/marketplace/quartz/) is used to run periodic tasks by the system. Mainly the following two scheduled tasks are implemented:
 
 * Create supplier order drafts (as part of the [Place Supplier Orders](#place-supplier-orders) process) every 5 minutes
 * Clean up old test data tenants that are no longer in use (every day)
