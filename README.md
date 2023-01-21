@@ -265,9 +265,7 @@ The add-on comes with an administrative UI to see what the status is of outgoing
 
 ### Reports
 
-The Reports [add-on](https://www.jmix.io/marketplace/reports/) is used in the Bookstore example as part of the [Place Supplier Orders](#place-supplier-orders) BPM process. When the order is placed, the supplier order form (as Microsoft Word document) is created. To achieve this, the Report `Supplier Order Form` is configured via the administrative UI:
-
-## TODO: image from Report Editor
+The Reports [add-on](https://www.jmix.io/marketplace/reports/) is used in the Bookstore example as part of the [Place Supplier Orders](#place-supplier-orders) BPM process. When the order is placed, the supplier order form (as Microsoft Word document) is created. To achieve this, the Report `Supplier Order Form` is configured via the administrative UI.
 
 The Report contains a report template as a Word document that contains placeholders where the actual data is inserted.
 
