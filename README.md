@@ -2,8 +2,41 @@
   <img src="https://github.com/jmix-framework/jmix-bookstore/blob/main/img/logo.png?raw=true"/>
 </p>
 
+# Jmix Bookstore
 
 Jmix Bookstore is an example application built with Jmix framework. It implements the use-cases of a retail business that focuses on shipping books throughout the US.
+
+### Table of Content
+
+- [Example Application](#example-application)
+   * [About the Example](#about-the-example)
+   * [Add-ons](#add-ons)
+   * [Online Demo](#online-demo)
+- [Application Overview](#application-overview)
+- [Business Functionality](#business-functionality)
+   * [Sales](#sales)
+      + [Placing Customer Orders](#placing-customer-orders)
+   * [Order Fulfillment](#order-fulfillment)
+      + [Confirming Customer Orders](#confirming-customer-orders)
+      + [Perform Fill-up requests](#perform-fill-up-requests)
+   * [Procurement](#procurement)
+      + [Place Supplier Orders](#place-supplier-orders)
+      + [Managing Product Catalog](#managing-product-catalog)
+   * [IT](#it)
+      + [Managing System Access](#managing-system-access)
+      + [Master data management](#master-data-management)
+- [Implementation](#implementation)
+   * [Multitenancy](#multitenancy)
+   * [BPM](#bpm)
+   * [Email](#email)
+   * [Reports](#reports)
+   * [Notifications](#notifications)
+   * [Background Tasks: Quartz](#background-tasks--quartz)
+
+
+## Example Application
+
+### About the Example
 
 ### Add-ons
 
@@ -18,7 +51,7 @@ The application is also a show-case application for multiple add-ons from the [J
 * Notifications (premium)
 * Maps (premium)
 
-## Online Demo
+### Online Demo
 
 The demo of the Jmix Bookstore is available at [demo.jmix.io/bookstore](https://demo.jmix.io/bookstore).
 
@@ -36,12 +69,11 @@ The following users are available:
 | Sales Representative         | jessica  | jessica  |
 | Administrator                | admin    | admin    |
 
-
 ## Application Overview
 
 ![Jmix Bookstore - Overview](img/1-overview.png)
 
-## Departments & Business Processes
+## Business Functionality
 
 Jmix Bookstore is a retail bookstore, that ships books to customers. The single distribution channel is phone. Customers call in and can order books directly from the phone, without any need to use a computer. They simply speak to a person that takes their orders and makes sure the correct book lands at their doorsteps. To achieve this mission, the Jmix Bookstore application supports all departments in their use-cases. The company contains of the following departments:
 
@@ -147,7 +179,7 @@ Particular data that changes very infrequent and acts as master data for other p
 
 ![](img/6-admin-fulfillment-center-edit.png)
 
-## Functionalities
+## Implementation
 
 This section describes different functionalities that are part of the Jmix Bookstore application and also how they implemented using different capabilities of Jmix.
 
@@ -195,8 +227,6 @@ The business process where the BPMN engine is used is: [Place Supplier Orders](#
 ![](img/7-supplier-order-approval-required-dmn.png)
 
 See also: [perform-supplier-order.bpmn20.xml](https://github.com/jmix-framework/jmix-bookstore/blob/main/src/main/resources/processes/perform-supplier-order.bpmn20.xml)
-
-#### Process Overview
 
 The process contains the following tasks:
 
@@ -287,7 +317,6 @@ class PerformSupplierOrderBean {
 }
 ```
 
-
 ### Notifications
 
 The Bookstore example utilises the [notifications add-on](https://www.jmix.io/marketplace/notifications/) to notify business users about events that happened within the system. In the users inbox, those notifications can be reviewed and marked as read.
@@ -301,8 +330,6 @@ The Bookstore notifies about the following business events:
 | [Confirming Customer Orders](#confirming-customer-orders) | Order confirmed                | Order Fulfillment Specialist | Sales                  |
 | [Perform Fill-up requests](#perform-fill-up-requests)     | Supplier Order Request created | Order Fulfillment Specialist | Procurement Specialist |
 | [Place Supplier Orders](#place-supplier-orders)           | Supplier Order Draft created   | System                       | Procurement            |
-
-#### Notification Implementation
 
 The notifications are send out by the system as part of state transitions of entities. Generally it uses the `NotificationManager` API from the notifications add-on to deliver the in-app notifications to the users. See [NotificationCenter](https://github.com/jmix-framework/jmix-bookstore/blob/main/src/main/java/io/jmix/bookstore/notification/NotificationCenter.java).
 
