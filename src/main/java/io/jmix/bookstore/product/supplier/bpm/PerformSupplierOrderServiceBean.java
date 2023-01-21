@@ -106,19 +106,23 @@ public class PerformSupplierOrderServiceBean implements PerformSupplierOrderServ
         supplierOrder.getOrderLines().stream().map(this::placedOrderNotification)
                 .forEach(NotificationManager.SendNotification::send);
 
-        ReportOutputDocument document = reportRunner.byReportCode("supplier-order-form")
-                .addParam("entity", reloadedSupplierOrder)
-                .addParam("reviewedBy", reviewedBy)
-                .run();
-
-        ByteArrayInputStream documentBytes = new ByteArrayInputStream(document.getContent());
-        FileRef orderFormFile = fileStorage.saveStream("supplier-order-form.docx", documentBytes);
+        FileRef orderFormFile = createSupplierOrderForm(reviewedBy, reloadedSupplierOrder);
 
         supplierOrderWithUpdatedStatus.setOrderForm(orderFormFile);
 
         dataManager.save(supplierOrderWithUpdatedStatus);
 
         return orderFormFile;
+    }
+
+    private FileRef createSupplierOrderForm(User reviewedBy, SupplierOrder reloadedSupplierOrder) {
+        ReportOutputDocument document = reportRunner.byReportCode("supplier-order-form")
+                .addParam("entity", reloadedSupplierOrder)
+                .addParam("reviewedBy", reviewedBy)
+                .run();
+
+        ByteArrayInputStream documentBytes = new ByteArrayInputStream(document.getContent());
+        return fileStorage.saveStream("supplier-order-form.docx", documentBytes);
     }
 
 }

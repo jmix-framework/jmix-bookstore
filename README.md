@@ -151,7 +151,6 @@ Particular data that changes very infrequent and acts as master data for other p
 
 This section describes different functionalities that are part of the Jmix Bookstore application and also how they implemented using different capabilities of Jmix.
 
-
 ### Multitenancy
 
 In the bookstore example the [Multitenancy add-on](https://www.jmix.io/marketplace/multitenancy/) is used to provide the different users ephemeral test environments of the bookstore. This is mainly used for the hosted version at [https://demo.jmix.io/bookstore](https://demo.jmix.io/bookstore) to prevent cluttered test data from various users when trying out the bookstore online demo.
@@ -225,6 +224,72 @@ See the following classes that are related to the BPM usage:
 * [SupplierOrderReview](https://github.com/jmix-framework/jmix-bookstore/blob/main/src/main/java/io/jmix/bookstore/product/supplier/screen/supplierorder/SupplierOrderReview.java) - Custom UI screen that implements the human task of the process to review the requested supplier order
 * [SupplierOrderApproval](https://github.com/jmix-framework/jmix-bookstore/blob/main/src/main/java/io/jmix/bookstore/product/supplier/screen/supplierorder/SupplierOrderApproval.java) - Custom UI screen that implements the human task of the process to approve a supplier order
 
+### Email
+
+As the last step of the [Place Supplier Orders](#place-supplier-orders) business process, the BPM business process integrates the [Email add-on](https://www.jmix.io/marketplace/email-sending/) into the process. The supplier order form is send to the supplier via Email. For sending out the Email the add-on is the responsible component.
+
+Besides adding the add-on to the `build.gradle` it is required to configure the connection settings to the SMTP server in the `application.properties`:
+
+````groovy
+// ...
+dependencies {
+    // ...
+    implementation 'io.jmix.email:jmix-email-starter'
+    implementation 'io.jmix.email:jmix-email-ui-starter'
+}
+````
+
+```properties
+# ...
+
+##############################################################
+# Jmix Email Add-on
+##############################################################
+jmix.email.email-sending-cron=*/30 * * * * ?
+
+jmix.email.from-address=<<MAIL_SERVER_HOST>>
+
+# Spring Mail configuration
+spring.mail.properties.mail.smtp.starttls.enable=true
+spring.mail.properties.mail.smtp.auth=true
+spring.mail.protocol=
+spring.mail.port=
+spring.mail.host=<<MAIL_SERVER_HOST>>
+spring.mail.username=<<MAIL_SERVER_USERNAME>>
+spring.mail.password=<<MAIL_SERVER_PASSWORD>>
+```
+
+The add-on comes with an administrative UI to see what the status is of outgoing Emails. It contains the ability to read the emails, download the attachments and trigger re-send in case something went wrong during transmission.
+
+![](img/6-admin-approved-supplier-order-sent-out-email.png)
+
+### Reports
+
+The Reports [add-on](https://www.jmix.io/marketplace/reports/) is used in the Bookstore example as part of the [Place Supplier Orders](#place-supplier-orders) BPM process. When the order is placed, the supplier order form (as Microsoft Word document) is created. To achieve this, the Report `Supplier Order Form` is configured via the administrative UI:
+
+## TODO: image from Report Editor
+
+The Report contains a report template as a Word document that contains placeholders where the actual data is inserted.
+
+To contain the correct data (supplier order, order lines), the correspondin data from the BPM process is passed in when the report execution is triggered. This happens within the Service task `Place Supplier Order` implemented in [PerformSupplierOrderServiceBean](https://github.com/jmix-framework/jmix-bookstore/blob/main/src/main/java/io/jmix/bookstore/product/supplier/bpm/PerformSupplierOrderServiceBean.java) through the `ReportRunner` API from the reports add-on (see also: [Jmix Documentation: Add-ons / Reports / Running Reports / Reports API](https://docs.jmix.io/jmix/reports/run-report.html#reports-api)):
+
+```java
+class PerformSupplierOrderBean {
+    
+    // ...
+    private FileRef createSupplierOrderForm(User reviewedBy, SupplierOrder reloadedSupplierOrder) {
+        ReportOutputDocument document = reportRunner.byReportCode("supplier-order-form")
+                .addParam("entity", reloadedSupplierOrder)
+                .addParam("reviewedBy", reviewedBy)
+                .run();
+
+        ByteArrayInputStream documentBytes = new ByteArrayInputStream(document.getContent());
+        return fileStorage.saveStream("supplier-order-form.docx", documentBytes);
+    }
+}
+```
+
+
 ### Notifications
 
 The Bookstore example utilises the [notifications add-on](https://www.jmix.io/marketplace/notifications/) to notify business users about events that happened within the system. In the users inbox, those notifications can be reviewed and marked as read.
@@ -259,13 +324,9 @@ actor Sales Emplyoee
 ```
 
 The data (sender, receiver, title and text) for the corresponding Events of type `InAppNotificationSource`
- are provided by implementing a bean of type `NotificationDetailDataProvider<OrderConfirmedEvent>`. For the Order Confirmation example from above the following bean implements this responsibility: [OrderConfirmedNotificationDetailDataProvider](https://github.com/jmix-framework/jmix-bookstore/blob/main/src/main/java/io/jmix/bookstore/order/notification/OrderConfirmedNotificationDetailDataProvider.java).
+are provided by implementing a bean of type `NotificationDetailDataProvider<OrderConfirmedEvent>`. For the Order Confirmation example from above the following bean implements this responsibility: [OrderConfirmedNotificationDetailDataProvider](https://github.com/jmix-framework/jmix-bookstore/blob/main/src/main/java/io/jmix/bookstore/order/notification/OrderConfirmedNotificationDetailDataProvider.java).
 
 The `NotificationCenter` finds the corresponding data provider bean that match a particular event type to retrieve the notification data.
-
-### Email
-
-### Reports
 
 ### Background Tasks: Quartz
 
