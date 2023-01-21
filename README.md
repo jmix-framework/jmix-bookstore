@@ -4,7 +4,9 @@
 
 # Jmix Bookstore
 
-Jmix Bookstore is an example application built with Jmix framework. It implements the use-cases of a retail business that focuses on shipping books throughout the US.
+Jmix Bookstore is a comprehensive example application built with [Jmix](https://jmix.io/) - A Full-Stack Framework for Business Applications. It implements the use-cases of a retail business that focuses on shipping books throughout the US.
+
+![Jmix Bookstore - Overview](img/1-overview.png)
 
 ### Table of Content
 
@@ -36,11 +38,68 @@ Jmix Bookstore is an example application built with Jmix framework. It implement
 
 ## Example Application
 
+Jmix Bookstore is a retail bookstore, that ships books to customers. The single distribution channel is phone. Customers call in and can order books directly from the phone, without any need to use a computer. They simply speak to a person that takes their orders and makes sure the correct book lands at their doorsteps.
+
 ### About the Example
+
+The Jmix Bookstore example application is a comprehensive example of what advanced capabilities Jmix provides for application developers. Compared to the [Jmix Petclinic](https://github.com/jmix-framework/jmix-petclinic) example application, the Bookstore is way bigger, covers more advanced use-cases and shows the capabilities of various add-ons (free as well as premium) and their integration into a Jmix application.
+
+### Technical Details
+
+Jmix Bookstore runs with the following technical characteristics:
+
+* Jmix 1.4
+* Spring Boot 2.7
+* Java 17
+
+The UI of the Bookstore is implemented using Jmix Classic UI. Flow UI Implementation will follow.
+
+#### Application Size
+
+To give an understanding of the size of the application, here are some rough statistics:
+
+* 20 Entities
+* 8 Enums
+* 36 UI Screens
+* 6 user roles
+* 10 business processes
+
+#### Production Code
+* 150 Java classes
+* 14.000 lines of code (Java + XML)
+
+#### Test Code (rough statistics)
+* 100 Test cases
+* 130 Java classes (Test + Test support)
+* 6.000 lines of code
+
+
+### Implementation Effort
+
+One important decision factors for implementing custom software is time to market / developer efficiency. Jmix aims to provide a fast way of delivering high quality backoffice style applications.
+
+The Implementation of the version 1.0 of the Bookstore example was done in a _one person-month_ by a single senior Java developer containing the following areas:
+
+* conceptual meetings (5%)
+* requirements gathering (5%)
+* domain modelling (10%)
+* data model implementation (10%)
+* custom business logic implementation (15%)
+* test automation (20%)
+* UI development (25%)
+* UI styling / theming (10%)
+
+Besides this little overall effort, the resulting application of the Jmix Bookstore has the following important characteristics:
+
+1. high resulting quality (test automation, modularisation)
+2. long term maintainable (due to test automation, modularisation, widely used base technologies like [Spring Boot](https://spring.io/projects/spring-boot), [JPA](https://jakarta.ee/specifications/persistence/) and [Vaadin](https://vaadin.com/))
+3. good (out-of-the-box) user experience
+4. broad functionality coverage
+5. extensible for users without development effort (like custom filter selection, user-created reports, user-created BPM processes)
 
 ### Add-ons
 
-The application is also a show-case application for multiple add-ons from the [Jmix Marketplace](https://www.jmix.io/marketplace). In particular, it uses the following add-ons:
+The application is also a show-case application for multiple add-ons from the [Jmix Marketplace](https://www.jmix.io/marketplace). Jmix Bookstore uses the following add-ons:
 
 * Multi-Tenancy
 * Email
@@ -75,7 +134,7 @@ The following users are available:
 
 ## Business Functionality
 
-Jmix Bookstore is a retail bookstore, that ships books to customers. The single distribution channel is phone. Customers call in and can order books directly from the phone, without any need to use a computer. They simply speak to a person that takes their orders and makes sure the correct book lands at their doorsteps. To achieve this mission, the Jmix Bookstore application supports all departments in their use-cases. The company contains of the following departments:
+The Jmix Bookstore application supports all departments in their use-cases. The company contains of the following departments:
 
 * Order Fulfillment
 * Procurement
