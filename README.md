@@ -28,6 +28,8 @@ Jmix Bookstore is a comprehensive example application built with [Jmix](https://
       + [Managing System Access](#managing-system-access)
       + [Master data management](#master-data-management)
 - [Implementation](#implementation)
+   * [Domain Model](#domain-model)
+   * [Security](#security)
    * [Multitenancy](#multitenancy)
    * [BPM](#bpm)
    * [Email](#email)
