@@ -53,9 +53,7 @@ public class OrderFulfillmentSpecialistDataProvider implements TestDataProvider<
                         orderFulfillmentSpecialistResourceRoles(),
                         orderFulfillmentSpecialistRowLevelRoles(),
                         dataContext.territories().findTerritoriesFromRegion(US_SOUTH),
-                        Set.of(
-                                dataContext.regions().find(US_SOUTH)
-                        )
+                        Set.of(dataContext.regions().find(US_SOUTH))
                 ),
                 new EmployeeData(
                         dataContext.tenantId(),
@@ -69,16 +67,14 @@ public class OrderFulfillmentSpecialistDataProvider implements TestDataProvider<
                         orderFulfillmentSpecialistResourceRoles(),
                         orderFulfillmentSpecialistRowLevelRoles(),
                         dataContext.territories().findTerritoriesFromRegion(US_EAST),
-                        Set.of(
-                                dataContext.regions().find(US_EAST)
-                        )
+                        Set.of(dataContext.regions().find(US_EAST))
                 )
         );
 
         return employeeDataProvider.save(employees);
     }
 
-    private List<String> orderFulfillmentSpecialistRowLevelRoles() {
+    private static List<String> orderFulfillmentSpecialistRowLevelRoles() {
         return List.of(
                 ShowOnlyAssociatedRegionsDataRole.CODE
         );

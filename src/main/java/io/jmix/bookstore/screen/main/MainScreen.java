@@ -205,7 +205,6 @@ public class MainScreen extends Screen implements Window.HasWorkArea {
                     positionBadgeLabel.setStyleName("position-badge " + colorStyleName);
                     userAvatar.setStyleName("user-avatar user-avatar-border-" + colorStyleName);
                     userAvatarMainScreen.setStyleName("user-avatar user-avatar-border-" + colorStyleName);
-
                 });
 
     }

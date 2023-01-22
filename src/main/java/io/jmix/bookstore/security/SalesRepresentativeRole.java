@@ -20,6 +20,15 @@ import io.jmix.security.role.annotation.ResourceRole;
 import io.jmix.securityui.role.annotation.MenuPolicy;
 import io.jmix.securityui.role.annotation.ScreenPolicy;
 
+/**
+ * functional role for 'Sales Representative' position
+ * <ul>
+ *   <li>read & write access to Customer & Order data; supplier order requests</li>
+ *   <li>read access to product catalog data</li>
+ *   <li>access to corresponding UI screens</li>
+ *   <li>access to corresponding UI screens</li>
+ * </ul>
+ */
 @ResourceRole(name = "Sales Representative", code = SalesRepresentativeRole.CODE)
 public interface SalesRepresentativeRole {
     String CODE = "sales-representative";
@@ -27,14 +36,6 @@ public interface SalesRepresentativeRole {
     @MenuPolicy(menuIds = {"bookstore_Order.browse", "bookstore_Customer.browse", "bookstore_Product.browse", "bookstore_Territory.browse", "bookstore_Region.browse", "bookstore_Employee.browse", "bookstore_ProductCategory.browse"})
     @ScreenPolicy(screenIds = {"bookstore_Order.browse", "bookstore_Customer.browse", "bookstore_Product.browse", "bookstore_Territory.browse", "bookstore_Region.browse", "bookstore_Order.edit", "bookstore_OrderLine.edit", "bookstore_Customer.edit", "bookstore_Employee.browse", "bookstore_Employee.edit", "bookstore_ProductCategory.browse", "bookstore_Product.edit", "bookstore_ProductCategory.edit", "bookstore_TrackDeliveryMap"})
     void screens();
-
-    @EntityAttributePolicy(entityClass = Employee.class, attributes = "*", action = EntityAttributePolicyAction.VIEW)
-    @EntityPolicy(entityClass = Employee.class, actions = EntityPolicyAction.READ)
-    void employee();
-
-    @EntityAttributePolicy(entityClass = FulfillmentCenter.class, attributes = "*", action = EntityAttributePolicyAction.VIEW)
-    @EntityPolicy(entityClass = FulfillmentCenter.class, actions = EntityPolicyAction.READ)
-    void fulfillmentCenter();
 
     @EntityAttributePolicy(entityClass = Address.class, attributes = "*", action = EntityAttributePolicyAction.MODIFY)
     @EntityPolicy(entityClass = Address.class, actions = EntityPolicyAction.ALL)

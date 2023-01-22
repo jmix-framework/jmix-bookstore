@@ -15,6 +15,17 @@ import io.jmix.security.role.annotation.ResourceRole;
 import io.jmix.securityui.role.annotation.MenuPolicy;
 import io.jmix.securityui.role.annotation.ScreenPolicy;
 
+
+/**
+ * functional role for 'Procurement Specialist' position
+ * <ul>
+ *   <li>read & write access to product catalog data</li>
+ *   <li>read & write access to supplier order data</li>
+ *   <li>read access to supplier order request data</li>
+ *   <li>write access to supplier order request status attribute</li>
+ *   <li>access to corresponding UI screens</li>
+ * </ul>
+ */
 @ResourceRole(name = "Procurement Specialist", code = ProcurementSpecialistRole.CODE)
 public interface ProcurementSpecialistRole {
     String CODE = "procurement-specialist";

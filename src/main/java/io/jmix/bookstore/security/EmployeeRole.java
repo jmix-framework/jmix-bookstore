@@ -12,6 +12,13 @@ import io.jmix.security.role.annotation.EntityPolicy;
 import io.jmix.security.role.annotation.ResourceRole;
 import io.jmix.securityui.role.annotation.ScreenPolicy;
 
+/**
+ * Base role for all employees to get basic system access
+ *  * <ul>
+ *  *   <li>read permission for master data like employees, position, tenants</li>
+ *  *   <li>UI permissions for common UI screens like 'My Task List', 'Address Map Lookup UI', etc.</li>
+ *  * </ul>
+ */
 @ResourceRole(name = "Employee", code = EmployeeRole.CODE)
 public interface EmployeeRole {
     String CODE = "employee";

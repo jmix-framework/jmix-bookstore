@@ -133,6 +133,10 @@ The following users are available:
 
 ![Jmix Bookstore - Overview](img/1-overview.png)
 
+After logging in as `admin` the application provides UIs for managing Customers, Orders, Products and associated master data like Employees.
+
+At the top menu, there is an icon for the current tasks of the user as well as unread notifications.
+
 ## Business Functionality
 
 The Jmix Bookstore application supports all departments in their use-cases. The company contains of the following departments:
@@ -242,6 +246,99 @@ Particular data that changes very infrequent and acts as master data for other p
 ## Implementation
 
 This section describes different functionalities that are part of the Jmix Bookstore application and also how they implemented using different capabilities of Jmix.
+
+### Domain Model
+
+The domain model of the Jmix Bookstore is based on a regular order management system's data model. Additionally, it contains the part for the supplier order process and the general HR domain model.
+
+The domain model for the customer orders part looks like this:
+
+```mermaid
+classDiagram
+    Customer o-- Order
+    Order *-- OrderLine
+    OrderLine --> Product
+    Product --> ProductCategory    
+    Product --> Supplier
+```
+
+The domain model that supports the supplier orders contains of the following entities:
+
+```mermaid
+classDiagram
+    Product --> Supplier
+    
+    SupplierOrderRequest --> Product
+    SupplierOrder o-- SupplierOrderLine
+    SupplierOrderLine --> Product
+    SupplierOrder --> Supplier
+```
+
+And the part of the employee information with the corresponding territory associations looks like this:
+
+```mermaid
+classDiagram
+    Region o-- Territory
+    Employee o--o Territory
+    Employee --> User
+    User o--> Region
+    User o--o Role
+```
+
+### Security
+
+The Bookstore example uses different permissions for the different user groups to ensure users can only see the data and use the functionality they need for their daily work.
+
+The Jmix Subsystem is used to achieve this goal. In the [io.jmix.bookstore.security](https://github.com/jmix-framework/jmix-bookstore/tree/main/src/main/java/io/jmix/bookstore/security) package, there are different design-time roles are defined.
+
+The employees generally obtain one of the following functional / resource roles:
+
+* `EmployeeRole` - base role for all employees to get basic system access
+  * read permission for master data like employees, position, tenants
+  * UI permissions for common UI screens like 'My Task List', 'Address Map Lookup UI', etc.
+* `FullAccessRole` - Role for administrative users without any restrictions
+* `OrderFulfillmentRole` - functional role for `Order Fulfillment` position
+  * read & write access to Customer & Order data; supplier order requests
+  * read access to Product and supplier order data
+  * access to corresponding UI screens
+* `ProcurementSpecialistRole`- functional role for `Procurement Specialist` position
+    * read & write access to product catalog data
+    * read & write access to supplier order data
+    * read access to supplier order request data
+    * write access to supplier order request _status_ attribute
+    * access to corresponding UI screens
+* `ProcurementManagerRole`- functional role for `Procurement Manager` position
+  * read & write access to product catalog data
+  * read & write access to supplier order data
+  * read access to supplier order request data
+  * access to corresponding UI screens
+* `SalesRepresentativeRole`- functional role for `Sales Representative` position
+  * read & write access to Customer & Order data; supplier order requests
+  * read access to product catalog data
+  * access to corresponding UI screens
+
+Additionally, there are two data constraining roles / row-level roles present in the system:
+
+* `ShowOnlyActiveSuppliersRole`- data constraining role for `Procurement Specialist` position
+    * limits Suppliers to only ones that are not in status 'On Hold'
+    * limits Products to only ones that have Suppliers with status not in 'On Hold'
+* `ShowOnlyActiveSuppliersRole`- data constraining role for `Order Fulfillment` and `Sales Representative` position
+    * limits customers to only ones that are in the associated regions of the current employee
+    * limits orders to only ones where the customers region is in the associated regions of the current employee
+
+The Jmix Security subsystem (see [Jmix Documentation: Security](https://docs.jmix.io/jmix/security/index.html)) takes those design time roles into consideration automatically when users are assigned to those roles.
+
+This assignment happens as part of the test data creation in the case of the Bookstore example, or during runtime in case an administrator manually manages system access (see [IT > Managing System Access](#managing-system-access)).
+
+For automatic provisioning of the role assignments see the following classes:
+
+* [ItAdministratorEmployeeDataProvider](https://github.com/jmix-framework/jmix-bookstore/blob/main/src/main/java/io/jmix/bookstore/test_data/data_provider/employee/ItAdministratorEmployeeDataProvider.java)
+* [ProcurementManagerDataProvider](https://github.com/jmix-framework/jmix-bookstore/blob/main/src/main/java/io/jmix/bookstore/test_data/data_provider/employee/ProcurementManagerDataProvider.java)
+* [OrderFulfillmentSpecialistDataProvider](https://github.com/jmix-framework/jmix-bookstore/blob/main/src/main/java/io/jmix/bookstore/test_data/data_provider/employee/OrderFulfillmentSpecialistDataProvider.java)
+* [ProcurementManagerDataProvider](https://github.com/jmix-framework/jmix-bookstore/blob/main/src/main/java/io/jmix/bookstore/test_data/data_provider/employee/ProcurementManagerDataProvider.java)
+* [ProcurementSpecialistDataProvider](https://github.com/jmix-framework/jmix-bookstore/blob/main/src/main/java/io/jmix/bookstore/test_data/data_provider/employee/ProcurementSpecialistDataProvider.java)
+* [SalesRepresentativeDataProvider](https://github.com/jmix-framework/jmix-bookstore/blob/main/src/main/java/io/jmix/bookstore/test_data/data_provider/employee/SalesRepresentativeDataProvider.java)
+
 
 ### Multitenancy
 
