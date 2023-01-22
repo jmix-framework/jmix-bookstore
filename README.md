@@ -35,7 +35,7 @@ Jmix Bookstore is a comprehensive example application built with [Jmix](https://
    * [Email](#email)
    * [Reports](#reports)
    * [Notifications](#notifications)
-   * [Background Tasks: Quartz](#background-tasks--quartz)
+   * [Background Tasks: Quartz](#background-tasks-quartz)
 
 
 ## Example Application
