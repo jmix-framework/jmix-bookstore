@@ -78,7 +78,7 @@ To give an understanding of the size of the application, here are some rough sta
 
 One important decision factors for implementing custom software is time to market / developer efficiency. Jmix aims to provide a fast way of delivering high quality backoffice style applications.
 
-The Implementation of the version 1.0 of the Bookstore example was done in a _one person-month_ by a single senior Java developer containing the following areas:
+The Implementation of the version 1.0 of the Bookstore example was done in a _1.5 person-months_ by a single senior Java developer containing the following areas:
 
 * conceptual meetings (5%)
 * requirements gathering (5%)
@@ -262,6 +262,8 @@ classDiagram
     Product --> Supplier
 ```
 
+A `Customer` are associated to many orders. An `Order` consists of multiple `OrderLine` objects. One `OrderLine` represents a product association with corresponding information about the price. The `Product` entity is grouped into `ProductCategory` entities and references a `Supplier` that is used to request supplier orders.
+
 The domain model that supports the supplier orders contains of the following entities:
 
 ```mermaid
@@ -274,16 +276,27 @@ classDiagram
     SupplierOrder --> Supplier
 ```
 
-And the part of the employee information with the corresponding territory associations looks like this:
+The `Product` entity is the source entity, that acts as the basis for `SupplierOrderRequest` instances. Those are created during the [Perform Fill-up requests](#perform-fill-up-requests) process. The system converts those requests into `SupplierOrder` entities which hold a `SupplierOrderLine` for each `SupplierOrderRequest` that referenced a `Product` which belongs to the same `Supplier`. This `Supplier` is also used for the `SupplierOrder`.
+
+During the [Place supplier orders](#place-supplier-orders) process, those `SupplierOrder` entities are created. The `Employee` that reviewed this `SupplierOrder` (through the BPM process variables) brings up the next subpart of the domain model. 
+
+The part of the employee information with the corresponding territory associations looks like this:
 
 ```mermaid
 classDiagram
     Region o-- Territory
     Employee o--o Territory
     Employee --> User
+    Employee --> Position
     User o--> Region
     User o--o Role
 ```
+
+An `Employee` represents the logical representation of an employee in the company. The `Employee` has a `Position` that (s)he holds within the organisation. Optionally the `Employee` can reference multiple `Territory` instances, that (s)he is responsible for. Those `Territory` entities are grouped into a `Region`.
+
+The system representation of an employee is the `User`, which main purpose is proving system access. The `User` references multiple `Role` entities (not physically in the database, just conceptually via the `RoleAssignmentEntity` from Jmix). 
+
+Additionally, the `User` references multiple `Region` entities as "associated regions". Those regions are automatically determined by the fact that the `Employee` has multiple `Territories` assigned, which themselves belong to a `Region`. This reference is present to allow the row-level roles to restrict access to Customers / Orders of the same region that the current user is in (see: [Security > row-level roles](#security)).
 
 ### Security
 
