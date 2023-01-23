@@ -54,6 +54,10 @@ public class Order extends StandardTenantEntity {
     })
     private Address shippingAddress;
 
+
+    /*
+    this method causes an unfetched attribute exception during saving the order through the editor
+     */
     @Geometry
     @JmixProperty
     @DependsOnProperties({"shippingAddress"})
