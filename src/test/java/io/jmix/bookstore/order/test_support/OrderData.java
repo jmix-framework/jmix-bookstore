@@ -16,6 +16,7 @@ import java.util.List;
 @Builder
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class OrderData {
+    Long orderNumber;
     LocalDate orderDate;
     Customer customer;
     List<OrderLine> orderLines;

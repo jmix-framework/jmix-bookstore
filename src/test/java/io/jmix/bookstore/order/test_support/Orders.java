@@ -7,12 +7,14 @@ import io.jmix.bookstore.entity.test_support.AddressMapper;
 import io.jmix.bookstore.order.entity.Order;
 import io.jmix.bookstore.order.entity.OrderStatus;
 import io.jmix.bookstore.test_support.TestDataProvisioning;
+import net.datafaker.Faker;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Random;
 
 @Component
 public class Orders
@@ -38,6 +40,7 @@ public class Orders
     @Override
     public OrderData.OrderDataBuilder defaultData() {
         return OrderData.builder()
+                .orderNumber(new Faker().number().numberBetween(0L, 100_000_000L))
                 .orderDate(DEFAULT_ORDER_DATE)
                 .customer(customers.createDefault())
                 .shippingAddress(defaultShippingAddress())

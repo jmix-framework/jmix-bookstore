@@ -22,7 +22,6 @@ import org.springframework.test.context.ActiveProfiles;
 
 import java.time.OffsetDateTime;
 import java.util.List;
-import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -31,7 +30,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 @ActiveProfiles("integration-test")
 class TenantTestdataIntegrationTest {
 
-    private final String TENANT_ID = UUID.randomUUID().toString();
     @Autowired
     TenantCleanup tenantCleanup;
     @Autowired
@@ -50,6 +48,7 @@ class TenantTestdataIntegrationTest {
 
     @Autowired
     SystemAuthenticator systemAuthenticator;
+    private String TENANT_ID;
 
     @BeforeEach
     void setUp() {
@@ -58,6 +57,8 @@ class TenantTestdataIntegrationTest {
             databaseCleanup.removeNonAdminUsers();
             testDataCreation.importInitialReport();
         });
+
+        TENANT_ID = tenantCreation.generateRandomTenantId();
     }
 
     private void asTenantAdmin(Runnable action) {
