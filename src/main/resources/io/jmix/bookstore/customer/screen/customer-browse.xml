@@ -51,6 +51,15 @@
         <filter id="filter"
                 dataLoader="customersDl">
             <properties include=".*"/>
+            <configurations>
+                <configuration id="defaultFilter"
+                               operation="AND"
+                               name="msg://io.jmix.bookstore.filter/defaultFilter"
+                               default="true">
+                    <propertyFilter property="firstName" operation="EQUAL" operationEditable="true"/>
+                    <propertyFilter property="lastName" operation="EQUAL" operationEditable="true"/>
+                </configuration>
+            </configurations>
         </filter>
         <tabSheet id="contentTabSheet" width="100%">
             <tab id="tableTab"

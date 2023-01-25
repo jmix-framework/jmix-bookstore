@@ -47,10 +47,12 @@
                         <dateField id="orderDateField" property="orderDate" editable="false"/>
                         <entityPicker id="customerField" property="customer" editable="false"/>
                         <dateField id="shippingDateField" property="shippingDate" editable="false"/>
+                        <textField id="orderNumberField" property="orderNumber" editable="false"/>
                     </column>
                 </form>
             </groupBox>
-            <groupBox id="orderLinesGroupBox" caption="msg://io.jmix.bookstore.order/Order.orderLines" height="100%">
+            <groupBox id="orderLinesGroupBox" caption="msg://io.jmix.bookstore.order.entity/Order.orderLines"
+                      height="100%">
                 <table id="orderLinesTable" dataContainer="orderLinesDc" width="100%" height="200px">
                     <columns>
                         <column id="product"/>
@@ -66,7 +68,6 @@
                       expand="fulfilledByMap"
                       spacing="true"
                       icon="MAP">
-
                 <form captionPosition="TOP" id="fulfilledByForm" dataContainer="orderDc">
                     <column width="200px">
                         <entityComboBox id="fulfilledByField"
@@ -86,14 +87,14 @@
                     <maps:layers selectedLayer="fulfillmentCentersLayer">
                         <maps:tile id="tiles" tileProvider="map_OpenStreetMap"/>
                         <maps:vector id="fulfillmentCentersLayer" dataContainer="fulfillmentCentersDc"/>
-                        <maps:vector id="orderLayer" dataContainer="orderDc"/>
+                        <!--                        <maps:vector id="orderLayer" dataContainer="orderDc"/>-->
                     </maps:layers>
                 </maps:geoMap>
             </groupBox>
             <groupBox id="addressInformationGroupBox"
                       height="100%"
                       width="400px"
-                      caption="msg://io.jmix.bookstore.order/Order.shippingAddress"
+                      caption="msg://io.jmix.bookstore.order.entity/Order.shippingAddress"
                       icon="ADDRESS_BOOK">
                 <form captionPosition="TOP" id="addressForm" dataContainer="orderDc" editable="false" width="250px">
                     <column width="200px">

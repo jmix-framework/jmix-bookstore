@@ -8,6 +8,7 @@
                     class="io.jmix.bookstore.order.entity.Order">
             <fetchPlan extends="_base">
                 <property name="fulfilledBy" fetchPlan="_base"/>
+                <property name="shippingAddress"/>
             </fetchPlan>
             <loader id="confirmedOrdersDl">
                 <query>
@@ -48,7 +49,7 @@
     <facets>
         <dataLoadCoordinator auto="true"/>
         <screenSettings id="settingsFacet" auto="true"/>
-        <notification id="orderConfirmedNotification" type="HUMANIZED" caption="msg://orderConfirmed" />
+        <notification id="orderConfirmedNotification" type="HUMANIZED" caption="msg://orderConfirmed"/>
     </facets>
     <actions>
         <action id="lookupSelectAction"
@@ -78,10 +79,10 @@
                    value="msg://orderBrowse.demoInfo"/>
         </groupBox>
         <tabSheet id="contentTabSheet" width="100%" stylename="centered-tabs icons-on-top">
-
-            <tab id="newOrdersTab" caption="msg://newOrders" spacing="true" margin="true" icon="font-icon:CERTIFICATE" expand="newOrdersTable">
-
-                <groupBox id="filterGroupBox" orientation="horizontal" align="MIDDLE_CENTER" width="75%" caption="msg://newOrdersFilter" icon="SEARCH">
+            <tab id="newOrdersTab" caption="msg://newOrders" spacing="true" margin="true" icon="font-icon:CERTIFICATE"
+                 expand="newOrdersTable">
+                <groupBox id="filterGroupBox" orientation="horizontal" align="MIDDLE_CENTER" width="75%"
+                          caption="msg://newOrdersFilter" icon="SEARCH">
                     <propertyFilter property="customer"
                                     operation="EQUAL"
                                     operationEditable="true"
@@ -104,11 +105,10 @@
                         </entitySuggestionField>
                     </propertyFilter>
                     <propertyFilter
-                                    property="orderDate"
-                                    operationEditable="true"
-                                    operation="EQUAL"
-                                    dataLoader="newOrdersDl"/>
-
+                            property="orderDate"
+                            operationEditable="true"
+                            operation="EQUAL"
+                            dataLoader="newOrdersDl"/>
                 </groupBox>
                 <dataGrid id="newOrdersTable"
                           width="100%"
@@ -116,9 +116,11 @@
                     <actions>
                         <action id="create" type="create"/>
                         <action id="edit" type="edit"/>
-                        <action id="confirm" icon="font-icon:CHECK_CIRCLE" caption="msg://confirmOrder" trackSelection="true"/>
+                        <action id="confirm" icon="font-icon:CHECK_CIRCLE" caption="msg://confirmOrder"
+                                trackSelection="true"/>
                     </actions>
                     <columns>
+                        <column property="orderNumber" id="orderNumber" sort="DESCENDING"/>
                         <column property="orderDate" id="orderDate"/>
                         <column property="customer" id="customer"/>
                     </columns>
@@ -130,11 +132,38 @@
                     </buttonsPanel>
                 </dataGrid>
             </tab>
-
-            <tab id="confirmedOrdersTab" caption="msg://confirmedOrders" spacing="true" margin="true" icon="font-icon:CHECK_CIRCLE" expand="confirmedOrdersTable">
+            <tab id="confirmedOrdersTab" caption="msg://confirmedOrders" spacing="true" margin="true"
+                 icon="font-icon:CHECK_CIRCLE" expand="confirmedOrdersTable">
                 <filter id="filter"
                         dataLoader="confirmedOrdersDl">
                     <properties include=".*"/>
+                    <configurations>
+                        <configuration id="defaultFilter"
+                                       operation="AND"
+                                       name="msg://io.jmix.bookstore.filter/defaultFilter"
+                                       default="true">
+                            <propertyFilter property="orderNumber" operation="EQUAL" operationEditable="true"/>
+                            <propertyFilter property="status" operation="EQUAL" operationEditable="true"/>
+                            <propertyFilter property="shippingDate" operation="DATE_INTERVAL" operationEditable="true"/>
+                            <jpqlFilter parameterClass="io.jmix.bookstore.product.Product"
+                                        caption="msg://containsProduct">
+                                <condition>
+                                    <c:jpql>
+                                        <c:join>join {E}.orderLines o</c:join>
+                                        <c:where>o.product.id = ?</c:where>
+                                    </c:jpql>
+                                </condition>
+                            </jpqlFilter>
+                            <propertyFilter property="customer.associatedRegion"
+                                            operation="EQUAL"
+                                            operationEditable="true"
+                                            caption="msg://customerRegion"/>
+                            <propertyFilter property="shippingAddress.postCode"
+                                            operation="STARTS_WITH"
+                                            operationEditable="true"
+                                            caption="msg://shippingAddressPostCode"/>
+                        </configuration>
+                    </configurations>
                 </filter>
                 <dataGrid id="confirmedOrdersTable"
                           width="100%"
@@ -145,11 +174,13 @@
                         <action id="trackDelivery" caption="msg://trackDelivery" icon="TRUCK" trackSelection="true"/>
                     </actions>
                     <columns>
+                        <column property="orderNumber" id="orderNumber" sort="DESCENDING"/>
                         <column property="orderDate" id="orderDate"/>
                         <column property="customer" id="customer"/>
                         <column property="shippingDate" id="shippingDate"/>
                         <column property="status" id="status"/>
                         <column property="fulfilledBy" id="fulfilledBy"/>
+                        <column property="shippingAddress" id="shippingAddress"/>
                     </columns>
                     <simplePagination/>
                     <buttonsPanel id="buttonsPanel"

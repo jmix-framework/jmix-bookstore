@@ -66,4 +66,11 @@ public class OrderBrowse extends StandardLookup<Order> {
                 .show();
     }
 
+    @Install(to = "newOrdersTable.create", subject = "afterCommitHandler")
+    private void newOrdersTableCreateAfterCommitHandler(Order order) {
+        notifications.create(Notifications.NotificationType.TRAY)
+                .withCaption(messageBundle.formatMessage("orderCreated", order.getOrderNumber())).show();
+    }
+
+
 }

@@ -1,6 +1,6 @@
 package io.jmix.bookstore.order.screen;
 
-import io.jmix.bookstore.directions.DirectionsProvider;
+import io.jmix.bookstore.directions.Geocoding;
 import io.jmix.bookstore.entity.Address;
 import io.jmix.mapsui.component.CanvasLayer;
 import io.jmix.mapsui.component.GeoMap;
@@ -26,12 +26,12 @@ public class TrackDeliveryMap extends Screen {
     @Autowired
     private GeoMap map;
     @Autowired
-    private DirectionsProvider directionsProvider;
+    private Geocoding geocoding;
+    @Autowired
+    private GeometryStyles geometryStyles;
 
     private Address end;
     private Address start;
-    @Autowired
-    private GeometryStyles geometryStyles;
 
 
     @Subscribe
@@ -67,7 +67,7 @@ public class TrackDeliveryMap extends Screen {
         map.selectLayer(customerLayer);
 
 
-        directionsProvider.calculateRoute(start.getPosition(), end.getPosition())
+        geocoding.calculateRoute(start.getPosition(), end.getPosition())
                 .ifPresent(route -> {
                     CanvasLayer canvas = map.getCanvas();
                     canvas.addPolyline(route.lineString());
@@ -78,6 +78,7 @@ public class TrackDeliveryMap extends Screen {
                             .withFontIcon(JmixIcon.TRUCK)
                             .setIconPathFillColor("#ff0000"));
                     map.zoomToGeometry(route.lineString());
+
                 });
 
     }

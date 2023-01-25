@@ -2,6 +2,7 @@ package io.jmix.bookstore.test_data.data_provider.fulfillment_center;
 
 import io.jmix.bookstore.employee.Region;
 import io.jmix.bookstore.fulfillment.FulfillmentCenter;
+import io.jmix.bookstore.test_data.data_provider.RandomValues;
 import io.jmix.bookstore.test_data.data_provider.region.AvailableRegions;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.GeometryFactory;
@@ -32,6 +33,10 @@ public record AvailableFulfillmentCenters(List<FulfillmentCenter> fulfillmentCen
         return fulfillmentCenters.stream()
                 .filter(fulfillmentCenter -> fulfillmentCenter.getRegion().equals(region))
                 .findFirst();
+    }
+
+    public FulfillmentCenter random() {
+        return RandomValues.randomOfList(fulfillmentCenters);
     }
 
 

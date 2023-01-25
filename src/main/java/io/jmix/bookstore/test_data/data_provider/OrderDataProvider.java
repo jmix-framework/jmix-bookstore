@@ -95,7 +95,10 @@ public class OrderDataProvider implements TestDataProvider<Order, OrderDataProvi
         if (!orderStatus.equals(OrderStatus.NEW)) {
             territories.findTerritoryForPosition(position)
                     .flatMap(territory -> fulfillmentCenters.findByRegion(territory.getRegion()))
-                    .ifPresent(order::setFulfilledBy);
+                    .ifPresentOrElse(
+                            order::setFulfilledBy,
+                            () -> order.setFulfilledBy(fulfillmentCenters.random())
+                            );
         }
 
         order.setOrderLines(
