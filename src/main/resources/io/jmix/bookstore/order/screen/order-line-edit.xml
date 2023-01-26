@@ -11,6 +11,16 @@
             </fetchPlan>
             <loader/>
         </instance>
+        <collection id="productsDc"
+                    class="io.jmix.bookstore.product.Product">
+            <fetchPlan extends="_base">
+            </fetchPlan>
+            <loader id="productsDl">
+                <query>
+                    <![CDATA[select e from bookstore_Product e]]>
+                </query>
+            </loader>
+        </collection>
     </data>
     <facets>
         <dataLoadCoordinator auto="true"/>
@@ -25,8 +35,8 @@
                 caption="msg:///actions.Close"
                 icon="EDITOR_CANCEL"/>
     </actions>
-    <dialogMode height="85%"
-                width="85%"
+    <dialogMode height="AUTO"
+                width="AUTO"
                 modal="true"
                 forceDialog="true"/>
     <layout spacing="true" expand="editActions">
@@ -40,7 +50,13 @@
 
                 <form captionPosition="TOP" id="form" dataContainer="orderLineDc">
                     <column width="350px">
-                        <entityPicker id="productField" property="product"/>
+                        <entityComboBox id="productField" property="product" optionsContainer="productsDc">
+                            <actions>
+                                <action id="lookup" type="entity_lookup" />
+                                <action id="open" type="entity_open" />
+                                <action id="clear" type="entity_clear" />
+                            </actions>
+                        </entityComboBox>
                         <textField id="quantityField" property="quantity"/>
                     </column>
                 </form>
