@@ -104,10 +104,10 @@ Besides this little overall effort, the resulting application of the Jmix Bookst
 
 The application is also a show-case application for multiple add-ons from the [Jmix Marketplace](https://www.jmix.io/marketplace). Jmix Bookstore uses the following add-ons:
 
-* Multi-Tenancy
+* Multitenancy
 * Email
 * Reports
-* data-tools
+* Data Tools
 * Quartz
 * BPM (premium)
 * Notifications (premium)
