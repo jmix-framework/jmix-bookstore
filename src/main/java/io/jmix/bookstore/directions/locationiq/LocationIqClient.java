@@ -3,7 +3,7 @@ package io.jmix.bookstore.directions.locationiq;
 import com.fasterxml.jackson.databind.JsonNode;
 import io.jmix.bookstore.directions.AddressInformation;
 import io.jmix.bookstore.directions.CalculatedRoute;
-import io.jmix.bookstore.directions.DirectionsProvider;
+import io.jmix.bookstore.directions.Geocoding;
 import io.jmix.bookstore.directions.RouteAccuracy;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.GeometryFactory;
@@ -30,8 +30,8 @@ import java.util.Optional;
  * It is possible to create a free account for personal / experimental usage.
  * See: <a href="https://locationiq.com/">LocationIQ</a>
  */
-@Component(DirectionsProvider.NAME)
-public class LocationIqClient implements DirectionsProvider {
+@Component(Geocoding.NAME)
+public class LocationIqClient implements Geocoding {
     private static final Logger log = LoggerFactory.getLogger(LocationIqClient.class);
 
     private final LocationIqProperties locationIqProperties;

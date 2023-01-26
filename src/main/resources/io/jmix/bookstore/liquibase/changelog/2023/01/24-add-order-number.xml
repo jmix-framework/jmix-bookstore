@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.11.xsd"
+        objectQuotingStrategy="QUOTE_ONLY_RESERVED_WORDS">
+    <changeSet id="1" author="bookstore">
+        <addColumn tableName="BOOKSTORE_ORDER">
+            <column name="ORDER_NUMBER" type="BIGINT"/>
+        </addColumn>
+
+        <addNotNullConstraint columnName="ORDER_NUMBER" defaultNullValue="0" tableName="BOOKSTORE_ORDER"/>
+    </changeSet>
+    <changeSet id="2" author="bookstore">
+        <createIndex indexName="IDX_BOOKSTORE_ORDER_ORDER_NUMBER_UNQ" tableName="BOOKSTORE_ORDER" unique="true">
+            <column name="TENANT"/>
+            <column name="ORDER_NUMBER"/>
+        </createIndex>
+    </changeSet>
+</databaseChangeLog>

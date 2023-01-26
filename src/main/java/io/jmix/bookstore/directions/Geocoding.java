@@ -4,9 +4,9 @@ import org.locationtech.jts.geom.Point;
 
 import java.util.Optional;
 
-public interface DirectionsProvider {
+public interface Geocoding {
 
-    String NAME = "bookstore_DirectionsProvider";
+    String NAME = "bookstore_Geocoding";
 
     /**
      * Calculating a route based on two points.

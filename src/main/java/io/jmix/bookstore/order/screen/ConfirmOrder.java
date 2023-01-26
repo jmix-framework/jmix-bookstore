@@ -1,7 +1,7 @@
 package io.jmix.bookstore.order.screen;
 
 import io.jmix.bookstore.directions.CalculatedRoute;
-import io.jmix.bookstore.directions.DirectionsProvider;
+import io.jmix.bookstore.directions.Geocoding;
 import io.jmix.bookstore.directions.RouteAccuracy;
 import io.jmix.bookstore.entity.Address;
 import io.jmix.bookstore.fulfillment.FulfillmentCenter;
@@ -40,7 +40,7 @@ public class ConfirmOrder extends StandardEditor<Order> {
     @Autowired
     private GeoMap fulfilledByMap;
     @Autowired
-    private DirectionsProvider directionsProvider;
+    private Geocoding geocoding;
     private CanvasLayer.Polyline drawnPolyline;
     @Autowired
     private TextField<String> durationField;
@@ -57,6 +57,16 @@ public class ConfirmOrder extends StandardEditor<Order> {
 
     @Subscribe
     public void onAfterShow(AfterShowEvent event) {
+
+
+        CanvasLayer canvas = fulfilledByMap.getCanvas();
+        CanvasLayer.Point point = canvas.addPoint(getEditedEntity().getShippingAddress().getPosition());
+        point.setStyle(
+                geometryStyles.point()
+                .withFontIcon(JmixIcon.USER)
+                .setIconPathFillColor("#3288ff")
+        );
+
 
         List<FulfillmentCenter> fulfillmentCenters = fulfillmentCentersDc.getItems();
         BackgroundTask<Integer, Map<FulfillmentCenter, Optional<CalculatedRoute>>> task = new CalculateRoutesTask(
@@ -99,7 +109,7 @@ public class ConfirmOrder extends StandardEditor<Order> {
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
-            return directionsProvider.calculateRoute(
+            return geocoding.calculateRoute(
                     fulfillmentCenter.getAddress().getPosition(),
                     shippingAddress.getPosition(),
                     RouteAccuracy.LOW_ACCURACY);
@@ -133,13 +143,6 @@ public class ConfirmOrder extends StandardEditor<Order> {
                 ));
     }
 
-    @SuppressWarnings("unused")
-    @Install(to = "fulfilledByMap.orderLayer", subject = "styleProvider")
-    private GeometryStyle fulfilledByMapOrderLayerStyleProvider(Order order) {
-        return geometryStyles.point()
-                .withFontIcon(JmixIcon.USER)
-                .setIconPathFillColor("#3288ff");
-    }
 
     @SuppressWarnings("unused")
     @Install(to = "fulfilledByMap.fulfillmentCentersLayer", subject = "styleProvider")

@@ -1,7 +1,7 @@
 package io.jmix.bookstore.fulfillment.screen;
 
 import io.jmix.bookstore.directions.AddressInformation;
-import io.jmix.bookstore.directions.DirectionsProvider;
+import io.jmix.bookstore.directions.Geocoding;
 import io.jmix.bookstore.entity.Address;
 import io.jmix.mapsui.component.GeoMap;
 import io.jmix.mapsui.component.layer.VectorLayer;
@@ -33,7 +33,7 @@ public class FulfillmentCenterEdit extends StandardEditor<FulfillmentCenter> {
     @Autowired
     private Label<String> emptyNameHeaderLabel;
     @Autowired
-    private DirectionsProvider directionsProvider;
+    private Geocoding geocoding;
     @Autowired
     private Notifications notifications;
     @Autowired
@@ -78,7 +78,7 @@ public class FulfillmentCenterEdit extends StandardEditor<FulfillmentCenter> {
     @Subscribe("locationLookupBtn")
     public void onLocationLookupBtnClick(Button.ClickEvent event) {
         Address address = getEditedEntity().getAddress();
-        Optional<Point> possibleLocation = directionsProvider
+        Optional<Point> possibleLocation = geocoding
                 .forwardGeocoding(new AddressInformation(
                         address.getStreet(),
                         address.getPostCode(),

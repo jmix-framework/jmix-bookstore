@@ -38,7 +38,7 @@ class LocationIqClientTest {
     public static final String BASE_URL = "https://locationiq-dummy.com";
     public static final String API_KEY = "api-key-123";
     @Autowired
-    private DirectionsProvider locationIqClient;
+    private Geocoding locationIqClient;
     @Autowired
     private RestTemplate restTemplate;
 

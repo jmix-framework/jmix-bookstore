@@ -8,13 +8,15 @@ import io.jmix.core.DeletePolicy;
 import io.jmix.core.MetadataTools;
 import io.jmix.core.entity.annotation.EmbeddedParameters;
 import io.jmix.core.entity.annotation.OnDelete;
-import io.jmix.core.metamodel.annotation.*;
+import io.jmix.core.metamodel.annotation.Composition;
+import io.jmix.core.metamodel.annotation.DependsOnProperties;
+import io.jmix.core.metamodel.annotation.InstanceName;
+import io.jmix.core.metamodel.annotation.JmixEntity;
 import io.jmix.core.metamodel.datatype.DatatypeFormatter;
-import io.jmix.maps.Geometry;
-import org.locationtech.jts.geom.Point;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -22,9 +24,17 @@ import java.util.List;
 @Table(name = "BOOKSTORE_ORDER", indexes = {
         @Index(name = "IDX_ORDER_CUSTOMER_ID", columnList = "CUSTOMER_ID"),
         @Index(name = "IDX_BOOKSTORE_ORDER_FULFILLED_BY", columnList = "FULFILLED_BY_ID")
+}, uniqueConstraints = {
+        @UniqueConstraint(name = "IDX_BOOKSTORE_ORDER_ORDER_NUMBER_UNQ", columnNames = {"TENANT", "ORDER_NUMBER"})
 })
 @Entity(name = "bookstore_Order")
 public class Order extends StandardTenantEntity {
+
+    @Positive
+    @NotNull
+    @Column(name = "ORDER_NUMBER", nullable = false)
+    private Long orderNumber;
+
     @NotNull
     @Column(name = "ORDER_DATE", nullable = false)
     private LocalDate orderDate;
@@ -54,13 +64,6 @@ public class Order extends StandardTenantEntity {
     })
     private Address shippingAddress;
 
-    @Geometry
-    @JmixProperty
-    @DependsOnProperties({"shippingAddress"})
-    public Point getGeometry() {
-        return shippingAddress != null ? shippingAddress.getPosition() : null;
-    }
-
     @NotNull
     @Column(name = "STATUS", nullable = false)
     private String status;
@@ -68,6 +71,14 @@ public class Order extends StandardTenantEntity {
     @JoinColumn(name = "FULFILLED_BY_ID")
     @ManyToOne(fetch = FetchType.LAZY)
     private FulfillmentCenter fulfilledBy;
+
+    public void setOrderNumber(Long orderNumber) {
+        this.orderNumber = orderNumber;
+    }
+
+    public Long getOrderNumber() {
+        return orderNumber;
+    }
 
     public FulfillmentCenter getFulfilledBy() {
         return fulfilledBy;

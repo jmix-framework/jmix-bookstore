@@ -90,6 +90,7 @@
                             <dateField id="orderDateField" property="orderDate"/>
                             <comboBox id="statusField" property="status" editable="false"/>
                             <entityPicker id="fulfilledByField" property="fulfilledBy" editable="false"/>
+                            <textField id="orderNumberField" property="orderNumber" editable="false"/>
                         </column>
                     </form>
                 </groupBox>
