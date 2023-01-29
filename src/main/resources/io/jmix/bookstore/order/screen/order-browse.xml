@@ -116,7 +116,9 @@
                     <actions>
                         <action id="create" type="create"/>
                         <action id="edit" type="edit"/>
-                        <action id="confirm" icon="font-icon:CHECK_CIRCLE" caption="msg://confirmOrder"
+                        <action id="confirm"
+                                icon="font-icon:CHECK_CIRCLE"
+                                caption="msg://confirmOrder"
                                 trackSelection="true"/>
                     </actions>
                     <columns>

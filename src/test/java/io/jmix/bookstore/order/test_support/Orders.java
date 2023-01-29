@@ -8,6 +8,8 @@ import io.jmix.bookstore.order.entity.Order;
 import io.jmix.bookstore.order.entity.OrderStatus;
 import io.jmix.bookstore.test_support.TestDataProvisioning;
 import net.datafaker.Faker;
+import org.locationtech.jts.geom.Coordinate;
+import org.locationtech.jts.geom.GeometryFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.stereotype.Component;
@@ -54,6 +56,7 @@ public class Orders
                         .city(DEFAULT_SHIPPING_ADDRESS_CITY)
                         .street(DEFAULT_SHIPPING_ADDRESS_STREET)
                         .postCode(DEFAULT_SHIPPING_ADDRESS_POST_CODE)
+                        .position(new GeometryFactory().createPoint(new Coordinate( 0,0)))
                         .build()
         );
     }

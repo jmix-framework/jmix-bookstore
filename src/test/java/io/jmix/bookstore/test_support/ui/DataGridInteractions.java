@@ -5,7 +5,9 @@ import io.jmix.ui.component.DataGrid;
 import io.jmix.ui.screen.Screen;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class DataGridInteractions<E> {
 
@@ -44,7 +46,19 @@ public class DataGridInteractions<E> {
         button("editBtn").click();
     }
 
+    public void click(String buttonId) {
+        button(buttonId).click();
+    }
+
     public void create() {
         dataGrid.getActionNN("create").actionPerform(null);
+    }
+
+    public List<E> items() {
+        return dataGrid.getItems().getItems().collect(Collectors.toList());
+    }
+
+    public void select(E entity) {
+        dataGrid.setSelected(entity);
     }
 }

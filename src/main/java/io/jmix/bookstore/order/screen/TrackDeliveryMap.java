@@ -42,29 +42,22 @@ public class TrackDeliveryMap extends Screen {
 
     private void bindAddressToMap() {
 
-        VectorLayer<Address> customerLayer = new VectorLayer<>("customerLayer");
-        customerLayer.setStyleProvider(address -> geometryStyles.point()
+        VectorLayer<Address> endAddressLayer = new VectorLayer<>("endAddressLayer");
+        endAddressLayer.setStyleProvider(address -> geometryStyles.point()
                 .withFontIcon(JmixIcon.USER)
                 .setIconPathFillColor("#3288ff"));
-        InstanceContainer<Address> customerDc = dataComponents.createInstanceContainer(Address.class);
-        customerDc.setItem(end);
-        customerLayer.setDataContainer(customerDc);
+        addAddressToLayer(endAddressLayer, end);
 
 
-        VectorLayer<Address> fulfillmentCenterLayer = new VectorLayer<>("fulfillmentCenterLayer");
-        fulfillmentCenterLayer.setStyleProvider(address -> geometryStyles.point()
+        VectorLayer<Address> startAddressLayer = new VectorLayer<>("startAddressLayer");
+        startAddressLayer.setStyleProvider(address -> geometryStyles.point()
                 .withFontIcon(JmixIcon.BUILDING_O)
                 .setIconPathFillColor("#2db83d"));
-        InstanceContainer<Address> fulfillmentCenterDc = dataComponents.createInstanceContainer(Address.class);
+        addAddressToLayer(startAddressLayer, start);
 
-
-        fulfillmentCenterDc.setItem(start);
-        fulfillmentCenterLayer.setDataContainer(fulfillmentCenterDc);
-
-
-        map.addLayer(customerLayer);
-        map.addLayer(fulfillmentCenterLayer);
-        map.selectLayer(customerLayer);
+        map.addLayer(endAddressLayer);
+        map.addLayer(startAddressLayer);
+        map.selectLayer(endAddressLayer);
 
 
         geocoding.calculateRoute(start.getPosition(), end.getPosition())
@@ -78,9 +71,14 @@ public class TrackDeliveryMap extends Screen {
                             .withFontIcon(JmixIcon.TRUCK)
                             .setIconPathFillColor("#ff0000"));
                     map.zoomToGeometry(route.lineString());
-
                 });
 
+    }
+
+    private void addAddressToLayer(VectorLayer<Address> addressLayer, Address address) {
+        InstanceContainer<Address> addressDc = dataComponents.createInstanceContainer(Address.class);
+        addressDc.setItem(address);
+        addressLayer.setDataContainer(addressDc);
     }
 
 

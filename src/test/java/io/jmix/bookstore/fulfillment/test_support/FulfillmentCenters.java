@@ -54,8 +54,8 @@ public class FulfillmentCenters
                 .build());
     }
     @Override
-    public FulfillmentCenter save(FulfillmentCenterData productCategoryData) {
-        return repository.save(productCategoryData);
+    public FulfillmentCenter save(FulfillmentCenterData fulfillmentCenterData) {
+        return repository.save(fulfillmentCenterData);
     }
 
     @Override

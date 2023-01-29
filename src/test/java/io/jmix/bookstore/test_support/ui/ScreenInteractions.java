@@ -27,6 +27,10 @@ public class ScreenInteractions {
     }
 
     public static ScreenInteractions forBrowse(Screens screens) {
+        return forScreen(screens);
+    }
+
+    public static ScreenInteractions forScreen(Screens screens) {
         return new ScreenInteractions(screens);
     }
 

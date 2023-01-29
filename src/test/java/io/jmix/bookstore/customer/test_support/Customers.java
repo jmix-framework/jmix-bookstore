@@ -48,7 +48,7 @@ public class Customers
                 .city(DEFAULT_CITY)
                 .state(DEFAULT_STATE)
                 .country(DEFAULT_COUNTRY)
-                        .position(new GeometryFactory().createPoint(new Coordinate( 0,0)))
+                .position(new GeometryFactory().createPoint(new Coordinate( 0,0)))
                 .build());
     }
 
