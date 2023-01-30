@@ -49,4 +49,11 @@ public class OrderEdit extends StandardEditor<Order> {
         customerSearchBox.setVisible(true);
         customerDetailsBox.setVisible(false);
     }
+
+    @Subscribe
+    public void onBeforeCommitChanges(BeforeCommitChangesEvent event) {
+        getEditedEntity().setShippingAddress(getEditedEntity().getCustomer().getAddress());
+    }
+
+
 }

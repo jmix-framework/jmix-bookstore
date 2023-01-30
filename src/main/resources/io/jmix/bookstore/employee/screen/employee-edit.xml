@@ -8,7 +8,9 @@
             <fetchPlan extends="_base">
                 <property name="address" fetchPlan="_base"/>
                 <property name="reportsTo" fetchPlan="_base"/>
-                <property name="territories" fetchPlan="_base"/>
+                <property name="territories" fetchPlan="_base">
+                    <property name="region" fetchPlan="_base"/>
+                </property>
                 <property name="user" fetchPlan="_base"/>
                 <property name="position" fetchPlan="_base"/>
             </fetchPlan>
@@ -154,6 +156,7 @@
                         </actions>
                         <columns>
                             <column id="name"/>
+                            <column id="region"/>
                         </columns>
                         <buttonsPanel>
                             <button action="territoriesTable.add"/>

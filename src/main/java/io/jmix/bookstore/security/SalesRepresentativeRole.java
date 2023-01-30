@@ -1,13 +1,11 @@
 package io.jmix.bookstore.security;
 
 import io.jmix.bookstore.customer.Customer;
-import io.jmix.bookstore.employee.Employee;
 import io.jmix.bookstore.employee.Position;
 import io.jmix.bookstore.employee.Region;
 import io.jmix.bookstore.employee.Territory;
 import io.jmix.bookstore.entity.Address;
 import io.jmix.bookstore.entity.Money;
-import io.jmix.bookstore.fulfillment.FulfillmentCenter;
 import io.jmix.bookstore.order.entity.Order;
 import io.jmix.bookstore.order.entity.OrderLine;
 import io.jmix.bookstore.product.Product;
@@ -34,7 +32,7 @@ public interface SalesRepresentativeRole {
     String CODE = "sales-representative";
 
     @MenuPolicy(menuIds = {"bookstore_Order.browse", "bookstore_Customer.browse", "bookstore_Product.browse", "bookstore_Territory.browse", "bookstore_Region.browse", "bookstore_Employee.browse", "bookstore_ProductCategory.browse"})
-    @ScreenPolicy(screenIds = {"bookstore_Order.browse", "bookstore_Customer.browse", "bookstore_Product.browse", "bookstore_Territory.browse", "bookstore_Region.browse", "bookstore_Order.edit", "bookstore_OrderLine.edit", "bookstore_Customer.edit", "bookstore_Employee.browse", "bookstore_Employee.edit", "bookstore_ProductCategory.browse", "bookstore_Product.edit", "bookstore_ProductCategory.edit", "bookstore_TrackDeliveryMap"})
+    @ScreenPolicy(screenIds = {"bookstore_Order.browse", "bookstore_Customer.browse", "bookstore_Product.browse", "bookstore_Territory.browse", "bookstore_Region.browse", "bookstore_Order.edit", "bookstore_OrderLine.edit", "bookstore_Customer.edit", "bookstore_Employee.browse", "bookstore_Employee.edit", "bookstore_ProductCategory.browse", "bookstore_Product.edit", "bookstore_ProductCategory.edit", "bookstore_TrackDeliveryMap", "bookstore_Customer.lookup"})
     void screens();
 
     @EntityAttributePolicy(entityClass = Address.class, attributes = "*", action = EntityAttributePolicyAction.MODIFY)

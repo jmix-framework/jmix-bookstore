@@ -45,7 +45,7 @@ public interface OrderFulfillmentRole {
     void productCategory();
 
     @MenuPolicy(menuIds = {"bookstore_Supplier.browse", "bookstore_SupplierOrder.browse", "bookstore_Order.browse", "bookstore_Customer.browse", "bookstore_Product.browse"})
-    @ScreenPolicy(screenIds = {"bookstore_Supplier.edit", "bookstore_Supplier.browse", "bookstore_SupplierOrderRequest.edit", "bookstore_SupplierOrder.browse", "bookstore_SupplierOrder.edit", "bookstore_SupplierOrder.review", "bookstore_MainScreen", "bookstore_LoginScreen", "bookstore_Order.browse", "bookstore_Customer.browse", "bookstore_Product.browse", "bookstore_Order.edit", "bookstore_OrderLine.edit", "bookstore_ConfirmOrder", "bookstore_Customer.edit"})
+    @ScreenPolicy(screenIds = {"bookstore_Supplier.edit", "bookstore_Supplier.browse", "bookstore_SupplierOrderRequest.edit", "bookstore_SupplierOrder.browse", "bookstore_SupplierOrder.edit", "bookstore_SupplierOrder.review", "bookstore_MainScreen", "bookstore_LoginScreen", "bookstore_Order.browse", "bookstore_Customer.browse", "bookstore_Product.browse", "bookstore_Order.edit", "bookstore_OrderLine.edit", "bookstore_ConfirmOrder", "bookstore_Customer.edit", "bookstore_TrackDeliveryMap", "bookstore_Customer.lookup"})
     void screens();
 
     @EntityAttributePolicy(entityClass = Supplier.class, attributes = "*", action = EntityAttributePolicyAction.VIEW)

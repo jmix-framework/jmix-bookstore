@@ -16,7 +16,8 @@
             </fetchPlan>
             <loader id="productsDl">
                 <query>
-                    <![CDATA[select e from bookstore_Product e]]>
+                    <!-- distinct is used in this case, as the filter 'fromCustomer' can cause duplicate results -->
+                    <![CDATA[select distinct e from bookstore_Product e]]>
                 </query>
             </loader>
         </collection>
@@ -58,6 +59,24 @@
                 dataLoader="productsDl">
             <properties include=".*"/>
             <configurations>
+                <configuration id="defaultFilter"
+                               operation="AND"
+                               name="msg://io.jmix.bookstore.filter/defaultFilter"
+                               default="true">
+                    <propertyFilter property="name" operation="CONTAINS" operationEditable="true"/>
+                    <propertyFilter property="category" operation="EQUAL" operationEditable="true"/>
+
+                    <!-- searches for products that are referenced in orders of a given customer (see also 'distinct' in data loader query)-->
+                    <jpqlFilter parameterClass="io.jmix.bookstore.customer.Customer"
+                                caption="msg://fromCustomer">
+                        <condition>
+                            <c:jpql>
+                                <c:join>join {E}.orderLines o</c:join>
+                                <c:where>o.order.customer.id = ?</c:where>
+                            </c:jpql>
+                        </condition>
+                    </jpqlFilter>
+                </configuration>
                 <configuration id="lowInStock" name="msg://productLowInsStock.filter">
                     <propertyFilter property="unitsInStock" operation="LESS"
                                     operationEditable="false" defaultValue="50" editable="false"/>
@@ -77,10 +96,11 @@
             <columns>
                 <column property="name" id="name"/>
                 <column property="category" id="category"/>
-                <column property="unitsInStock" id="unitsInStock"/>
-                <column property="unitsOnOrder" id="unitsOnOrder"/>
-                <column property="supplier" id="supplier"/>
-                <column property="supplier.cooperationStatus" id="supplierCooperationStatus"/>
+                <column property="unitsInStock" id="unitsInStock" collapsed="true"/>
+                <column property="unitsOnOrder" id="unitsOnOrder" collapsed="true"/>
+                <column property="supplier" id="supplier" />
+                <column property="supplier.cooperationStatus" id="supplierCooperationStatus" collapsed="true"
+                        caption="msg://supplierCooperationStatus"/>
                 <column property="active" id="active"/>
             </columns>
             <simplePagination/>

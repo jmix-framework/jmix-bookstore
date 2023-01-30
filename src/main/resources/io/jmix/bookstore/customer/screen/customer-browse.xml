@@ -56,8 +56,8 @@
                                operation="AND"
                                name="msg://io.jmix.bookstore.filter/defaultFilter"
                                default="true">
-                    <propertyFilter property="firstName" operation="EQUAL" operationEditable="true"/>
-                    <propertyFilter property="lastName" operation="EQUAL" operationEditable="true"/>
+                    <propertyFilter property="firstName" operation="CONTAINS" operationEditable="true"/>
+                    <propertyFilter property="lastName" operation="CONTAINS" operationEditable="true"/>
                 </configuration>
             </configurations>
         </filter>

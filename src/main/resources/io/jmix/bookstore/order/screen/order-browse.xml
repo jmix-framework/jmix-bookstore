@@ -2,8 +2,8 @@
 <window xmlns="http://jmix.io/schema/ui/window"
         xmlns:c="http://jmix.io/schema/ui/jpql-condition"
         caption="msg://orderBrowse.caption"
-        focusComponent="confirmedOrdersTable">
-    <data readOnly="true">
+        focusComponent="customerFilterField">
+    <data>
         <collection id="confirmedOrdersDc"
                     class="io.jmix.bookstore.order.entity.Order">
             <fetchPlan extends="_base">
@@ -50,6 +50,25 @@
         <dataLoadCoordinator auto="true"/>
         <screenSettings id="settingsFacet" auto="true"/>
         <notification id="orderConfirmedNotification" type="HUMANIZED" caption="msg://orderConfirmed"/>
+
+        <notification id="orderMarkedAsInDeliveryNotification" type="TRAY"
+                      caption="msg://orderMarkedAsInDelivery"/>
+        <optionDialog id="confirmMarkAsInDeliveryDialog"
+                      caption="msg://confirmMarkAsInDeliveryCaption"
+                      width="40%"
+                      message="msg://confirmMarkAsInDeliveryMessage"
+                      onAction="confirmedOrdersTable.markAsInDelivery">
+            <actions>
+                <action id="ok"
+                        caption="OK"
+                        icon="CHECK"
+                        primary="true"/>
+                <action id="cancel"
+                        caption="Cancel"
+                        icon="BAN"
+                />
+            </actions>
+        </optionDialog>
     </facets>
     <actions>
         <action id="lookupSelectAction"
@@ -81,9 +100,14 @@
         <tabSheet id="contentTabSheet" width="100%" stylename="centered-tabs icons-on-top">
             <tab id="newOrdersTab" caption="msg://newOrders" spacing="true" margin="true" icon="font-icon:CERTIFICATE"
                  expand="newOrdersTable">
-                <groupBox id="filterGroupBox" orientation="horizontal" align="MIDDLE_CENTER" width="75%"
-                          caption="msg://newOrdersFilter" icon="SEARCH">
-                    <propertyFilter property="customer"
+                <groupBox id="filterGroupBox"
+                          orientation="horizontal"
+                          align="MIDDLE_CENTER"
+                          width="100%"
+                          caption="msg://newOrdersFilter"
+                          icon="SEARCH">
+                    <propertyFilter id="customerFilterField"
+                                    property="customer"
                                     operation="EQUAL"
                                     operationEditable="true"
                                     dataLoader="newOrdersDl">
@@ -173,7 +197,8 @@
                     <actions>
                         <action id="edit" type="edit"/>
                         <action id="remove" type="remove"/>
-                        <action id="trackDelivery" caption="msg://trackDelivery" icon="TRUCK" trackSelection="true"/>
+                        <action id="markAsInDelivery" caption="msg://markAsInDelivery" icon="TRUCK" trackSelection="true"/>
+                        <action id="trackDelivery" caption="msg://trackDelivery" icon="MAP_O" trackSelection="true"/>
                     </actions>
                     <columns>
                         <column property="orderNumber" id="orderNumber" sort="DESCENDING"/>
@@ -189,6 +214,7 @@
                                   alwaysVisible="true">
                         <button id="editBtn" action="confirmedOrdersTable.edit"/>
                         <button id="removeBtn" action="confirmedOrdersTable.remove"/>
+                        <button id="markAsInDeliveryBtn" action="confirmedOrdersTable.markAsInDelivery"/>
                         <button id="trackDeliveryBtn" action="confirmedOrdersTable.trackDelivery"/>
                     </buttonsPanel>
                 </dataGrid>

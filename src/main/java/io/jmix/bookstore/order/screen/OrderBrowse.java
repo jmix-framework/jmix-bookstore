@@ -3,11 +3,15 @@ package io.jmix.bookstore.order.screen;
 import io.jmix.bookstore.order.entity.Order;
 import io.jmix.bookstore.order.entity.OrderStatus;
 import io.jmix.core.Messages;
+import io.jmix.core.TimeSource;
 import io.jmix.ui.Notifications;
 import io.jmix.ui.ScreenBuilders;
 import io.jmix.ui.action.Action;
+import io.jmix.ui.component.ActionsAwareDialogFacet;
 import io.jmix.ui.component.DataGrid;
 import io.jmix.ui.component.NotificationFacet;
+import io.jmix.ui.component.OptionDialogFacet;
+import io.jmix.ui.model.DataContext;
 import io.jmix.ui.navigation.Route;
 import io.jmix.ui.screen.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +35,12 @@ public class OrderBrowse extends StandardLookup<Order> {
     private DataGrid<Order> newOrdersTable;
     @Autowired
     private NotificationFacet orderConfirmedNotification;
+    @Autowired
+    private TimeSource timeSource;
+    @Autowired
+    private DataContext dataContext;
+    @Autowired
+    private NotificationFacet orderMarkedAsInDeliveryNotification;
 
     @Subscribe("confirmedOrdersTable.trackDelivery")
     public void onAllOrdersTableTrackDelivery(Action.ActionPerformedEvent event) {
@@ -72,5 +82,15 @@ public class OrderBrowse extends StandardLookup<Order> {
                 .withCaption(messageBundle.formatMessage("orderCreated", order.getOrderNumber())).show();
     }
 
+    @Install(to = "confirmMarkAsInDeliveryDialog.ok", subject = "actionHandler")
+    private void confirmMarkAsInDeliveryDialogOkActionHandler(ActionsAwareDialogFacet.DialogActionPerformedEvent<OptionDialogFacet> dialogActionPerformedEvent) {
+        Order orderToMarkAsInDelivery = confirmedOrdersTable.getSingleSelected();
 
+        orderToMarkAsInDelivery.setStatus(OrderStatus.IN_DELIVERY);
+        orderToMarkAsInDelivery.setShippingDate(timeSource.now().toLocalDate());
+
+        dataContext.commit();
+
+        orderMarkedAsInDeliveryNotification.show();
+    }
 }

@@ -12,6 +12,7 @@ import io.jmix.mapsui.component.layer.VectorLayer;
 import io.jmix.mapsui.component.layer.style.GeometryStyle;
 import io.jmix.mapsui.component.layer.style.GeometryStyles;
 import io.jmix.ui.Dialogs;
+import io.jmix.ui.Notifications;
 import io.jmix.ui.component.HasValue;
 import io.jmix.ui.component.TextField;
 import io.jmix.ui.executor.BackgroundTask;
@@ -54,13 +55,30 @@ public class ConfirmOrder extends StandardEditor<Order> {
     private MessageBundle messageBundle;
 
     private Map<FulfillmentCenter, Optional<CalculatedRoute>> calculatedRoutes;
+    @Autowired
+    private Notifications notifications;
 
     @Subscribe
     public void onAfterShow(AfterShowEvent event) {
 
+        tryToCalculateRoutesFromFulfillmentCenters();
+    }
 
+    private void tryToCalculateRoutesFromFulfillmentCenters() {
+        Address shippingAddress = getEditedEntity().getShippingAddress();
+        if (shippingAddress == null || shippingAddress.getPosition() == null) {
+            notifications.create(Notifications.NotificationType.WARNING)
+                    .withCaption(messageBundle.getMessage("noValidShippingAddressFound"))
+                    .show();
+            return;
+        }
+
+        calculateRoutesFromFulfillmentCenters(shippingAddress);
+    }
+
+    private void calculateRoutesFromFulfillmentCenters(Address shippingAddress) {
         CanvasLayer canvas = fulfilledByMap.getCanvas();
-        CanvasLayer.Point point = canvas.addPoint(getEditedEntity().getShippingAddress().getPosition());
+        CanvasLayer.Point point = canvas.addPoint(shippingAddress.getPosition());
         point.setStyle(
                 geometryStyles.point()
                 .withFontIcon(JmixIcon.USER)
@@ -71,7 +89,7 @@ public class ConfirmOrder extends StandardEditor<Order> {
         List<FulfillmentCenter> fulfillmentCenters = fulfillmentCentersDc.getItems();
         BackgroundTask<Integer, Map<FulfillmentCenter, Optional<CalculatedRoute>>> task = new CalculateRoutesTask(
                 fulfillmentCenters,
-                getEditedEntity().getShippingAddress()
+                shippingAddress
         );
         dialogs.createBackgroundWorkDialog(this, task)
                 .withCaption(messageBundle.getMessage("calculatingRoutesCaption"))

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <window xmlns="http://jmix.io/schema/ui/window"
         caption="msg://orderEdit.caption"
-        focusComponent="form">
+        focusComponent="customerField">
     <data>
         <instance id="orderDc"
                   class="io.jmix.bookstore.order.entity.Order">
@@ -46,7 +46,7 @@
                        htmlEnabled="true"
                        value="msg://orderEdit.demoInfo"/>
             </groupBox>
-            <hbox spacing="true" width="100%" height="275px">
+            <hbox spacing="true" width="100%" height="315px">
                 <groupBox id="customerGroupBox" caption="msg://customer" icon="font-icon:USER" height="100%"
                           width="100%">
                     <vbox id="customerSearchBox" visible="true">
@@ -87,10 +87,10 @@
                           icon="BOOK">
                     <form captionPosition="TOP" id="form" dataContainer="orderDc">
                         <column width="350px">
+                            <textField id="orderNumberField" property="orderNumber" editable="false"/>
                             <dateField id="orderDateField" property="orderDate"/>
                             <comboBox id="statusField" property="status" editable="false"/>
                             <entityPicker id="fulfilledByField" property="fulfilledBy" editable="false"/>
-                            <textField id="orderNumberField" property="orderNumber" editable="false"/>
                         </column>
                     </form>
                 </groupBox>

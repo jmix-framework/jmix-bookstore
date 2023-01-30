@@ -15,8 +15,7 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Set;
 
-import static io.jmix.bookstore.test_data.data_provider.region.AvailableRegions.Entry.US_EAST;
-import static io.jmix.bookstore.test_data.data_provider.region.AvailableRegions.Entry.US_SOUTH;
+import static io.jmix.bookstore.test_data.data_provider.region.AvailableRegions.Entry.*;
 
 @Component("bookstore_OrderFulfillmentEmployeeDataProvider")
 public class OrderFulfillmentSpecialistDataProvider implements TestDataProvider<Employee, OrderFulfillmentSpecialistDataProvider.DataContext> {
@@ -52,8 +51,14 @@ public class OrderFulfillmentSpecialistDataProvider implements TestDataProvider<
                         RandomValues.randomOfList(dataContext.managers()),
                         orderFulfillmentSpecialistResourceRoles(),
                         orderFulfillmentSpecialistRowLevelRoles(),
-                        dataContext.territories().findTerritoriesFromRegion(US_SOUTH),
-                        Set.of(dataContext.regions().find(US_SOUTH))
+                        dataContext.territories().findTerritoriesFromRegion(
+                                US_NORTH,
+                                US_WEST
+                        ),
+                        Set.of(
+                                dataContext.regions().find(US_NORTH),
+                                dataContext.regions().find(US_WEST)
+                        )
                 ),
                 new EmployeeData(
                         dataContext.tenantId(),
@@ -66,8 +71,14 @@ public class OrderFulfillmentSpecialistDataProvider implements TestDataProvider<
                         RandomValues.randomOfList(dataContext.managers()),
                         orderFulfillmentSpecialistResourceRoles(),
                         orderFulfillmentSpecialistRowLevelRoles(),
-                        dataContext.territories().findTerritoriesFromRegion(US_EAST),
-                        Set.of(dataContext.regions().find(US_EAST))
+                        dataContext.territories().findTerritoriesFromRegion(
+                                US_EAST,
+                                US_SOUTH
+                        ),
+                        Set.of(
+                                dataContext.regions().find(US_EAST),
+                                dataContext.regions().find(US_SOUTH)
+                        )
                 )
         );
 

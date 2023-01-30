@@ -2,6 +2,7 @@ package io.jmix.bookstore.product;
 
 import io.jmix.bookstore.entity.Money;
 import io.jmix.bookstore.entity.StandardTenantEntity;
+import io.jmix.bookstore.order.entity.OrderLine;
 import io.jmix.bookstore.product.supplier.Supplier;
 import io.jmix.core.entity.annotation.EmbeddedParameters;
 import io.jmix.core.metamodel.annotation.InstanceName;
@@ -9,6 +10,7 @@ import io.jmix.core.metamodel.annotation.JmixEntity;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 @JmixEntity
 @Table(name = "BOOKSTORE_PRODUCT", indexes = {
@@ -51,6 +53,17 @@ public class Product extends StandardTenantEntity {
     @JoinColumn(name = "SUPPLIER_ID")
     @ManyToOne(fetch = FetchType.LAZY)
     private Supplier supplier;
+
+    @OneToMany(mappedBy = "product")
+    private List<OrderLine> orderLines;
+
+    public List<OrderLine> getOrderLines() {
+        return orderLines;
+    }
+
+    public void setOrderLines(List<OrderLine> orderLines) {
+        this.orderLines = orderLines;
+    }
 
     public Supplier getSupplier() {
         return supplier;
