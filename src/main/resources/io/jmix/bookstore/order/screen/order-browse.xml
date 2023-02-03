@@ -84,6 +84,7 @@
                 width="800"/>
     <layout expand="contentTabSheet" spacing="true">
         <groupBox
+                id="demoInfoGroupBox"
                 orientation="horizontal"
                 collapsable="true"
                 width="75%"

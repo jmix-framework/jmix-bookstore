@@ -13,12 +13,12 @@ import org.springframework.context.event.EventListener;
 public class LoginPerformedEventListener {
 
     private static final Logger log = LoggerFactory.getLogger(LoginPerformedEventListener.class);
-    private final EmployeeSessionData employeeSessionData;
+    private final BookstoreSessionData bookstoreSessionData;
     private final TenantProvider tenantProvider;
     private final TestEnvironmentTenants testEnvironmentTenants;
     private final TimeSource timeSource;
-    public LoginPerformedEventListener(EmployeeSessionData employeeSessionData, TenantProvider tenantProvider, TestEnvironmentTenants testEnvironmentTenants, TimeSource timeSource) {
-        this.employeeSessionData = employeeSessionData;
+    public LoginPerformedEventListener(BookstoreSessionData bookstoreSessionData, TenantProvider tenantProvider, TestEnvironmentTenants testEnvironmentTenants, TimeSource timeSource) {
+        this.bookstoreSessionData = bookstoreSessionData;
         this.tenantProvider = tenantProvider;
         this.testEnvironmentTenants = testEnvironmentTenants;
         this.timeSource = timeSource;
@@ -28,7 +28,7 @@ public class LoginPerformedEventListener {
     public void onInteractiveAuthenticationSuccess(InteractiveAuthenticationSuccessEvent event) {
 
         log.info("Login happened. Initialising Employee Session");
-        employeeSessionData.initSession();
+        bookstoreSessionData.initSession();
 
         testEnvironmentTenants.trackUserLoginForTenant(
                 tenantProvider.getCurrentUserTenantId(),

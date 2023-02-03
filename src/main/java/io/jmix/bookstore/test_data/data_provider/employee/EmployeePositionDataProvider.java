@@ -2,21 +2,26 @@ package io.jmix.bookstore.test_data.data_provider.employee;
 
 import io.jmix.bookstore.employee.Position;
 import io.jmix.bookstore.employee.PositionColor;
+import io.jmix.bookstore.employee.PositionTranslation;
 import io.jmix.bookstore.test_data.data_provider.TestDataProvider;
 import io.jmix.core.DataManager;
 import io.jmix.core.SaveContext;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+
+import static io.jmix.bookstore.employee.PositionColor.*;
+import static io.jmix.bookstore.test_data.data_provider.employee.EmployeePositions.AvailablePosition.*;
 
 @Component("bookstore_ProvisionDataProvider")
 public class EmployeePositionDataProvider implements TestDataProvider<Position, EmployeePositionDataProvider.DataContext> {
 
     protected final DataManager dataManager;
 
-    public record DataContext(){}
     public EmployeePositionDataProvider(DataManager dataManager) {
         this.dataManager = dataManager;
     }
@@ -29,12 +34,60 @@ public class EmployeePositionDataProvider implements TestDataProvider<Position, 
     private List<Object> createPositions() {
 
         List<PositionData> positionData = List.of(
-                new PositionData("IT Administrator", EmployeePositions.AvailablePosition.IT_ADMINISTRATOR, PositionColor.GREEN),
-                new PositionData("Procurement Specialist", EmployeePositions.AvailablePosition.PROCUREMENT_SPECIALIST, PositionColor.PURPLE),
-                new PositionData("Procurement Manager", EmployeePositions.AvailablePosition.PROCUREMENT_MANAGER, PositionColor.DARK_PURPLE),
-                new PositionData("Order Fulfillment Specialist", EmployeePositions.AvailablePosition.ORDER_FULFILLMENT_SPECIALIST, PositionColor.RED),
-                new PositionData("Order Fulfillment Manager", EmployeePositions.AvailablePosition.ORDER_FULFILLMENT_MANAGER, PositionColor.DARK_RED),
-                new PositionData("Sales Representative", EmployeePositions.AvailablePosition.SALES_REPRESENTATIVE, PositionColor.YELLOW)
+                new PositionData(
+                        "IT Administrator",
+                        Map.of(
+                                Locale.GERMAN, "IT Administrator",
+                                Locale.ENGLISH, "IT Administrator"
+                        ),
+                        IT_ADMINISTRATOR,
+                        GREEN
+                ),
+                new PositionData(
+                        "Procurement Specialist",
+                        Map.of(
+                                Locale.GERMAN, "Einkaufsmitarbeiter",
+                                Locale.ENGLISH, "Procurement Specialist"
+                        ),
+                        PROCUREMENT_SPECIALIST,
+                        PURPLE
+                ),
+                new PositionData(
+                        "Procurement Manager",
+                        Map.of(
+                                Locale.GERMAN, "Einkaufsleiter",
+                                Locale.ENGLISH, "Procurement Manager"
+                        ),
+                        PROCUREMENT_MANAGER,
+                        DARK_PURPLE
+                ),
+                new PositionData(
+                        "Order Fulfillment Specialist",
+                        Map.of(
+                                Locale.GERMAN, "Auftragsabwicklung",
+                                Locale.ENGLISH, "Order Fulfillment Specialist"
+                        ),
+                        ORDER_FULFILLMENT_SPECIALIST,
+                        RED
+                ),
+                new PositionData(
+                        "Order Fulfillment Manager",
+                        Map.of(
+                                Locale.GERMAN, "Auftragsabwicklungleiter",
+                                Locale.ENGLISH, "Order Fulfillment Manager"
+                        ),
+                        ORDER_FULFILLMENT_MANAGER,
+                        DARK_RED
+                ),
+                new PositionData(
+                        "Sales Representative",
+                        Map.of(
+                                Locale.GERMAN, "Vertriebsmitarbeiter",
+                                Locale.ENGLISH, "Sales Representative"
+                        ),
+                        SALES_REPRESENTATIVE,
+                        YELLOW
+                )
         );
 
         return positionData.stream()
@@ -48,11 +101,22 @@ public class EmployeePositionDataProvider implements TestDataProvider<Position, 
         position.setCode(positionData.availablePosition().getCode());
         position.setColor(positionData.color());
 
-        return Stream.of(position);
+        return Stream.concat(
+                Stream.of(position),
+                positionData.translations().entrySet()
+                        .stream()
+                        .map(entry -> createPositionTranslation(position, entry.getKey(), entry.getValue()))
+
+        );
     }
 
-
-    record PositionData(String name, EmployeePositions.AvailablePosition availablePosition, PositionColor color) {}
+    private PositionTranslation createPositionTranslation(Position position, Locale locale, String name) {
+        PositionTranslation positionTranslation = dataManager.create(PositionTranslation.class);
+        positionTranslation.setLocale(locale);
+        positionTranslation.setName(name);
+        positionTranslation.setPosition(position);
+        return positionTranslation;
+    }
 
     private <T> List<T> commit(List<T> entities) {
         SaveContext saveContext = new SaveContext();
@@ -62,10 +126,18 @@ public class EmployeePositionDataProvider implements TestDataProvider<Position, 
 
         return entities;
     }
+
     private List<Position> findPositionsOf(List<Object> storedEntities) {
         return storedEntities.stream()
                 .filter(o -> o instanceof Position)
                 .map(user -> (Position) user)
                 .collect(Collectors.toList());
+    }
+
+    public record DataContext() {
+    }
+
+    record PositionData(String name, Map<Locale, String> translations,
+                        EmployeePositions.AvailablePosition availablePosition, PositionColor color) {
     }
 }

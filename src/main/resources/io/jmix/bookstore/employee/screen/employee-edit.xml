@@ -19,7 +19,9 @@
         </instance>
         <collection id="positionsDc"
                     class="io.jmix.bookstore.employee.Position">
-            <fetchPlan extends="_base"/>
+            <fetchPlan extends="_base">
+                <property name="translations" fetchPlan="_base"/>
+            </fetchPlan>
             <loader id="positionsDl">
                 <query>
                     <![CDATA[select e from bookstore_Position e]]>
