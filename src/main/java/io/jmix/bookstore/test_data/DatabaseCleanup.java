@@ -3,6 +3,7 @@ package io.jmix.bookstore.test_data;
 import io.jmix.bookstore.customer.Customer;
 import io.jmix.bookstore.employee.Employee;
 import io.jmix.bookstore.employee.Position;
+import io.jmix.bookstore.employee.PositionTranslation;
 import io.jmix.bookstore.entity.User;
 import io.jmix.bookstore.order.entity.Order;
 import io.jmix.bookstore.order.entity.OrderLine;
@@ -90,6 +91,7 @@ public class DatabaseCleanup {
 
         performDeletion(UserGroupRole.class, jdbcTemplate);
         performDeletion(UserGroup.class, jdbcTemplate);
+        performDeletion(PositionTranslation.class, jdbcTemplate);
         performDeletion(Position.class, jdbcTemplate);
         performDeletion(OrderLine.class, jdbcTemplate);
         performDeletion(Order.class, jdbcTemplate);
@@ -156,6 +158,7 @@ public class DatabaseCleanup {
         performDeletionWhere(RoleAssignmentEntity.class,  usernameStartsWith(tenant), jdbcTemplate);
         performDeletionWhere(UserGroupRole.class,  tenantEquals("SYS_TENANT_ID", tenant), jdbcTemplate);
         performDeletionWhere(UserGroup.class, tenantEquals("SYS_TENANT_ID", tenant), jdbcTemplate);
+        performDeletionWhere(PositionTranslation.class, tenantEquals("TENANT", tenant), jdbcTemplate);
         performDeletionWhere(Position.class, tenantEquals("TENANT", tenant), jdbcTemplate);
         performDeletionWhere(OrderLine.class, tenantEquals("TENANT", tenant), jdbcTemplate);
         performDeletionWhere(Order.class, tenantEquals("TENANT", tenant), jdbcTemplate);
