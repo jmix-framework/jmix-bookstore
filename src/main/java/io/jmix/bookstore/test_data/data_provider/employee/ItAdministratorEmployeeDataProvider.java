@@ -5,11 +5,10 @@ import io.jmix.bookstore.employee.Position;
 import io.jmix.bookstore.entity.Title;
 import io.jmix.bookstore.entity.User;
 import io.jmix.bookstore.security.FullAccessRole;
+import io.jmix.bookstore.test_data.AddressGenerator;
 import io.jmix.bookstore.test_data.data_provider.TestDataProvider;
 import io.jmix.core.DataManager;
 import io.jmix.core.querycondition.PropertyCondition;
-import net.datafaker.Address;
-import net.datafaker.Faker;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
@@ -23,12 +22,14 @@ import static io.jmix.bookstore.test_data.data_provider.RandomValues.randomBirth
 public class ItAdministratorEmployeeDataProvider implements TestDataProvider<Employee, ItAdministratorEmployeeDataProvider.DataContext> {
 
     protected final DataManager dataManager;
+    protected final AddressGenerator addressGenerator;
 
     public record DataContext(EmployeePositions employeePositions, String tenantId) {
     }
 
-    public ItAdministratorEmployeeDataProvider(DataManager dataManager) {
+    public ItAdministratorEmployeeDataProvider(DataManager dataManager, AddressGenerator addressGenerator) {
         this.dataManager = dataManager;
+        this.addressGenerator = addressGenerator;
     }
 
     @Override
@@ -58,21 +59,13 @@ public class ItAdministratorEmployeeDataProvider implements TestDataProvider<Emp
         employee.setHireDate(employeeData.hireDate());
         employee.setTitle(employeeData.title());
         employee.setReportsTo(employeeData.manager());
+        employee.setAddress(addressGenerator.generate());
 
         employee.setBirthDate(randomBirthday());
-        employee.setAddress(toAddress(new Faker().address()));
 
         return List.of(dataManager.save(employee));
     }
 
-
-    private io.jmix.bookstore.entity.Address toAddress(Address address) {
-        io.jmix.bookstore.entity.Address addressEntity = dataManager.create(io.jmix.bookstore.entity.Address.class);
-        addressEntity.setCity(address.city());
-        addressEntity.setStreet(String.format("%s %s", address.streetName(), address.buildingNumber()));
-        addressEntity.setPostCode(address.postcode());
-        return addressEntity;
-    }
 
     private static Position itAdministrator(DataContext dataContext) {
         return dataContext.employeePositions().find(EmployeePositions.AvailablePosition.IT_ADMINISTRATOR);

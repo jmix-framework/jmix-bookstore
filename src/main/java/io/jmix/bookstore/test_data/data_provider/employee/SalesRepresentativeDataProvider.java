@@ -94,7 +94,6 @@ public class SalesRepresentativeDataProvider implements TestDataProvider<Employe
             EmployeePositions employeePositions,
             AvailableRegions regions, AvailableTerritories availableTerritories,
             String tenantId
-    ) {
-    }
+    ) {}
 
 }

@@ -224,7 +224,7 @@ public class TestDataCreation {
 
     private List<Customer> generateCustomers(int amount, AvailableTerritories territories) {
         log.info("Trying to create a random amount of {} Customers", amount);
-        List<Customer> customers = customerDataProvider.create(new CustomerDataProvider.DataContext(amount, "classpath:test-data/addresses-us-all.json", territories));
+        List<Customer> customers = customerDataProvider.create(new CustomerDataProvider.DataContext(amount, territories));
         log.info("{} Customers created", customers.size());
         return customers;
     }

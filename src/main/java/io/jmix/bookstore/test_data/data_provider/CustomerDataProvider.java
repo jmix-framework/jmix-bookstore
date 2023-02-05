@@ -1,25 +1,19 @@
 package io.jmix.bookstore.test_data.data_provider;
 
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jmix.bookstore.customer.Customer;
 import io.jmix.bookstore.employee.Territory;
+import io.jmix.bookstore.entity.Address;
+import io.jmix.bookstore.test_data.AddressGenerator;
 import io.jmix.bookstore.test_data.data_provider.territory.AvailableTerritories;
 import io.jmix.core.DataManager;
 import io.jmix.core.SaveContext;
 import net.datafaker.*;
-import org.locationtech.jts.geom.Coordinate;
-import org.locationtech.jts.geom.GeometryFactory;
-import org.locationtech.jts.geom.Point;
-import org.springframework.core.io.Resource;
-import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Component;
-import org.springframework.web.client.RestTemplate;
 
-import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static io.jmix.bookstore.test_data.data_provider.RandomValues.randomOfList;
 
@@ -28,49 +22,26 @@ public class CustomerDataProvider implements TestDataProvider<Customer, Customer
 
 
     protected final DataManager dataManager;
-    protected final ResourceLoader resourceLoader;
-    protected final ObjectMapper objectMapper;
-    protected final RestTemplate restTemplate;
+    protected final AddressGenerator addressGenerator;
 
-    public record DataContext(int amount, String addressesFileName,
+    public record DataContext(int amount,
                               AvailableTerritories territories){
     }
 
-    /**
-     *         {
-     *             "address1": "1745 T Street Southeast",
-     *             "address2": "",
-     *             "city": "Washington",
-     *             "state": "DC",
-     *             "postalCode": "20020",
-     *             "coordinates": {
-     *                 "lat": 38.867033,
-     *                 "lng": -76.979235
-     *             }
-     *         }
-     */
-    public record AddressEntryCoordinates(double lat, double lng){}
-    public record AddressEntry(String address1, String city, String state, String postalCode, AddressEntryCoordinates coordinates){}
-    public record AddressEntries(List<AddressEntry> addresses){}
-    public CustomerDataProvider(DataManager dataManager, ResourceLoader resourceLoader, ObjectMapper objectMapper) {
+    public CustomerDataProvider(DataManager dataManager, AddressGenerator addressGenerator) {
         this.dataManager = dataManager;
-        this.resourceLoader = resourceLoader;
-        this.objectMapper = objectMapper;
-        this.restTemplate = new RestTemplate();
+        this.addressGenerator = addressGenerator;
     }
 
     @Override
     public List<Customer> create(DataContext dataContext) {
-        return commit(createCustomer(dataContext.amount(), dataContext.addressesFileName(), dataContext.territories()));
+        return commit(createCustomer(dataContext.amount(), dataContext.territories()));
     }
 
-    private List<Customer> createCustomer(int amount, String addressesFileName, AvailableTerritories territories) {
+    private List<Customer> createCustomer(int amount, AvailableTerritories territories) {
         Faker faker = new Faker();
 
-        AddressEntries addresses = addresses(addressesFileName);
-
-
-        return addresses.addresses().stream()
+        return Stream.generate(addressGenerator::generate).limit(amount)
                 .map(address -> new CustomerData(address, faker.name(), faker.internet(), faker.phoneNumber())).limit(amount)
                 .map(customerData -> toCustomer(customerData, territories))
                 .collect(Collectors.groupingBy(customer -> customer.getAddress().getPosition().getX()))
@@ -79,18 +50,8 @@ public class CustomerDataProvider implements TestDataProvider<Customer, Customer
                 .collect(Collectors.toList());
     }
 
-    private AddressEntries addresses(String addressesFileName) {
-        Resource addressesFile = resourceLoader.getResource(addressesFileName);
-        try {
-            byte[] zipBytes = addressesFile.getInputStream().readAllBytes();
-            return objectMapper.readValue(zipBytes, new TypeReference<>() {
-            });
-        } catch (IOException e) {
-            throw new RuntimeException("Error while importing report", e);
-        }
-    }
 
-    public record CustomerData(AddressEntry address, Name name, Internet internet, PhoneNumber phoneNumber){}
+    public record CustomerData(Address address, Name name, Internet internet, PhoneNumber phoneNumber){}
 
     private Customer toCustomer(CustomerData customerData, AvailableTerritories territories) {
         Customer customer = dataManager.create(Customer.class);
@@ -104,7 +65,7 @@ public class CustomerDataProvider implements TestDataProvider<Customer, Customer
         String email = generateEmail(customerData, firstName, lastName);
         customer.setEmail(email);
 
-        customer.setAddress(toAddress(customerData.address()));
+        customer.setAddress(customerData.address());
 
         territories.findTerritoryForPosition(customer.getAddress().getPosition())
                 .map(Territory::getRegion)
@@ -136,18 +97,6 @@ public class CustomerDataProvider implements TestDataProvider<Customer, Customer
                 String.format("%s%d", lowerCaseLastName, i)
         );
         return internetFaker.emailAddress(randomOfList(localParts));
-    }
-
-    private io.jmix.bookstore.entity.Address toAddress(AddressEntry address) {
-        io.jmix.bookstore.entity.Address addressEntity = dataManager.create(io.jmix.bookstore.entity.Address.class);
-        addressEntity.setCity(address.city());
-        addressEntity.setStreet(address.address1());
-        addressEntity.setPostCode(address.postalCode());
-        addressEntity.setStreet(address.state());
-        Point point = new GeometryFactory().createPoint(new Coordinate(address.coordinates().lng(), address.coordinates().lat()));
-        addressEntity.setPosition(point);
-
-        return addressEntity;
     }
 
     private <T> List<T> commit(List<T> entities) {

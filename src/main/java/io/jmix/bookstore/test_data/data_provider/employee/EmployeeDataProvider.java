@@ -3,6 +3,7 @@ package io.jmix.bookstore.test_data.data_provider.employee;
 import io.jmix.bookstore.employee.Employee;
 import io.jmix.bookstore.entity.User;
 import io.jmix.bookstore.security.EmployeeRole;
+import io.jmix.bookstore.test_data.AddressGenerator;
 import io.jmix.bpmui.security.role.BpmProcessActorRole;
 import io.jmix.core.DataManager;
 import io.jmix.core.SaveContext;
@@ -10,7 +11,6 @@ import io.jmix.reportsui.role.ReportsRunRole;
 import io.jmix.security.role.assignment.RoleAssignmentRoleType;
 import io.jmix.securitydata.entity.RoleAssignmentEntity;
 import io.jmix.securityui.role.UiMinimalRole;
-import net.datafaker.Address;
 import net.datafaker.DateAndTime;
 import net.datafaker.Faker;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -26,10 +26,12 @@ public class EmployeeDataProvider {
 
     protected final DataManager dataManager;
     protected final PasswordEncoder passwordEncoder;
+    protected final AddressGenerator addressGenerator;
 
-    public EmployeeDataProvider(DataManager dataManager, PasswordEncoder passwordEncoder) {
+    public EmployeeDataProvider(DataManager dataManager, PasswordEncoder passwordEncoder, AddressGenerator addressGenerator) {
         this.dataManager = dataManager;
         this.passwordEncoder = passwordEncoder;
+        this.addressGenerator = addressGenerator;
     }
 
     private static LocalDate randomBirthday() {
@@ -70,7 +72,7 @@ public class EmployeeDataProvider {
         employee.setReportsTo(employeeData.manager());
 
         employee.setBirthDate(randomBirthday());
-        employee.setAddress(toAddress(new Faker().address()));
+        employee.setAddress(addressGenerator.generate());
 
         employee.setTerritories(employeeData.territories().stream().toList());
 
@@ -99,13 +101,6 @@ public class EmployeeDataProvider {
         );
     }
 
-    private io.jmix.bookstore.entity.Address toAddress(Address address) {
-        io.jmix.bookstore.entity.Address addressEntity = dataManager.create(io.jmix.bookstore.entity.Address.class);
-        addressEntity.setCity(address.city());
-        addressEntity.setStreet(String.format("%s %s", address.streetName(), address.buildingNumber()));
-        addressEntity.setPostCode(address.postcode());
-        return addressEntity;
-    }
 
     private RoleAssignmentEntity toRoleAssignment(User user, String roleCode, String roleType) {
         RoleAssignmentEntity userRole = dataManager.create(RoleAssignmentEntity.class);
