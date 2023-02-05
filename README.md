@@ -354,6 +354,60 @@ For automatic provisioning of the role assignments see the following classes:
 * [ProcurementSpecialistDataProvider](https://github.com/jmix-framework/jmix-bookstore/blob/main/src/main/java/io/jmix/bookstore/test_data/data_provider/employee/ProcurementSpecialistDataProvider.java)
 * [SalesRepresentativeDataProvider](https://github.com/jmix-framework/jmix-bookstore/blob/main/src/main/java/io/jmix/bookstore/test_data/data_provider/employee/SalesRepresentativeDataProvider.java)
 
+### Internationalization - I18n
+
+Jmix supports the application to be available in different languages. The Jmix Bookstore is translated into different languages (English and German at the moment). The user can select the desired language on the login screen.
+
+#### Static Translations
+
+In the UI, the texts to display are referenced through the `msg://` prefix, together with a translation key like: `io.jmix.bookstore.employee.territory.screen/territoryBrowse.caption`. For each language, there is a translation file that contains the mappings between those keys and the translated text. See [messages_de.properties](https://github.com/jmix-framework/jmix-bookstore/blob/main/src/main/resources/io/jmix/bookstore/messages_de.properties) for the german translation.
+
+#### Translation of data
+
+Sometimes it is also required to not only change the static part of the application (like UI Labels, Error messages, Enum Values), but also to allow users to dynamically enter translations for data that is used as reference data e.g.
+
+This form of translation is not supported out of the box by Jmix. Instead, it requires the application developer to implement a solution for the concrete use-case.
+
+In the Bookstore example, we have implemented one example of such behaviour. There is an entity called `Position` which allows the administrator to configure the different Positions that are available for employees. The name of that Position (like `Sales Representative`) should be translated to the different languages. This way when the administrator creates the employee, it is possible to see the translated term for the entry in the dropdown box of the position selection.
+
+It is implemented in the following way. The `Position` entity holds a 1:N composition to an entity called `PositionTranslation` that is used to store the translations. The `PositionTranslation` entity has the following attributes:
+
+* name (the translated value)
+* locale (the language the value represents)
+* position (the position it belongs to)
+
+There are standard UIs for the management of the translations generated as part of the Position editor screen. To display the correct translation on the dropdown, the instance name of the `Position` entity contains a lookup for the translation of the current user: 
+
+
+```java
+class Position {
+    // ...
+
+    @OnDelete(DeletePolicy.CASCADE)
+    @Composition
+    @OneToMany(mappedBy = "position")
+    private List<PositionTranslation> translations;
+
+    @InstanceName
+    @DependsOnProperties({"name", "translations"})
+    public String getInstanceName(CurrentAuthentication currentAuthentication) {
+        Locale currentLocale = currentAuthentication.getLocale();
+        return translations.stream().filter(positionTranslation -> positionTranslation.getLocale().equals(currentLocale))
+                .map(PositionTranslation::getName)
+                .findFirst()
+                .orElse(getName());
+    }
+}
+```
+
+The `CurrentAuthentication` dependency passed into the method allows to retrieve the current locale of the user.
+
+See the following classes that represent the described behaviour:
+* [Position](https://github.com/jmix-framework/jmix-bookstore/blob/main/src/main/java/io/jmix/bookstore/employee/Position.java) - The entity that should have translation for the name
+* [PositionTranslation](https://github.com/jmix-framework/jmix-bookstore/blob/main/src/main/java/io/jmix/bookstore/employee/PositionTranslation.java) - The entity that holds the translations of a Position 
+* [LocaleConverter](https://github.com/jmix-framework/jmix-bookstore/blob/main/src/main/java/io/jmix/bookstore/entity/datatypes/LocaleConverter.java) - Converter to store `java.util.Locale` instances directly in the DB
+* [LocaleDatatype](https://github.com/jmix-framework/jmix-bookstore/blob/main/src/main/java/io/jmix/bookstore/entity/datatypes/LocaleDatatype.java) - Jmix Datatype definition of `java.util.Locale`
+* [PositionEdit](https://github.com/jmix-framework/jmix-bookstore/blob/main/src/main/java/io/jmix/bookstore/employee/position/screen/PositionEdit.java) - Position Edit Screen that converts the `Locale` instance to a proper name via `MessageTools` (e.g.: `de` will translate to `German`)
 
 ### Multitenancy
 
