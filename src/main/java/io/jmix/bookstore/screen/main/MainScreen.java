@@ -1,12 +1,15 @@
 package io.jmix.bookstore.screen.main;
 
+import io.jmix.bookstore.employee.Employee;
+import io.jmix.bookstore.employee.PositionTranslation;
 import io.jmix.bookstore.entity.User;
 import io.jmix.bookstore.multitenancy.TestEnvironmentTenants;
 import io.jmix.bookstore.screen.bookstoremytasksbrowse.BookstoreMyTasksBrowse;
-import io.jmix.bookstore.security.session.EmployeeSessionData;
+import io.jmix.bookstore.security.session.BookstoreSessionData;
 import io.jmix.bpm.entity.UserGroup;
 import io.jmix.bpm.multitenancy.BpmTenantProvider;
 import io.jmix.bpm.service.UserGroupService;
+import io.jmix.core.MessageTools;
 import io.jmix.core.security.CurrentAuthentication;
 import io.jmix.core.usersubstitution.CurrentUserSubstitution;
 import io.jmix.multitenancy.core.TenantProvider;
@@ -25,6 +28,7 @@ import org.flowable.task.api.TaskQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.stream.Collectors;
 
 @UiController("bookstore_MainScreen")
@@ -65,7 +69,7 @@ public class MainScreen extends Screen implements Window.HasWorkArea {
     @Autowired
     private Label<String> tasksIndicator_counterLabel;
     @Autowired
-    private EmployeeSessionData employeeSessionData;
+    private BookstoreSessionData bookstoreSessionData;
     @Autowired
     private TenantProvider tenantProvider;
     @Autowired
@@ -198,15 +202,27 @@ public class MainScreen extends Screen implements Window.HasWorkArea {
 
     private void initMainScreenUserAvatar() {
         welcomeMessage.setValue(messageBundle.formatMessage("welcomeMessageUser", currentUser().getFirstName()));
-        employeeSessionData.employee()
+        bookstoreSessionData.employee()
                 .ifPresent(it -> {
-                    positionBadgeLabel.setValue(it.getPosition().getName());
+                    positionBadgeLabel.setValue(translatedPosition(it));
                     String colorStyleName = it.getPosition().getColor().getStyleName();
                     positionBadgeLabel.setStyleName("position-badge " + colorStyleName);
                     userAvatar.setStyleName("user-avatar user-avatar-border-" + colorStyleName);
                     userAvatarMainScreen.setStyleName("user-avatar user-avatar-border-" + colorStyleName);
                 });
 
+    }
+
+    private String translatedPosition(Employee employee) {
+        Locale currentLocale = currentAuthentication.getLocale();
+
+        String localisedPositionName = employee.getPosition().getTranslations().stream()
+                .filter(positionTranslation -> positionTranslation.getLocale().equals(currentLocale))
+                .map(PositionTranslation::getName)
+                .findFirst()
+                .orElse(employee.getPosition().getName());
+
+        return localisedPositionName;
     }
 
     private void initUserAvatar() {

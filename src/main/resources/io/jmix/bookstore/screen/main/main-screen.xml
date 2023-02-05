@@ -23,8 +23,12 @@
                 <sideMenu id="sideMenu"
                           width="100%"
                           stylename="jmix-drawer-content"/>
+                <hbox width="100%" spacing="true">
+
+                </hbox>
+
             </drawer>
-            <vbox expand="workArea" width="100%" height="100%">
+            <vbox expand="workArea" width="95%" height="100%">
                 <hbox stylename="top-menu" align="TOP_RIGHT" spacing="true">
 
                     <hbox id="taskIndicator_rootBox"
@@ -63,8 +67,7 @@
 
             <workArea id="workArea"
                       stylename="jmix-workarea"
-                      width="100%"
-                      >
+                      width="95%" align="MIDDLE_CENTER">
                 <initialLayout spacing="true" margin="true">
                     <vbox expand="welcomeBox" align="TOP_CENTER">
                         <image id="mainScreenLogoImage" stylename="bookstore-main-screen-logo"

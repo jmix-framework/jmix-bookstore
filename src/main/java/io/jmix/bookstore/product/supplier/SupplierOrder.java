@@ -4,9 +4,13 @@ import io.jmix.bookstore.entity.StandardEntity;
 import io.jmix.bookstore.entity.StandardTenantEntity;
 import io.jmix.core.DeletePolicy;
 import io.jmix.core.FileRef;
+import io.jmix.core.MetadataTools;
 import io.jmix.core.entity.annotation.OnDelete;
 import io.jmix.core.metamodel.annotation.Composition;
+import io.jmix.core.metamodel.annotation.DependsOnProperties;
+import io.jmix.core.metamodel.annotation.InstanceName;
 import io.jmix.core.metamodel.annotation.JmixEntity;
+import io.jmix.core.metamodel.datatype.DatatypeFormatter;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -19,6 +23,7 @@ import java.util.List;
 })
 @Entity(name = "bookstore_SupplierOrder")
 public class SupplierOrder extends StandardTenantEntity {
+
     @JoinColumn(name = "SUPPLIER_ID", nullable = false)
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
@@ -80,5 +85,11 @@ public class SupplierOrder extends StandardTenantEntity {
 
     public void setSupplier(Supplier supplier) {
         this.supplier = supplier;
+    }
+
+    @InstanceName
+    @DependsOnProperties({"supplier", "orderDate"})
+    public String getInstanceName(DatatypeFormatter datatypeFormatter, MetadataTools metadataTools) {
+        return String.format("%s - %s", metadataTools.getInstanceName(supplier), datatypeFormatter.formatLocalDate(orderDate));
     }
 }
