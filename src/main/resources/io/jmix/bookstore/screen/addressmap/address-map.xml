@@ -7,6 +7,11 @@
         height="75%"
         forceDialog="true"
         />
+    <facets>
+        <notification id="addressNotFoundWarningNotification"
+                      caption="msg://addressNotFound"
+                      type="WARNING" />
+    </facets>
     <layout expand="map">
         <maps:geoMap id="map" width="100%" centerX="-99.755859" centerY="39.164141" zoom="6">
             <maps:layers selectedLayer="tiles">
