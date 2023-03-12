@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.11.xsd"
+        objectQuotingStrategy="QUOTE_ONLY_RESERVED_WORDS">
+    <changeSet id="1" author="wms">
+        <createTable tableName="WMS_MQTT_DEVICE">
+            <column name="ID" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_WMS_MQTT_DEVICE"/>
+            </column>
+            <column name="VERSION" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="CREATED_BY" type="VARCHAR(255)"/>
+            <column name="CREATED_DATE" type="DATETIME"/>
+            <column name="LAST_MODIFIED_BY" type="VARCHAR(255)"/>
+            <column name="LAST_MODIFIED_DATE" type="DATETIME"/>
+            <column name="DELETED_BY" type="VARCHAR(255)"/>
+            <column name="DELETED_DATE" type="DATETIME"/>
+            <column name="DEVICE_ID" type="VARCHAR(255)"/>
+            <column name="NAME" type="VARCHAR(255)"/>
+            <column name="EQUIPMENT_ID" type="UUID"/>
+            <column name="STATUS" type="INT"/>
+            <column name="ONLINE_TIME" type="VARCHAR(255)"/>
+            <column name="TOPIC" type="CLOB"/>
+            <column name="WORKSPACE" type="VARCHAR(255)"/>
+            <column name="ENABLE" type="BOOLEAN"/>
+            <column name="DESCRIPTION" type="VARCHAR(255)"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="2" author="wms">
+        <createTable tableName="WMS_MQTT_EQUIPMENT">
+            <column name="ID" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_WMS_MQTT_EQUIPMENT"/>
+            </column>
+            <column name="TENANT" type="VARCHAR(255)"/>
+            <column name="VERSION" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="CREATED_BY" type="VARCHAR(255)"/>
+            <column name="CREATED_DATE" type="DATETIME"/>
+            <column name="LAST_MODIFIED_BY" type="VARCHAR(255)"/>
+            <column name="LAST_MODIFIED_DATE" type="DATETIME"/>
+            <column name="DELETED_BY" type="VARCHAR(255)"/>
+            <column name="DELETED_DATE" type="DATETIME"/>
+            <column name="NAME" type="VARCHAR(255)"/>
+            <column name="STATUS" type="INT"/>
+            <column name="ONLINE_TIME" type="VARCHAR(255)"/>
+            <column name="DESCRIPTION" type="VARCHAR(255)"/>
+            <column name="ENABLE" type="BOOLEAN"/>
+            <column name="MQTT_HOST" type="VARCHAR(255)"/>
+            <column name="MQTT_PORT" type="INT"/>
+            <column name="MQTT_PATH" type="VARCHAR(255)"/>
+            <column name="MQTT_KEEPALIVE" type="INT"/>
+            <column name="MQTT_SESSION_EXPIRY_INTERVAL" type="INT"/>
+            <column name="MQTT_TLS" type="BOOLEAN"/>
+            <column name="MQTT_PROTOCOL_VERSION" type="INT"/>
+            <column name="MQTT_USERNAME" type="VARCHAR(255)"/>
+            <column name="MQTT_PASSWORD" type="VARCHAR(255)"/>
+            <column name="MQTT_CLIENT_ID" type="VARCHAR(255)"/>
+            <column name="QOS" type="INT"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="3" author="wms">
+        <createTable tableName="WMS_MQTT_EQUIPMENT_HISTORY">
+            <column name="ID" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_WMS_MQTT_EQUIPMENT_HISTORY"/>
+            </column>
+            <column name="EQUIPMENT_ID" type="UUID"/>
+            <column name="OPERATE" type="VARCHAR(255)"/>
+            <column name="CREATED_BY" type="VARCHAR(255)"/>
+            <column name="CREATED_DATE" type="DATETIME"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="4" author="wms">
+        <createIndex indexName="IDX_WMS_MQTT_DEVICE" tableName="WMS_MQTT_DEVICE">
+            <column name="EQUIPMENT_ID"/>
+        </createIndex>
+
+        <addForeignKeyConstraint baseColumnNames="EQUIPMENT_ID" baseTableName="WMS_MQTT_DEVICE"
+                                 constraintName="FK_WMS_MQTT_DEVICE_ON_EQUIPMENT" referencedColumnNames="ID"
+                                 referencedTableName="WMS_MQTT_EQUIPMENT"/>
+    </changeSet>
+    <changeSet id="5" author="wms">
+        <createIndex indexName="IDX_WMS_MQTT_EQUIPMENT_HISTORY_EQUIPMENT" tableName="WMS_MQTT_EQUIPMENT_HISTORY">
+            <column name="EQUIPMENT_ID"/>
+        </createIndex>
+
+        <addForeignKeyConstraint baseColumnNames="EQUIPMENT_ID" baseTableName="WMS_MQTT_EQUIPMENT_HISTORY"
+                                 constraintName="FK_WMS_MQTT_EQUIPMENT_HISTORY_ON_EQUIPMENT" referencedColumnNames="ID"
+                                 referencedTableName="WMS_MQTT_EQUIPMENT"/>
+    </changeSet>
+</databaseChangeLog>

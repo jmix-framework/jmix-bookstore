@@ -79,4 +79,46 @@
 
     </changeSet>
 
+    <changeSet id="5" author="jmix-bookstore" context="!cuba">
+
+        <insert tableName="BOOKSTORE_USER" dbms="postgresql, mssql, hsqldb">
+            <column name="ID" value="78d92b63-058d-42fc-8052-317fee18f649"/>
+            <column name="VERSION" value="1"/>
+            <column name="USERNAME" value="superAdmin"/>
+            <column name="PASSWORD" value="{noop}admin"/>
+            <column name="FIRST_NAME" value="Zhou"/>
+            <column name="LAST_NAME" value="GuangMing"/>
+            <column name="EMAIL" value="shushen@trdeep.com"/>
+            <column name="ACTIVE" valueBoolean="true"/>
+        </insert>
+
+        <insert tableName="BOOKSTORE_USER" dbms="oracle, mysql, mariadb">
+            <column name="ID" value="78d92b63058d42fc8052317fee18f649"/>
+            <column name="VERSION" value="1"/>
+            <column name="USERNAME" value="superAdmin"/>
+            <column name="PASSWORD" value="{noop}admin"/>
+            <column name="FIRST_NAME" value="Zhou"/>
+            <column name="LAST_NAME" value="GuangMing"/>
+            <column name="EMAIL" value="shushen@trdeep.com"/>
+            <column name="ACTIVE" valueBoolean="true"/>
+        </insert>
+
+        <insert tableName="SEC_ROLE_ASSIGNMENT" dbms="postgresql, mssql, hsqldb">
+            <column name="ID" value="c3ecccde-087b-4f8e-b299-ff0a81acee64"/>
+            <column name="VERSION" value="1"/>
+            <column name="USERNAME" value="superAdmin"/>
+            <column name="ROLE_CODE" value="system-full-access"/>
+            <column name="ROLE_TYPE" value="resource"/>
+        </insert>
+
+        <insert tableName="SEC_ROLE_ASSIGNMENT" dbms="oracle, mysql, mariadb">
+            <column name="ID" value="c3ecccde087b4f8eb299ff0a81acee64"/>
+            <column name="VERSION" value="1"/>
+            <column name="USERNAME" value="superAdmin"/>
+            <column name="ROLE_CODE" value="system-full-access"/>
+            <column name="ROLE_TYPE" value="resource"/>
+        </insert>
+
+    </changeSet>
+
 </databaseChangeLog>

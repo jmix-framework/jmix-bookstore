@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://jmix.io/schema/ui/window"
+        xmlns:c="http://jmix.io/schema/ui/jpql-condition"
+        caption="msg://equipmentBrowse.caption"
+        focusComponent="equipmentsTable">
+    <data readOnly="true">
+        <collection id="equipmentsDc"
+                    class="io.jmix.bookstore.wms.entity.Equipment">
+            <fetchPlan extends="_base">
+                <property name="devices" fetchPlan="_base"/>
+                <property name="onlineTime"/>
+            </fetchPlan>
+            <loader id="equipmentsDl">
+                <query>
+                    <![CDATA[select e from wms_MqttEquipment e]]>
+                </query>
+            </loader>
+        </collection>
+    </data>
+    <facets>
+        <dataLoadCoordinator auto="true"/>
+        <screenSettings id="settingsFacet" auto="true"/>
+    </facets>
+    <actions>
+        <action id="lookupSelectAction"
+                caption="msg:///actions.Select"
+                icon="LOOKUP_OK"
+                primary="true"
+                shortcut="${COMMIT_SHORTCUT}"/>
+        <action id="lookupCancelAction"
+                caption="msg:///actions.Cancel"
+                icon="LOOKUP_CANCEL"/>
+    </actions>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="equipmentsTable" spacing="true">
+        <filter id="filter"
+                dataLoader="equipmentsDl">
+            <properties include=".*"/>
+        </filter>
+        <groupTable id="equipmentsTable"
+                    width="100%"
+                    dataContainer="equipmentsDc"
+                    multiselect="true">
+            <actions>
+                <action id="create" type="create"/>
+                <action id="edit" type="edit"/>
+                <action id="refresh" type="refresh"/>
+                <action id="remove" type="remove"/>
+            </actions>
+            <columns>
+                <column id="name"/>
+                <column id="clientId"/>
+                <column id="status"/>
+                <column id="onlineTime"/>
+                <column id="description"/>
+                <column id="createdDate"/>
+            </columns>
+            <simplePagination/>
+            <buttonsPanel id="buttonsPanel"
+                          alwaysVisible="true">
+                <button id="createBtn" action="equipmentsTable.create"/>
+                <button id="editBtn" action="equipmentsTable.edit"/>
+                <button id="refreshBtn" action="equipmentsTable.refresh"/>
+                <button id="removeBtn" action="equipmentsTable.remove"/>
+            </buttonsPanel>
+        </groupTable>
+        <hbox id="lookupActions" spacing="true" visible="false">
+            <button action="lookupSelectAction"/>
+            <button action="lookupCancelAction"/>
+        </hbox>
+    </layout>
+</window>

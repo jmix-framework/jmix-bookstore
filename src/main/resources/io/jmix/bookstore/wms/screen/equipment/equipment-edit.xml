@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://jmix.io/schema/ui/window"
+        caption="msg://equipmentEdit.caption"
+        focusComponent="form">
+    <data>
+        <instance id="equipmentDc"
+                  class="io.jmix.bookstore.wms.entity.Equipment">
+            <fetchPlan extends="_base">
+                <property name="devices" fetchPlan="_base"/>
+                <property name="history" fetchPlan="_base"/>
+                <property name="onlineTime"/>
+            </fetchPlan>
+            <loader/>
+            <collection id="devicesDc" property="devices"/>
+            <collection id="historyDc" property="history"/>
+        </instance>
+
+        <collection id="devicesDc0"
+                    class="io.jmix.bookstore.wms.entity.Device">
+            <fetchPlan extends="_base"/>
+            <loader id="devicesDl">
+                <query>
+                    <![CDATA[select e from wms_MqttDevice e]]>
+                </query>
+            </loader>
+        </collection>
+
+    </data>
+    <facets>
+        <timer id="deviceTimer" delay="1000" autostart="false" repeating="true"/>
+        <timer id="equipmentTimer" delay="1000" autostart="false" repeating="true"/>
+        <dataLoadCoordinator auto="true"/>
+        <screenSettings id="settingsFacet" auto="true"/>
+    </facets>
+    <actions>
+        <action id="windowCommitAndClose" caption="msg:///actions.Ok"
+                icon="EDITOR_OK"
+                primary="true"
+                shortcut="${COMMIT_SHORTCUT}"/>
+        <action id="windowCommit"
+                caption="msg:///actions.Save"
+                icon="SAVE"/>
+        <action id="windowClose"
+                caption="msg:///actions.Close"
+                icon="EDITOR_CANCEL"/>
+    </actions>
+    <dialogMode height="600"
+                width="800"/>
+    <layout spacing="true" expand="editActions">
+        <tabSheet id="contentTabSheet" width="100%">
+            <tab id="tab1"
+                 caption="设备"
+                 spacing="true"
+                 margin="true"
+                 icon="ANDROID">
+                <filter dataLoader="devicesDl">
+                    <properties include=".*"/>
+                </filter>
+                <groupBox height="300px" visible="true">
+                    <table id="devicesTable"
+                           width="100%"
+                           dataContainer="devicesDc"
+                           multiselect="true">
+                        <actions>
+                            <action id="create" type="create" caption="添加"/>
+                            <action id="edit" type="edit"/>
+                            <action id="refresh" type="refresh"/>
+                            <action id="remove" type="remove"/>
+                        </actions>
+                        <columns>
+                            <column id="deviceId"/>
+                            <column id="name"/>
+                            <column id="status"/>
+                            <column id="up"/>
+                            <column id="down"/>
+                            <column id="onlineTime"/>
+                            <column id="workspace"/>
+                            <column id="createdDate" caption="注册时间"/>
+                            <column id="enable"/>
+                            <column id="description"/>
+                        </columns>
+                        <simplePagination/>
+                        <buttonsPanel id="buttonsPanel">
+                            <button id="createBtn" action="devicesTable.create"/>
+                            <button id="editBtn" action="devicesTable.edit"/>
+                            <button id="refreshBtn" action="devicesTable.refresh"/>
+                            <button id="removeBtn" action="devicesTable.remove"/>
+                        </buttonsPanel>
+                    </table>
+
+                </groupBox>
+            </tab>
+
+            <tab id="tab2"
+                 caption="设备组"
+                 spacing="true"
+                 margin="true"
+                 icon="SERVER">
+                <hbox spacing="true" width="100%">
+
+                    <vbox spacing="true">
+                        <groupBox id="formGroup" caption="设备组信息">
+                            <vbox spacing="true">
+                                <form id="form" dataContainer="equipmentDc">
+                                    <column width="350px">
+                                        <textField id="nameField" property="name" required="true"/>
+                                        <textArea id="descriptionField" property="description" rows="3"/>
+                                        <comboBox id="onlineField" property="status" editable="false"/>
+                                        <textField id="onlineTimeField" property="onlineTime" editable="false"/>
+                                        <!--<checkBox id="enableField" property="enable"/>-->
+                                    </column>
+                                </form>
+                                <buttonsPanel>
+                                    <button id="connection" icon="HEART_O" caption="连接" stylename="friendly"/>
+                                    <button id="disconnect" icon="UNLINK" caption="断开" stylename="danger"/>
+                                </buttonsPanel>
+                            </vbox>
+
+                        </groupBox>
+                        <groupBox caption="操作记录" height="326px">
+                            <dataGrid id="historyGrid" width="100%" dataContainer="historyDc">
+                                <simplePagination/>
+                                <columns>
+                                    <column property="equipment.clientId"/>
+                                    <column property="equipment.name"/>
+                                    <column property="equipment.onlineTime"/>
+                                    <column property="operate"/>
+                                    <column property="createdBy"/>
+                                    <column property="createdDate"/>
+                                </columns>
+                            </dataGrid>
+                        </groupBox>
+                    </vbox>
+
+                    <groupBox id="mqttClientGroup" caption="连接配置" height="650px">
+                        <form id="mqttClient" dataContainer="equipmentDc">
+                            <column width="350px">
+                                <textField id="clientIdField" property="clientId" editable="false"/>
+                                <textField id="hostField" property="host" required="true"/>
+                                <textField id="portField" property="port" required="true"/>
+                                <textField id="PathField" property="path" required="true"/>
+                                <textField id="usernameField" property="username"/>
+                                <textField id="passwordField" property="password"/>
+                                <comboBox id="qosField" property="qos"/>
+                                <comboBox id="cleanStartField" property="cleanStart"/>
+                                <textField id="keepaliveField" property="keepalive"/>
+                                <textField id="expiryField" property="sessionExpiryInterval"/>
+                                <checkBox id="tlsField" property="tls"/>
+                                <comboBox id="protocolVersionField" property="protocolVersion"/>
+                                <textField id="subscriptionField" property="subscription" required="true"/>
+                                <textField id="publishField" property="publish"/>
+                            </column>
+                        </form>
+                    </groupBox>
+
+                </hbox>
+
+            </tab>
+
+
+        </tabSheet>
+        <hbox id="editActions" spacing="true">
+            <button id="commitAndCloseBtn" action="windowCommitAndClose"/>
+            <button id="commitBtn" action="windowCommit"/>
+            <button id="closeBtn" action="windowClose"/>
+        </hbox>
+    </layout>
+</window>

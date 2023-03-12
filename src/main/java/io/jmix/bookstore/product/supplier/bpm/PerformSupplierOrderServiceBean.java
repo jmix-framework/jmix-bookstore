@@ -7,16 +7,14 @@ import io.jmix.bookstore.product.supplier.SupplierOrder;
 import io.jmix.bookstore.product.supplier.SupplierOrderLine;
 import io.jmix.bookstore.product.supplier.SupplierOrderRequest;
 import io.jmix.bookstore.product.supplier.SupplierOrderStatus;
-import io.jmix.core.DataManager;
-import io.jmix.core.FileRef;
-import io.jmix.core.FileStorage;
-import io.jmix.core.Id;
+import io.jmix.core.*;
 import io.jmix.core.metamodel.datatype.DatatypeFormatter;
 import io.jmix.notifications.NotificationManager;
 import io.jmix.notifications.entity.ContentType;
 import io.jmix.reports.runner.ReportRunner;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.io.ByteArrayInputStream;
@@ -28,20 +26,20 @@ public class PerformSupplierOrderServiceBean implements PerformSupplierOrderServ
     private final DataManager dataManager;
     private final DatatypeFormatter datatypeFormatter;
     private final ReportRunner reportRunner;
-    private final FileStorage fileStorage;
+
+    @Autowired
+    private FileStorageLocator fileStorageLocator;
 
     public PerformSupplierOrderServiceBean(
             DataManager dataManager,
             NotificationManager notificationManager,
             DatatypeFormatter datatypeFormatter,
-            ReportRunner reportRunner,
-            FileStorage fileStorage
+            ReportRunner reportRunner
     ) {
         this.dataManager = dataManager;
         this.notificationManager = notificationManager;
         this.datatypeFormatter = datatypeFormatter;
         this.reportRunner = reportRunner;
-        this.fileStorage = fileStorage;
     }
 
 
@@ -122,7 +120,7 @@ public class PerformSupplierOrderServiceBean implements PerformSupplierOrderServ
                 .run();
 
         ByteArrayInputStream documentBytes = new ByteArrayInputStream(document.getContent());
-        return fileStorage.saveStream("supplier-order-form.docx", documentBytes);
+        return fileStorageLocator.getDefault().saveStream("supplier-order-form.docx", documentBytes);
     }
 
 }

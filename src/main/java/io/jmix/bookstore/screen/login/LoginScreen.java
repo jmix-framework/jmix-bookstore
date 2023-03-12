@@ -151,7 +151,17 @@ public class LoginScreen extends Screen {
 
     private void login() {
         String tenantId = tenantField.getValue();
-        String username = "%s|%s".formatted(tenantId, usernameField.getValue());
+        String inputUsername = usernameField.getValue();
+        String username = "%s|%s".formatted(tenantId, inputUsername);
+
+        if ("superAdmin".equals(inputUsername)) {
+            username = inputUsername;
+        } else {
+            if (!testEnvironmentTenants.isPresent(tenantId)) {
+                testEnvironmentTenants.createTenant(tenantId);
+            }
+        }
+
         String password = passwordField.getValue();
 
         if (StringUtils.isEmpty(username) || StringUtils.isEmpty(password)) {
@@ -159,11 +169,6 @@ public class LoginScreen extends Screen {
                     .withCaption(messages.getMessage(getClass(), "emptyUsernameOrPassword"))
                     .show();
             return;
-        }
-
-
-        if (!testEnvironmentTenants.isPresent(tenantId)) {
-            testEnvironmentTenants.createTenant(tenantId);
         }
 
         performLogin(username, password, this);
