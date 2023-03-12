@@ -153,6 +153,8 @@ public class Mqtt5Client implements TdMqttClient {
         String clientId = equipment.getClientId();
 
         this.client = new MqttClient(broker, clientId, new MemoryPersistence());
+
+        // todo 先联机在订阅
         client.subscribe(equipment.getSubscription(), equipment.getQos().getId());
 
         String username = equipment.getUsername();

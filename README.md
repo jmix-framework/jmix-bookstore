@@ -20,3 +20,8 @@ Java 代码位置
 
 - io/jmix/bookstore/wms/screen/
 
+参考资料
+- [Jmix 文档](https://docs.jmix.cn/jmix/intro.html)
+- [EMQX 产品文档](https://www.emqx.io/docs/zh/v5.0/)
+- [MQTT QoS 0, 1, 2 介绍](https://www.emqx.com/zh/blog/introduction-to-mqtt-qos)
+- [通过案例理解 MQTT 主题与通配符](https://www.emqx.com/zh/blog/advanced-features-of-mqtt-topics)
