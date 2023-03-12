@@ -1,19 +1,19 @@
-package io.jmix.bookstore.wms.entity;
+package io.jmix.bookstore.wms.mqtt;
 
 import io.jmix.core.metamodel.datatype.impl.EnumClass;
 
 import javax.annotation.Nullable;
 
 
-public enum QoS implements EnumClass<Integer> {
+public enum MqttProtocol implements EnumClass<Integer> {
 
-    QOS_0(0),
-    QOS_1(1),
-    QOS_2(2);
+    MQTT_VERSION_5(5),
+    MQTT_VERSION_3_1_1(4),
+    MQTT_VERSION_3_1(3);
 
     private Integer id;
 
-    QoS(Integer id) {
+    MqttProtocol(Integer id) {
         this.id = id;
     }
 
@@ -22,8 +22,8 @@ public enum QoS implements EnumClass<Integer> {
     }
 
     @Nullable
-    public static QoS fromId(Integer id) {
-        for (QoS at : QoS.values()) {
+    public static MqttProtocol fromId(Integer id) {
+        for (MqttProtocol at : MqttProtocol.values()) {
             if (at.getId().equals(id)) {
                 return at;
             }

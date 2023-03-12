@@ -1,6 +1,8 @@
 package io.jmix.bookstore.wms.entity;
 
 import io.jmix.bookstore.entity.StandardTenantEntity;
+import io.jmix.bookstore.wms.mqtt.MqttProtocol;
+import io.jmix.bookstore.wms.mqtt.QoS;
 import io.jmix.core.DeletePolicy;
 import io.jmix.core.annotation.Secret;
 import io.jmix.core.entity.annotation.OnDelete;

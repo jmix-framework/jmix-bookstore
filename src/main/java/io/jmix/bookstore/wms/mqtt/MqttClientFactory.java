@@ -1,7 +1,6 @@
 package io.jmix.bookstore.wms.mqtt;
 
 import io.jmix.bookstore.wms.entity.Equipment;
-import io.jmix.bookstore.wms.entity.MqttProtocol;
 import org.slf4j.Logger;
 
 import java.util.HashMap;
