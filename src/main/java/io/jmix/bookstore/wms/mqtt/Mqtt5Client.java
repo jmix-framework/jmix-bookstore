@@ -1,7 +1,7 @@
 package io.jmix.bookstore.wms.mqtt;
 
 import cn.treedeep.upaas.core.exception.BizException;
-import cn.treedeep.upaas.util.SSLUtils;
+import io.jmix.bookstore.wms.util.SSLUtils;
 import io.jmix.bookstore.wms.entity.Equipment;
 import org.apache.commons.lang3.StringUtils;
 import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
