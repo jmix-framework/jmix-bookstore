@@ -12,10 +12,4 @@ import org.springframework.stereotype.Service;
 @Service
 public class EquipmentServiceImpl implements EquipmentService {
 
-
-    
-    public void getEquipmentTopics() {
-
-
-    }
 }

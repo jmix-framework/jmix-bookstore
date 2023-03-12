@@ -59,7 +59,7 @@ public class Equipment extends StandardTenantEntity {
     private List<EquipmentHistory> history;
 
     @Column(name = "MQTT_HOST")
-    private String host = "localhost";
+    private String host = "110.41.157.159";
 
     @NumberFormat(pattern = "0")
     @Column(name = "MQTT_PORT")

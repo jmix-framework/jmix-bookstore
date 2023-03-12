@@ -16,7 +16,7 @@ import org.eclipse.paho.mqttv5.client.MqttConnectionOptions;
 
     org.eclipse.paho.client.mqttv3.MqttClient get3();
      void connect();
-    
+
      void connect3(MqttConnectOptions options);
      void connect5(MqttConnectionOptions options);
 
@@ -32,7 +32,5 @@ import org.eclipse.paho.mqttv5.client.MqttConnectionOptions;
      String getClientId();
 
      void close();
-
-
 
 }
