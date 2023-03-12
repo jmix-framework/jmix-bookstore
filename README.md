@@ -7,6 +7,3 @@ MQTT 服务
 - path: /mqtt
 
 [管理监控](http://110.41.157.159:18083)
-
-- username: admin
-- password: tree@admin
