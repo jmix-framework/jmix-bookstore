@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://jmix.io/schema/ui/window"
+        caption="msg://deviceEdit.caption"
+        focusComponent="form">
+    <data>
+        <instance id="deviceDc"
+                  class="io.jmix.bookstore.wms.entity.Device">
+            <fetchPlan extends="_base"/>
+            <loader/>
+        </instance>
+    </data>
+    <facets>
+        <dataLoadCoordinator auto="true"/>
+        <screenSettings id="settingsFacet" auto="true"/>
+    </facets>
+    <actions>
+        <action id="windowCommitAndClose" caption="msg:///actions.Ok"
+                icon="EDITOR_OK"
+                primary="true"
+                shortcut="${COMMIT_SHORTCUT}"/>
+        <action id="windowClose"
+                caption="msg:///actions.Close"
+                icon="EDITOR_CANCEL"/>
+    </actions>
+    <dialogMode height="AUTO"
+                width="AUTO"
+                modal="true"
+                forceDialog="true"/>
+    <layout spacing="true" expand="formGroupBox">
+        <groupBox id="formGroupBox">
+            <form id="form" dataContainer="deviceDc">
+                <column width="350px">
+                    <textField id="deviceIdField" property="deviceId" required="true"/>
+                    <textField id="nameField" property="name" required="true"/>
+                    <comboBox id="onlineField" property="status" editable="false"/>
+                    <textField id="onlineTimeField" property="onlineTime" editable="false"/>
+                    <textField id="workspaceField" property="workspace"/>
+                    <textArea id="descriptionField" property="description" rows="5"/>
+                    <checkBox id="enableField" property="enable"/>
+                </column>
+            </form>
+        </groupBox>
+        <hbox id="editActions" spacing="true">
+            <button id="commitAndCloseBtn" action="windowCommitAndClose"/>
+            <button id="closeBtn" action="windowClose"/>
+        </hbox>
+    </layout>
+</window>

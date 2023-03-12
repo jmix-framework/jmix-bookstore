@@ -1,5 +1,6 @@
 package io.jmix.bookstore.screen.main;
 
+//import cn.treedeep.upaas.core.util.AvatarHelper;
 import io.jmix.bookstore.employee.Employee;
 import io.jmix.bookstore.employee.PositionTranslation;
 import io.jmix.bookstore.entity.User;
@@ -9,7 +10,7 @@ import io.jmix.bookstore.security.session.BookstoreSessionData;
 import io.jmix.bpm.entity.UserGroup;
 import io.jmix.bpm.multitenancy.BpmTenantProvider;
 import io.jmix.bpm.service.UserGroupService;
-import io.jmix.core.MessageTools;
+import io.jmix.core.FileRef;
 import io.jmix.core.security.CurrentAuthentication;
 import io.jmix.core.usersubstitution.CurrentUserSubstitution;
 import io.jmix.multitenancy.core.TenantProvider;
@@ -29,6 +30,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 import java.util.Locale;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @UiController("bookstore_MainScreen")
@@ -120,8 +122,7 @@ public class MainScreen extends Screen implements Window.HasWorkArea {
                             try {
                                 taskLifeCycle.publish();
                                 testEnvironmentTenants.generateRandomTestdata(tenantId);
-                            }
-                            catch (Exception e) {
+                            } catch (Exception e) {
                                 return false;
                             }
                             return true;
@@ -135,8 +136,7 @@ public class MainScreen extends Screen implements Window.HasWorkArea {
                                         .withCaption(messageBundle.getMessage("testdataCreated"))
                                         .show();
 
-                            }
-                            else {
+                            } else {
 
                                 notifications.create(Notifications.NotificationType.ERROR)
                                         .withCaption(messageBundle.getMessage("testdataNotCreatedCaption"))
@@ -226,13 +226,13 @@ public class MainScreen extends Screen implements Window.HasWorkArea {
     }
 
     private void initUserAvatar() {
-        String username = currentUser().getUsername().replaceAll(currentTenant()+"\\|", "");
+        String username = currentUser().getUsername().replaceAll(currentTenant() + "\\|", "");
+        userAvatar.setSource(ThemeResource.class).setPath("avatars/%s.png".formatted(username));
+        userAvatarMainScreen.setSource(ThemeResource.class).setPath("avatars/%s.png".formatted(username));
 
-        userAvatar.setSource(ThemeResource.class)
-                .setPath("avatars/%s.png".formatted(username));
-
-        userAvatarMainScreen.setSource(ThemeResource.class)
-                .setPath("avatars/%s.png".formatted(username));
+//        FileRef avatar = AvatarHelper.createAvatar(UUID.randomUUID());
+//        userAvatar.setSource(FileStorageResource.class).setFileReference(avatar);
+//        userAvatarMainScreen.setSource(FileStorageResource.class).setFileReference(avatar);
     }
 
     private User currentUser() {

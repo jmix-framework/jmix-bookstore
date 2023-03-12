@@ -3,7 +3,7 @@
         caption="msg://application.caption">
 
     <facets>
-        <timer id="taskNotificationCounterTimer" delay="2000" autostart="true" repeating="true" />
+        <timer id="taskNotificationCounterTimer" delay="2000" autostart="false" repeating="true" />
     </facets>
     <layout>
         <cssLayout id="horizontalWrap"
