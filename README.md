@@ -13,6 +13,7 @@ Jmix Bookstore is a comprehensive example application built with [Jmix](https://
 - [Example Application](#example-application)
    * [About the Example](#about-the-example)
    * [Add-ons](#add-ons)
+   * [Running with Trial Subscription](#running-with-trial-subscription)
    * [Online Demo](#online-demo)
 - [Application Overview](#application-overview)
 - [Business Functionality](#business-functionality)
@@ -110,9 +111,43 @@ The application is also a show-case application for multiple add-ons from the [J
 * Reports
 * Data Tools
 * Quartz
-* BPM (premium)
-* Notifications (premium)
-* Maps (premium)
+* BPM (commercial)
+* Notifications (commercial)
+* Maps (commercial)
+
+### Running with Trial Subscription
+
+The application uses commercial add-ons, so you need an active subscription to run the app. If you have a trial subscription and want to run the Bookstore application locally, you may achieve this by a few simple steps. 
+
+First, get the `jmix-commercial-addons-demo` sample application. You may download it from your account page at https://store.jmix.io/.
+
+Next, copy the `trial-repository` directory from the `jmix-commercial-addons-demo` sample project to the root of the `jmix-bookstore` project.
+
+After that modify the `build.gradle` file of the `jmix-bookstore` project: add the repository with the `trial-repository` directory.
+
+```
+repositories {
+    mavenCentral()
+    maven {
+        url 'https://global.repo.jmix.io/repository/public'
+    }
+    if (file('trial_repository').exists()) {
+        maven {
+            url "file://${project.projectDir}/trial_repository"
+        }
+    } else {
+        maven {
+            url = 'https://global.repo.jmix.io/repository/premium'
+            credentials {
+                username = rootProject['premiumRepoUser']
+                password = rootProject['premiumRepoPass']
+            }
+        }
+    }
+}
+```
+
+Keep in mind that the Bookstore sample must be based on exactly the same Jmix version as a commercial add-ons sample.
 
 ### Online Demo
 
