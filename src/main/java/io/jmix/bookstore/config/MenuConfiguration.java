@@ -46,7 +46,7 @@ public class MenuConfiguration {
 
         protected boolean isForbiddenScreen(Element element) {
             String screen = element.attributeValue("screen");
-            return forbiddenScreens.contains(screen);
+            return screen != null && forbiddenScreens.contains(screen);
         }
     }
 }
