@@ -23,7 +23,7 @@ public class MenuConfiguration {
     }
 
     protected Collection<String> getForbiddenScreens() {
-        return List.of("ui_JmxConsoleScreen", "sys_LockInfo.browse", "entityInspector.browse");
+        return List.of("ui_JmxConsoleScreen");
     }
 
     public static class ExtendedMenuConfig extends MenuConfig {
