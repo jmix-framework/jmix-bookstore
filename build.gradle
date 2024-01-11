@@ -115,6 +115,8 @@ dependencies {
     implementation "org.hsqldb:hsqldb"
 
     implementation 'io.jmix.translations:jmix-translations-de'
+
+    testImplementation 'org.jetbrains:annotations:24.1.0'
 }
 
 test {
